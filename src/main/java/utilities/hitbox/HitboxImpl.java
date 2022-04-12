@@ -2,6 +2,7 @@ package utilities.hitbox;
 
 import utilities.Vector;
 
+//e se hitbox fosse un observer di movement? non appena la sua pos cambia avvisa hitbox di fare una "update position"
 public class HitboxImpl implements Hitbox{
 
     private final double width;
