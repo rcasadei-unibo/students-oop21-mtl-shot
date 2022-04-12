@@ -1,4 +1,4 @@
-package model.character.tools;
+package model.character.tools.aim;
 
 import utilities.Direction;
 
