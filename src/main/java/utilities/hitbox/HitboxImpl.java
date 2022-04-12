@@ -1,4 +1,6 @@
-package utilities;
+package utilities.hitbox;
+
+import utilities.Vector;
 
 public class HitboxImpl implements Hitbox{
 
@@ -33,6 +35,10 @@ public class HitboxImpl implements Hitbox{
                this.position.getY() >= hitbox.getPosition().getY() && this.position.getY() <= hitbox.getPosition().getY() + hitbox.getHeight();
     }
 
+    @Override
+    public String toString() {
+        return position + "-" + new Vector(position.getX() + width, position.getY() + height);
+    }
     
     
 }

@@ -1,4 +1,6 @@
-package utilities;
+package utilities.hitbox;
+
+import utilities.Vector;
 
 public interface Hitbox {
 
