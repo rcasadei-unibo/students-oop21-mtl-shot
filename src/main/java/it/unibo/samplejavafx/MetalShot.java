@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public final class JavaFXApp extends Application {
+public final class MetalShot extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -32,7 +32,7 @@ public final class JavaFXApp extends Application {
         }
 
         public static void main(final String...args) {
-            Application.launch(JavaFXApp.class, args);
+            Application.launch(MetalShot.class, args);
             // The following line raises: Error: class it.unibo.samplejavafx.JavaFXApp$Main is not a subclass of javafx.application.Application
             // JavaFXApp.launch(args);
             // Whereas the following would do just fine:
