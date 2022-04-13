@@ -1,6 +1,5 @@
-package model.character.entity;
+package utilities.entity;
 
-import utilities.EnvironmentConstants;
 import utilities.Vector;
 
 public abstract class MovableEntity extends Entity{

@@ -1,4 +1,4 @@
-package utilities;
+package utilities.entity;
 
 public final class EnvironmentConstants {
 	

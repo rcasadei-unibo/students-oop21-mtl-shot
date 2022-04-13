@@ -1,4 +1,4 @@
-package model.character.entity;
+package utilities.entity;
 
 import utilities.Vector;
 
