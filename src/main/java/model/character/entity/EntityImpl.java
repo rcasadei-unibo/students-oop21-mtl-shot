@@ -13,5 +13,10 @@ public class EntityImpl implements Entity{
     public Movement getMovement() {
         return this.movement;
     }
+    
+    @Override
+    public String toString() {
+    	return this.getMovement().toString();
+    }
 
 }
