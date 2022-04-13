@@ -1,4 +1,4 @@
-package model.character.tools;
+package model.character.tools.health;
 
 public interface Health {
 

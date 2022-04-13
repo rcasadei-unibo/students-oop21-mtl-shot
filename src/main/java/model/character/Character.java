@@ -1,7 +1,7 @@
 package model.character;
 
 import model.character.tools.Aim;
-import model.character.tools.Health;
+import model.character.tools.health.Health;
 import utilities.Vector;
 import utilities.entity.MovableEntity;
 
