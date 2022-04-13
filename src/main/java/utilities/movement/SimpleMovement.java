@@ -1,6 +1,7 @@
 package utilities.movement;
 
 import utilities.Vector;
+import utilities.hitbox.Hitbox;
 
 public class SimpleMovement implements Movement{
 
@@ -12,6 +13,7 @@ public class SimpleMovement implements Movement{
     
     private Vector speed;
     private Vector position;
+    private Hitbox hitbox;
     
     private final static double MAXHORIZONTALSPEED = 4;
     private final static double MAXVERTICALSPEED = 20;
@@ -157,6 +159,7 @@ public class SimpleMovement implements Movement{
             this.setVerticalSpeed(0);
         }
         this.position = new Vector(this.position.getX() + this.speed.getX(), this.position.getY() + this.speed.getY());
+        hitbox.updatePosition(position);
     }
 
     private void decelerate() {
@@ -172,5 +175,4 @@ public class SimpleMovement implements Movement{
     public String toString() {
         return "Speed: " + this.speed + ", position: " + this.position;
     }
-
 }
