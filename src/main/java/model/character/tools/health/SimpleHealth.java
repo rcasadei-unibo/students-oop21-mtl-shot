@@ -60,4 +60,8 @@ public class SimpleHealth implements Health {
 		return this.maxHealth;
 	}
 
+	@Override
+	public String toString() {
+		return this.getHealth() + "";
+	}
 }

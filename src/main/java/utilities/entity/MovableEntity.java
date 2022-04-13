@@ -2,7 +2,7 @@ package utilities.entity;
 
 import utilities.Vector;
 
-public abstract class MovableEntity extends Entity{
+public abstract class MovableEntity extends Entity {
 
 	private boolean left;
 	private boolean right;
@@ -99,4 +99,9 @@ public abstract class MovableEntity extends Entity{
 		this.setSpeed(new Vector(update, this.speed.getY()));
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString() + "\n" + 
+				"Speed: " + this.speed;
+	}
 }

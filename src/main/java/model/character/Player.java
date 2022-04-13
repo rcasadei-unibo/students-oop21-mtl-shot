@@ -8,9 +8,9 @@ public class Player extends Character {
 	private int lives;
 	//private final List<Item> items;
 	
-	public Player(final Vector hitbox, final Vector position, final Health health, final int lives) {
-		super(hitbox, position, health);
-		this.lives = lives;
+	private Player(final PlayerBuilder builder) {
+		super(builder.hitbox, builder.position, builder.health/*, builder.weapon*/);
+		this.lives = builder.lives;
 	}
 	
 	public int getLives() {
@@ -40,6 +40,43 @@ public class Player extends Character {
 		}
 		return false;
 	}
-	 
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\n" + 
+				"Lives: " + this.lives;
+	}
+	
+	public static class PlayerBuilder {
+		private Vector hitbox;
+		private Vector position;
+		private Health health;
+		private int lives;
+		//private Weapon weapon;
+		
+		public PlayerBuilder hitbox(final Vector hitbox) {
+			this.hitbox = hitbox;
+			return this;
+		}
+		
+		public PlayerBuilder position(final Vector position) {
+			this.position = position;
+			return this;
+		}
+		
+		public PlayerBuilder health(final Health health) {
+			this.health = health;
+			return this;
+		}
+		
+		public PlayerBuilder lives(final int lives) {
+			this.lives = lives;
+			return this;
+		}
+		
+		public Player build() {
+			return new Player(this);
+		}
+	}
 
 }

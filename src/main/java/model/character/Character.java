@@ -32,4 +32,12 @@ public abstract class Character extends MovableEntity {
 	public Aim getAim() {
 		return this.aim;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\n" + 
+				health.toString() + "\n" + 
+				//weapon.toString() + "\n" +
+				aim.toString();
+	}
 }
