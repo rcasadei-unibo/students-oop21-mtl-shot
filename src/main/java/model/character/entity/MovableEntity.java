@@ -1,6 +1,6 @@
 package model.character.entity;
 
-import utilities.EnviromentConstants;
+import utilities.EnvironmentConstants;
 import utilities.Vector;
 
 public abstract class MovableEntity extends Entity{
@@ -73,12 +73,31 @@ public abstract class MovableEntity extends Entity{
 	
 	void moveEntity() {
 		if (right && !left) {
-			this.setSpeed(new Vector(this.speed.getX() + EnviromentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			this.setSpeed(new Vector(this.speed.getX() + EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
 		} else if (left && !right) {
-			this.setSpeed(new Vector(this.speed.getX() - EnviromentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			this.setSpeed(new Vector(this.speed.getX() - EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
 		} else {
 			this.decelerate();
 		}
+		if (jump && !fall) {
+			this.crawl = false;
+			this.fall = true;
+			this.setSpeed(new Vector(this.speed.getX(), EnvironmentConstants.getJump()));
+		}
+		if (fall) {
+			this.setSpeed(new Vector(this.speed.getX(), this.speed.getY() + EnvironmentConstants.getGravity()));
+		}
+		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+	}
+
+	private void decelerate() {
+		double update = 0;
+		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
+			update = this.speed.getX() + EnvironmentConstants.getDeceleration();
+		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
+			update = this.speed.getX() - EnvironmentConstants.getDeceleration();
+		}
+		this.setSpeed(new Vector(update, this.speed.getY()));
 	}
 	
 }
