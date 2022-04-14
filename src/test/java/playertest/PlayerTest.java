@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
+import utilities.Direction;
 import utilities.Vector;
 
 public class PlayerTest {
@@ -22,13 +23,6 @@ public class PlayerTest {
 	
     @Test 
     public void movementTest() {
-        final Player player = new PlayerBuilder()
-                .health(new SimpleHealth())
-                .hitbox(new Vector(1, 2))
-                .lives(3)
-                .position(new Vector(0,0))
-                .build();
-        
       //--------SIMPLE MOVEMENT-------------
         System.out.println("sx x4");
         System.out.println(player.getPosition() + " " + player.getSpeed());
@@ -95,6 +89,64 @@ public class PlayerTest {
         for (int i = 0; i < 50; i++) {
             player.moveEntity();
             System.out.println(player.getPosition() + " " + player.getSpeed());
+        }
+        player.setRight(false);
+        player.setJump(false);
+        player.setFall(false);
+        player.setSpeed(new Vector(0,0));
+        
+        player.setPosition(new Vector(0,0));
+        
+        //-----------AIM-----------
+        player.getAim().setDirection(Direction.LEFT);
+        System.out.println(player.getAim());
+        player.getAim().setDirection(Direction.DOWN);
+        System.out.println(player.getAim());
+        player.getAim().returnToHorizontal();
+        System.out.println(player.getAim());
+        player.getAim().setDirection(Direction.UP);
+        System.out.println(player.getAim());
+        player.getAim().returnToHorizontal();
+        System.out.println(player.getAim());
+        player.getAim().setDirection(Direction.NOTHING);
+        System.out.println(player.getAim());
+        
+        //-----------HEALTH-----------------
+        System.out.println(player.getHealth());
+        player.getHealth().hurt(10);
+        System.out.println(player.getHealth());
+        player.getHealth().heal(1);
+        System.out.println(player.getHealth());
+        player.getHealth().setMaxHealth(120);
+        player.getHealth().heal(player.getHealth().getMaxHealth());
+        System.out.println(player.getHealth());
+        player.getHealth().heal(1000);
+        System.out.println(player.getHealth());
+        player.getHealth().hurt(1000);
+        System.out.println(player.getHealth());
+        System.out.println(player.getHealth().isDead());
+        try {
+            player.getHealth().heal(-1);
+        } catch(final IllegalStateException e) {
+            System.out.println("errore preso");
+        }
+        try {
+            player.getHealth().hurt(-1);
+        } catch(final IllegalStateException e) {
+            System.out.println("errore preso");
+        }
+        
+        //-----------RESPAWN--------------
+        double i = 0;
+        while (player.getLives() > 0) {
+            player.respawn(new Vector(i, 0));
+            i++;
+            System.out.println(player.getPosition());
+        }
+        try {
+            player.respawn(new Vector(5,5));
+        } catch (final IllegalStateException e) {
+            System.out.println("non respawnato");
         }
     }
 }

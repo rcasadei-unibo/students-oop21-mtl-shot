@@ -21,6 +21,8 @@ public class Player extends Character {
 		this.lives--;
 		if (this.lives >= 0) {			
 			super.setPosition(position);
+		} else {
+		    throw new IllegalStateException();
 		}
 	}
 	
