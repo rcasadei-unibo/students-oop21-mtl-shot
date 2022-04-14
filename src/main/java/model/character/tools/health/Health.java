@@ -1,20 +1,20 @@
 package model.character.tools.health;
 
-/**An health wrap an object that has a durability that can increase and decrease*/
+/**A health wraps an object that has a durability that can increase and decrease*/
 public interface Health {
 
-    /**The method that increases the actual health by @amount
-     * @throws IllegalStateException if @amount is negative*/
+    /**The method that increases the health by @amount
+     * @throws IllegalArgumentException if @amount is negative or 0*/
 	void heal(int amount);
-	/**The method that decreases the actual health by @amount
-     * @throws IllegalStateException if @amount is negative*/
+	/**The method that decreases the health by @amount
+     * @throws IllegalArgumentException if @amount is negative or 0*/
 	void hurt(int amount);
-	/**@return the actual health*/
+	/**@return the health*/
 	int getHealth();
-	/**@return true if the actual health is equals to 0*/
+	/**@return true if the health is equals to 0*/
 	boolean isDead();
-	/**set the maximum value that health can reach at @amount
-	 * @throws IllegalStateException if @amount is negative*/
+	/**set the maximum value that health can reach to @amount
+	 * @throws IllegalArgumentException if @amount is negative or 0*/
 	void setMaxHealth(int amount);
 	/**@return the maximum value that health can reach*/
 	int getMaxHealth();

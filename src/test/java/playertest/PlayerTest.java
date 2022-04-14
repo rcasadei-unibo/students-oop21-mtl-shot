@@ -108,7 +108,7 @@ public class PlayerTest {
         System.out.println(player.getAim());
         player.getAim().returnToHorizontal();
         System.out.println(player.getAim());
-        player.getAim().setDirection(Direction.NOTHING);
+        player.getAim().setDirection(Direction.NEUTRAL);
         System.out.println(player.getAim());
         
         //-----------HEALTH-----------------

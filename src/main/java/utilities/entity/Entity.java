@@ -2,9 +2,8 @@ package utilities.entity;
 
 import utilities.Vector;
 /**
- * An abstract class that identify something that can exist in any game that has collisions.
- * It's composed by a hitbox and a position, each one is identified by a Vector.
- * creator: */
+ * An abstract class that represents an object with collisions, implementable in any game.
+ * It's composed of an hitbox and a position, each one of them is identified by a Vector. */
 public abstract class Entity {
 
     /**It represents a box that has width and height*/
@@ -30,13 +29,13 @@ public abstract class Entity {
 	}
 	
 	/**
-	 * set the position of the entity*/
+	 * set the position of the entity to @position*/
 	public void setPosition(final Vector position) {
 		this.position = position;
 	}
 	
 	/**
-	 * set the hitbox of the entity*/
+	 * set the hitbox of the entity to @hitbox*/
 	public void setHitbox(final Vector hitbox) {
 	    this.consistencyCheck(hitbox);
 		this.hitbox = hitbox;
@@ -44,7 +43,7 @@ public abstract class Entity {
 	
 	private void consistencyCheck(final Vector vec) {
 	    if (vec.getX() <= 0 || vec.getY() <= 0 || vec == null) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         }
 	}
 	
@@ -53,7 +52,7 @@ public abstract class Entity {
 	 * x2 <= x1 <= (x2 + w2) && y2 <= y1 <= (y2 + h2)
 	 */
 	/**
-	 * a method that @return if this entity and the entity given are colliding*/
+	 * a method that @return if this entity and the given @entity are colliding*/
 	public boolean isColliding(final Entity entity) {
 		return this.getPosition().getX() <= entity.getPosition().getX() && entity.getPosition().getX() <= (this.getPosition().getX() + this.getHitbox().getX()) &&
 			   this.getPosition().getY() <= entity.getPosition().getY() && entity.getPosition().getY() <= (this.getPosition().getY() + this.getHitbox().getY()) ||

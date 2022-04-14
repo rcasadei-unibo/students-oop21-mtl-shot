@@ -5,11 +5,14 @@ import model.character.tools.health.Health;
 import utilities.Vector;
 import utilities.entity.MovableEntity;
 
-/**A character is a specific MovableEntity that also has an health, an aim and a weapon*/
+/**A character is a kind of MovableEntity that also has an health, an aim and a weapon*/
 public abstract class Character extends MovableEntity {
 
+    /**The health of the character*/
 	private final Health health;
+	/**The aim of the character*/
 	private final Aim aim = new Aim();
+	/**The weapon held by the character*/
 	//private Weapon weapon;
 	
 	public Character(final Vector hitbox, final Vector position, final Health health) {
@@ -21,7 +24,7 @@ public abstract class Character extends MovableEntity {
 		return this.weapon;
 	}*/
 
-    /**set a new weapon for the character*/
+    /**Sets a new weapon for the character*/
 	/*public void setWeapon(final Weapon weapon) {
 		this.weapon = weapon;
 	}*/

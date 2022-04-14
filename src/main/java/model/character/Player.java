@@ -3,8 +3,8 @@ package model.character;
 import model.character.tools.health.Health;
 import utilities.Vector;
 
-/**The player is the main character of the game, this means that can respawn if he dies,
- * has a lives counter to manage the respawn logic and can hold items (such as power ups and weapons) in his "pockets"*/
+/**The player is the main character of the game, it can means that can respawn if it dies,
+ * has a lives counter to manage the respawn logic and can hold items (such as power ups and weapons) in its inventory*/
 public class Player extends Character {
 
 	private int lives;
@@ -20,7 +20,7 @@ public class Player extends Character {
 		return this.lives;
 	}
 	
-	/**set the player position to @position only if he has at least one remaining life
+	/**Sets the player position to @position only if it has at least one remaining life
 	 * @throws IllegalStateException if there aren't remaining lives*/
 	public void respawn(final Vector position) {
 		this.lives--;
@@ -30,7 +30,7 @@ public class Player extends Character {
 		    throw new IllegalStateException();
 		}
 	}
-	/**pick up the item @item only if it's close enough to take it*/
+	/**Picks up the item @item only if it's close enough to take it*/
 	/*public void interact(final Item item) {
 	 *	if(this.isClose(item.getPosition)) {
 	 *		this.items.add(item);

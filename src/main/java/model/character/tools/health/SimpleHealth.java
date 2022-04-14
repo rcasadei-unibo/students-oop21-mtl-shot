@@ -1,9 +1,11 @@
 package model.character.tools.health;
 
-/**The simplest way to implements Health interface*/
+/**A simple implementation of the Health interface*/
 public class SimpleHealth implements Health {
 
+    /**The value that can be increased and decreased*/
 	private int health;
+	/**The maximum value that @health can reach*/
 	private int maxHealth;
 	
 	public SimpleHealth() {
@@ -27,7 +29,7 @@ public class SimpleHealth implements Health {
 
 	private void consistencyCheck(final int amount) {
 		if (amount <= 0) {
-			throw new IllegalStateException();
+			throw new IllegalArgumentException();
 		}
 	}
 

@@ -1,7 +1,11 @@
 package utilities;
 
-/**Enumeration that identify every direction in a 2D world*/
+/**Enumeration of every direction in a 2D world in a determined landmark*/
 public enum Direction {
 
-	UP, DOWN, LEFT, RIGHT, NOTHING;
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	NEUTRAL;
 }

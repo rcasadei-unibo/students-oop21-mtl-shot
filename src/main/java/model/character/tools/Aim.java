@@ -2,43 +2,46 @@ package model.character.tools;
 
 import utilities.Direction;
 
-/**A class that manage the aim of something that lives in a 2D world*/
+/**A class that manages the aim of something that lives in a 2D world.
+ * It uses 2 Direction: one for each axis in the two-dimensional world*/
 final public class Aim {
 
+    /**Field for horizontal axis aim*/
 	private Direction horizontal;
+	/**Field for vertical axis aim*/
 	private Direction vertical;
 	
-	/**Start by default aiming at its right*/
+	/**Starts by default aiming at its right*/
 	public Aim() {
 		this.horizontal = Direction.RIGHT;
-		this.vertical = Direction.NOTHING;
+		this.vertical = Direction.NEUTRAL;
 	}
 	
-	/**starts aiming at direction @direction*/
+	/**Starts aiming at direction @direction*/
 	public Aim(final Direction direction) {
 		this.setDirection(direction);
 	}
-	/**@return the current aiming direction*/
+	/**@return the current aiming direction (preferring the vertical over the horizontal)*/
 	public Direction getDirection() {
-		if (this.vertical != Direction.NOTHING) {
+		if (this.vertical != Direction.NEUTRAL) {
 			return this.vertical;
 		} else {
 			return this.horizontal;
 		}
 	}
 	
-	/**set the aiming direction to @direction*/
+	/**Sets the aiming direction to @direction*/
 	public void setDirection(final Direction direction) {
 		if (direction == Direction.LEFT || direction == Direction.RIGHT) {
 			this.horizontal = direction;
-		} else if (direction != Direction.NOTHING){
+		} else if (direction != Direction.NEUTRAL){
 			this.vertical = direction;
 		}
 	}
 	
-	/**A method used to return to the last horizontal put direction*/
+	/**A method used to revert to the last horizontal direction the object was facing*/
 	public void returnToHorizontal() {
-		this.vertical = Direction.NOTHING;
+		this.vertical = Direction.NEUTRAL;
 	}
 	
 	@Override
