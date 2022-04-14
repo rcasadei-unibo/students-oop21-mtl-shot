@@ -30,7 +30,7 @@ public class Player extends Character {
 		    throw new IllegalStateException();
 		}
 	}
-	
+	/**pick up the item @item only if it's close enough to take it*/
 	/*public void interact(final Item item) {
 	 *	if(this.isClose(item.getPosition)) {
 	 *		this.items.add(item);
@@ -54,6 +54,7 @@ public class Player extends Character {
 				"Lives: " + this.lives;
 	}
 	
+	/**The player builder*/
 	public static class PlayerBuilder {
 		private Vector hitbox;
 		private Vector position;
@@ -61,30 +62,37 @@ public class Player extends Character {
 		private int lives;
 		//private Weapon weapon;
 		
+		/**The method that sets the player hitbox*/
 		public PlayerBuilder hitbox(final Vector hitbox) {
 			this.hitbox = hitbox;
 			return this;
 		}
 		
+		/**The method that sets the player position*/
 		public PlayerBuilder position(final Vector position) {
 			this.position = position;
 			return this;
 		}
 		
+		/**The method that sets the player health*/
 		public PlayerBuilder health(final Health health) {
 			this.health = health;
 			return this;
 		}
 		
+		/**The method that sets the player lives*/
 		public PlayerBuilder lives(final int lives) {
 			this.lives = lives;
 			return this;
 		}
 		
+		/**The method that sets the player weapon*/
 		/*public PlayerBuilder weapon(final Weapon weapon) {
 		 *  this.weapon = weapon;
 		 *  return this;*/
 		
+		/**The method that builds the player with the set up values
+		 * @throws IllegalStateException if at least one is null or if the lives are a negative number*/
 		public Player build() {
 		    this.consistencyCheck();
 			return new Player(this);

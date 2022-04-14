@@ -1,5 +1,7 @@
 package utilities.entity;
 
+/**This is a static class where all the main environment constants are contained.
+ * The constants can be modified to prevent every possible setting*/
 public final class EnvironmentConstants {
 	
 	private static double maxHorizontalSpeed = 8;

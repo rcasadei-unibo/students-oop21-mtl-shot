@@ -1,8 +1,14 @@
 package utilities;
 
+/**An object to identify a vector in a 2D world.
+ * Basically a vector is characterized by 2 components: x and y.
+ * This components represent a point in a 2D space that is connected
+ *  by the vector with the center of the reference system.*/
 public class Vector {
 
+    /**the x component*/
 	private final double x;
+	/**the y component*/
 	private final double y;
 	
 	public Vector(final double x, final double y) {
@@ -10,10 +16,12 @@ public class Vector {
 		this.y = y;
 	}
 	
+	/**@return the x component*/
 	public double getX() {
 		return this.x;
 	}
 	
+	/**@return the y component*/
 	public double getY() {
 		return this.y;
 	}

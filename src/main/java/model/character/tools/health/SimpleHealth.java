@@ -1,5 +1,6 @@
 package model.character.tools.health;
 
+/**The simplest way to implements Health interface*/
 public class SimpleHealth implements Health {
 
 	private int health;
