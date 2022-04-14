@@ -9,7 +9,7 @@ public class Aim {
 	
 	public Aim() {
 		this.horizontal = Direction.RIGHT;
-		this.horizontal = Direction.NOTHING;
+		this.vertical = Direction.NOTHING;
 	}
 	
 	public Aim(final Direction direction) {
@@ -38,6 +38,6 @@ public class Aim {
 	
 	@Override
 	public String toString() {
-		return this.getDirection().toString();
+		return "Aim: " + this.getDirection();
 	}
 }

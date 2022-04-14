@@ -8,13 +8,12 @@ import utilities.entity.MovableEntity;
 public abstract class Character extends MovableEntity {
 
 	private final Health health;
-	private final Aim aim;
+	private final Aim aim = new Aim();
 	//private Weapon weapon;
 	
 	public Character(final Vector hitbox, final Vector position, final Health health) {
 		super(hitbox, position);
 		this.health = health;
-		this.aim = new Aim();
 	}
 	
 	/*public Weapon getWeapon() {

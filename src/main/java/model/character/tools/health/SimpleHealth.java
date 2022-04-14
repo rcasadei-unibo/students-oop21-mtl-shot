@@ -62,6 +62,6 @@ public class SimpleHealth implements Health {
 
 	@Override
 	public String toString() {
-		return this.getHealth() + "";
+		return "Health: " + this.getHealth();
 	}
 }

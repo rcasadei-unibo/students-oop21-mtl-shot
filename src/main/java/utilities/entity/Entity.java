@@ -21,17 +21,18 @@ public abstract class Entity {
 	}
 	
 	public void setPosition(final Vector position) {
-		if (position.getX() <= 0 || position.getY() <= 0) {
-			throw new IllegalStateException();
-		}
 		this.position = position;
 	}
 	
 	public void setHitbox(final Vector hitbox) {
-		if (hitbox.getX() <= 0 || hitbox.getY() <= 0) {
-			throw new IllegalStateException();
-		}
+	    this.consistencyCheck(hitbox);
 		this.hitbox = hitbox;
+	}
+	
+	private void consistencyCheck(final Vector vec) {
+	    if (vec.getX() <= 0 || vec.getY() <= 0 || vec == null) {
+            throw new IllegalStateException();
+        }
 	}
 	
 	/* x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1)

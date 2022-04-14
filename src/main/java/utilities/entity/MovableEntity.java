@@ -70,7 +70,7 @@ public abstract class MovableEntity extends Entity {
 		this.speed = speed;
 	}
 	
-	void moveEntity() {
+	public void moveEntity() {
 		if (right && !left) {
 			this.setSpeed(new Vector(this.speed.getX() + EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
 		} else if (left && !right) {

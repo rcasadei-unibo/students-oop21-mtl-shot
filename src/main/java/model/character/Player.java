@@ -74,9 +74,21 @@ public class Player extends Character {
 			return this;
 		}
 		
+		/*public PlayerBuilder weapon(final Weapon weapon) {
+		 *  this.weapon = weapon;
+		 *  return this;*/
+		
 		public Player build() {
+		    this.consistencyCheck();
 			return new Player(this);
 		}
+
+        private void consistencyCheck() {
+            if (this.lives < 0 || this.health == null || this.hitbox == null
+                    || this.position == null /*|| this.weapon == null*/) {
+                throw new IllegalStateException();
+            }
+        }
 	}
 
 }
