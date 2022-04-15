@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import utilities.Direction;
-import utilities.Vector;
+import util.Direction;
+import util.Vector;
 
 public class PlayerTest {
 	

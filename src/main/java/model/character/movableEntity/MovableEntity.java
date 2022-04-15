@@ -1,22 +1,37 @@
-package utilities.entity;
+package model.character.movableEntity;
 
-import utilities.Vector;
-/**An extension of the abstract class Entity which also has the ability to move in a 2D world.
- * A MovableEntity can jump, crawl, fall and go left and right.*/
+import model.Entity;
+import util.Vector;
+/**
+ * An extension of the abstract class Entity which also has the ability to move in a 2D world.
+ * A MovableEntity can jump, crawl, fall and go left and right.
+ * */
 public abstract class MovableEntity extends Entity {
 
-    /**Represent the entity intention to go left*/
+    /**
+     * Represent the entity intention to go left
+     * */
 	private boolean left;
-	/**Represent the entity intention to go right*/
+	/**
+	 * Represent the entity intention to go right
+	 * */
 	private boolean right;
-	/**Represent the entity intention to jump*/
+	/**
+	 * Represent the entity intention to jump
+	 * */
 	private boolean jump;
-	/**Represent the entity intention to crawl*/
+	/**
+	 * Represent the entity intention to crawl
+	 * */
 	private boolean crawl;
-	/**Represent if the entity has to fall or not*/
+	/**
+	 * Represent if the entity has to fall or not
+	 * */
 	private boolean fall;
 	
-	/**Field used to create an acceleration and a deceleration*/
+	/**
+	 * Field used to create an acceleration and a deceleration
+	 * */
 	private Vector speed;
 	
 	public MovableEntity(final Vector hitbox, final Vector position) {
@@ -24,73 +39,101 @@ public abstract class MovableEntity extends Entity {
 		this.speed = new Vector(0,0);
 	}
 	
-	/**A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)*/
+	/**
+	 * A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)
+	 * */
 	public MovableEntity(final Vector hitbox, final Vector position, final Vector speed) {
 		super(hitbox, position);
 		this.speed = speed;
 	}
 
-	/**@return the entity's intention to go left*/
+	/**
+	 * @return the entity's intention to go left
+	 * */
 	public boolean isLeft() {
 		return left;
 	}
 	
-	/**Sets the field left to @left*/
+	/**
+	 * Sets the field left to @left
+	 * */
 	public void setLeft(final boolean left) {
 		this.left = left;
 	}
 	
-	/**@return the entity's intention to go right*/
+	/**
+	 * @return the entity's intention to go right
+	 * */
 	public boolean isRight() {
 		return right;
 	}
 	
-	/**Sets the field right to @right*/
+	/**
+	 * Sets the field right to @right
+	 * */
 	public void setRight(final boolean right) {
 		this.right = right;
 	}
 
-	/**@return the entity's intention to jump*/
+	/**
+	 * @return the entity's intention to jump
+	 * */
 	public boolean isJumping() {
 		return jump;
 	}
 
-	/**Sets the field jump to @jump*/
+	/**
+	 * Sets the field jump to @jump
+	 * */
 	public void setJump(final boolean jump) {
 		this.jump = jump;
 	}
 
-	/**@return the entity's intention to crawl*/
+	/**
+	 * @return the entity's intention to crawl
+	 * */
 	public boolean isCrawling() {
 		return crawl;
 	}
 
-	/**Sets the field crawl to @crawl*/
+	/**
+	 * Sets the field crawl to @crawl
+	 * */
 	public void setCrawl(final boolean crawl) {
 		this.crawl = crawl;
 	}
 
-	/**@return if the entity has to fall or not (used to keep it from falling through the ground)*/
+	/**
+	 * @return if the entity has to fall or not (used to keep it from falling through the ground)
+	 * */
 	public boolean isFalling() {
 		return fall;
 	}
 
-	/**Sets the field fall to @fall*/
+	/**
+	 * Sets the field fall to @fall
+	 * */
 	public void setFall(final boolean fall) {
 		this.fall = fall;
 	}
 
-	/**@return a vector that represents the actual speed of the entity*/
+	/**
+	 * @return a vector that represents the actual speed of the entity
+	 * */
 	public Vector getSpeed() {
 		return speed;
 	}
 
-	/**Sets the entity speed vector to @speed*/
+	/**
+	 * Sets the entity speed vector to @speed
+	 * */
 	public void setSpeed(final Vector speed) {
 		this.speed = speed;
 	}
 	
-	/**The main method that reads all the boolean fields, updates the speed and updates the current position*/
+	/**
+	 * The main method that reads all the boolean fields, updates the speed and updates the current position
+	 * */
 	public void moveEntity() {
 		if (right && !left) {
 			this.setSpeed(new Vector(this.speed.getX() + EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));

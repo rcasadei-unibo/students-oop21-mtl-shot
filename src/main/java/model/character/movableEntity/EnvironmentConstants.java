@@ -1,4 +1,4 @@
-package utilities.entity;
+package model.character.movableEntity;
 
 /**This is a static class where all the main environment constants are contained.
  * The constants can be modified to fit any possible environment*/

@@ -1,7 +1,7 @@
 package model.character;
 
 import model.character.tools.health.Health;
-import utilities.Vector;
+import util.Vector;
 
 /**The player is the main character of the game, it can means that can respawn if it dies,
  * has a lives counter to manage the respawn logic and can hold items (such as power ups and weapons) in its inventory*/

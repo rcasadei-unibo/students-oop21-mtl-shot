@@ -1,11 +1,17 @@
 package model.character.tools.health;
 
-/**A simple implementation of the Health interface*/
+/**
+ * A simple implementation of the Health interface
+ * */
 public class SimpleHealth implements Health {
 
-    /**The value that can be increased and decreased*/
+    /**
+     * The value that can be increased and decreased
+     * */
 	private int health;
-	/**The maximum value that @health can reach*/
+	/**
+	 * The maximum value that @health can reach
+	 * */
 	private int maxHealth;
 	
 	public SimpleHealth() {
@@ -18,6 +24,9 @@ public class SimpleHealth implements Health {
 		this.health = maxHealth;
 	}
 	
+	/**
+     * @throws IllegalArgumentException if @amount is negative or 0
+	 */
 	@Override
 	public void heal(final int amount) {
 		this.consistencyCheck(amount);
@@ -33,6 +42,9 @@ public class SimpleHealth implements Health {
 		}
 	}
 
+	/**
+     * @throws IllegalArgumentException if @amount is negative or 0
+	 */
 	@Override
 	public void hurt(final int amount) {
 		this.consistencyCheck(amount);
@@ -52,6 +64,9 @@ public class SimpleHealth implements Health {
 		return this.health == 0;
 	}
 
+	/**
+     * @throws IllegalArgumentException if @amount is negative or 0
+	 */
 	@Override
 	public void setMaxHealth(final int amount) {
 		this.consistencyCheck(amount);
