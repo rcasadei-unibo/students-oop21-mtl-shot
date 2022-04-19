@@ -12,6 +12,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import model.map.tile.Tile;
 import model.map.tile.TileType;
+import util.MapConstants;
 
 public class MapView {
 
@@ -36,8 +37,8 @@ public class MapView {
 	    tileImage.setX(tileSize*tile.getPosition().getX());
 	    tileImage.setY(tileSize*tile.getPosition().getY());
 	    
-	    tileImage.setScaleX(tileSize/32);
-	    tileImage.setScaleY(tileSize/32);
+	    tileImage.setScaleX(tileSize/MapConstants.getTilesize());
+	    tileImage.setScaleY(tileSize/MapConstants.getTilesize());
 	    
 	    outputMap.add(tileImage);
 	}

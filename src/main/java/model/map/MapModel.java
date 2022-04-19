@@ -11,6 +11,7 @@ import java.util.Optional;
 import model.map.tile.Tile;
 import model.map.tile.TileImpl;
 import model.map.tile.TileType;
+import util.MapConstants;
 import util.Vector;
 
 public class MapModel {
@@ -24,7 +25,7 @@ public class MapModel {
 	}
 
 	public List<Tile> create() throws IOException{
-		final Vector tileHitbox = new Vector(32,32);
+		final Vector tileHitbox = new Vector(MapConstants.getTilesize(),MapConstants.getTilesize());
 		File mapTxt = new File(textMap.getPath());
 		BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
 		for(double i = 0; i < textMap.getHeight(); i++) {
@@ -50,8 +51,8 @@ public class MapModel {
 
 	public Optional<Tile> getTile(final Vector position) {
 		for(Tile tile : map) {
-			if(tile.getPosition().getX() == Math.floor(position.getX()/32) &&
-					tile.getPosition().getY() == Math.floor(position.getY()/32)) {
+			if(tile.getPosition().getX() == Math.floor(position.getX()/MapConstants.getTilesize()) &&
+					tile.getPosition().getY() == Math.floor(position.getY()/MapConstants.getTilesize())) {
 				return Optional.of(tile);
 			}
 		}
