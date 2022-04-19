@@ -1,4 +1,4 @@
-package it.unibo.samplejavafx;
+package app;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -33,10 +33,6 @@ public final class MetalShot extends Application {
 
         public static void main(final String...args) {
             Application.launch(MetalShot.class, args);
-            // The following line raises: Error: class it.unibo.samplejavafx.JavaFXApp$Main is not a subclass of javafx.application.Application
-            // JavaFXApp.launch(args);
-            // Whereas the following would do just fine:
-            // JavaFXApp.run(args)
         }
     }
 }

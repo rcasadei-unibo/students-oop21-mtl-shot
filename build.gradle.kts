@@ -5,6 +5,9 @@ plugins {
     // Apply the application plugin to add support for building a CLI application
     // You can run your app via task "run": ./gradlew run
     application
+    
+    //Eclipse plugin
+    eclipse
 
     /*
      * Adds tasks to export a runnable jar.
