@@ -21,11 +21,6 @@ public final class MetalShot extends Application {
         launch();
     }
 
-    // Defining the main methods directly within JavaFXApp may be problematic:
-    // public static void main(final String[] args) {
-    //        run();
-    // }
-
     public static final class Main {
         private Main() {
             // the constructor will never be called directly.

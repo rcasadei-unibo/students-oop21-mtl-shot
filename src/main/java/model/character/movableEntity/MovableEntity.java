@@ -125,10 +125,10 @@ public abstract class MovableEntity extends Entity {
 	}
 
 	/**
-	 * Sets the entity speed vector to @speed
+	 * Sum the input values to the current @speed
 	 * */
-	public void setSpeed(final Vector speed) {
-		this.speed = speed;
+	public void updateSpeed(final double x, final double y) {
+		this.speed = new Vector(this.speed.getX() + x,this.speed.getY() + y);
 	}
 	
 	/**
@@ -136,31 +136,43 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	public void moveEntity() {
 		if (right && !left) {
-			this.setSpeed(new Vector(this.speed.getX() + EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			this.updateSpeed(EnvironmentConstants.getHorizontalAcceleration(), 0);
 		} else if (left && !right) {
-			this.setSpeed(new Vector(this.speed.getX() - EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			this.updateSpeed(-EnvironmentConstants.getHorizontalAcceleration(), 0);
 		} else {
 			this.decelerate();
 		}
 		if (jump && !fall) {
 			this.crawl = false;
 			this.fall = true;
-			this.setSpeed(new Vector(this.speed.getX(), EnvironmentConstants.getJump()));
+			this.updateSpeed(0, EnvironmentConstants.getJump());
 		}
 		if (fall) {
-			this.setSpeed(new Vector(this.speed.getX(), this.speed.getY() + EnvironmentConstants.getGravity()));
+			this.updateSpeed(0, EnvironmentConstants.getGravity());
 		}
 		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+	}
+	
+	/**
+	 * Resets the entity intentions and the @speed at zero
+	 * */
+	public void reset() {
+		this.left = false;
+		this.right = false;
+		this.crawl = false;
+		this.jump = false;
+		this.fall = false;
+		this.speed = new Vector(0,0);
 	}
 
 	private void decelerate() {
 		double update = 0;
 		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
-			update = this.speed.getX() + EnvironmentConstants.getDeceleration();
+			update = EnvironmentConstants.getDeceleration();
 		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
-			update = this.speed.getX() - EnvironmentConstants.getDeceleration();
+			update = -EnvironmentConstants.getDeceleration();
 		}
-		this.setSpeed(new Vector(update, this.speed.getY()));
+		this.updateSpeed(update, 0);
 	}
 	
 	@Override

@@ -63,9 +63,7 @@ public class PlayerTest {
             System.out.println(player.getPosition() + " " + player.getSpeed());
             player.moveEntity();
         }
-        player.setFall(false);
-        player.setJump(false);
-        player.setSpeed(new Vector(0,0));
+        player.reset();
         
         //---------COMBO MOVEMENT-------------
         player.setPosition(new Vector(0,0));
@@ -90,10 +88,7 @@ public class PlayerTest {
             player.moveEntity();
             System.out.println(player.getPosition() + " " + player.getSpeed());
         }
-        player.setRight(false);
-        player.setJump(false);
-        player.setFall(false);
-        player.setSpeed(new Vector(0,0));
+        player.reset();
         
         player.setPosition(new Vector(0,0));
         
