@@ -1,5 +1,7 @@
 package model.map.tile;
 
+import java.util.Objects;
+
 import utilities.Hitbox;
 import utilities.Position;
 
@@ -29,6 +31,11 @@ public class TileImpl implements Tile {
 
     public String toString() {
 	return hitbox.toString() + " - " + tileType; 
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(hitbox, position, tileType);
     }
 
 }
