@@ -8,7 +8,7 @@ public class TileImpl extends Entity implements Tile {
 	private final TileType tileType;
 
 	public TileImpl(final Vector position, final TileType tileType, final Vector hitbox) {
-		super(position, hitbox);
+		super(hitbox, position);
 		this.tileType = tileType;
 	}
 

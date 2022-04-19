@@ -15,24 +15,29 @@ import model.map.tile.TileType;
 
 public class MapView {
 
-    public List<Node> drawMap(final List<Tile> map, final int tileSize) throws FileNotFoundException{
+    public List<Node> drawMap(final List<Tile> map, final double tileSize) throws FileNotFoundException{
 	final List<Node> outputMap = new LinkedList<>();
 	for(Tile tile : map) {
 	    WritableImage newImage = null;
 	    if(tile.getTileType() == TileType.AIR) {
-		final PixelReader reader = new Image(new FileInputStream("src\\\\main\\\\resources\\\\Air.png")).getPixelReader();
+		final PixelReader reader = new Image(new FileInputStream("src\\main\\resources\\Air.png")).getPixelReader();
 		newImage = new WritableImage(reader, 0, 0, 32, 32);
 	    } else if(tile.getTileType() == TileType.GROUND) {
-		final PixelReader reader = new Image(new FileInputStream("src\\\\main\\\\resources\\\\tempBlock.png")).getPixelReader();
+		final PixelReader reader = new Image(new FileInputStream("src\\main\\resources\\tempBlock.png")).getPixelReader();
 		newImage = new WritableImage(reader, 0, 0, 32, 32);
 	    }
 	    final ImageView tileImage = new ImageView(newImage);
 	    
+	    System.out.println(tile.getPosition());
+	    System.out.println(tileSize);
+	    
+	    System.out.println("---------------------------");
+	    
 	    tileImage.setX(tileSize*tile.getPosition().getX());
 	    tileImage.setY(tileSize*tile.getPosition().getY());
 	    
-	    //tileImage.setScaleX(1.25);
-	    //tileImage.setScaleY(1.25);
+	    tileImage.setScaleX(tileSize/32);
+	    tileImage.setScaleY(tileSize/32);
 	    
 	    outputMap.add(tileImage);
 	}

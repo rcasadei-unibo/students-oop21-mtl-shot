@@ -32,13 +32,13 @@ public class MapModel {
 			while(j < textMap.getWidth()) {
 				int check = mapTxtInput.read();
 				if(check == '0') {							
-					map.add(new TileImpl(new Vector(j, i), TileType.AIR, tileHitbox));
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR, null));
 					j++;
 				} else if(check == '1') {
-					map.add(new TileImpl(new Vector(j, i), TileType.GROUND, tileHitbox));
+					map.add(new TileImpl(new Vector(j, i), TileType.GROUND, null));
 					j++;
 				} else if(check == 'p')	{
-					map.add(new TileImpl(new Vector(j, i), TileType.AIR, tileHitbox));
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR, null));
 					playerSpawn = new Vector(j, i);
 					j++;
 				}
@@ -50,8 +50,8 @@ public class MapModel {
 
 	public Optional<Tile> getTile(final Vector position) {
 		for(Tile tile : map) {
-			if(tile.getPosition().getX() == Math.floor(position.getX()/40) &&
-					tile.getPosition().getY() == Math.floor(position.getY()/40)) {
+			if(tile.getPosition().getX() == Math.floor(position.getX()/32) &&
+					tile.getPosition().getY() == Math.floor(position.getY()/32)) {
 				return Optional.of(tile);
 			}
 		}
