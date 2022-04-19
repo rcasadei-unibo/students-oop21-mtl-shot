@@ -31,8 +31,8 @@ public class MapView {
 	    tileImage.setX(tileSize*tile.getPosition().getX());
 	    tileImage.setY(tileSize*tile.getPosition().getY());
 	    
-	    tileImage.setScaleX(1.25);
-	    tileImage.setScaleY(1.25);
+	    //tileImage.setScaleX(1.25);
+	    //tileImage.setScaleY(1.25);
 	    
 	    outputMap.add(tileImage);
 	}

@@ -10,10 +10,9 @@ public final class MetalShot extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final Label message = new Label("Hello, JavaFX!"); 
-        message.setFont(new Font(100));
-        primaryStage.setScene(new Scene(message));
-        primaryStage.setTitle("Hello");
+
+    
+        primaryStage.setTitle("メタルショット");
         primaryStage.show();
     }
 

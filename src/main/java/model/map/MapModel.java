@@ -11,47 +11,55 @@ import java.util.Optional;
 import model.map.tile.Tile;
 import model.map.tile.TileImpl;
 import model.map.tile.TileType;
-import utilities.Position;
+import util.Vector;
 
 public class MapModel {
 
-    private final List<Tile> map = new LinkedList<>();
-    private final TextMap textMap;
+	private final List<Tile> map = new LinkedList<>();
+	private final TextMap textMap;
+	private Vector playerSpawn;
 
-    public MapModel(final TextMap textMap) {
-	this.textMap = textMap;
-    }
+	public MapModel(final TextMap textMap) {
+		this.textMap = textMap;
+	}
 
-    public List<Tile> create() throws IOException{
-	File mapTxt = new File(textMap.getPath());
-	BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
-	for(int i = 0; i < textMap.getHeight(); i++) {
-	    int j = 0;
-	    while(j < textMap.getWidth()) {
-		int check = mapTxtInput.read();
-		if(check == '0') {							
-		    map.add(new TileImpl(new Position<Integer, Integer>(j, i), TileType.AIR, null));
-		    j++;
-		} else if(check == '1') {
-		    map.add(new TileImpl(new Position<Integer, Integer>(j, i), TileType.GROUND, null));
-		    j++;
-		} else if(check == 'p')	{
-		    //PLAYER SPAWN
+	public List<Tile> create() throws IOException{
+		final Vector tileHitbox = new Vector(32,32);
+		File mapTxt = new File(textMap.getPath());
+		BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
+		for(double i = 0; i < textMap.getHeight(); i++) {
+			double j = 0;
+			while(j < textMap.getWidth()) {
+				int check = mapTxtInput.read();
+				if(check == '0') {							
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR, tileHitbox));
+					j++;
+				} else if(check == '1') {
+					map.add(new TileImpl(new Vector(j, i), TileType.GROUND, tileHitbox));
+					j++;
+				} else if(check == 'p')	{
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR, tileHitbox));
+					playerSpawn = new Vector(j, i);
+					j++;
+				}
+			}
 		}
-	    }
+		mapTxtInput.close();
+		return map;
 	}
-	mapTxtInput.close();
-	return map;
-    }
-    
-    public Optional<Tile> getTile(final Position<Double, Double> position) {
-	for(Tile tile : map) {
-	    if(tile.getPosition().getX() == (int)Math.floor(position.getX()/40) &&
-		    tile.getPosition().getY() == (int)Math.floor(position.getY()/40)) {
-		return Optional.of(tile);
-	    }
+
+	public Optional<Tile> getTile(final Vector position) {
+		for(Tile tile : map) {
+			if(tile.getPosition().getX() == Math.floor(position.getX()/40) &&
+					tile.getPosition().getY() == Math.floor(position.getY()/40)) {
+				return Optional.of(tile);
+			}
+		}
+		return Optional.empty();
 	}
-	return Optional.empty();
-    }
-    
+
+	public Vector getPlayerSpawn() {
+		return playerSpawn;
+	}
+
 }

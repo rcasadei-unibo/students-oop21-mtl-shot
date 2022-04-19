@@ -1,41 +1,31 @@
 package model.map.tile;
 
-import java.util.Objects;
+import model.Entity;
+import util.Vector;
 
-import utilities.Hitbox;
-import utilities.Position;
+public class TileImpl extends Entity implements Tile {
 
-public class TileImpl implements Tile {
+	private final TileType tileType;
 
-    private final Hitbox hitbox;
-    private final TileType tileType;
-    private final Position<Integer, Integer> position;
+	public TileImpl(final Vector position, final TileType tileType, final Vector hitbox) {
+		super(position, hitbox);
+		this.tileType = tileType;
+	}
 
-    public TileImpl(final Position<Integer, Integer> position, final TileType tileType, final Hitbox hitbox) {
-	this.position = position;
-	this.tileType = tileType;
-	this.hitbox = hitbox;
-    }
-    
-    public Position<Integer, Integer> getPosition(){
-	return position;
-    }
+	public Vector getPosition(){
+		return super.getPosition();
+	}
 
-    public Hitbox getHitbox() {
-	return hitbox;
-    }
+	public Vector getHitbox() {
+		return super.getHitbox();
+	}
 
-    public TileType getTileType() {
-	return tileType;
-    }
+	public TileType getTileType() {
+		return tileType;
+	}
 
-    public String toString() {
-	return hitbox.toString() + " - " + tileType; 
-    }
-
-    @Override
-    public int hashCode() {
-	return Objects.hash(hitbox, position, tileType);
-    }
+	public String toString() {
+		return super.getHitbox().toString() + " - " + tileType; 
+	}
 
 }

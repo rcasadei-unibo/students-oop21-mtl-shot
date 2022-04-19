@@ -1,14 +1,13 @@
 package model.map.tile;
 
-import utilities.Hitbox;
-import utilities.Position;
+import util.Vector;
 
 public interface Tile {
 
-    Hitbox getHitbox();
-
     TileType getTileType();
     
-    Position<Integer, Integer> getPosition();
+    Vector getHitbox();
+    
+    Vector getPosition();
 
 }
