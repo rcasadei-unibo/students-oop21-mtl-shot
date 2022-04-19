@@ -16,7 +16,7 @@ public abstract class Entity {
 	 * */
 	private Vector position;
 	
-	public Entity(final Vector hitbox, final Vector position) {
+	public Entity(final Vector position, final Vector hitbox) {
 		this.hitbox = hitbox;
 		this.position = position;
 	}

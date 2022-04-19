@@ -34,16 +34,16 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	private Vector speed;
 	
-	public MovableEntity(final Vector hitbox, final Vector position) {
-		super(hitbox, position);
+	public MovableEntity(final Vector position, final Vector hitbox) {
+		super(position, hitbox);
 		this.speed = new Vector(0,0);
 	}
 	
 	/**
 	 * A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)
 	 * */
-	public MovableEntity(final Vector hitbox, final Vector position, final Vector speed) {
-		super(hitbox, position);
+	public MovableEntity(final Vector position, final Vector hitbox, final Vector speed) {
+		super(position, hitbox);
 		this.speed = speed;
 	}
 

@@ -11,7 +11,7 @@ public class Player extends Character {
 	//private final List<Item> items;
 	
 	private Player(final PlayerBuilder builder) {
-		super(builder.hitbox, builder.position, builder.health/*, builder.weapon*/);
+		super(builder.position, builder.hitbox, builder.health/*, builder.weapon*/);
 		this.lives = builder.lives;
 	}
 	
