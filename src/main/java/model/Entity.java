@@ -42,6 +42,11 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
+	public void setPosition(final double x, final double y) {
+		this.position.setX(x);
+		this.position.setY(y);
+	}
+	
 	/**
 	 * set the hitbox of the entity to @hitbox
 	 * */
