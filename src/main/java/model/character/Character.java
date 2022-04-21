@@ -23,8 +23,11 @@ public abstract class Character extends MovableEntity {
 	 * */
 	//private Weapon weapon;
 	
-	public Character(final Vector hitbox, final Vector position, final Health health) {
-		super(hitbox, position);
+	/**
+	 * Character constructor
+	 * */
+	public Character(final Vector position, final Vector hitbox, final Health health) {
+		super(position, hitbox);
 		this.health = health;
 		this.aim = new Aim();
 	}

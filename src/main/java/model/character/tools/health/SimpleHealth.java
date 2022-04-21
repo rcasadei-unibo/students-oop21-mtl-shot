@@ -14,11 +14,17 @@ public class SimpleHealth implements Health {
 	 * */
 	private int maxHealth;
 	
+	/**
+	 * The simpleHealth constructor
+	 * */
 	public SimpleHealth() {
 		this.maxHealth = 100;
 		this.health = this.maxHealth;
 	}
 	
+	/**
+	 * The simpleHealth constructor that puts the maxHealth at @param maxHealth
+	 */
 	public SimpleHealth(final int maxHealth) {
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;

@@ -34,16 +34,17 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	private Vector speed;
 	
-	public MovableEntity(final Vector hitbox, final Vector position) {
-		super(hitbox, position);
-		this.speed = new Vector(0,0);
+	/**The movableEntity constructor*/
+	public MovableEntity(final Vector position, final Vector hitbox) {
+		super(position, hitbox);
+		this.speed = new Vector();
 	}
 	
 	/**
 	 * A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)
 	 * */
-	public MovableEntity(final Vector hitbox, final Vector position, final Vector speed) {
-		super(hitbox, position);
+	public MovableEntity(final Vector position, final Vector hitbox, final Vector speed) {
+		super(position, hitbox);
 		this.speed = speed;
 	}
 
@@ -125,42 +126,62 @@ public abstract class MovableEntity extends Entity {
 	}
 
 	/**
-	 * Sets the entity speed vector to @speed
+	 * Sets the input values to the current @speed
 	 * */
-	public void setSpeed(final Vector speed) {
-		this.speed = speed;
+	public void setSpeed(final double x, final double y) {
+		this.speed.setX(x);
+		this.speed.setY(y);
 	}
 	
 	/**
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
+		final Vector update = new Vector();
 		if (right && !left) {
-			this.setSpeed(new Vector(this.speed.getX() + EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			update.setX(EnvironmentConstants.getHorizontalAcceleration());
 		} else if (left && !right) {
-			this.setSpeed(new Vector(this.speed.getX() - EnvironmentConstants.getHorizontalAcceleration(), this.speed.getY()));
+			update.setX(-EnvironmentConstants.getHorizontalAcceleration());
 		} else {
-			this.decelerate();
+			update.setX(this.decelerate());
 		}
 		if (jump && !fall) {
 			this.crawl = false;
 			this.fall = true;
-			this.setSpeed(new Vector(this.speed.getX(), EnvironmentConstants.getJump()));
+			update.setY(EnvironmentConstants.getJump());
 		}
 		if (fall) {
-			this.setSpeed(new Vector(this.speed.getX(), this.speed.getY() + EnvironmentConstants.getGravity()));
+			update.setY(EnvironmentConstants.getGravity());
 		}
-		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+		this.speed.sum(update);
+		super.setPosition(super.getPosition().getX() + this.speed.getX(),
+				          super.getPosition().getY() + this.speed.getY());
+		//super.getPosition().setX(super.getPosition().getX() + this.speed.getX());
+		//super.getPosition().setY(super.getPosition().getY() + this.speed.getY());
+		//super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+		//super.setPosition(update);
+	}
+	
+	/**
+	 * Resets the entity intentions and the @speed at zero
+	 * */
+	public void reset() {
+		this.left = false;
+		this.right = false;
+		this.crawl = false;
+		this.jump = false;
+		this.fall = false;
+		this.speed = new Vector();
 	}
 
-	private void decelerate() {
+	private double decelerate() {
 		double update = 0;
 		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
-			update = this.speed.getX() + EnvironmentConstants.getDeceleration();
+			update = EnvironmentConstants.getDeceleration();
 		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
-			update = this.speed.getX() - EnvironmentConstants.getDeceleration();
+			update = -EnvironmentConstants.getDeceleration();
 		}
-		this.setSpeed(new Vector(update, this.speed.getY()));
+		return update;
 	}
 	
 	@Override
