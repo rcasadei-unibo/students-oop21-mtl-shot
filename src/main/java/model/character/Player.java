@@ -43,21 +43,10 @@ public class Player extends Character {
 	 * Picks up the item @item only if it's close enough to take it
 	 * */
 	/*public void interact(final Item item) {
-	 *	if(this.isClose(item.getPosition)) {
+	 *	if(super.isColliding(item)) {
 	 *		this.items.add(item);
 	 *  }
 	 *}*/
-	
-	private boolean isClose(final Vector position) {
-		for (int i = -1; i < 2; i++) {
-			for (int j = -1; j < 2; j++) {
-				if (new Vector(super.getPosition().getX() + i, super.getPosition().getY() + j).equals(position)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 	
 	@Override
 	public String toString() {

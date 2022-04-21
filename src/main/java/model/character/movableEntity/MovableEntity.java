@@ -143,7 +143,7 @@ public abstract class MovableEntity extends Entity {
 		} else if (left && !right) {
 			update.setX(-EnvironmentConstants.getHorizontalAcceleration());
 		} else {
-			this.decelerate();
+			update.setX(this.decelerate());
 		}
 		if (jump && !fall) {
 			this.crawl = false;
@@ -174,14 +174,14 @@ public abstract class MovableEntity extends Entity {
 		this.speed = new Vector();
 	}
 
-	private void decelerate() {
-		final Vector update = new Vector();
+	private double decelerate() {
+		double update = 0;
 		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
-			update.setX(EnvironmentConstants.getDeceleration());
+			update = EnvironmentConstants.getDeceleration();
 		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
-			update.setX(-EnvironmentConstants.getDeceleration());
+			update = -EnvironmentConstants.getDeceleration();
 		}
-		this.speed.sum(update);
+		return update;
 	}
 	
 	@Override

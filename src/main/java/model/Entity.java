@@ -59,14 +59,10 @@ public abstract class Entity {
 	 * set the hitbox of the entity to @hitbox
 	 * */
 	public void setHitbox(final Vector hitbox) {
-	    this.consistencyCheck(hitbox);
-		this.hitbox = hitbox;
-	}
-	
-	private void consistencyCheck(final Vector vec) {
-	    if (vec.getX() <= 0 || vec.getY() <= 0 || vec == null) {
+		if (hitbox.getX() <= 0 || hitbox.getY() <= 0) {
             throw new IllegalArgumentException();
         }
+		this.hitbox = hitbox;
 	}
 	
 	/* x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1)
