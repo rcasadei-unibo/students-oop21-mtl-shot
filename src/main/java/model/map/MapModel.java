@@ -60,7 +60,7 @@ public class MapModel {
 	}
 
 	public Vector getPlayerSpawn() {
-		return playerSpawn;
+		return new Vector(playerSpawn.getX()*MapConstants.getTilesize(), playerSpawn.getY()*MapConstants.getTilesize());
 	}
 
 }

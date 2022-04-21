@@ -29,11 +29,6 @@ public class MapView {
 	    }
 	    final ImageView tileImage = new ImageView(newImage);
 	    
-	    System.out.println(tile.getPosition());
-	    System.out.println(tileSize);
-	    
-	    System.out.println("---------------------------");
-	    
 	    tileImage.setX(tileSize*tile.getPosition().getX());
 	    tileImage.setY(tileSize*tile.getPosition().getY());
 	    

@@ -54,6 +54,7 @@ public class PlayerController {
 										mapModel.getTile(position).get().getPosition().getY()-player.getHitbox().getY()));						
 							}
 							player.moveEntity();
+							playerView.updatePlayer(player.getPosition());
 						}
 						
 					}

@@ -99,10 +99,12 @@ public class Player extends Character {
 		}
 
         private void consistencyCheck() {
-            if (this.lives < 0 || this.health == null || this.hitbox == null
-                    || this.position == null /*|| this.weapon == null*/) {
+           /*if (this.lives < 0 || this.health == null || this.hitbox == null
+                    || this.position == null 
+                    //|| this.weapon == null
+                    ) {
                 throw new IllegalStateException();
-            }
+            }*/
         }
 	}
 
