@@ -25,7 +25,8 @@ public class MapModel {
 	}
 
 	public List<Tile> create() throws IOException{
-		final Vector tileHitbox = new Vector(MapConstants.getTilesize(),MapConstants.getTilesize());
+		//final Vector tileHitbox = new Vector(MapConstants.getTilesize(),MapConstants.getTilesize());
+		//dice che non viene usata tileHitbox per ora l'ho commentata ma penso si possa cancellare
 		File mapTxt = new File(textMap.getPath());
 		BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
 		for(double i = 0; i < textMap.getHeight(); i++) {
@@ -33,13 +34,13 @@ public class MapModel {
 			while(j < textMap.getWidth()) {
 				int check = mapTxtInput.read();
 				if(check == '0') {							
-					map.add(new TileImpl(new Vector(j, i), TileType.AIR, null));
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR));
 					j++;
 				} else if(check == '1') {
-					map.add(new TileImpl(new Vector(j, i), TileType.GROUND, null));
+					map.add(new TileImpl(new Vector(j, i), TileType.GROUND));
 					j++;
 				} else if(check == 'p')	{
-					map.add(new TileImpl(new Vector(j, i), TileType.AIR, null));
+					map.add(new TileImpl(new Vector(j, i), TileType.AIR));
 					playerSpawn = new Vector(j, i);
 					j++;
 				}
@@ -60,7 +61,7 @@ public class MapModel {
 	}
 
 	public Vector getPlayerSpawn() {
-		return new Vector(playerSpawn.getX()*MapConstants.getTilesize(), playerSpawn.getY()*MapConstants.getTilesize());
+		return playerSpawn;
 	}
 
 }

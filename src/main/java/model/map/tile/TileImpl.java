@@ -3,21 +3,18 @@ package model.map.tile;
 import model.Entity;
 import util.Vector;
 
-public class TileImpl extends Entity implements Tile {
+public class TileImpl implements Tile {
 
 	private final TileType tileType;
+	private final Vector position;
 
-	public TileImpl(final Vector position, final TileType tileType, final Vector hitbox) {
-		super(hitbox, position);
+	public TileImpl(final Vector position, final TileType tileType) {
+		this.position = position;
 		this.tileType = tileType;
 	}
 
 	public Vector getPosition(){
-		return super.getPosition();
-	}
-
-	public Vector getHitbox() {
-		return super.getHitbox();
+		return this.position;
 	}
 
 	public TileType getTileType() {
@@ -25,7 +22,7 @@ public class TileImpl extends Entity implements Tile {
 	}
 
 	public String toString() {
-		return super.getHitbox().toString() + " - " + tileType; 
+		return this.position + " - " + tileType; 
 	}
 
 }

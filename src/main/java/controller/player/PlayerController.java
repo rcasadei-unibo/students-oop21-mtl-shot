@@ -41,17 +41,17 @@ public class PlayerController {
 						new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(final ActionEvent event) {
-						List<Vector> underPlayer = new LinkedList<>();
+						final List<Vector> underPlayer = new LinkedList<>();
 						for(double i = 0; i < player.getHitbox().getX(); i++) {
 							underPlayer.add(new Vector(player.getPosition().getX()+i,
 									player.getPosition().getY()+player.getHitbox().getY()+1));
 						}
-						for(Vector position : underPlayer) {
+						for(final Vector position : underPlayer) {
 							if(mapModel.getTile(position).get().getTileType() == TileType.GROUND) {
 								player.setFall(false);
-								player.setSpeed(new Vector(player.getSpeed().getX(), 0));
-								player.setPosition(new Vector(player.getPosition().getX(),
-										mapModel.getTile(position).get().getPosition().getY()-player.getHitbox().getY()));						
+								player.setSpeed(player.getSpeed().getX(), 0);
+								player.setPosition(player.getPosition().getX(),
+										mapModel.getTile(position).get().getPosition().getY()-player.getHitbox().getY());						
 							}
 							player.moveEntity();
 							playerView.updatePlayer(player.getPosition());

@@ -8,8 +8,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.map.MapModel;
 import model.map.TextMap;
@@ -21,7 +19,7 @@ public final class MetalShot extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
     	final Scene mainScene;
-    	final TextMap textMap = new TextMap(10, 5, "src\\\\main\\\\resources\\\\map.txt");
+    	final TextMap textMap = new TextMap(10, 5, "src\\main\\resources\\map.txt");
     	final MapModel mapModel = new MapModel(textMap);
     	final PlayerView playerView = new PlayerView(); 	
     

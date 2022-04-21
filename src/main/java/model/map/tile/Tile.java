@@ -6,8 +6,6 @@ public interface Tile {
 
     TileType getTileType();
     
-    Vector getHitbox();
-    
     Vector getPosition();
 
 }
