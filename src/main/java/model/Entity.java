@@ -16,6 +16,9 @@ public abstract class Entity {
 	 * */
 	private Vector position;
 	
+	/**
+	 * The entity constructor
+	 * */
 	public Entity(final Vector position, final Vector hitbox) {
 		this.hitbox = hitbox;
 		this.position = position;
@@ -36,12 +39,17 @@ public abstract class Entity {
 	}
 	
 	/**
-	 * set the position of the entity to @position
+	 * Sets the position of the entity to @position
 	 * */
 	public void setPosition(final Vector position) {
 		this.position = position;
 	}
 	
+	/**
+	 * Sets the position's component of the entity to 
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(final double x, final double y) {
 		this.position.setX(x);
 		this.position.setY(y);

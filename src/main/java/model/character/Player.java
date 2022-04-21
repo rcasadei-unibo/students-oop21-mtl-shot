@@ -9,6 +9,9 @@ import util.Vector;
  * */
 public class Player extends Character {
 
+	/**
+	 * The current remaining player lives
+	 * */
 	private int lives;
 	//private final List<Item> items;
 	

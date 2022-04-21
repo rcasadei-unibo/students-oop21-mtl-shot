@@ -34,6 +34,7 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	private Vector speed;
 	
+	/**The movableEntity constructor*/
 	public MovableEntity(final Vector position, final Vector hitbox) {
 		super(position, hitbox);
 		this.speed = new Vector();
