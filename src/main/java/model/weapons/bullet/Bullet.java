@@ -45,4 +45,32 @@ public class Bullet {
 	public void tick() {
 		// TODO: change position coords
 	}
+
+	/**
+	 * @return the bullet's owner
+	 */
+	public Character getOwner() {
+		return this.owner;
+	}
+
+	/**
+	 * @return the bullet's position
+	 */
+	public Vector getPosition() {
+		return this.position;
+	}
+
+	/**
+	 * @return the bullet's direction
+	 */
+	public Direction getDirection() {
+		return this.direction;
+	}
+
+	/**
+	 * @return the bullet's speed
+	 */
+	public double getSpeed() {
+		return this.speed;
+	}
 }
