@@ -68,4 +68,8 @@ public abstract class Weapon {
 	public int getBulletsInMag() {
 		return this.bulletsInMag;
 	}
+	
+	public int getReloadTime() {
+		return this.reloadTime;
+	}
 }
