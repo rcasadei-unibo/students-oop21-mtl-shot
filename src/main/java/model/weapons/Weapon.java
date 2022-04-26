@@ -24,11 +24,17 @@ public abstract class Weapon {
 	 */
 	private final int fireRate;
 	
-	public Weapon(final String name, final int magCapacity, final int damagePerBullet, final int fireRate) {
+	/*
+	 * The amount of milliseconds needed to reload
+	 */
+	private final int reloadTime;
+	
+	public Weapon(final String name, final int magCapacity, final int damagePerBullet, final int fireRate, final int reloadTime) {
 		this.name = name;
 		this.magCapacity = magCapacity;
 		this.damagePerBullet = damagePerBullet;
 		this.fireRate = fireRate;
+		this.reloadTime = reloadTime;
 	}
 	
 	public void reload() {
