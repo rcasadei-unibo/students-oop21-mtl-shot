@@ -1,12 +1,28 @@
 package model.weapons;
 
+/*
+ * Weapon class models an infinite-bullets
+ * generic weapon
+ */
 public abstract class Weapon {
-	// This Weapon class models an infinite-bullets generic weapon
 	private final String name;
+	
+	/*
+	 * The amount of bullets that can be contained in a mag
+	 */
 	private final int magCapacity;
+	
+	/*
+	 * The current amount of bullets in the mag
+	 */
 	private int bulletsInMag;
+	
 	private int damagePerBullet;
-	private final int fireRate; // fireRate is the amount of milliseconds between two consecutive bullets
+	
+	/*
+	 * The amount of milliseconds between two consecutive bullets
+	 */
+	private final int fireRate;
 	
 	public Weapon(final String name, final int magCapacity, final int damagePerBullet, final int fireRate) {
 		this.name = name;
@@ -46,6 +62,4 @@ public abstract class Weapon {
 	public int getBulletsInMag() {
 		return this.bulletsInMag;
 	}
-	
-	
 }
