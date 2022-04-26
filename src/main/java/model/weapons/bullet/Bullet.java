@@ -11,6 +11,7 @@ import model.character.Character;
  * direction and movement speed.
  */
 public class Bullet {
+	
 	/*
 	 * Reference of the Character who shot
 	 */
@@ -31,10 +32,16 @@ public class Bullet {
 	 */
 	private double speed;
 	
+	/*
+	 * Bullet's damage (based on the weapon held by owner)
+	 */
+	private double damage;
+	
 	public Bullet(final Character owner) {
 		this.owner = owner;
 		this.position = owner.getPosition();
 		this.direction = owner.getAim().getDirection();
+		//this.damage = owner.getWeapon().getDamagePerBullet(); TODO: uncomment when Character's ready 
 	}
 	
 	/*
@@ -81,5 +88,12 @@ public class Bullet {
 	 */
 	public double getSpeed() {
 		return this.speed;
+	}
+
+	/**
+	 * @return the bullet's damage
+	 */
+	public double getDamage() {
+		return this.damage;
 	}
 }
