@@ -22,6 +22,14 @@ public class Controller {
 					@Override
 					public void handle(ActionEvent event) {
 						// TODO implement game loop here
+
+							// Move player
+								// Jumping and falling included
+							// Shoot (player)
+							
+							// Move/shoot enemies (based on Susca's AI)
+							
+							// Check for colliding bullets
 					}
 					
 				}));
@@ -31,6 +39,11 @@ public class Controller {
 	public void gameStart() {
 		gameLoop.play();
 		// TODO
+	}
+	
+	public void gamePause() {		// not in UML
+		gameLoop.pause();
+		// TODO show pause menu
 	}
 	
 	public void gameReset() {
