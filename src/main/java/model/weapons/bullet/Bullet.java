@@ -43,7 +43,16 @@ public class Bullet {
 	 * is not colliding with entities or tiles.
 	 */
 	public void tick() {
-		// TODO: change position coords
+		// This implementation is in accordance with this (old) implementation of Vector class. TODO: update in the future
+		if (this.direction.equals(Direction.UP)) {
+			this.position = new Vector(this.position.getX(), this.position.getY() - this.speed);
+		} else if (this.direction.equals(Direction.DOWN)) {
+			this.position = new Vector(this.position.getX(), this.position.getY() + this.speed);
+		} else if (this.direction.equals(Direction.LEFT)) {
+			this.position = new Vector(this.position.getX() - this.speed, this.position.getY());
+		} else if (this.direction.equals(Direction.RIGHT)) {
+			this.position = new Vector(this.position.getX() + this.speed, this.position.getY());
+		}
 	}
 
 	/**
