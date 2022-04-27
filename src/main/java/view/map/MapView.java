@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,8 @@ public class MapView {
 
     public List<Node> drawMap(final List<Tile> map, final double tileSize) throws FileNotFoundException{
 	final List<Node> outputMap = new LinkedList<>();
+	final AutotileManager autotileManager = new AutotileManager(map);
+	
 	for(Tile tile : map) {
 	    WritableImage newImage = null;
 	    if(tile.getTileType() == TileType.AIR) {
@@ -27,10 +30,9 @@ public class MapView {
 		final PixelReader reader = new Image(new FileInputStream("src\\main\\resources\\tempBlock.png")).getPixelReader();
 		newImage = new WritableImage(reader, 0, 0, 32, 32);
 	    }
-	    final ImageView tileImage = new ImageView(newImage);
 	    
-	    tileImage.setX(tileSize*tile.getPosition().getX());
-	    tileImage.setY(tileSize*tile.getPosition().getY());
+	    final Group tileImage = autotileManager.autotile(tileSize*tile.getPosition().getX(),tileSize*tile.getPosition().getY());
+	    //final ImageView tileImage = new ImageView(newImage);
 	    
 	    tileImage.setScaleX(tileSize/MapConstants.getTilesize());
 	    tileImage.setScaleY(tileSize/MapConstants.getTilesize());

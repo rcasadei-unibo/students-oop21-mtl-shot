@@ -19,7 +19,9 @@ public final class MetalShot extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
     	final Scene mainScene;
-    	final TextMap textMap = new TextMap(10, 5, "src\\main\\resources\\map.txt");
+    	final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
+    	System.out.println(textMap.getHeight());
+    	System.out.println(textMap.getWidth());
     	final MapModel mapModel = new MapModel(textMap);
     	final PlayerView playerView = new PlayerView(); 	
     

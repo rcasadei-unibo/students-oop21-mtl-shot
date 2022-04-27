@@ -4,41 +4,48 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import model.map.tile.Tile;
 
 public class AutotileManager {
 
-    private List<Tile> tileList;
-    private Image tileset;
-    
-    public AutotileManager(List<Tile> tileList, Image tileset) throws FileNotFoundException {
-	PixelReader reader = new Image(new FileInputStream("src\\\\main\\\\resources\\\\DesertTileSet.png")).getPixelReader();
-	this.tileList = tileList;
-	this.tileset = tileset;
-    }
-    
-    public WritableImage autotile() {
-	/*BufferedImage image = ImageIO.read(new File(path, "image.png"));
-	BufferedImage overlay = ImageIO.read(new File(path, "overlay.png"));
+	private List<Tile> tileList;
+	private PixelReader reader;
 
-	// create the new image, canvas size is the max. of both image sizes
-	int w = Math.max(image.getWidth(), overlay.getWidth());
-	int h = Math.max(image.getHeight(), overlay.getHeight());
-	BufferedImage combined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+	public AutotileManager(List<Tile> tileList) throws FileNotFoundException {
+		this.reader = new Image(new FileInputStream("src\\main\\resources\\DesertTilesetCompact.png")).getPixelReader();
+		this.tileList = tileList;
+	}
 
-	// paint both images, preserving the alpha channels
-	Graphics g = combined.getGraphics();
-	g.drawImage(image, 0, 0, null);
-	g.drawImage(overlay, 0, 0, null);
+	public Group autotile(double x, double y) {
+		ImageView layer1 = new ImageView(new WritableImage(reader, 0, 0, 32, 32));
+		ImageView layer2 = new ImageView(new WritableImage(reader, 64, 0, 32, 32));
+		ImageView layer3 = new ImageView(new WritableImage(reader, 96, 0, 32, 32));
+		ImageView layer4 = new ImageView(new WritableImage(reader, 128, 64, 32, 32));
+		
+		layer1.setX(x);
+		layer1.setY(y);
+		layer2.setX(x);
+		layer2.setY(y);
+		layer3.setX(x);
+		layer3.setY(y);
+		layer4.setX(x);
+		layer4.setY(y);
+		
+		// create the new image, canvas size is the max. of both image sizes
+		
+		Group result = new Group(
+				layer1,
+				layer2,
+				layer3,
+				layer4
+				);
+		
+		return result;
+	}
 
-	g.dispose();
-
-	// Save as new image
-	ImageIO.write(combined, "PNG", new File(path, "combined.png"));*/
-	return null;
-    }
-    
 }

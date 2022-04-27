@@ -1,6 +1,5 @@
 package model.map.tile;
 
-import model.Entity;
 import util.Vector;
 
 public class TileImpl implements Tile {

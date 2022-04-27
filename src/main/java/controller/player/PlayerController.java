@@ -15,6 +15,7 @@ import model.map.MapModel;
 import model.map.tile.Tile;
 import model.map.tile.TileImpl;
 import model.map.tile.TileType;
+import util.MapConstants;
 import util.Vector;
 import view.player.PlayerView;
 
@@ -36,6 +37,7 @@ public class PlayerController {
 	}
 
 	public void startGame() {
+		player.setFall(true);
 		final Timeline timer = new Timeline(
 				new KeyFrame(Duration.seconds(0.01),
 						new EventHandler<ActionEvent>() {
@@ -46,12 +48,13 @@ public class PlayerController {
 							underPlayer.add(new Vector(player.getPosition().getX()+i,
 									player.getPosition().getY()+player.getHitbox().getY()+1));
 						}
+						System.out.println(underPlayer);
 						for(final Vector position : underPlayer) {
 							if(mapModel.getTile(position).get().getTileType() == TileType.GROUND) {
 								player.setFall(false);
 								player.setSpeed(player.getSpeed().getX(), 0);
 								player.setPosition(player.getPosition().getX(),
-										mapModel.getTile(position).get().getPosition().getY()-player.getHitbox().getY());						
+										mapModel.getTile(position).get().getPosition().getY()*MapConstants.getTilesize()-player.getHitbox().getY());						
 							}
 							player.moveEntity();
 							playerView.updatePlayer(player.getPosition());
