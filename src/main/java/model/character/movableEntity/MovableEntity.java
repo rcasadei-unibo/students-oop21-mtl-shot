@@ -34,7 +34,9 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	private Vector speed;
 	
-	/**The movableEntity constructor*/
+	/**
+	 * The movableEntity constructor
+	 * */
 	public MovableEntity(final Vector position, final Vector hitbox) {
 		super(position, hitbox);
 		this.speed = new Vector();
@@ -151,17 +153,29 @@ public abstract class MovableEntity extends Entity {
 			update.setY(EnvironmentConstants.getJump());
 		}
 		if (fall) {
-			update.setY(EnvironmentConstants.getGravity());
+			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
 		this.speed.sum(update);
+		this.maxSpeedCheck();
 		super.setPosition(super.getPosition().getX() + this.speed.getX(),
 				          super.getPosition().getY() + this.speed.getY());
-		//super.getPosition().setX(super.getPosition().getX() + this.speed.getX());
-		//super.getPosition().setY(super.getPosition().getY() + this.speed.getY());
-		//super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
-		//super.setPosition(update);
 	}
 	
+	//TODO make code less ugly
+	
+	private void maxSpeedCheck() {
+		if (this.speed.getX() > EnvironmentConstants.getMaxHorizontalSpeed()) {
+			this.speed.setX(EnvironmentConstants.getMaxHorizontalSpeed());
+		} else if (this.speed.getX() < -EnvironmentConstants.getMaxHorizontalSpeed()) {
+			this.speed.setX(-EnvironmentConstants.getMaxHorizontalSpeed());
+		}
+		if (this.speed.getY() > EnvironmentConstants.getMaxVerticalSpeed()) {
+			this.speed.setY(EnvironmentConstants.getMaxVerticalSpeed());
+		} else if (this.speed.getY() < -EnvironmentConstants.getMaxVerticalSpeed()) {
+			this.speed.setY(-EnvironmentConstants.getMaxVerticalSpeed());
+		}
+	}
+
 	/**
 	 * Resets the entity intentions and the @speed at zero
 	 * */
@@ -175,7 +189,7 @@ public abstract class MovableEntity extends Entity {
 	}
 
 	private double decelerate() {
-		double update = 0;
+		double update = -this.speed.getX();
 		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
 			update = EnvironmentConstants.getDeceleration();
 		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
