@@ -1,5 +1,6 @@
 package app;
 
+import controller.TemporaryController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -8,6 +9,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public final class MetalShot extends Application {
+	
+	private TemporaryController tc;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
