@@ -34,7 +34,7 @@ public class TemporaryController {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						
+						System.out.println("Player [Position: " + player.getLives() + ", Life: " + "]");
 					}
 					
 				}));
