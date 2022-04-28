@@ -12,7 +12,7 @@ public class Controller {
 	private Timeline gameLoop;
 	
 	//Instance of model (Stage?)
-	private final MetalShot viewReference;
+	private final MetalShot viewReference;	
 	
 	public Controller(final MetalShot viewReference) {
 		this.viewReference = viewReference;
