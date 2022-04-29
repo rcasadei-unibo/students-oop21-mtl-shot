@@ -135,7 +135,7 @@ public abstract class MovableEntity extends Entity {
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
-		if (right && !left) {
+		/*if (right && !left) {
 			this.updateSpeed(EnvironmentConstants.getHorizontalAcceleration(), 0);
 		} else if (left && !right) {
 			this.updateSpeed(-EnvironmentConstants.getHorizontalAcceleration(), 0);
@@ -151,6 +151,16 @@ public abstract class MovableEntity extends Entity {
 			this.updateSpeed(0, EnvironmentConstants.getGravity());
 		}
 		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+		*/
+		cv
+		if(!(right && left)) {
+			if(right) {
+				super.setPosition(new Vector(super.getPosition().getX() + 1, 0));
+			} else if(left) {
+				super.setPosition(new Vector(super.getPosition().getX() - 1, 0));
+			}
+		}
+		
 	}
 	
 	/**
