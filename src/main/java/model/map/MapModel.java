@@ -41,7 +41,7 @@ public class MapModel {
 					j++;
 				} else if(check == 'p')	{
 					map.add(new TileImpl(new Vector(j, i), TileType.AIR));
-					playerSpawn = new Vector(j, i);
+					playerSpawn = new Vector(j*MapConstants.getTilesize(), i*MapConstants.getTilesize());
 					j++;
 				}
 			}

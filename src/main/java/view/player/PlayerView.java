@@ -19,8 +19,8 @@ public class PlayerView {
 	}
 	
     public void updatePlayer(final Vector position) {
-    	playerImageView.setX(position.getX()*MapConstants.getTilesize());
-    	playerImageView.setY(position.getY()*MapConstants.getTilesize());
+    	playerImageView.setX(position.getX());
+    	playerImageView.setY(position.getY());
  
     }
 
