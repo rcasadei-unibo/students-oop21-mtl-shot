@@ -9,7 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.map.MapModel;
+import model.map.MapController;
 import model.map.TextMap;
 import view.map.MapView;
 import view.player.PlayerView;
@@ -22,7 +22,7 @@ public final class MetalShot extends Application {
     	final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
     	System.out.println(textMap.getHeight());
     	System.out.println(textMap.getWidth());
-    	final MapModel mapModel = new MapModel(textMap);
+    	final MapController mapModel = new MapController(textMap);
     	final PlayerView playerView = new PlayerView(); 	
     
     	final MapView mapView = new MapView();

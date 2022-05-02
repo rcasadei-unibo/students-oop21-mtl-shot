@@ -14,10 +14,10 @@ import util.Vector;
 
 public class AutotileManager {
 
-	private final List<Tile> tileList;
+	private final List<Vector> tileList;
 	
 
-	public AutotileManager(List<Tile> tileList) throws FileNotFoundException {
+	public AutotileManager(final List<Vector> tileList) throws FileNotFoundException {
 		this.tileList = tileList;
 	}
 

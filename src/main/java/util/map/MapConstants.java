@@ -1,4 +1,4 @@
-package util;
+package util.map;
 
 public final class MapConstants {
 	private static final double TILESIZE = 32;

@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import util.MapConstants;
 import util.Vector;
 
 public class PlayerView {

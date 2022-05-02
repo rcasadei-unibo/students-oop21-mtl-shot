@@ -3,9 +3,13 @@ package model.map.tile;
 import util.Vector;
 
 public interface Tile {
-
-    TileType getTileType();
+	
+	Vector getPosition();
+	
+    boolean isCollidable();
     
-    Vector getPosition();
-
+    boolean isTileable();
+    
+    String getPath();
+	
 }

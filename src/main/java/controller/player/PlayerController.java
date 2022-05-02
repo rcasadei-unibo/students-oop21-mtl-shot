@@ -11,11 +11,8 @@ import javafx.util.Duration;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import model.map.MapModel;
-import model.map.tile.Tile;
-import model.map.tile.TileImpl;
-import model.map.tile.TileType;
-import util.MapConstants;
+import controller.map.MapController;
+import util.map.MapConstants;
 import util.Vector;
 import view.player.PlayerView;
 
@@ -23,11 +20,11 @@ public class PlayerController {
 
 	private final Player player;
 	private final PlayerView playerView;
-	private final MapModel mapModel;
+	private final MapController mapController;
 
-	public PlayerController(final MapModel mapModel, final PlayerView playerView) {
+	public PlayerController(final MapController mapModel, final PlayerView playerView) {
 		this.playerView = playerView;
-		this.mapModel = mapModel;
+		this.mapController = mapModel;
 		player = new PlayerBuilder()
 				.hitbox(new Vector(32, 32))
 				.position(mapModel.getPlayerSpawn())
@@ -50,11 +47,11 @@ public class PlayerController {
 						}
 						System.out.println(underPlayer);
 						for(final Vector position : underPlayer) {
-							if(mapModel.getTile(position).get().getTileType() == TileType.GROUND) {
+							if(mapController.getTileConverted(position).get().getTileType() == TileType.GROUND) {
 								player.setFall(false);
 								player.setSpeed(player.getSpeed().getX(), 0);
 								player.setPosition(player.getPosition().getX(),
-										mapModel.getTile(position).get().getPosition().getY()*MapConstants.getTilesize()-player.getHitbox().getY());						
+										mapController.getTileConverted(position).get().getPosition().getY()*MapConstants.getTilesize()-player.getHitbox().getY());						
 							}
 							player.moveEntity();
 							playerView.updatePlayer(player.getPosition());
