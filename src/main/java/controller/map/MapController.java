@@ -4,17 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import util.map.TextMap;
-import view.map.MapView;
 import model.map.tile.MapModel;
 import model.map.tile.Tile;
 import model.map.tile.TileAir;
+import model.map.tile.TileMetal;
 import model.map.tile.TileStone;
 import util.map.MapConstants;
 import util.Vector;
@@ -22,7 +18,6 @@ import util.Vector;
 public class MapController {
 
 	private final MapModel mapModel;
-	private final MapView mapView;
 	private Vector playerSpawn;
 
 	public MapController(final TextMap textMap) throws IOException {
@@ -39,6 +34,9 @@ public class MapController {
 				} else if(check == '1') {
 					mapModel.addTile(new TileStone(new Vector(j, i)));
 					j++;
+				} else if(check == '2') {
+					mapModel.addTile(new TileMetal(new Vector(j, i)));
+					j++;
 				} else if(check == 'p')	{
 					mapModel.addTile(new TileAir(new Vector(j, i)));
 					playerSpawn = new Vector(j*MapConstants.getTilesize(), i*MapConstants.getTilesize());
@@ -47,10 +45,9 @@ public class MapController {
 			}
 		}
 		mapTxtInput.close();
-		mapView = new MapView(getTileables(), this, 32d);
 	}
 
-	private List<Vector> getTileables(){
+	public List<Vector> getTileables(){
 		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).toList();
 	}
 
@@ -64,7 +61,9 @@ public class MapController {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
 	
-	public Optional<Tile> getTile()
+	public Optional<Tile> getTile(final Vector position, List<Tile> tileList){
+		return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
+	}
 
 	public Vector getPlayerSpawn() {
 		return playerSpawn;

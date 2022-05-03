@@ -1,21 +1,16 @@
 package view.map;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import model.map.tile.Tile;
 import util.Vector;
 
 public class AutotileManager {
 
 	private final List<Vector> tileList;
-	
 
 	public AutotileManager(final List<Vector> tileList) throws FileNotFoundException {
 		this.tileList = tileList;
@@ -39,87 +34,81 @@ public class AutotileManager {
 		ImageView botRight = botRightDef;
 		ImageView botLeft = botLeftDef;
 
-		for(int j = -1; j < 2; j++) { 
-			for(int i = -1; i < 2; i++) {
-				final Tile tileTemp = new TileImpl(new Vector(position.getX()+j, position.getY()+i), TileType.GROUND);
-				if(tileList.contains(tileTemp)) {
-					//TOP
-					if(i == -1 && j == 0) {
-						if(topLeft.equals(topLeftDef)) {
+		for (int j = -1; j < 2; j++) {
+			for (int i = -1; i < 2; i++) {
+				if (tileList.contains(new Vector(position.getX() + j, position.getY() + i))) {
+					// TOP
+					if (i == -1 && j == 0) {
+						if (topLeft.equals(topLeftDef)) {
 							topLeft = new ImageView(new WritableImage(reader, 128, 32, 32, 32));
 						} else {
 							topLeft = new ImageView(new WritableImage(reader, 96, 96, 32, 32));
 						}
-						if(topRight.equals(topRightDef)) {
+						if (topRight.equals(topRightDef)) {
 							topRight = new ImageView(new WritableImage(reader, 160, 32, 32, 32));
 						} else {
 							topRight = new ImageView(new WritableImage(reader, 64, 96, 32, 32));
 						}
-					}		
-					//RIGHT
-					if(i == 0 && j == 1) {
-						if(topRight.equals(topRightDef)) {
+					}
+					// RIGHT
+					if (i == 0 && j == 1) {
+						if (topRight.equals(topRightDef)) {
 							topRight = new ImageView(new WritableImage(reader, 64, 0, 32, 32));
 						} else {
 							topRight = new ImageView(new WritableImage(reader, 64, 96, 32, 32));
 						}
-						if(botRight.equals(botRightDef)) {
+						if (botRight.equals(botRightDef)) {
 							botRight = new ImageView(new WritableImage(reader, 64, 32, 32, 32));
 						} else {
 							botRight = new ImageView(new WritableImage(reader, 64, 64, 32, 32));
 						}
 					}
-					//BOTTOM
-					if(i == 1 && j == 0) {
-						if(botRight.equals(botRightDef)) {
+					// BOTTOM
+					if (i == 1 && j == 0) {
+						if (botRight.equals(botRightDef)) {
 							botRight = new ImageView(new WritableImage(reader, 160, 0, 32, 32));
 						} else {
 							botRight = new ImageView(new WritableImage(reader, 64, 64, 32, 32));
 						}
-						if(botLeft.equals(botLeftDef)) {
+						if (botLeft.equals(botLeftDef)) {
 							botLeft = new ImageView(new WritableImage(reader, 128, 0, 32, 32));
 						} else {
 							botLeft = new ImageView(new WritableImage(reader, 96, 64, 32, 32));
 						}
 					}
-					//LEFT
-					if(i == 0 && j == -1) {
-						if(botLeft.equals(botLeftDef)) {
+					// LEFT
+					if (i == 0 && j == -1) {
+						if (botLeft.equals(botLeftDef)) {
 							botLeft = new ImageView(new WritableImage(reader, 96, 32, 32, 32));
 						} else {
 							botLeft = new ImageView(new WritableImage(reader, 96, 64, 32, 32));
 						}
-						if(topLeft.equals(topLeftDef)) {
+						if (topLeft.equals(topLeftDef)) {
 							topLeft = new ImageView(new WritableImage(reader, 96, 0, 32, 32));
 						} else {
 							topLeft = new ImageView(new WritableImage(reader, 96, 96, 32, 32));
 						}
 					}
-					
-				}
-				else {
-					//TOP-LEFT CORNER
-					if(i == -1 && j == -1 &&
-							tileList.contains(new TileImpl(new Vector(position.getX()-1, position.getY()), TileType.GROUND)) &&
-							tileList.contains(new TileImpl(new Vector(position.getX(), position.getY()-1), TileType.GROUND))) {
+
+				} else {
+					// TOP-LEFT CORNER
+					if (i == -1 && j == -1 && tileList.contains(new Vector(position.getX() - 1, position.getY()))
+							&& tileList.contains(new Vector(position.getX(), position.getY() - 1))) {
 						topLeftCorner = new ImageView(new WritableImage(reader, 32, 96, 32, 32));
 					}
-					//TOP-RIGHT CORNER
-					if(i == -1 && j == 1 &&
-							tileList.contains(new TileImpl(new Vector(position.getX()+1, position.getY()), TileType.GROUND)) &&
-							tileList.contains(new TileImpl(new Vector(position.getX(), position.getY()-1), TileType.GROUND))) {
+					// TOP-RIGHT CORNER
+					if (i == -1 && j == 1 && tileList.contains(new Vector(position.getX() + 1, position.getY()))
+							&& tileList.contains(new Vector(position.getX(), position.getY() - 1))) {
 						topRightCorner = new ImageView(new WritableImage(reader, 0, 96, 32, 32));
 					}
-					//BOT-RIGHT CORNER
-					if(i == 1 && j == 1 &&
-							tileList.contains(new TileImpl(new Vector(position.getX()+1, position.getY()), TileType.GROUND)) &&
-							tileList.contains(new TileImpl(new Vector(position.getX(), position.getY()+1), TileType.GROUND))) {
+					// BOT-RIGHT CORNER
+					if (i == 1 && j == 1 && tileList.contains(new Vector(position.getX() + 1, position.getY()))
+							&& tileList.contains(new Vector(position.getX(), position.getY() + 1))) {
 						botRightCorner = new ImageView(new WritableImage(reader, 0, 64, 32, 32));
 					}
-					//BOT-LEFT CORNER
-					if(i == 1 && j == -1 &&
-							tileList.contains(new TileImpl(new Vector(position.getX()-1, position.getY()), TileType.GROUND)) &&
-							tileList.contains(new TileImpl(new Vector(position.getX(), position.getY()+1), TileType.GROUND))) {
+					// BOT-LEFT CORNER
+					if (i == 1 && j == -1 && tileList.contains(new Vector(position.getX() - 1, position.getY()))
+							&& tileList.contains(new Vector(position.getX(), position.getY() + 1))) {
 						botLeftCorner = new ImageView(new WritableImage(reader, 32, 64, 32, 32));
 					}
 				}
@@ -150,16 +139,8 @@ public class AutotileManager {
 
 		// create the new image, canvas size is the max. of both image sizes
 
-		final Group result = new Group(
-				topLeft,
-				topRight,
-				botRight,
-				botLeft,
-				topLeftCorner,
-				topRightCorner,
-				botRightCorner,
-				botLeftCorner
-				);
+		final Group result = new Group(topLeft, topRight, botRight, botLeft, topLeftCorner, topRightCorner,
+				botRightCorner, botLeftCorner);
 
 		return result;
 	}

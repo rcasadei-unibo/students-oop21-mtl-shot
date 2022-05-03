@@ -3,16 +3,14 @@ package app;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.player.PlayerController;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.map.MapController;
-import model.map.TextMap;
+import controller.map.MapController;
+import util.map.TextMap;
 import view.map.MapView;
-import view.player.PlayerView;
 
 public final class MetalShot extends Application {
 	
@@ -20,21 +18,14 @@ public final class MetalShot extends Application {
     public void start(final Stage primaryStage) throws Exception {
     	final Scene mainScene;
     	final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-    	System.out.println(textMap.getHeight());
-    	System.out.println(textMap.getWidth());
-    	final MapController mapModel = new MapController(textMap);
-    	final PlayerView playerView = new PlayerView(); 	
+    	final MapController mapController = new MapController(textMap);	
     
-    	final MapView mapView = new MapView();
+    	final MapView mapView = new MapView(mapController , 32d);
     	
     	final List<Node> totalList = new ArrayList<>();
     	
     	
-    	totalList.addAll(mapView.drawMap(mapModel.create(), 32d));
-    	final PlayerController playerController = new PlayerController(mapModel, playerView);
-    	totalList.add(playerView.getPlayerImageView());
-        playerController.startGame();
-    	System.out.println(mapModel.getPlayerSpawn());
+    	totalList.addAll(mapView.getNodes());
     	
     	Group mainGroup = new Group(totalList);
     	

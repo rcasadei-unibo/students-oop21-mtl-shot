@@ -22,12 +22,12 @@ public class PlayerController {
 	private final PlayerView playerView;
 	private final MapController mapController;
 
-	public PlayerController(final MapController mapModel, final PlayerView playerView) {
+	public PlayerController(final MapController mapController, final PlayerView playerView) {
 		this.playerView = playerView;
-		this.mapController = mapModel;
+		this.mapController = mapController;
 		player = new PlayerBuilder()
 				.hitbox(new Vector(32, 32))
-				.position(mapModel.getPlayerSpawn())
+				.position(mapController.getPlayerSpawn())
 				.health(new SimpleHealth())
 				.lives(3)
 				.build();
@@ -45,14 +45,13 @@ public class PlayerController {
 							underPlayer.add(new Vector(player.getPosition().getX()+i,
 									player.getPosition().getY()+player.getHitbox().getY()+1));
 						}
-						System.out.println(underPlayer);
 						for(final Vector position : underPlayer) {
-							if(mapController.getTileConverted(position).get().getTileType() == TileType.GROUND) {
+							/*if(mapController.getTileConverted(position).get().getTileType() == TileType.GROUND) {
 								player.setFall(false);
 								player.setSpeed(player.getSpeed().getX(), 0);
 								player.setPosition(player.getPosition().getX(),
 										mapController.getTileConverted(position).get().getPosition().getY()*MapConstants.getTilesize()-player.getHitbox().getY());						
-							}
+							}*/
 							player.moveEntity();
 							playerView.updatePlayer(player.getPosition());
 						}
