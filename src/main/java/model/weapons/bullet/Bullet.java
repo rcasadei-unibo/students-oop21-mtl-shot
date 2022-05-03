@@ -96,4 +96,10 @@ public class Bullet {
 	public double getDamage() {
 		return this.damage;
 	}
+
+	@Override
+	public String toString() {
+		return "Bullet [owner=" + owner + ", position=" + position + ", direction=" + direction + ", speed=" + speed
+				+ ", damage=" + damage + "]";
+	}
 }
