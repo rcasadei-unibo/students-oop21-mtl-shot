@@ -25,7 +25,7 @@ public class PlayerController {
 
 	public PlayerController(final List<Vector> collidableObjects, final PlayerView playerView, final Vector spawn) {
 	    this.collidableObjects = collidableObjects;
-		this.playerView = playerView;
+	    this.playerView = playerView;
 		player = new PlayerBuilder()
 				.hitbox(new Vector(32, 32))
 				.position(spawn)
@@ -44,8 +44,11 @@ public class PlayerController {
 		botLeft.sum(nextPos);
 		if (this.collidableObjects.contains(botLeft) || this.collidableObjects.contains(botLeft)) {
 		    player.setFall(false);
-		    player.setSpeed(player.getSpeed().getX(), 0);
+		    if (player.getSpeed().getY() > 0) {		        
+		        player.setSpeed(player.getSpeed().getX(), 0);
+		    }
 		}
+		this.playerView.updatePlayer(player.getPosition());
 	}
 
 	public Player getPlayer() {

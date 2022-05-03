@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import util.map.TextMap;
+import view.player.PlayerView;
 
 public class Controller {
     
@@ -25,7 +26,7 @@ public class Controller {
 	public Controller(final MetalShot viewReference) throws IOException {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
 	    this.mapController = new MapController(textMap);
-	    this.playerController = new PlayerController(mapController.getCollidables(), null, mapController.getPlayerSpawn()); //null -> player view
+	    this.playerController = new PlayerController(mapController.getCollidables(), new PlayerView(), mapController.getPlayerSpawn()); //null -> player view
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
