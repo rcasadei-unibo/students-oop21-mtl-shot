@@ -2,6 +2,7 @@ package controller;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,6 +24,8 @@ public class BulletsController {
 	private Player dummy;
 	private List<Bullet> bullets;
 	private Timeline gameLoop;
+	
+	private static final double EPSILON = 0.01d;
 	
 	public BulletsController() {
 		/**
@@ -47,8 +50,17 @@ public class BulletsController {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
-						System.out.print("Bullets: " + bullets);
+						bullets.forEach(b -> {
+							if (areEqual(b.getPosition().getX(), dummy.getPosition().getX()) /*b.getPosition().equals(dummy.getPosition())*/) {
+								bullets.remove(b);
+							} else {
+								b.tick();
+							}
+						});
+						System.out.println("");
+						
+						//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
+						System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
 						System.out.print("\n");
 					}
 					
@@ -61,4 +73,8 @@ public class BulletsController {
 	public void addBullet() {
 		this.bullets.add(new Bullet(this.player));
 	}
+	
+	private boolean areEqual(double a, double b) {
+        return Math.abs(a - b) < EPSILON;
+    }
 }

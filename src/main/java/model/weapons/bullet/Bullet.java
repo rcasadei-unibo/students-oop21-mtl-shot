@@ -41,6 +41,7 @@ public class Bullet {
 		this.owner = owner;
 		this.position = owner.getPosition();
 		this.direction = owner.getAim().getDirection();
+		this.speed = 0.05;
 		//this.damage = owner.getWeapon().getDamagePerBullet(); TODO: uncomment when Character's ready 
 	}
 	
