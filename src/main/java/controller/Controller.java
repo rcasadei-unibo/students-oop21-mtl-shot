@@ -69,6 +69,9 @@ public class Controller {
 		if (key == KeyCode.D) {
 		    playerController.getPlayer().setRight(true);
 		}
+		if (key == KeyCode.SPACE) {
+		    playerController.getPlayer().setJump(true);
+		}
 	}
 	
 	public void keyReleased(final KeyCode key) {
@@ -77,6 +80,9 @@ public class Controller {
 		}
 		if (key == KeyCode.D) {
 		    playerController.getPlayer().setRight(false);
+		}
+		if (key == KeyCode.SPACE) {
+		    playerController.getPlayer().setJump(false);
 		}
 	}
 	
