@@ -18,7 +18,7 @@ public class Controller {
     
     private final PlayerController playerController;
     private final MapController mapController;
-	private Timeline gameLoop;
+	private final Timeline gameLoop;
 	
 	//Instance of model (Stage?)
 	private final MetalShot viewReference;
@@ -26,8 +26,8 @@ public class Controller {
 	public Controller(final MetalShot viewReference) throws IOException {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
 	    this.mapController = new MapController(textMap);
-	    this.playerController = new PlayerController(mapController.getCollidables(), new PlayerView(), mapController.getPlayerSpawn()); //null -> player view
-		this.viewReference = viewReference;
+	    this.viewReference = viewReference;
+	    this.playerController = new PlayerController(mapController.getCollidables(), this.viewReference.getPlayerView(), mapController.getPlayerSpawn()); //null -> player view
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					

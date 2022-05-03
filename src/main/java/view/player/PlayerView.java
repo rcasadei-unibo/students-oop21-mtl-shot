@@ -6,10 +6,11 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Vector;
+import util.map.MapConstants;
 
 public class PlayerView {
 
-	private ImageView playerImageView;
+	private final ImageView playerImageView;
 	private Image playerIcon;
 	
 	public PlayerView() throws FileNotFoundException {
@@ -18,8 +19,8 @@ public class PlayerView {
 	}
 	
     public void updatePlayer(final Vector position) {
-    	playerImageView.setX(position.getX());
-    	playerImageView.setY(position.getY());
+    	playerImageView.setX(position.getX()*MapConstants.getTilesize());
+    	playerImageView.setY(position.getY()*MapConstants.getTilesize());
  
     }
 

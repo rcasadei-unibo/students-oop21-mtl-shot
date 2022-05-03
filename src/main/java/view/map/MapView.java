@@ -19,11 +19,11 @@ public class MapView {
 	public MapView(final MapController mapController, final double tileSize) throws FileNotFoundException {
 		final List<Vector> list = mapController.getTileables();
 		final AutotileManager autotileManager = new AutotileManager(list);
-		for (var position : list) {
-			Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,
+		for (final var position : list) {
+			//Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,
 									// and as such will never evade the if construct.
 
-			tileImage = autotileManager.autotile(position, tileSize,
+			final Group tileImage = autotileManager.autotile(position, tileSize,
 					new Image(new FileInputStream(mapController.getTile(position).get().getPath())).getPixelReader());
 
 			tileImage.setScaleX(tileSize / MapConstants.getTilesize());

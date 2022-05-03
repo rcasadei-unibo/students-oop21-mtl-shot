@@ -1,19 +1,10 @@
 package controller.player;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.util.Duration;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import controller.map.MapController;
-import util.map.MapConstants;
 import util.Vector;
 import view.player.PlayerView;
 
@@ -27,7 +18,7 @@ public class PlayerController {
 	    this.collidableObjects = collidableObjects;
 	    this.playerView = playerView;
 		player = new PlayerBuilder()
-				.hitbox(new Vector(32, 32))
+				.hitbox(new Vector(1, 1.5))
 				.position(spawn)
 				.health(new SimpleHealth())
 				.lives(3)
@@ -48,7 +39,8 @@ public class PlayerController {
 		        player.setSpeed(player.getSpeed().getX(), 0);
 		    }
 		}
-		this.playerView.updatePlayer(player.getPosition());
+		System.out.println(player.getPosition());
+		playerView.updatePlayer(player.getPosition());
 	}
 
 	public Player getPlayer() {
