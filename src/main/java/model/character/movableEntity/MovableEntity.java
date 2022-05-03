@@ -34,9 +34,12 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	private Vector speed;
 	
+	/**
+	 * The movableEntity constructor
+	 * */
 	public MovableEntity(final Vector position, final Vector hitbox) {
 		super(position, hitbox);
-		this.speed = new Vector(0,0);
+		this.speed = new Vector();
 	}
 	
 	/**
@@ -125,34 +128,54 @@ public abstract class MovableEntity extends Entity {
 	}
 
 	/**
-	 * Sum the input values to the current @speed
+	 * Sets the input values to the current @speed
 	 * */
-	public void updateSpeed(final double x, final double y) {
-		this.speed = new Vector(this.speed.getX() + x,this.speed.getY() + y);
+	public void setSpeed(final double x, final double y) {
+		this.speed.setX(x);
+		this.speed.setY(y);
 	}
 	
 	/**
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
+		final Vector update = new Vector();
 		if (right && !left) {
-			this.updateSpeed(EnvironmentConstants.getHorizontalAcceleration(), 0);
+			update.setX(EnvironmentConstants.getHorizontalAcceleration());
 		} else if (left && !right) {
-			this.updateSpeed(-EnvironmentConstants.getHorizontalAcceleration(), 0);
+			update.setX(-EnvironmentConstants.getHorizontalAcceleration());
 		} else {
-			this.decelerate();
+			update.setX(this.decelerate());
 		}
 		if (jump && !fall) {
 			this.crawl = false;
 			this.fall = true;
-			this.updateSpeed(0, EnvironmentConstants.getJump());
+			update.setY(EnvironmentConstants.getJump());
 		}
 		if (fall) {
-			this.updateSpeed(0, EnvironmentConstants.getGravity());
+			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
-		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
+		this.speed.sum(update);
+		this.maxSpeedCheck();
+		super.setPosition(super.getPosition().getX() + this.speed.getX(),
+				          super.getPosition().getY() + this.speed.getY());
 	}
 	
+	//TODO make code less ugly
+	
+	private void maxSpeedCheck() {
+		if (this.speed.getX() > EnvironmentConstants.getMaxHorizontalSpeed()) {
+			this.speed.setX(EnvironmentConstants.getMaxHorizontalSpeed());
+		} else if (this.speed.getX() < -EnvironmentConstants.getMaxHorizontalSpeed()) {
+			this.speed.setX(-EnvironmentConstants.getMaxHorizontalSpeed());
+		}
+		if (this.speed.getY() > EnvironmentConstants.getMaxVerticalSpeed()) {
+			this.speed.setY(EnvironmentConstants.getMaxVerticalSpeed());
+		} else if (this.speed.getY() < -EnvironmentConstants.getMaxVerticalSpeed()) {
+			this.speed.setY(-EnvironmentConstants.getMaxVerticalSpeed());
+		}
+	}
+
 	/**
 	 * Resets the entity intentions and the @speed at zero
 	 * */
@@ -162,17 +185,17 @@ public abstract class MovableEntity extends Entity {
 		this.crawl = false;
 		this.jump = false;
 		this.fall = false;
-		this.speed = new Vector(0,0);
+		this.speed = new Vector();
 	}
 
-	private void decelerate() {
-		double update = 0;
+	private double decelerate() {
+		double update = -this.speed.getX();
 		if (this.speed.getX() < -EnvironmentConstants.getDeceleration()) {
 			update = EnvironmentConstants.getDeceleration();
 		} else if(this.speed.getX() > EnvironmentConstants.getDeceleration()) {
 			update = -EnvironmentConstants.getDeceleration();
 		}
-		this.updateSpeed(update, 0);
+		return update;
 	}
 	
 	@Override
