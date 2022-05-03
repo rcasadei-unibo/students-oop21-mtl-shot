@@ -1,6 +1,6 @@
 package app;
 
-import controller.TemporaryController;
+import controller.BulletsController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public final class MetalShot extends Application {
 	
-	private TemporaryController tc;
+	private BulletsController tc;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {

@@ -17,12 +17,12 @@ import util.Vector;
  * This is a temporary class made to test the
  * bullet's behavior.
  */
-public class TemporaryController {
+public class BulletsController {
 	private Player player;
 	private List<Bullet> bullets;
 	private Timeline gameLoop;
 	
-	public TemporaryController() {
+	public BulletsController() {
 		var pBuilder = new PlayerBuilder();
 		this.player = pBuilder.health(new SimpleHealth())
 				.hitbox(new Vector(10, 10))
