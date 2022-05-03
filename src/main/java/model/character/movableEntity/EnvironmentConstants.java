@@ -29,7 +29,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
-	private static double gravity = 0.01;
+	private static double gravity = 0.02;
 	
 	private EnvironmentConstants() {}
 

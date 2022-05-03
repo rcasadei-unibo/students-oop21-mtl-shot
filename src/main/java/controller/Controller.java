@@ -72,6 +72,9 @@ public class Controller {
 		if (key == KeyCode.SPACE) {
 		    playerController.getPlayer().setJump(true);
 		}
+		if (key == KeyCode.S) {
+		    playerController.getPlayer().setCrawl(true);
+		}
 	}
 	
 	public void keyReleased(final KeyCode key) {
@@ -83,6 +86,9 @@ public class Controller {
 		}
 		if (key == KeyCode.SPACE) {
 		    playerController.getPlayer().setJump(false);
+		}
+		if (key == KeyCode.S) {
+		    playerController.getPlayer().setCrawl(false);
 		}
 	}
 	

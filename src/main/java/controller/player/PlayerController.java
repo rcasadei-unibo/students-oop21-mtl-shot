@@ -37,10 +37,6 @@ public class PlayerController {
         botLeft.setY(Math.floor(botLeft.getY()));
         botRight.setX(Math.floor(botRight.getX()));
         botRight.setY(Math.floor(botRight.getY()));
-		/*System.out.println("nextPos:" + nextPos);
-		System.out.println("botLeft:" + botLeft);
-		System.out.println("botRight:" + botRight);
-		System.out.println("---------------------------");*/
 		if (this.collidableObjects.contains(botLeft) || this.collidableObjects.contains(botLeft)) {
 		    player.setFall(false);
 		    if (player.getSpeed().getY() > 0) {		        

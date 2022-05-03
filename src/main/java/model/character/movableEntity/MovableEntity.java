@@ -103,7 +103,9 @@ public abstract class MovableEntity extends Entity {
 	 * Sets the field crawl to @crawl
 	 * */
 	public void setCrawl(final boolean crawl) {
-		this.crawl = crawl;
+	    if (crawl && !fall) {	        
+	        this.crawl = crawl;
+	    }
 	}
 
 	/**
