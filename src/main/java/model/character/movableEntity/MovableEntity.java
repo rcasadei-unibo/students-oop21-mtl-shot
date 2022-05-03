@@ -152,7 +152,7 @@ public abstract class MovableEntity extends Entity {
 		}
 		super.setPosition(new Vector(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY() + this.speed.getY()));
 		*/
-		cv
+		
 		if(!(right && left)) {
 			if(right) {
 				super.setPosition(new Vector(super.getPosition().getX() + 1, 0));
