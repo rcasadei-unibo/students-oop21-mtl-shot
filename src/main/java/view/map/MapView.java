@@ -28,7 +28,7 @@ public class MapView {
 		for(var position : list) {
 			Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles, and as such will never evade the if construct.
 			
-				tileImage = autotileManager.autotile(position, tileSize, null);
+				tileImage = autotileManager.autotile(position, tileSize, new Image(new FileInputStream(mapController.getTile(position).get().getPath())).getPixelReader());
 			/*if(tile.getTileType() == TileType.AIR) {
 				final PixelReader reader = new Image(new FileInputStream("src\\main\\resources\\Air.png")).getPixelReader();
 				final WritableImage newImage = new WritableImage(reader, 0, 0, 32, 32);

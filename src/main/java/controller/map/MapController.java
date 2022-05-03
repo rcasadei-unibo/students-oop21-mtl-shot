@@ -63,6 +63,8 @@ public class MapController {
 	public Optional<Tile> getTile(final Vector position) {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
+	
+	public Optional<Tile> getTile()
 
 	public Vector getPlayerSpawn() {
 		return playerSpawn;

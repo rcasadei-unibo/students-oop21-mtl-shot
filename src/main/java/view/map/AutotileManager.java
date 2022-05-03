@@ -1,15 +1,15 @@
 package view.map;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import model.map.tile.Tile;
-import model.map.tile.TileImpl;
-import model.map.tile.TileType;
 import util.Vector;
 
 public class AutotileManager {
