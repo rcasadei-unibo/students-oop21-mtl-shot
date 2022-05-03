@@ -27,7 +27,7 @@ public class MapController {
 		for(int i = 0; i < textMap.getHeight(); i++) {
 			int j = 0;
 			while(j < textMap.getWidth()) {
-				int check = mapTxtInput.read();
+				final int check = mapTxtInput.read();
 				if(check == '0') {	
 					mapModel.addTile(new TileAir(new Vector(j, i)));
 					j++;
@@ -50,6 +50,10 @@ public class MapController {
 	public List<Vector> getTileables(){
 		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).toList();
 	}
+	
+	public List<Vector> getCollidables() {
+	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
+	}
 
 	public Optional<Tile> getTileConverted(final Vector position) {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
@@ -61,7 +65,7 @@ public class MapController {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
 	
-	public Optional<Tile> getTile(final Vector position, List<Tile> tileList){
+	public Optional<Tile> getTile(final Vector position, final List<Tile> tileList){
 		return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
 

@@ -1,26 +1,31 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controller.Controller;
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import view.map.MapView;
 
 public final class MetalShot extends Application {
-	private Controller controller;
-	
+    
     @Override
     public void start(final Stage primaryStage) throws Exception {
-    	this.controller = new Controller(this);
-    	
-        final Label message = new Label("Hello, JavaFX!"); 
-        message.setFont(new Font(100));
-        primaryStage.setScene(new Scene(message));
-        primaryStage.setTitle("Hello");
+    	final Controller controller = new Controller(this);
+    	final Scene mainScene;
+        final MapView mapView = new MapView(controller.getMapController() , 32d);
+        final List<Node> totalList = new ArrayList<>();
+        totalList.addAll(mapView.getNodes());
+        final Group mainGroup = new Group(totalList);
+        mainScene = new Scene(mainGroup, 600, 600);
+        primaryStage.setScene(mainScene);
+        primaryStage.setTitle("メタルショット");
         primaryStage.show();
-        
-        this.controller.gameStart();
+        controller.gameStart();
     }
 
     public static void run(final String... args) {

@@ -2,6 +2,7 @@ package controller.player;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,46 +21,31 @@ public class PlayerController {
 
 	private final Player player;
 	private final PlayerView playerView;
-	private final MapController mapController;
+	private final List<Vector> collidableObjects;
 
-	public PlayerController(final MapController mapController, final PlayerView playerView) {
+	public PlayerController(final List<Vector> collidableObjects, final PlayerView playerView, final Vector spawn) {
+	    this.collidableObjects = collidableObjects;
 		this.playerView = playerView;
-		this.mapController = mapController;
 		player = new PlayerBuilder()
 				.hitbox(new Vector(32, 32))
-				.position(mapController.getPlayerSpawn())
+				.position(spawn)
 				.health(new SimpleHealth())
 				.lives(3)
 				.build();
 	}
 
-	public void startGame() {
+	public void check() {
 		player.setFall(true);
-		final Timeline timer = new Timeline(
-				new KeyFrame(Duration.seconds(0.01),
-						new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(final ActionEvent event) {
-						final List<Vector> underPlayer = new LinkedList<>();
-						for(double i = 0; i < player.getHitbox().getX(); i++) {
-							underPlayer.add(new Vector(player.getPosition().getX()+i,
-									player.getPosition().getY()+player.getHitbox().getY()+1));
-						}
-						for(final Vector position : underPlayer) {
-							/*if(mapController.getTileConverted(position).get().getTileType() == TileType.GROUND) {
-								player.setFall(false);
-								player.setSpeed(player.getSpeed().getX(), 0);
-								player.setPosition(player.getPosition().getX(),
-										mapController.getTileConverted(position).get().getPosition().getY()*MapConstants.getTilesize()-player.getHitbox().getY());						
-							}*/
-							player.moveEntity();
-							playerView.updatePlayer(player.getPosition());
-						}
-						
-					}
-				}));
-		timer.setCycleCount(Timeline.INDEFINITE);
-		timer.play();
+		final Vector nextPos = new Vector(player.getPosition());
+		nextPos.sum(player.getSpeed());		
+		final Vector botRight = new Vector(player.getHitbox());
+		final Vector botLeft = new Vector(player.getHitbox().getX(), 0);
+		botRight.sum(nextPos);
+		botLeft.sum(nextPos);
+		if (this.collidableObjects.contains(botLeft) || this.collidableObjects.contains(botLeft)) {
+		    player.setFall(false);
+		    player.setSpeed(player.getSpeed().getX(), 0);
+		}
 	}
 
 	public Player getPlayer() {
