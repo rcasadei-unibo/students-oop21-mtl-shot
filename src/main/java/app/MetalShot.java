@@ -2,6 +2,8 @@ package app;
 
 import controller.BulletsController;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -10,7 +12,7 @@ import javafx.stage.Stage;
 
 public final class MetalShot extends Application {
 	
-	private BulletsController tc;
+	private BulletsController bc;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -19,7 +21,19 @@ public final class MetalShot extends Application {
         
         ImageView iv = new ImageView();
         
-        primaryStage.setScene(new Scene(message));
+        this.bc = new BulletsController();
+        
+        var s = new Scene(message);
+        s.setOnKeyPressed(new EventHandler<Event>() {
+        	
+			@Override
+			public void handle(Event event) {
+				bc.addBullet();
+			}
+			
+        });
+        
+        primaryStage.setScene(s);
         primaryStage.setTitle("Hello");
         primaryStage.show();
     }
