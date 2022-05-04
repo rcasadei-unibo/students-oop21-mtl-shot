@@ -22,65 +22,23 @@ import util.Vector;
  * THIS COMMENTS NEEDS TO BE CLEANED!
  */
 public class BulletsController {
-	private Player player;
-	//private Player dummy;
+	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
 	private List<Bullet> bullets;
-	//private Timeline gameLoop;
-	
 	private static final double EPSILON = 0.01d;
 	
-	public BulletsController() {
-		/**
-		 * This part is for tests!!
-		 */
-		var pBuilder = new PlayerBuilder();
-		this.player = pBuilder.health(new SimpleHealth())
-				.hitbox(new Vector(10, 10))
-				.position(new Vector(0, 0))
-				.build();
-		
-		/*var dBuilder = new PlayerBuilder();
-		this.dummy = dBuilder.health(new SimpleHealth())
-				.hitbox(new Vector(10, 10))
-				.position(new Vector(50, 50))
-				.build();*/
-		
+	public BulletsController(/* final Controller controllerReference TODO UNCOMMENT AFTER MERGING */) {
+		//this.controllerReference = controllerReference; TODO UNCOMMENT AFTER MERGING
 		this.bullets = new LinkedList<>();
-		
-		/*this.gameLoop = new Timeline(
-				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
-					
-					@Override
-					public void handle(ActionEvent event) {
-						bullets.forEach(b -> {
-							if (equalsForDouble(b.getPosition().getX(), dummy.getPosition().getX())) {
-								bullets.remove(b);
-							} else {
-								b.tick();
-							}
-						});
-						System.out.println("");
-						
-						//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
-						System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
-						System.out.print("\n");
-					}
-					
-				}));
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-		
-		this.gameLoop.play();*/
 	}
 	
 	public void controllerTick() {
 		bullets.forEach(b -> {
-			if (true) /* Insert collision conditions here */ {
+			if (true) /* TODO Insert collision conditions here */ {
 				bullets.remove(b);
 			} else {
 				b.tick();
 			}
 		});
-		System.out.println("");
 		
 		//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
 		System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
@@ -88,9 +46,13 @@ public class BulletsController {
 	}
 	
 	public void addBullet() {
-		this.bullets.add(new Bullet(this.player));
+		//this.bullets.add(new Bullet(this.controllerReference.getPlayer())); TODO UNCOMMENT AFTER MERGING
 	}
 	
+	/*
+	 * Tool to compare doubles given a certain tolerance.
+	 * Should be put in an utility class (?)
+	 */
 	private boolean equalsForDouble(double a, double b) {
         return Math.abs(a - b) < EPSILON;
     }
