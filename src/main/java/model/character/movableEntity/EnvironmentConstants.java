@@ -17,7 +17,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the speed reached by the jumping subjects in this environment
 	 * */
-	private static double jump = -0.4;
+	private static double jump = -0.1;
 	/**
 	 * Field that represents the horizontal deceleration (in module) in this environment
 	 * */
@@ -29,7 +29,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
-	private static double gravity = 0.02;
+	private static double gravity = 0.001;
 	
 	private EnvironmentConstants() {}
 

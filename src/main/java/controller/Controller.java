@@ -26,7 +26,7 @@ public class Controller {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
 	    this.mapController = new MapController(textMap);
 	    this.viewReference = viewReference;
-	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController.getPlayerSpawn()); //null -> player view
+	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController); //null -> player view
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					

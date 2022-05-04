@@ -1,5 +1,6 @@
 package controller.player;
 
+import controller.map.MapController;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -10,12 +11,14 @@ public class PlayerController {
 
 	private final Player player;
 	private final PlayerView playerView;
+	private final MapController mapController;
 
-	public PlayerController(final PlayerView playerView, final Vector spawn) {
+	public PlayerController(final PlayerView playerView, final MapController mapController) {
 	    this.playerView = playerView;
+	    this.mapController = mapController;
 		player = new PlayerBuilder()
-				.hitbox(new Vector(1, 1.5))
-				.position(spawn)
+				.hitbox(new Vector(1, 1))
+				.position(mapController.getPlayerSpawn())
 				.health(new SimpleHealth())
 				.lives(3)
 				.build();
@@ -33,7 +36,15 @@ public class PlayerController {
 		botLeft.sum(nextPos);
 		topLeft.sum(nextPos);
 		topRight.sum(nextPos);
-		
+		if (mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight)) {
+		    player.setFall(false);
+		    if (player.getSpeed().getY() > 0) {
+		        player.setSpeed(player.getSpeed().getX(), 0);
+		    }
+		}
+		if (mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight) && player.getSpeed().getY() < 0) {
+		    player.setSpeed(player.getSpeed().getX(), 0);
+		}
 		player.moveEntity();
 		playerView.updatePlayer(player.getPosition());
 	}

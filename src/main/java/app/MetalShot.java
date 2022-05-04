@@ -17,7 +17,7 @@ import view.player.PlayerView;
 public final class MetalShot extends Application {
     
     private PlayerView playerView;
-    private final static double VIEWRESIZE = 1d;
+    private final static double VIEWRESIZE = 2d;
     
     @Override
     public void start(final Stage primaryStage) throws Exception {

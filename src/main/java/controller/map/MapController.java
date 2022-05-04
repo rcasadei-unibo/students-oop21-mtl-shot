@@ -12,7 +12,6 @@ import model.map.tile.Tile;
 import model.map.tile.TileAir;
 import model.map.tile.TileMetal;
 import model.map.tile.TileStone;
-import util.map.MapConstants;
 import util.Vector;
 
 public class MapController {
@@ -39,7 +38,7 @@ public class MapController {
 					j++;
 				} else if(check == 'p')	{
 					mapModel.addTile(new TileAir(new Vector(j, i)));
-					playerSpawn = new Vector(j/*MapConstants.getTilesize()*/, i);
+					playerSpawn = new Vector(j, i);
 					j++;
 				}
 			}
@@ -55,10 +54,14 @@ public class MapController {
 	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
 	}
 
-	public boolean getSingleCollidable(final Vector position) {
-		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
-				Math.floor(position.getX()/MapConstants.getTilesize())).filter(t -> t.getPosition().getY() == 
-				Math.floor(position.getY()/MapConstants.getTilesize())).findFirst().get().isCollidable();
+	public boolean hasSingleCollidable(final Vector position) {
+	    final var tmp = mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
+                Math.floor(position.getX())).filter(t -> t.getPosition().getY() == 
+                Math.floor(position.getY())).findFirst();
+	    if (tmp.equals(Optional.empty())) {
+	        return false;
+	    }
+		return tmp.get().isCollidable();
 	}
 	
 	public Optional<Tile> getTile(final Vector position) {
