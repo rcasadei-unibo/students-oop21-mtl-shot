@@ -2,6 +2,7 @@ package controller;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import model.character.Character;
@@ -40,6 +41,19 @@ public class BulletsController {
 	
 	public void addBullet(final Character owner) {
 		this.bullets.add(new Bullet(owner));
+	}
+	
+	/*
+	 * This method checks if Bullet b is colliding with
+	 * any of the current Characters in game
+	 */
+	private Optional<Character> checkCharactersColliding(Bullet b) {
+		/*for (var c : this.controllerReference.getAllCharacters()) {
+			if (b.isColliding(this.controllerReference.getPlayer())) {	TODO UNCOMMENT AFTER MERGING
+				return Optional.of(this.controllerReference.getPlayer());
+			}
+		}*/
+		return Optional.empty();
 	}
 	
 	/*
