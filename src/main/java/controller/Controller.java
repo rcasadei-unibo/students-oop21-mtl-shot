@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import util.map.TextMap;
-import view.player.PlayerView;
 
 public class Controller {
     
@@ -27,7 +26,7 @@ public class Controller {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
 	    this.mapController = new MapController(textMap);
 	    this.viewReference = viewReference;
-	    this.playerController = new PlayerController(mapController.getCollidables(), this.viewReference.getPlayerView(), mapController.getPlayerSpawn()); //null -> player view
+	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController.getPlayerSpawn()); //null -> player view
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					

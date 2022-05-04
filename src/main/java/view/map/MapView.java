@@ -23,11 +23,11 @@ public class MapView {
 			//Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,
 									// and as such will never evade the if construct.
 
-			final Group tileImage = autotileManager.autotile(position, tileSize,
+			final Group tileImage = autotileManager.autotile(position, tileSize*MapConstants.getTilesize(),
 					new Image(new FileInputStream(mapController.getTile(position).get().getPath())).getPixelReader());
 
-			tileImage.setScaleX(tileSize / MapConstants.getTilesize());
-			tileImage.setScaleY(tileSize / MapConstants.getTilesize());
+			tileImage.setScaleX(tileSize);
+			tileImage.setScaleY(tileSize);
 
 			nodes.add(tileImage);
 		}

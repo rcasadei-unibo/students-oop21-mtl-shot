@@ -17,13 +17,14 @@ import view.player.PlayerView;
 public final class MetalShot extends Application {
     
     private PlayerView playerView;
+    private final static double VIEWRESIZE = 1d;
     
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        this.playerView = new PlayerView();
+        this.playerView = new PlayerView(VIEWRESIZE);
     	final Controller controller = new Controller(this);
     	final Scene mainScene;
-        final MapView mapView = new MapView(controller.getMapController() , 32d);
+        final MapView mapView = new MapView(controller.getMapController() , VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());

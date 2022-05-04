@@ -55,10 +55,10 @@ public class MapController {
 	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
 	}
 
-	public Optional<Tile> getTileConverted(final Vector position) {
+	public boolean getSingleCollidable(final Vector position) {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
 				Math.floor(position.getX()/MapConstants.getTilesize())).filter(t -> t.getPosition().getY() == 
-				Math.floor(position.getY()/MapConstants.getTilesize())).findFirst();
+				Math.floor(position.getY()/MapConstants.getTilesize())).findFirst().get().isCollidable();
 	}
 	
 	public Optional<Tile> getTile(final Vector position) {
