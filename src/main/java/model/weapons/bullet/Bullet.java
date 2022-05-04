@@ -34,8 +34,8 @@ public class Bullet extends Entity {
 	private double damage;
 	
 	public Bullet(final Character owner) {
+		super(owner.getPosition(), new Vector(10, 10));		// TODO: change magic numbers
 		this.owner = owner;
-		this.position = owner.getPosition();
 		this.direction = owner.getAim().getDirection();
 		this.speed = 0.05;
 		//this.damage = owner.getWeapon().getDamagePerBullet(); TODO: uncomment when Character's ready 
@@ -49,13 +49,13 @@ public class Bullet extends Entity {
 	public void tick() {
 		// This implementation is in accordance with this (old) implementation of Vector class. TODO: update in the future
 		if (this.direction.equals(Direction.UP)) {
-			this.position = new Vector(this.position.getX(), this.position.getY() - this.speed);
+			super.setPosition(new Vector(super.getPosition().getX(), super.getPosition().getY() - this.speed));
 		} else if (this.direction.equals(Direction.DOWN)) {
-			this.position = new Vector(this.position.getX(), this.position.getY() + this.speed);
+			super.setPosition(new Vector(super.getPosition().getX(), super.getPosition().getY() + this.speed));
 		} else if (this.direction.equals(Direction.LEFT)) {
-			this.position = new Vector(this.position.getX() - this.speed, this.position.getY());
+			super.setPosition(new Vector(super.getPosition().getX() - this.speed, super.getPosition().getY()));
 		} else if (this.direction.equals(Direction.RIGHT)) {
-			this.position = new Vector(this.position.getX() + this.speed, this.position.getY());
+			super.setPosition(new Vector(super.getPosition().getX() + this.speed, super.getPosition().getY()));
 		}
 	}
 
