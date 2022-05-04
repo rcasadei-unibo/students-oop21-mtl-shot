@@ -1,4 +1,4 @@
-package model.character.movableEntity;
+package model.character.movableentity;
 
 import model.Entity;
 import util.Vector;

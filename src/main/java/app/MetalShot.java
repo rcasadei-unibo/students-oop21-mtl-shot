@@ -50,7 +50,7 @@ public final class MetalShot extends Application {
             public void handle(final KeyEvent event) {}
         });
     }
-
+    
     public static void run(final String... args) {
         launch();
     }

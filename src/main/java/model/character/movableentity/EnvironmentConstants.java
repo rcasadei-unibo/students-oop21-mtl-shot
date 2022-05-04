@@ -1,4 +1,4 @@
-package model.character.movableEntity;
+package model.character.movableentity;
 
 /**
  * This is a static class where all the main environment constants are contained.
@@ -29,7 +29,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
-	private static double gravity = 0.001;
+	private static double gravity = 0.03;
 	
 	private EnvironmentConstants() {}
 
