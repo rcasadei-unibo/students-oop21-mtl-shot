@@ -2,6 +2,7 @@ package model.weapons.bullet;
 
 import util.Direction;
 import util.Vector;
+import model.Entity;
 import model.character.Character;
 
 /*
@@ -10,17 +11,12 @@ import model.character.Character;
  * to the Character who shot it), its movement
  * direction and movement speed.
  */
-public class Bullet {
+public class Bullet extends Entity {
 	
 	/*
 	 * Reference of the Character who shot
 	 */
 	private final Character owner;
-	
-	/*
-	 * Bullet's position
-	 */
-	private Vector position;
 	
 	/*
 	 * Bullet's movement direction
@@ -71,13 +67,6 @@ public class Bullet {
 	}
 
 	/**
-	 * @return the bullet's position
-	 */
-	public Vector getPosition() {
-		return this.position;
-	}
-
-	/**
 	 * @return the bullet's direction
 	 */
 	public Direction getDirection() {
@@ -100,7 +89,7 @@ public class Bullet {
 
 	@Override
 	public String toString() {
-		return "Bullet [owner=" + owner + ", position=" + position + ", direction=" + direction + ", speed=" + speed
+		return "Bullet [owner=" + owner + ", position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed
 				+ ", damage=" + damage + "]";
 	}
 }
