@@ -1,19 +1,18 @@
 package app;
 
-import controller.BulletsController;
+import controller.TemporaryController;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public final class MetalShot extends Application {
+	private TemporaryController controller;
 	
-	private BulletsController bc;
-
     @Override
     public void start(final Stage primaryStage) throws Exception {
         final Label message = new Label("Hello, JavaFX!"); 
@@ -21,14 +20,14 @@ public final class MetalShot extends Application {
         
         ImageView iv = new ImageView();
         
-        this.bc = new BulletsController();
+        this.controller = new TemporaryController(this);
         
         var s = new Scene(message);
-        s.setOnKeyPressed(new EventHandler<Event>() {
+        s.setOnKeyPressed(new EventHandler<KeyEvent>() {
         	
 			@Override
-			public void handle(Event event) {
-				bc.addBullet();
+			public void handle(KeyEvent event) {
+				controller.keyPressed(event.getCode());
 			}
 			
         });
