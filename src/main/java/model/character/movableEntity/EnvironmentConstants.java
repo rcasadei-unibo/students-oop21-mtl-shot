@@ -9,7 +9,7 @@ public final class EnvironmentConstants {
     /**
      * Field that represents the max horizontal speed (in module) reachable in this environment
      * */
-	private static double maxHorizontalSpeed = 0.1;
+	private static double maxHorizontalSpeed = 0.01;
 	/**
 	 * Field that represents the max vertical speed (in module) reachable in this environment
 	 * */

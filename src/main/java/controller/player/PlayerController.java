@@ -46,7 +46,7 @@ public class PlayerController {
 		    player.setSpeed(player.getSpeed().getX(), 0);
 		}
 		player.moveEntity();
-		playerView.updatePlayer(player.getPosition(), player.isCrawling());
+		playerView.updatePlayer(player.getPosition(), player.isCrawling(), player.getSpeed());
 	}
 
 	public Player getPlayer() {
