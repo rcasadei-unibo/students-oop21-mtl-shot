@@ -102,11 +102,19 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * Sets the field crawl to @crawl
 	 * */
-	public void setCrawl(final boolean crawl) {
-	    if (crawl && !fall) {	        
-	        this.crawl = crawl;
-	    }
-	}
+    public void setCrawl(final boolean crawl) {
+        if (crawl != this.crawl && !fall) {
+            if (crawl) {
+                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
+                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
+            } else {
+                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
+                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
+            }
+            this.crawl = crawl;
+            System.out.println("crawling");
+        }
+    }
 
 	/**
 	 * @return if the entity has to fall or not (used to keep it from falling through the ground)
@@ -150,7 +158,7 @@ public abstract class MovableEntity extends Entity {
 			update.setX(this.decelerate());
 		}
 		if (jump && !fall) {
-			this.crawl = false;
+			this.setCrawl(false);
 			this.fall = true;
 			update.setY(EnvironmentConstants.getJump());
 		}
