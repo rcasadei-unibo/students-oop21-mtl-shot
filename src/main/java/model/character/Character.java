@@ -66,4 +66,10 @@ public abstract class Character extends MovableEntity {
 				//weapon.toString() + "\n" +
 				aim.toString();
 	}
+	
+	@Override
+	public void setCrawl(final boolean crawl) {
+	    this.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
+	    super.setCrawl(crawl);
+	}
 }
