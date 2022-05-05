@@ -13,6 +13,7 @@ public class TemporaryController {
 	
 	//Instance of model (Stage?)
 	private final MetalShot viewReference;
+	private BulletsController bulletsController;
 	
 	public TemporaryController(final MetalShot viewReference) {
 		this.viewReference = viewReference;
@@ -21,11 +22,13 @@ public class TemporaryController {
 					
 					@Override
 					public void handle(ActionEvent event) {
-						
+						bulletsController.controllerTick();
 					}
 					
 				}));
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
+		
+		this.bulletsController = new BulletsController(this);
 	}
 	
 	public void gameStart() {
