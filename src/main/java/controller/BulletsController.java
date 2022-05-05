@@ -54,11 +54,11 @@ public class BulletsController {
 	 * any of the current Characters in game
 	 */
 	private Optional<Character> checkCharactersColliding(Bullet b) {
-		/*for (var c : this.controllerReference.getAllCharacters()) {
-			if (b.isColliding(this.controllerReference.getPlayer())) {	TODO UNCOMMENT AFTER MERGING
-				return Optional.of(this.controllerReference.getPlayer());
+		for (var c : this.controllerReference.getAllCharacters()) {
+			if (b.isColliding(c)) {
+				return Optional.of(c);
 			}
-		}*/
+		}
 		return Optional.empty();
 	}
 	
