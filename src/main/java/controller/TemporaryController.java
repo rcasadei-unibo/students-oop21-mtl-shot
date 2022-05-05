@@ -88,6 +88,10 @@ public class TemporaryController {
 		// TODO
 	}
 	
+	/*
+	 * Returns every Character (the player, enemies, ...)
+	 * currently in game. TODO: needs to be implemented differently
+	 */
 	public Set<Character> getAllCharacters() {
 		return Set.of(this.player, this.dummy);
 	}
