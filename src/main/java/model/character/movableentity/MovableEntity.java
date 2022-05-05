@@ -112,7 +112,6 @@ public abstract class MovableEntity extends Entity {
                 super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
             }
             this.crawl = crawl;
-            System.out.println("crawling");
         }
     }
 
@@ -158,7 +157,6 @@ public abstract class MovableEntity extends Entity {
 			update.setX(this.decelerate());
 		}
 		if (jump && !fall) {
-			this.setCrawl(false);
 			this.fall = true;
 			update.setY(EnvironmentConstants.getJump());
 		}
