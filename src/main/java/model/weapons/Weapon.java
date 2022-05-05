@@ -72,4 +72,8 @@ public abstract class Weapon {
 	public int getReloadTime() {
 		return this.reloadTime;
 	}
+	
+	public int getFireRate() {
+		return this.fireRate;
+	}
 }
