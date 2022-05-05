@@ -54,7 +54,7 @@ public abstract class MovableEntity extends Entity {
 	 * @return the entity's intention to go left
 	 * */
 	public boolean isLeft() {
-		return left;
+		return this.left;
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public abstract class MovableEntity extends Entity {
 	 * @return the entity's intention to go right
 	 * */
 	public boolean isRight() {
-		return right;
+		return this.right;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public abstract class MovableEntity extends Entity {
 	 * @return the entity's intention to jump
 	 * */
 	public boolean isJumping() {
-		return jump;
+		return this.jump;
 	}
 
 	/**
@@ -96,14 +96,14 @@ public abstract class MovableEntity extends Entity {
 	 * @return the entity's intention to crawl
 	 * */
 	public boolean isCrawling() {
-		return crawl;
+		return this.crawl;
 	}
 
 	/**
 	 * Sets the field crawl to @crawl
 	 * */
     public void setCrawl(final boolean crawl) {
-        if (crawl != this.crawl && !fall) {
+        if (crawl != this.crawl && !this.fall) {
             if (crawl) {
                 super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
                 super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
@@ -119,7 +119,7 @@ public abstract class MovableEntity extends Entity {
 	 * @return if the entity has to fall or not (used to keep it from falling through the ground)
 	 * */
 	public boolean isFalling() {
-		return fall;
+		return this.fall;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public abstract class MovableEntity extends Entity {
 	 * @return a vector that represents the actual speed of the entity
 	 * */
 	public Vector getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	/**
@@ -149,18 +149,19 @@ public abstract class MovableEntity extends Entity {
 	 * */
 	public void moveEntity() {
 		final Vector update = new Vector();
-		if (right && !left) {
+		if (this.right && !this.left) {
 			update.setX(EnvironmentConstants.getHorizontalAcceleration());
-		} else if (left && !right) {
+		} else if (this.left && !this.right) {
 			update.setX(-EnvironmentConstants.getHorizontalAcceleration());
 		} else {
 			update.setX(this.decelerate());
 		}
-		if (jump && !fall) {
+		if (this.jump && !this.fall) {
+		    this.setCrawl(false);
 			this.fall = true;
 			update.setY(EnvironmentConstants.getJump());
 		}
-		if (fall) {
+		if (this.fall) {
 			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
 		this.speed.sum(update);

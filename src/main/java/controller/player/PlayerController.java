@@ -50,12 +50,10 @@ public class PlayerController {
 	}
 
 	private void crawlingCheck(final Vector nextPos) {
-        if (player.isCrawling() && player.isJumping()) {
-            player.setCrawl(false);
-        }
         if (!player.isCrawling() && this.isCollidingUp(nextPos)) {
             player.setCrawl(true);
         }
+        
     }
 
 	private boolean isCollidingLeft(final Vector nextPos) {
