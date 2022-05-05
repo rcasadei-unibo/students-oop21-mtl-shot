@@ -27,7 +27,13 @@ public class BulletsController {
 	
 	public void controllerTick() {
 		bullets.forEach(b -> {
-			if (true) /* TODO Insert collision conditions here */ {
+			var characterColliding = this.checkCharactersColliding(b);
+			var tileColliding = this.checkTilesColliding(b);
+			
+			if (characterColliding.isPresent()) {
+				bullets.remove(b);
+				// TODO: characterColliding.get() takes damage
+			} else if (tileColliding.isPresent()) {
 				bullets.remove(b);
 			} else {
 				b.tick();
@@ -53,6 +59,15 @@ public class BulletsController {
 				return Optional.of(this.controllerReference.getPlayer());
 			}
 		}*/
+		return Optional.empty();
+	}
+	
+	/*
+	 * This method checks if Bullet b
+	 * is colliding with any tile
+	 */
+	private Optional<Character> checkTilesColliding(Bullet b) {
+		// TODO: implementation based on Map implementation
 		return Optional.empty();
 	}
 	
