@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Set;
+
 import app.MetalShot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
+import model.character.Character;
 import model.character.Player;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
@@ -85,5 +88,7 @@ public class TemporaryController {
 		// TODO
 	}
 	
-	
+	public Set<Character> getAllCharacters() {
+		return Set.of(this.player, this.dummy);
+	}
 }
