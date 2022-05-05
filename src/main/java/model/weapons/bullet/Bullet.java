@@ -34,7 +34,7 @@ public class Bullet extends Entity {
 	private double damage;
 	
 	public Bullet(final Character owner) {
-		super(owner.getPosition(), new Vector(10, 10));		// TODO: change magic numbers
+		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX() + 1, owner.getPosition().getY()), new Vector(5, 5));		// TODO: change magic numbers
 		this.owner = owner;
 		this.direction = owner.getAim().getDirection();
 		this.speed = 0.05;
@@ -89,7 +89,7 @@ public class Bullet extends Entity {
 
 	@Override
 	public String toString() {
-		return "Bullet [owner=" + owner + ", position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed
+		return "Bullet [position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed
 				+ ", damage=" + damage + "]";
 	}
 }

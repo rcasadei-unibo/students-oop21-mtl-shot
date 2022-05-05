@@ -35,6 +35,8 @@ public final class MetalShot extends Application {
         primaryStage.setScene(s);
         primaryStage.setTitle("Hello");
         primaryStage.show();
+        
+        this.controller.gameStart();
     }
 
     public static void run(final String... args) {

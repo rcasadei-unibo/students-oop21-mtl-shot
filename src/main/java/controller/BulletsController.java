@@ -38,11 +38,14 @@ public class BulletsController {
 			} else {
 				b.tick();
 			}
+			if (!this.bullets.isEmpty()) {
+				System.out.println(this.bullets);
+			}
 		});
 		
 		//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
-		System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
-		System.out.print("\n");
+		//System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+		//System.out.print("\n");
 	}
 	
 	public void addBullet(final Character owner) {

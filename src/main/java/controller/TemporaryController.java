@@ -33,7 +33,7 @@ public class TemporaryController {
 				.build();
 		
 		var pb2 = new Player.PlayerBuilder();
-		this.dummy = pb2.position(new Vector(0, 0))
+		this.dummy = pb2.position(new Vector(50, 0))
 				.health(new SimpleHealth())
 				.lives(1)
 				.hitbox(new Vector(32, 32))
@@ -70,6 +70,7 @@ public class TemporaryController {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
+		this.bulletsController.addBullet(this.player);
 	}
 	
 	public void keyReleased(final KeyCode key) {
