@@ -20,11 +20,12 @@ public class WeaponController {
 		this.timers.forEach((c, sc) -> {
 			sc.tick();
 			System.out.println("Ticking " + c.getWeapon().getClass().getName() + "'s weapon");
+			System.out.println(this.timers.values());
 			if (sc.isCooldownOver()) {
-				this.timers.remove(c);
 				System.out.println("Ending " + c.getWeapon().getClass().getName() + "'s shooting timer");
 			}
 		});
+		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 
 	public boolean tryToShoot(final Character characterShooting) {
