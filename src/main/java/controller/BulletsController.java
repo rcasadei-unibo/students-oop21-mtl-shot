@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import model.character.Character;
-import model.weapons.bullet.Bullet;
+import model.weapons.Bullet;
 
 /*
  * This is a temporary class made to test the

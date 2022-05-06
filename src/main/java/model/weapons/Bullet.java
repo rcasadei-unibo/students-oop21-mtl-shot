@@ -1,4 +1,4 @@
-package model.weapons.bullet;
+package model.weapons;
 
 import util.Direction;
 import util.Vector;
