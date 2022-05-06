@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.character.Character;
-import model.weapons.ShootingCooldown;
 
 public class WeaponController {
 	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
