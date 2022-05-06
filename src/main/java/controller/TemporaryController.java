@@ -23,6 +23,7 @@ public class TemporaryController {
 	
 	private final MetalShot viewReference;
 	private BulletsController bulletsController;
+	private WeaponController weaponController;
 	
 	public TemporaryController(final MetalShot viewReference) {
 		var pb = new Player.PlayerBuilder();
@@ -52,6 +53,7 @@ public class TemporaryController {
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 		
 		this.bulletsController = new BulletsController(this);
+		this.weaponController = new WeaponController(this);
 	}
 	
 	public void gameStart() {
@@ -70,6 +72,7 @@ public class TemporaryController {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
+		this.weaponController.tryToShoot(this.player);
 		this.bulletsController.addBullet(this.player);
 	}
 	
