@@ -18,7 +18,6 @@ public class BulletsController {
 	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
 	private TemporaryController controllerReference;
 	private List<Bullet> bullets;
-	private static final double EPSILON = 0.01d;
 	
 	public BulletsController(final TemporaryController controllerReference /* final Controller controllerReference TODO UNCOMMENT AFTER MERGING */) {
 		this.controllerReference = controllerReference;
@@ -73,12 +72,4 @@ public class BulletsController {
 		// TODO: implementation based on Map implementation
 		return Optional.empty();
 	}
-	
-	/*
-	 * Tool to compare doubles given a certain tolerance.
-	 * Should be put in an utility class (?)
-	 */
-	private boolean equalsForDouble(double a, double b) {
-        return Math.abs(a - b) < EPSILON;
-    }
 }
