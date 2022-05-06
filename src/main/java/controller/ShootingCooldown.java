@@ -33,7 +33,7 @@ public class ShootingCooldown {
 	}
 	
 	/*
-	 * Returns true is the cooldown is over
+	 * Returns true if the cooldown is over
 	 */
 	public boolean isCooldownOver() {
 		return this.elapsedTicks >= this.totalTicks;
