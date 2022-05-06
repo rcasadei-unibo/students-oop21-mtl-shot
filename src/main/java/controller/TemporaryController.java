@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import model.character.Character;
 import model.character.Player;
 import model.character.tools.health.SimpleHealth;
+import model.weapons.PeaceKeeper;
 import util.Vector;
 
 public class TemporaryController {
@@ -32,6 +33,7 @@ public class TemporaryController {
 				.lives(1)
 				.hitbox(new Vector(32, 32))
 				.build();
+		this.player.setWeapon(new PeaceKeeper());
 		
 		var pb2 = new Player.PlayerBuilder();
 		this.dummy = pb2.position(new Vector(50, 0))
@@ -46,6 +48,7 @@ public class TemporaryController {
 					
 					@Override
 					public void handle(ActionEvent event) {
+						weaponController.controllerTick();
 						bulletsController.controllerTick();
 					}
 					
