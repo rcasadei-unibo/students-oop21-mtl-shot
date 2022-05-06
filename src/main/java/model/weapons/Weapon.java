@@ -20,12 +20,12 @@ public abstract class Weapon {
 	private int damagePerBullet;
 	
 	/*
-	 * The amount of milliseconds between two consecutive bullets
+	 * The amount of ticks between two consecutive bullets
 	 */
 	private final int fireRate;
 	
 	/*
-	 * The amount of milliseconds needed to reload
+	 * The amount of ticks needed to reload
 	 */
 	private final int reloadTime;
 	
