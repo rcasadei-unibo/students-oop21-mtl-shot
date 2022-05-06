@@ -75,8 +75,9 @@ public class TemporaryController {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
-		this.weaponController.tryToShoot(this.player);
-		this.bulletsController.addBullet(this.player);
+		if (this.weaponController.tryToShoot(this.player)) {
+			this.bulletsController.addBullet(this.player);			
+		}
 	}
 	
 	public void keyReleased(final KeyCode key) {

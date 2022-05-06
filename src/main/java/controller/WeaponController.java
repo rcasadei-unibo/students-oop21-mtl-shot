@@ -19,18 +19,20 @@ public class WeaponController {
 	public void controllerTick() {
 		this.timers.forEach((c, sc) -> {
 			sc.tick();
-			System.out.println("Ticking " + c + "'s weapon");
+			System.out.println("Ticking " + c.getWeapon().getClass().getName() + "'s weapon");
 			if (sc.isCooldownOver()) {
 				this.timers.remove(c);
-				System.out.println("Ending " + c + "'s shooting timer");
+				System.out.println("Ending " + c.getWeapon().getClass().getName() + "'s shooting timer");
 			}
 		});
 	}
 
-	public void tryToShoot(final Character characterShooting) {
+	public boolean tryToShoot(final Character characterShooting) {
 		if (!this.timers.containsKey(characterShooting)) { /* If characterShooting is not in this.timers, he can shoot */
 			this.timers.put(characterShooting, new ShootingCooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
+			return true;
 		}
+		return false;
 	}
 }
