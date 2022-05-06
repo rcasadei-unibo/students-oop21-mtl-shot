@@ -16,4 +16,9 @@ public class ShootingCooldown {
 	public boolean isCooldownOver() {
 		return this.elapsedTicks >= this.totalTicks;
 	}
+
+	@Override
+	public String toString() {
+		return "ShootingCooldown [totalTicks=" + totalTicks + ", elapsedTicks=" + elapsedTicks + "]";
+	}
 }
