@@ -18,10 +18,10 @@ public class WeaponController {
 	public void controllerTick() {
 		this.timers.forEach((c, sc) -> {
 			sc.tick();
-			System.out.println("Ticking " + c.getWeapon().getClass().getName() + "'s weapon");
-			System.out.println(this.timers.values());
+			//System.out.println("Ticking " + c.getWeapon().getClass().getName() + "'s weapon");
+			//System.out.println(this.timers.values());
 			if (sc.isCooldownOver()) {
-				System.out.println("Ending " + c.getWeapon().getClass().getName() + "'s shooting timer");
+				//System.out.println("Ending " + c.getWeapon().getClass().getName() + "'s shooting timer");
 			}
 		});
 		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());

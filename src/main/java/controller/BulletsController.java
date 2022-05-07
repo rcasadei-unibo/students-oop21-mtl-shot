@@ -30,17 +30,23 @@ public class BulletsController {
 			var tileColliding = this.checkTilesColliding(b);
 			
 			if (characterColliding.isPresent()) {
-				bullets.remove(b);
-				// TODO: characterColliding.get() takes damage
+				b.hitSomething();
+				characterColliding.get().getHealth().hurt(b.getDamage());
 			} else if (tileColliding.isPresent()) {
-				bullets.remove(b);
+				b.hitSomething();
+				// TODO: if the tile is breakable, tileColliding brakes here
 			} else {
 				b.tick();
 			}
 			if (!this.bullets.isEmpty()) {
-				//System.out.println(this.bullets);
+				System.out.println(this.bullets);
 			}
 		});
+		
+		/*
+		 * This line removes from this.bullets bullets that have hit something
+		 */
+		this.bullets = this.bullets.stream().filter(b -> b.hasHit() == false).collect(Collectors.toList());
 		
 		//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
 		//System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
