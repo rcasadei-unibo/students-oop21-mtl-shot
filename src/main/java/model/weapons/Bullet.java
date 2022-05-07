@@ -31,7 +31,7 @@ public class Bullet extends Entity {
 	/*
 	 * Bullet's damage (based on the weapon held by owner)
 	 */
-	private double damage;
+	private int damage;
 	
 	/*
 	 * It is true if the bullet has hit something
@@ -89,7 +89,7 @@ public class Bullet extends Entity {
 	/**
 	 * @return the bullet's damage
 	 */
-	public double getDamage() {
+	public int getDamage() {
 		return this.damage;
 	}
 
