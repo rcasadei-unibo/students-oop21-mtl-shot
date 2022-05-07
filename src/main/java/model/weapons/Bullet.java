@@ -33,11 +33,17 @@ public class Bullet extends Entity {
 	 */
 	private double damage;
 	
+	/*
+	 * It is true if the bullet has hit something
+	 */
+	private boolean hit;
+	
 	public Bullet(final Character owner) {
 		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX() + 1, owner.getPosition().getY()), new Vector(5, 5));		// TODO: change magic numbers
 		this.owner = owner;
 		this.direction = owner.getAim().getDirection();
 		this.speed = 0.05;
+		this.hit = false;
 		//this.damage = owner.getWeapon().getDamagePerBullet(); TODO: uncomment when Character's ready 
 	}
 	
@@ -85,6 +91,20 @@ public class Bullet extends Entity {
 	 */
 	public double getDamage() {
 		return this.damage;
+	}
+
+	/**
+	 * @return true if the bullet has hit something
+	 */
+	public boolean isHit() {
+		return hit;
+	}
+
+	/**
+	 * Sets hit to true
+	 */
+	public void hitSomething() {
+		this.hit = true;
 	}
 
 	@Override
