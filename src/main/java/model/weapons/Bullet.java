@@ -44,7 +44,7 @@ public class Bullet extends Entity {
 		this.direction = owner.getAim().getDirection();
 		this.speed = 0.05;
 		this.hit = false;
-		//this.damage = owner.getWeapon().getDamagePerBullet(); TODO: uncomment when Character's ready 
+		this.damage = owner.getWeapon().getDamagePerBullet();
 	}
 	
 	/*
