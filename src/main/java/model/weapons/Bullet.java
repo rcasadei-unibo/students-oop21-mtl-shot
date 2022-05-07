@@ -96,7 +96,7 @@ public class Bullet extends Entity {
 	/**
 	 * @return true if the bullet has hit something
 	 */
-	public boolean isHit() {
+	public boolean hasHit() {
 		return hit;
 	}
 
