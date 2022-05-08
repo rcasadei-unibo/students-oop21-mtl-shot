@@ -112,4 +112,14 @@ public class Bullet extends Entity {
 		return "Bullet [position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed
 				+ ", damage=" + damage + "]";
 	}
+
+	@Override
+	public boolean isColliding(Entity entity) {
+		if (entity.equals(this.owner)) {
+			return false;
+		}
+		return super.isColliding(entity);
+	}
+	
+	
 }
