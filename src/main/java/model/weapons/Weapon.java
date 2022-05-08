@@ -35,6 +35,11 @@ public abstract class Weapon {
 		this.damagePerBullet = damagePerBullet;
 		this.fireRate = fireRate;
 		this.reloadTime = reloadTime;
+		
+		/*
+		 * When initialized, the mag is full
+		 */
+		this.bulletsInMag = this.magCapacity;
 	}
 	
 	public void reload() {
