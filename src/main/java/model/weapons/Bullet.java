@@ -39,7 +39,9 @@ public class Bullet extends Entity {
 	private boolean hit;
 	
 	public Bullet(final Character owner) {
-		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX() + 1, owner.getPosition().getY()), new Vector(5, 5));		// TODO: change magic numbers
+		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX()/2,
+				owner.getPosition().getY() + owner.getHitbox().getY()/2),
+				new Vector(5, 5));		// TODO: change magic numbers
 		this.owner = owner;
 		this.direction = owner.getAim().getDirection();
 		this.speed = 0.05;

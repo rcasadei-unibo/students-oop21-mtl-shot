@@ -12,7 +12,9 @@ import javafx.util.Duration;
 import model.character.Character;
 import model.character.Player;
 import model.character.tools.health.SimpleHealth;
+import model.weapons.P2020;
 import model.weapons.PeaceKeeper;
+import util.Direction;
 import util.Vector;
 
 public class TemporaryController {
@@ -26,6 +28,8 @@ public class TemporaryController {
 	private BulletsController bulletsController;
 	private WeaponController weaponController;
 	
+	private boolean turn = false;
+	
 	public TemporaryController(final MetalShot viewReference) {
 		var pb = new Player.PlayerBuilder();
 		this.player = pb.position(new Vector(0, 0))
@@ -34,6 +38,8 @@ public class TemporaryController {
 				.hitbox(new Vector(32, 32))
 				.build();
 		this.player.setWeapon(new PeaceKeeper());
+		System.out.println(this.player);
+		System.out.println("\n");
 		
 		var pb2 = new Player.PlayerBuilder();
 		this.dummy = pb2.position(new Vector(50, 0))
@@ -41,6 +47,9 @@ public class TemporaryController {
 				.lives(1)
 				.hitbox(new Vector(32, 32))
 				.build();
+		this.dummy.getAim().setDirection(Direction.LEFT);
+		this.dummy.setWeapon(new P2020());
+		System.out.println(this.dummy);
 		
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
@@ -75,8 +84,16 @@ public class TemporaryController {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
-		if (this.weaponController.tryToShoot(this.player)) {
-			this.bulletsController.addBullet(this.player);
+		if (turn) {	
+			if (this.weaponController.tryToShoot(this.player)) {
+				this.bulletsController.addBullet(this.player);
+			}
+			this.turn = false;
+		} else {
+			if (this.weaponController.tryToShoot(this.dummy)) {
+				this.bulletsController.addBullet(this.dummy);
+			}
+			this.turn = true;
 		}
 	}
 	
