@@ -1,4 +1,4 @@
-package model.character.movableEntity;
+package model.character.movableentity;
 
 /**
  * This is a static class where all the main environment constants are contained.
@@ -17,7 +17,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the speed reached by the jumping subjects in this environment
 	 * */
-	private static double jump = -0.1;
+	private static double jump = -0.06;
 	/**
 	 * Field that represents the horizontal deceleration (in module) in this environment
 	 * */
@@ -25,11 +25,11 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the horizontal acceleration (in module) in this environment
 	 * */
-	private static double horizontalAcceleration = 0.1;
+	private static double horizontalAcceleration = 0.01;
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
-	private static double gravity = 0.001;
+	private static double gravity = 0.0003;
 	
 	private EnvironmentConstants() {}
 

@@ -28,7 +28,7 @@ public class Controller {
 	    this.viewReference = viewReference;
 	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController); //null -> player view
 		this.gameLoop = new Timeline(
-				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
+				new KeyFrame(Duration.seconds(0.001), new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(final ActionEvent event) {
@@ -72,7 +72,7 @@ public class Controller {
 		    playerController.getPlayer().setJump(true);
 		}
 		if (key == KeyCode.S) {
-		    playerController.getPlayer().setCrawl(true);
+		    playerController.getPlayer().setCrouchKey(true);
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class Controller {
 		    playerController.getPlayer().setJump(false);
 		}
 		if (key == KeyCode.S) {
-		    playerController.getPlayer().setCrawl(false);
+		    playerController.getPlayer().setCrouchKey(false);
 		}
 	}
 	

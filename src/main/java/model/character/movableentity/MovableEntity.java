@@ -1,4 +1,4 @@
-package model.character.movableEntity;
+package model.character.movableentity;
 
 import model.Entity;
 import util.Vector;
@@ -8,6 +8,14 @@ import util.Vector;
  * */
 public abstract class MovableEntity extends Entity {
 
+    /**
+     * Delineates the conditions which limit the entity's crouching capabilities
+     */
+    public enum Crouch {
+        DC,/*Crouch could be everything*/ 
+        FALSE, /*Crouch has to be false*/
+        TRUE; /*Crouch has to be true*/
+    }
     /**
      * Represent the entity intention to go left
      * */
@@ -19,21 +27,27 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * Represent the entity intention to jump
 	 * */
-	private boolean jump;
+	private boolean jump;	
 	/**
-	 * Represent the entity intention to crawl
+	 * Represent the entity intention to crouch
 	 * */
-	private boolean crawl;
+	private boolean crouchKey;
+	/**
+	 * Represent the current crouch state
+	 */
+	private boolean crouch;
+	/**
+	 * Delineates the conditions which limit the entity's crouching capabilities
+	 */
+	private Crouch crouchCondition = Crouch.DC;
 	/**
 	 * Represent if the entity has to fall or not
 	 * */
 	private boolean fall;
-	
 	/**
 	 * Field used to create an acceleration and a deceleration
 	 * */
 	private Vector speed;
-	
 	/**
 	 * The movableEntity constructor
 	 * */
@@ -41,7 +55,6 @@ public abstract class MovableEntity extends Entity {
 		super(position, hitbox);
 		this.speed = new Vector();
 	}
-	
 	/**
 	 * A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)
 	 * */
@@ -49,94 +62,90 @@ public abstract class MovableEntity extends Entity {
 		super(position, hitbox);
 		this.speed = speed;
 	}
-
 	/**
 	 * @return the entity's intention to go left
 	 * */
 	public boolean isLeft() {
-		return left;
+		return this.left;
 	}
-	
 	/**
 	 * Sets the field left to @left
 	 * */
 	public void setLeft(final boolean left) {
 		this.left = left;
 	}
-	
 	/**
 	 * @return the entity's intention to go right
 	 * */
 	public boolean isRight() {
-		return right;
+		return this.right;
 	}
-	
 	/**
 	 * Sets the field right to @right
 	 * */
 	public void setRight(final boolean right) {
 		this.right = right;
 	}
-
 	/**
 	 * @return the entity's intention to jump
 	 * */
 	public boolean isJumping() {
-		return jump;
+		return this.jump;
 	}
-
 	/**
 	 * Sets the field jump to @jump
 	 * */
 	public void setJump(final boolean jump) {
 		this.jump = jump;
 	}
-
 	/**
-	 * @return the entity's intention to crawl
+	 * @return the entity's crouch state
 	 * */
-	public boolean isCrawling() {
-		return crawl;
+	public boolean isCrouching() {
+		return this.crouch;
 	}
-
 	/**
-	 * Sets the field crawl to @crawl
+	 * Sets the field crouchKey to @crouchKey
 	 * */
-    public void setCrawl(final boolean crawl) {
-        if (crawl != this.crawl && !fall) {
-            if (crawl) {
-                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
-                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
-            } else {
-                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
-            }
-            this.crawl = crawl;
-            System.out.println("crawling");
-        }
+    public void setCrouchKey(final boolean crouchKey) {
+        this.crouchKey = crouchKey;
     }
-
+    /**
+     * @return the crouchKey state (pressed = true, released = false)
+     */
+    public boolean isCrouchKey() {
+        return this.crouchKey;
+    }
+    /**
+     * Sets the crouchCondition to @param crouchCondition
+     */
+    public void setCrouchCondition(final Crouch crouchCondition) {
+        this.crouchCondition = crouchCondition;
+    }
+    /**
+     * @return the crouchCondition
+     */
+    public Crouch getCrouchCondition() {
+        return this.crouchCondition;
+    }
 	/**
 	 * @return if the entity has to fall or not (used to keep it from falling through the ground)
 	 * */
 	public boolean isFalling() {
-		return fall;
+		return this.fall;
 	}
-
 	/**
 	 * Sets the field fall to @fall
 	 * */
 	public void setFall(final boolean fall) {
 		this.fall = fall;
 	}
-
 	/**
 	 * @return a vector that represents the actual speed of the entity
 	 * */
 	public Vector getSpeed() {
-		return speed;
+		return this.speed;
 	}
-
 	/**
 	 * Sets the input values to the current @speed
 	 * */
@@ -144,33 +153,62 @@ public abstract class MovableEntity extends Entity {
 		this.speed.setX(x);
 		this.speed.setY(y);
 	}
-	
 	/**
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
+	    if (this.crouchCondition != Crouch.TRUE) {
+	        this.setCrouchCondition(Crouch.DC);
+	    }
 		final Vector update = new Vector();
-		if (right && !left) {
+		if (this.right && !this.left) {
 			update.setX(EnvironmentConstants.getHorizontalAcceleration());
-		} else if (left && !right) {
+		} else if (this.left && !this.right) {
 			update.setX(-EnvironmentConstants.getHorizontalAcceleration());
 		} else {
 			update.setX(this.decelerate());
 		}
-		if (jump && !fall) {
-			this.setCrawl(false);
+		if (this.jump && !this.fall) {
 			this.fall = true;
 			update.setY(EnvironmentConstants.getJump());
 		}
-		if (fall) {
+		if (this.fall) {
+            this.setCrouchCondition(Crouch.FALSE);
 			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
 		this.speed.sum(update);
 		this.maxSpeedCheck();
 		super.setPosition(super.getPosition().getX() + this.speed.getX(),
 				          super.getPosition().getY() + this.speed.getY());
+		this.setCrouch();
 	}
 	
+	private void setCrouch() {
+	    if (this.crouchCondition == Crouch.DC && this.isCrouching() != this.crouchKey) {
+	        this.crouch = this.crouchKey; 
+	        if (this.crouchKey) {
+	            this.decreaseHitbox();
+	        } else {
+	            this.increaseHitbox();
+	        }
+	    } else if (this.crouchCondition == Crouch.FALSE && this.isCrouching()) {
+	        increaseHitbox();
+	        this.crouch = false;
+	    } else if (this.crouchCondition == Crouch.TRUE && !this.isCrouching()) {
+	        decreaseHitbox();
+	        this.crouch = true;
+	    }
+	}
+	
+	private void increaseHitbox() {
+	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
+        super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
+	}
+	
+	private void decreaseHitbox() {
+	    super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
+	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
+	}
 	//TODO make code less ugly
 	
 	private void maxSpeedCheck() {
@@ -192,7 +230,9 @@ public abstract class MovableEntity extends Entity {
 	public void reset() {
 		this.left = false;
 		this.right = false;
-		this.crawl = false;
+		this.crouch = false;
+		this.crouchKey = false;
+		this.crouchCondition = Crouch.DC;
 		this.jump = false;
 		this.fall = false;
 		this.speed = new Vector();
