@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -13,7 +14,7 @@ public class BulletView {
 	private Image image;
 	
 	public BulletView() throws FileNotFoundException {
-		this.image = new Image(new FileInputStream("src\\main\\resources\\bullet6x4.png"));
+		this.image = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
 		this.imageView = new ImageView(this.image);
 	}
 	
