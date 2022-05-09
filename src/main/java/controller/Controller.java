@@ -28,7 +28,7 @@ public class Controller {
 	    this.viewReference = viewReference;
 	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController); //null -> player view
 		this.gameLoop = new Timeline(
-				new KeyFrame(Duration.seconds(0.001), new EventHandler<ActionEvent>() {
+				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(final ActionEvent event) {
@@ -41,6 +41,9 @@ public class Controller {
 							// Move/shoot enemies (based on Susca's AI)
 							
 							// Check for colliding bullets
+						
+						viewReference.getCamera().setTranslateX((((viewReference.getPlayerView().getPlayerImageView().getX()-192) - viewReference.getCamera().getTranslateX())/20) + viewReference.getCamera().getTranslateX());
+						viewReference.getCamera().setTranslateY((((viewReference.getPlayerView().getPlayerImageView().getY()-192) - viewReference.getCamera().getTranslateY())/20) + viewReference.getCamera().getTranslateY());
 					    playerController.check();
 					}
 				}));

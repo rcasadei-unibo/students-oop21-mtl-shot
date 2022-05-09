@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import util.map.TextMap;
-import model.map.tile.MapModel;
+import model.map.MapModel;
 import model.map.tile.Tile;
 import model.map.tile.TileAir;
 import model.map.tile.TileMetal;
@@ -47,11 +49,11 @@ public class MapController {
 	}
 
 	public List<Vector> getTileables(){
-		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).toList();
+		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).collect(Collectors.toList());
 	}
 	
 	public List<Vector> getCollidables() {
-	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
+	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).collect(Collectors.toList());
 	}
 
 	public boolean hasSingleCollidable(final Vector position) {

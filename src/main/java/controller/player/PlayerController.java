@@ -20,7 +20,7 @@ public class PlayerController {
 	    this.playerView = playerView;
 	    this.mapController = mapController;
 		player = new PlayerBuilder()
-				.hitbox(new Vector(1.01, 1.5))
+				.hitbox(new Vector(1.25, 2))
 				.position(mapController.getPlayerSpawn())
 				.health(new SimpleHealth())
 				.lives(3)
@@ -52,7 +52,7 @@ public class PlayerController {
             player.setJump(false);
         }
         player.moveEntity();
-		playerView.updatePlayer(player.getPosition(), player.isCrouching());
+		playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getSpeed());
 	}
 
 	private boolean isCollidingLeft(final Vector nextPos) {

@@ -6,8 +6,10 @@ import java.util.List;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -18,9 +20,12 @@ public final class MetalShot extends Application {
     
     private PlayerView playerView;
     private final static double VIEWRESIZE = 1d;
-    
+    private Camera camera;
     @Override
     public void start(final Stage primaryStage) throws Exception {
+    	this.camera = new ParallelCamera();
+    	camera.setScaleX(0.5);
+    	camera.setScaleY(0.5);
         this.playerView = new PlayerView(VIEWRESIZE);
     	final Controller controller = new Controller(this);
     	final Scene mainScene;
@@ -30,6 +35,7 @@ public final class MetalShot extends Application {
         totalList.add(playerView.getPlayerImageView());
         final Group mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup, 600, 600);
+        mainScene.setCamera(camera);
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("メタルショット");
         primaryStage.show();
@@ -66,5 +72,9 @@ public final class MetalShot extends Application {
         public static void main(final String...args) {
             Application.launch(MetalShot.class, args);
         }
+    }
+    
+    public Camera getCamera() {
+    	return this.camera;
     }
 }

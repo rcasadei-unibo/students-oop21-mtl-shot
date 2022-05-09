@@ -1,9 +1,11 @@
-package model.map.tile;
+package model.map;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import model.map.tile.Tile;
 
 public class MapModel {
 
