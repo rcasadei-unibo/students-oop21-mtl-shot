@@ -29,7 +29,7 @@ public class PlayerController {
 
 	public void check() {
 		player.setFall(true);
-		player.setCrouchCondition(Crouch.DC);
+		player.setCrouchCondition(Crouch.FREE);
 		final Vector nextPos = new Vector(player.getPosition());
         nextPos.sum(player.getSpeed());
         if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
@@ -48,7 +48,7 @@ public class PlayerController {
         }        
         if (this.isCollidingUp(new Vector(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY())) &&
                 player.isCrouching()) {
-            player.setCrouchCondition(Crouch.TRUE);
+            player.setCrouchCondition(Crouch.DOWN);
             player.setJump(false);
         }
         player.moveEntity();
