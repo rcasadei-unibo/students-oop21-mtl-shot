@@ -28,12 +28,19 @@ public class Controller {
 		
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
+				
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
+					
+					int num = 0;
 					
 					@Override
 					public void handle(ActionEvent event) {
 						brain.move();
-						System.out.println(brain.getEntity().getPosition());
+						viewReference.setCirclePos(brain.getEntity().getPosition());
+						System.out.println("Entity POS: " + brain.getEntity().getPosition());
+						System.out.println("Actual POS: " + viewReference.getX());
+						//viewReference.setCirclePos(new Vector(num++,0));
+						
 					}
 					
 				}));

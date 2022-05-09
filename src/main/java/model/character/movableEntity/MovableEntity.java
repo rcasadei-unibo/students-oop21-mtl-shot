@@ -136,7 +136,7 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
-	public void moveEntity() {
+	public void moveEntity() {		
 		final Vector update = new Vector();
 		if (right && !left) {
 			update.setX(EnvironmentConstants.getHorizontalAcceleration());
