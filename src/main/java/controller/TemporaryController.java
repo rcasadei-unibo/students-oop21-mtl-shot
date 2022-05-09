@@ -44,7 +44,7 @@ public class TemporaryController {
 		System.out.println("\n");
 		
 		var pb2 = new Player.PlayerBuilder();
-		this.dummy = pb2.position(new Vector(50, 0))
+		this.dummy = pb2.position(new Vector(100, 0))
 				.health(new SimpleHealth())
 				.lives(1)
 				.hitbox(new Vector(32, 32))
@@ -61,6 +61,7 @@ public class TemporaryController {
 					public void handle(ActionEvent event) {
 						weaponController.controllerTick();
 						bulletsController.controllerTick();
+						viewReference.displayBullets(getBullets());
 					}
 					
 				}));

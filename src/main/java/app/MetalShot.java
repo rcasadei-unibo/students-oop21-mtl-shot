@@ -1,5 +1,9 @@
 package app;
 
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import controller.TemporaryController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,18 +14,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import util.Direction;
+import util.Vector;
+import view.BulletsView;
 
 public final class MetalShot extends Application {
 	private TemporaryController controller;
+	private Group mainGroup;
+	private BulletsView bulletsView;
 	
     @Override
     public void start(final Stage primaryStage) throws Exception {
         
         this.controller = new TemporaryController(this);
         
-        var g = new Group();
+        this.mainGroup = new Group();
         
-        var s = new Scene(g);
+        this.bulletsView = new BulletsView();
+        
+        var s = new Scene(mainGroup, 700, 700);
         s.setOnKeyPressed(new EventHandler<KeyEvent>() {
         	
 			@Override
@@ -31,12 +42,18 @@ public final class MetalShot extends Application {
 			
         });
         
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
         primaryStage.setScene(s);
         primaryStage.setTitle("Hello");
         primaryStage.show();
         
         this.controller.gameStart();
+    }
+    
+    public void displayBullets(final Map<Vector, Direction> bullets) {
+    	this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+    	this.mainGroup.getChildren().clear();	//TODO: correct, I can't remove every node in every gametick...
+    	this.mainGroup.getChildren().addAll(this.bulletsView.getImageViews());
     }
 
     public static void run(final String... args) {

@@ -39,7 +39,7 @@ public class BulletsController {
 				b.tick();
 			}
 			if (!this.bullets.isEmpty()) {
-				System.out.println(this.bullets);
+				//System.out.println(this.bullets);
 			}
 		});
 		
