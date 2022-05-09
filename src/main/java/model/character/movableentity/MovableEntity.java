@@ -8,6 +8,11 @@ import util.Vector;
  * */
 public abstract class MovableEntity extends Entity {
 
+    public enum Crouch {
+        DC,/*crawl could be everything*/ 
+        FALSE, /*crawl has to be false*/
+        TRUE; /*crawl has to be true*/
+    }
     /**
      * Represent the entity intention to go left
      * */
@@ -23,7 +28,13 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * Represent the entity intention to crawl
 	 * */
-	private boolean crawl;
+	private boolean crouchKey;
+	
+	private boolean crouch;
+	
+	private Crouch crouchCondition = Crouch.DC;
+	
+	
 	/**
 	 * Represent if the entity has to fall or not
 	 * */
@@ -95,26 +106,30 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * @return the entity's intention to crawl
 	 * */
-	public boolean isCrawling() {
-		return this.crawl;
+	public boolean isCrouching() {
+		return this.crouch;
 	}
 
 	/**
-	 * Sets the field crawl to @crawl
+	 * Sets the field crawl to @crawl and changes the hitbox's dimension
 	 * */
-    public void setCrawl(final boolean crawl) {
-        if (crawl != this.crawl && !this.fall) {
-            if (crawl) {
-                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
-                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
-            } else {
-                super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-                super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
-            }
-            this.crawl = crawl;
-        }
-    }
 
+    public void setCrouchKey(final boolean crouchKey) {
+        this.crouchKey = crouchKey;
+    }
+    
+    public boolean isCrouchKey() {
+        return this.crouchKey;
+    }
+    
+    public void setCrouchCondition(final Crouch crouchCondition) {
+        this.crouchCondition = crouchCondition;
+    }
+    
+    public Crouch getCrouchCondition() {
+        return this.crouchCondition;
+    }
+    
 	/**
 	 * @return if the entity has to fall or not (used to keep it from falling through the ground)
 	 * */
@@ -148,6 +163,9 @@ public abstract class MovableEntity extends Entity {
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
+	    if (this.crouchCondition != Crouch.TRUE) {
+	        this.setCrouchCondition(Crouch.DC);
+	    }
 		final Vector update = new Vector();
 		if (this.right && !this.left) {
 			update.setX(EnvironmentConstants.getHorizontalAcceleration());
@@ -157,19 +175,46 @@ public abstract class MovableEntity extends Entity {
 			update.setX(this.decelerate());
 		}
 		if (this.jump && !this.fall) {
-		    this.setCrawl(false);
 			this.fall = true;
 			update.setY(EnvironmentConstants.getJump());
 		}
 		if (this.fall) {
+            this.setCrouchCondition(Crouch.FALSE);
 			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
 		this.speed.sum(update);
 		this.maxSpeedCheck();
 		super.setPosition(super.getPosition().getX() + this.speed.getX(),
 				          super.getPosition().getY() + this.speed.getY());
+		this.setCrouch();
 	}
 	
+	private void setCrouch() {
+	    if (this.crouchCondition == Crouch.DC && this.isCrouching() != this.crouchKey) {
+	        this.crouch = this.crouchKey; 
+	        if (this.crouchKey) {
+	            this.decreaseHitbox();
+	        } else {
+	            this.increaseHitbox();
+	        }
+	    } else if (this.crouchCondition == Crouch.FALSE && this.isCrouching()) {
+	        increaseHitbox();
+	        this.crouch = false;
+	    } else if (this.crouchCondition == Crouch.TRUE && !this.isCrouching()) {
+	        decreaseHitbox();
+	        this.crouch = true;
+	    }
+	}
+	
+	private void increaseHitbox() {
+	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
+        super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
+	}
+	
+	private void decreaseHitbox() {
+	    super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
+	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
+	}
 	//TODO make code less ugly
 	
 	private void maxSpeedCheck() {
@@ -191,7 +236,9 @@ public abstract class MovableEntity extends Entity {
 	public void reset() {
 		this.left = false;
 		this.right = false;
-		this.crawl = false;
+		this.crouch = false;
+		this.crouchKey = false;
+		this.crouchCondition = Crouch.DC;
 		this.jump = false;
 		this.fall = false;
 		this.speed = new Vector();

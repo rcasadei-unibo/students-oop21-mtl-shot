@@ -42,6 +42,7 @@ public class Controller {
 							
 							// Check for colliding bullets
 					    playerController.check();
+					    
 					}
 				}));
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -72,7 +73,7 @@ public class Controller {
 		    playerController.getPlayer().setJump(true);
 		}
 		if (key == KeyCode.S) {
-		    playerController.getPlayer().setCrawl(true);
+		    playerController.getPlayer().setCrouchKey(true);
 		}
 	}
 	
@@ -87,7 +88,7 @@ public class Controller {
 		    playerController.getPlayer().setJump(false);
 		}
 		if (key == KeyCode.S) {
-		    playerController.getPlayer().setCrawl(false);
+		    playerController.getPlayer().setCrouchKey(false);
 		}
 	}
 	

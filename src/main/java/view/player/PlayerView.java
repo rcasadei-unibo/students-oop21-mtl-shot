@@ -14,7 +14,7 @@ public class PlayerView {
 	private final Image playerIcon;
 	private final Image playerCrawlIcon;
 	private final double playerSize;
-	private boolean crawl;
+	private boolean crouch;
 	
 	public PlayerView(final double playerSize) throws FileNotFoundException {
 		playerIcon = new Image(new FileInputStream("src\\main\\resources\\pleier.png"));
@@ -25,15 +25,15 @@ public class PlayerView {
 		this.playerSize = playerSize;
 	}
 	
-    public void updatePlayer(final Vector position, final boolean crawl) {
+    public void updatePlayer(final Vector position, final boolean crouch) {
     	playerImageView.setX(position.getX()*playerSize*MapConstants.getTilesize());
     	playerImageView.setY(position.getY()*playerSize*MapConstants.getTilesize());
-    	if (crawl && crawl != this.crawl) {
+    	if (crouch && crouch != this.crouch) {
     	    playerImageView.setImage(playerCrawlIcon);
-    	} else if (!crawl && crawl != this.crawl){
+    	} else if (crouch != this.crouch) {
     	    playerImageView.setImage(playerIcon);
     	}
-    	this.crawl = crawl;
+    	this.crouch = crouch;
     }
 
 	public ImageView getPlayerImageView() {

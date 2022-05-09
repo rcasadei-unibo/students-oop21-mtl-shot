@@ -4,6 +4,7 @@ import controller.map.MapController;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.movableentity.EnvironmentConstants;
+import model.character.movableentity.MovableEntity.Crouch;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
 import view.player.PlayerView;
@@ -28,6 +29,7 @@ public class PlayerController {
 
 	public void check() {
 		player.setFall(true);
+		player.setCrouchCondition(Crouch.DC);
 		final Vector nextPos = new Vector(player.getPosition());
         nextPos.sum(player.getSpeed());
         if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
@@ -43,18 +45,15 @@ public class PlayerController {
             player.setSpeed(EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
         } else if (this.isCollidingRight(nextPos) && player.isRight()) {
             player.setSpeed(-EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
+        }        
+        if (this.isCollidingUp(new Vector(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY())) &&
+                player.isCrouching()) {
+            player.setCrouchCondition(Crouch.TRUE);
+            player.setJump(false);
         }
-        this.crawlingCheck(nextPos);
-		player.moveEntity();
-		playerView.updatePlayer(player.getPosition(), player.isCrawling());
+        player.moveEntity();
+		playerView.updatePlayer(player.getPosition(), player.isCrouching());
 	}
-
-	private void crawlingCheck(final Vector nextPos) {
-        if (!player.isCrawling() && this.isCollidingUp(nextPos)) {
-            player.setCrawl(true);
-        }
-        
-    }
 
 	private boolean isCollidingLeft(final Vector nextPos) {
 	    final Vector botLeft = new Vector(0, player.getHitbox().getY()-DELTA);
