@@ -123,6 +123,10 @@ public class TemporaryController {
 		return Set.of(this.player, this.dummy);
 	}
 	
+	/*
+	 * Returns a map where every entry represents
+	 * a bullet's position and direction
+	 */
 	public Map<Vector, Direction> getBullets() {
 		Map<Vector, Direction> ret = new HashMap<>();
 		
