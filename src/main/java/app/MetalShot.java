@@ -3,6 +3,7 @@ package app;
 import controller.TemporaryController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -15,14 +16,12 @@ public final class MetalShot extends Application {
 	
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final Label message = new Label("Hello, JavaFX!"); 
-        message.setFont(new Font(100));
-        
-        ImageView iv = new ImageView();
         
         this.controller = new TemporaryController(this);
         
-        var s = new Scene(message);
+        var g = new Group();
+        
+        var s = new Scene(g);
         s.setOnKeyPressed(new EventHandler<KeyEvent>() {
         	
 			@Override
@@ -32,6 +31,7 @@ public final class MetalShot extends Application {
 			
         });
         
+        primaryStage.setFullScreen(true);
         primaryStage.setScene(s);
         primaryStage.setTitle("Hello");
         primaryStage.show();
