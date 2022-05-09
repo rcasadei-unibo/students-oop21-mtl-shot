@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import app.MetalShot;
@@ -119,5 +121,15 @@ public class TemporaryController {
 	 */
 	public Set<Character> getAllCharacters() {
 		return Set.of(this.player, this.dummy);
+	}
+	
+	public Map<Vector, Direction> getBullets() {
+		Map<Vector, Direction> ret = new HashMap<>();
+		
+		for (var b : this.bulletsController.getBullets()) {
+			ret.put(b.getPosition(), b.getDirection());
+		}
+		
+		return ret;
 	}
 }

@@ -78,4 +78,8 @@ public class BulletsController {
 		// TODO: implementation based on Map implementation
 		return Optional.empty();
 	}
+	
+	public List<Bullet> getBullets() {
+		return List.copyOf(this.bullets);
+	}
 }
