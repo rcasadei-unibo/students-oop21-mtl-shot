@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 
 import controller.Controller;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,25 +30,13 @@ public final class MetalShot extends Application {
     	
     	this.enemy = new ImageView(new Image(input));
     	
-    	StackPane root = new StackPane();
+    	final Group mainGroup = new Group(enemy);
     	
     	System.out.println(enemy.getX());
     	
-    	
-    	root.getChildren().add(enemy);
-        primaryStage.setScene(new Scene(root,1000,500));
+        primaryStage.setScene(new Scene(mainGroup,1000,500));
         primaryStage.setTitle("Hello");
         primaryStage.show();
-        
-
-    	/*for(int i = 0; i<10;i++) {
-        	circle.setTranslateX(i*50);
-        }
-        
-    	System.out.println(circle.getCenterX());
-    	System.out.println(circle.getLayoutX());
-    	System.out.println(circle.getTranslateX());*/
-        
         
         this.controller.gameStart();
     }

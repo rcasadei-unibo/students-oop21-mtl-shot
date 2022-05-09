@@ -13,11 +13,10 @@ public class RandomBot implements SimpleBot {
 
 	@Override
 	public void move() {
-//		boolean dir = new Random().nextBoolean();
-//		System.out.println(dir ? "right" : "left");
-//		entity.setRight(dir);
-//		entity.setLeft(!dir);
-		entity.setRight(true);
+		boolean dir = new Random().nextBoolean();
+		System.out.println(dir ? "right" : "left");
+		entity.setRight(dir);
+		entity.setLeft(!dir);
 		entity.moveEntity();
 	}
 	
