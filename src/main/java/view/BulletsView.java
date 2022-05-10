@@ -21,7 +21,6 @@ public class BulletsView {
 	}
 	
     public void updateBullets(final List<Vector> bullets) {
-    	System.out.println("updateBullets(): " + bullets.toString());
     	this.imageViewList.clear();
     	for (var v : bullets) {
     		var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
