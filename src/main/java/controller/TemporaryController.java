@@ -87,12 +87,12 @@ public class TemporaryController {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
-		if (turn) {	
+		if (key.equals(KeyCode.E)) {
 			if (this.weaponController.tryToShoot(this.player)) {
 				this.bulletsController.addBullet(this.player);
 			}
 			this.turn = false;
-		} else {
+		} else if (key.equals(KeyCode.Q)) {
 			if (this.weaponController.tryToShoot(this.dummy)) {
 				this.bulletsController.addBullet(this.dummy);
 			}
