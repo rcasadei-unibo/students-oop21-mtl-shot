@@ -17,6 +17,9 @@ public abstract class Weapon {
 	 */
 	private int bulletsInMag;
 	
+	/*
+	 * The amount of damage every bullet does when hits a Character
+	 */
 	private int damagePerBullet;
 	
 	/*

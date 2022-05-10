@@ -8,12 +8,6 @@ import java.util.stream.Collectors;
 import model.character.Character;
 import model.weapons.Bullet;
 
-/*
- * This is a temporary class made to test the
- * bullet's behavior.
- * 
- * THIS COMMENTS NEEDS TO BE CLEANED!
- */
 public class BulletsController {
 	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
 	private TemporaryController controllerReference;
