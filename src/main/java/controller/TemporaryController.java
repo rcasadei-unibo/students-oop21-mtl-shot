@@ -91,13 +91,15 @@ public class TemporaryController {
 			if (this.weaponController.tryToShoot(this.player)) {
 				this.bulletsController.addBullet(this.player);
 			}
-			this.turn = false;
 		} else if (key.equals(KeyCode.Q)) {
 			if (this.weaponController.tryToShoot(this.dummy)) {
 				this.bulletsController.addBullet(this.dummy);
 			}
-			this.turn = true;
+		} else if (key.equals(KeyCode.R)) {
+			this.player.getWeapon().reload();
+			this.dummy.getWeapon().reload();
 		}
+		
 	}
 	
 	public void keyReleased(final KeyCode key) {
