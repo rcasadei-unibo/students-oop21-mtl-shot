@@ -12,23 +12,23 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the max vertical speed (in module) reachable in this environment
 	 * */
-	private static double maxVerticalSpeed = 0.06;
+	private static double maxVerticalSpeed = 0.02;
 	/**
 	 * Field that represents the speed reached by the jumping subjects in this environment
 	 * */
-	private static double jump = -0.06;
+	private static double jump = -0.02;
 	/**
 	 * Field that represents the horizontal deceleration (in module) in this environment
 	 * */
-	private static double deceleration = 0.005;
+	private static double deceleration = 0.000_05;
 	/**
 	 * Field that represents the horizontal acceleration (in module) in this environment
 	 * */
-	private static double horizontalAcceleration = 0.005;
+	private static double horizontalAcceleration = 0.000_05;
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
-	private static double gravity = 0.0003;
+	private static double gravity = 0.000_03;
 	
 	private EnvironmentConstants() {}
 

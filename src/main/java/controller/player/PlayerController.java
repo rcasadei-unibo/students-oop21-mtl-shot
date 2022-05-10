@@ -14,10 +14,15 @@ public class PlayerController {
 	private final Player player;
 	private final PlayerView playerView;
 	private final MapController mapController;
-	private final static double DELTA = 0.1; //Constant used to have a shift from the hitbox corners
+	private final static double DELTA = 0.21; //Constant used to have a shift from the hitbox corners
 	private final static Vector HITBOXSHIFT = new Vector(0.2, 0.3); 
 	//Constant used to have the shift from the playerPos to the hitbox pos 
-	//(player should penetrate at least a bit the field with the head and the arms 
+	//(player should penetrate at least a bit the field with the head and the arms)
+	//imageWidth = HITBOXSHIFT.x * 2 + hitbox.x
+	//imageHeight = HITBOXSHIFT.y + hitbox.y
+	//DELTA > HITBOXSHIFT.x
+	//Il replacing al momento del crouch non funziona più in questo modo
+	//TROPPE CONDIZIONI DI ESISTENZA, MEGLIO WRAPPARLE NELLA HITBOX (?)
 
 	public PlayerController(final PlayerView playerView, final MapController mapController) {
 	    this.playerView = playerView;
