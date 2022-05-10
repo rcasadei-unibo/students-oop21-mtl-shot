@@ -1,5 +1,4 @@
 package controller;
-
 import javax.swing.text.html.parser.Entity;
 
 import app.MetalShot;
@@ -16,15 +15,16 @@ import model.character.tools.health.SimpleHealth;
 import util.Vector;
 
 public class Controller {
-	private Timeline gameLoop;
+	private final Timeline gameLoop;
 	
 	//Instance of model (Stage?)
-	private final MetalShot viewReference;	
+	private final MetalShot viewReference;
 	
 	public Controller(final MetalShot viewReference) {
 		
 		//SBAGLIATO, SOLO TEMPORANEO!!!!
 		SimpleBot brain = new RandomBot();
+		brain.getEntity().setPosition(825, 0);
 		
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
@@ -39,10 +39,8 @@ public class Controller {
 						viewReference.setCirclePos(brain.getEntity().getPosition());
 						System.out.println("Entity POS: " + brain.getEntity().getPosition());
 						System.out.println("Actual POS: " + viewReference.getX());
-						//viewReference.setCirclePos(new Vector(num++,0));
-						
+						//viewReference.setCirclePos(new Vector(num++,0));						
 					}
-					
 				}));
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
 	}
@@ -58,14 +56,6 @@ public class Controller {
 	}
 	
 	public void gameReset() {
-		// TODO
-	}
-	
-	public void keyPressed(final KeyCode key) {
-		// TODO
-	}
-	
-	public void keyReleased(final KeyCode key) {
 		// TODO
 	}
 	

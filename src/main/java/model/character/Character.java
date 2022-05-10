@@ -1,6 +1,6 @@
 package model.character;
 
-import model.character.movableEntity.MovableEntity;
+import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
 import util.Vector;

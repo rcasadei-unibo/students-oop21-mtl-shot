@@ -3,7 +3,7 @@ package controller.enemy;
 import java.util.Random;
 
 import model.character.Enemy;
-import model.character.movableEntity.MovableEntity;
+import model.character.movableentity.MovableEntity;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
 
