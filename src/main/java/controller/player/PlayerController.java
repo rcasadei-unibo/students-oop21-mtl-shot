@@ -14,13 +14,16 @@ public class PlayerController {
 	private final Player player;
 	private final PlayerView playerView;
 	private final MapController mapController;
-	private final static double DELTA = 0.3;
+	private final static double DELTA = 0.1; //Constant used to have a shift from the hitbox corners
+	private final static Vector HITBOXSHIFT = new Vector(0.2, 0.3); 
+	//Constant used to have the shift from the playerPos to the hitbox pos 
+	//(player should penetrate at least a bit the field with the head and the arms 
 
 	public PlayerController(final PlayerView playerView, final MapController mapController) {
 	    this.playerView = playerView;
 	    this.mapController = mapController;
 		player = new PlayerBuilder()
-				.hitbox(new Vector(1.01, 1.5))
+				.hitbox(new Vector(0.6, 0.7))
 				.position(mapController.getPlayerSpawn())
 				.health(new SimpleHealth())
 				.lives(3)
@@ -32,6 +35,7 @@ public class PlayerController {
 		player.setCrouchCondition(Crouch.FREE);
 		final Vector nextPos = new Vector(player.getPosition());
         nextPos.sum(player.getSpeed());
+        nextPos.sum(HITBOXSHIFT);
         if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
             player.setSpeed(player.getSpeed().getX(), 0);
         }
@@ -45,9 +49,9 @@ public class PlayerController {
             player.setSpeed(EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
         } else if (this.isCollidingRight(nextPos) && player.isRight()) {
             player.setSpeed(-EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
-        }        
-        if (this.isCollidingUp(new Vector(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY())) &&
-                player.isCrouching()) {
+        }
+        if (this.isCollidingUp(new Vector(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
+                && player.isCrouching()) {
             player.setCrouchCondition(Crouch.DOWN);
             player.setJump(false);
         }

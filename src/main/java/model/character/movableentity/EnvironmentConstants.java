@@ -1,5 +1,4 @@
 package model.character.movableentity;
-
 /**
  * This is a static class where all the main environment constants are contained.
  * The constants can be modified to fit any possible environment
@@ -13,7 +12,7 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the max vertical speed (in module) reachable in this environment
 	 * */
-	private static double maxVerticalSpeed = 3;
+	private static double maxVerticalSpeed = 0.06;
 	/**
 	 * Field that represents the speed reached by the jumping subjects in this environment
 	 * */
@@ -21,11 +20,11 @@ public final class EnvironmentConstants {
 	/**
 	 * Field that represents the horizontal deceleration (in module) in this environment
 	 * */
-	private static double deceleration = 0.5;
+	private static double deceleration = 0.005;
 	/**
 	 * Field that represents the horizontal acceleration (in module) in this environment
 	 * */
-	private static double horizontalAcceleration = 0.01;
+	private static double horizontalAcceleration = 0.005;
 	/**
 	 * Field that represents the vertical acceleration in this environment
 	 * */
