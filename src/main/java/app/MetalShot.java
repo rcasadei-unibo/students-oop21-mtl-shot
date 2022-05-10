@@ -51,7 +51,6 @@ public final class MetalShot extends Application {
     }
     
     public void displayBullets(final Map<Vector, Direction> bullets) {
-    	//this.mainGroup.getChildren().clear();	//TODO: correct, I can't remove every node in every gametick...
     	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
     	this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
     	this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
