@@ -44,7 +44,7 @@ public class Bullet extends Entity {
 				new Vector(5, 5));		// TODO: change magic numbers
 		this.owner = owner;
 		this.direction = owner.getAim().getDirection();
-		this.speed = 1.2;
+		this.speed = 3.2;
 		this.hit = false;
 		this.damage = owner.getWeapon().getDamagePerBullet();
 	}
