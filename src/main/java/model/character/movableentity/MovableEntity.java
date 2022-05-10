@@ -12,9 +12,9 @@ public abstract class MovableEntity extends Entity {
      * Delineates the conditions which limit the entity's crouching capabilities
      */
     public enum Crouch {
-        DC,/*Crouch could be everything*/ 
-        FALSE, /*Crouch has to be false*/
-        TRUE; /*Crouch has to be true*/
+        FREE,/*Crouch could be everything*/ 
+        UP, /*Crouch has to be false*/
+        DOWN; /*Crouch has to be true*/
     }
     /**
      * Represent the entity intention to go left
@@ -39,7 +39,7 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * Delineates the conditions which limit the entity's crouching capabilities
 	 */
-	private Crouch crouchCondition = Crouch.DC;
+	private Crouch crouchCondition = Crouch.FREE;
 	/**
 	 * Represent if the entity has to fall or not
 	 * */
@@ -157,8 +157,8 @@ public abstract class MovableEntity extends Entity {
 	 * The main method that reads all the boolean fields, updates the speed and updates the current position
 	 * */
 	public void moveEntity() {
-	    if (this.crouchCondition != Crouch.TRUE) {
-	        this.setCrouchCondition(Crouch.DC);
+	    if (this.crouchCondition != Crouch.DOWN) {
+	        this.setCrouchCondition(Crouch.FREE);
 	    }
 		final Vector update = new Vector();
 		if (this.right && !this.left) {
@@ -173,7 +173,7 @@ public abstract class MovableEntity extends Entity {
 			update.setY(EnvironmentConstants.getJump());
 		}
 		if (this.fall) {
-            this.setCrouchCondition(Crouch.FALSE);
+            this.setCrouchCondition(Crouch.UP);
 			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
 		this.speed.sum(update);
@@ -184,17 +184,17 @@ public abstract class MovableEntity extends Entity {
 	}
 	
 	private void setCrouch() {
-	    if (this.crouchCondition == Crouch.DC && this.isCrouching() != this.crouchKey) {
+	    if (this.crouchCondition == Crouch.FREE && this.isCrouching() != this.crouchKey) {
 	        this.crouch = this.crouchKey; 
 	        if (this.crouchKey) {
 	            this.decreaseHitbox();
 	        } else {
 	            this.increaseHitbox();
 	        }
-	    } else if (this.crouchCondition == Crouch.FALSE && this.isCrouching()) {
+	    } else if (this.crouchCondition == Crouch.UP && this.isCrouching()) {
 	        increaseHitbox();
 	        this.crouch = false;
-	    } else if (this.crouchCondition == Crouch.TRUE && !this.isCrouching()) {
+	    } else if (this.crouchCondition == Crouch.DOWN && !this.isCrouching()) {
 	        decreaseHitbox();
 	        this.crouch = true;
 	    }
@@ -232,7 +232,7 @@ public abstract class MovableEntity extends Entity {
 		this.right = false;
 		this.crouch = false;
 		this.crouchKey = false;
-		this.crouchCondition = Crouch.DC;
+		this.crouchCondition = Crouch.FREE;
 		this.jump = false;
 		this.fall = false;
 		this.speed = new Vector();
