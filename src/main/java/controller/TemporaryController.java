@@ -18,7 +18,6 @@ import model.weapons.P2020;
 import model.weapons.PeaceKeeper;
 import util.Direction;
 import util.Vector;
-import view.sounds.SoundManager;
 
 public class TemporaryController {
 	private Timeline gameLoop;
@@ -31,10 +30,7 @@ public class TemporaryController {
 	private BulletsController bulletsController;
 	private WeaponController weaponController;
 	
-	private SoundManager sounds;
-	
 	public TemporaryController(final MetalShot viewReference) {
-		this.sounds = new SoundManager();
 		
 		var pb = new Player.PlayerBuilder();
 		this.player = pb.position(new Vector(0, 0))
@@ -92,12 +88,10 @@ public class TemporaryController {
 		// TODO
 		if (key.equals(KeyCode.E)) {
 			if (this.weaponController.tryToShoot(this.player)) {
-				this.sounds.playBulletSound();
 				this.bulletsController.addBullet(this.player);
 			}
 		} else if (key.equals(KeyCode.Q)) {
 			if (this.weaponController.tryToShoot(this.dummy)) {
-				this.sounds.playBulletSound();
 				this.bulletsController.addBullet(this.dummy);
 			}
 		} else if (key.equals(KeyCode.R)) {
