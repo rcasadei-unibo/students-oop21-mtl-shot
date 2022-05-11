@@ -32,19 +32,12 @@ public class BulletsController {
 			} else {
 				b.tick();
 			}
-			if (!this.bullets.isEmpty()) {
-				//System.out.println(this.bullets);
-			}
 		});
 		
 		/*
 		 * This line removes from this.bullets bullets that have hit something
 		 */
 		this.bullets = this.bullets.stream().filter(b -> b.hasHit() == false).collect(Collectors.toList());
-		
-		//System.out.print("Player [Position: " + player.getLives() + ", Life: " + "] ");
-		//System.out.print("Bullets: " + bullets.stream().map(b -> b.getPosition()).collect(Collectors.toList()));
-		//System.out.print("\n");
 	}
 	
 	public void addBullet(final Character owner) {

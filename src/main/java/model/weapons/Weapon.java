@@ -50,9 +50,7 @@ public abstract class Weapon {
 	}
 	
 	public void shoot() {
-		if (this.bulletsInMag == 0) {
-			//throw new NoBulletsInMagException()
-		} else {
+		if (this.bulletsInMag != 0) {
 			this.bulletsInMag--;
 		}
 	}
