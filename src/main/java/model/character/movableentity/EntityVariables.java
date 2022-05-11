@@ -3,7 +3,7 @@ package model.character.movableentity;
  * This is a static class where all the main environment constants are contained.
  * The constants can be modified to fit any possible environment
  * */
-public final class EnvironmentConstants {
+public final class EntityVariables {
 	
     /**
      * Field that represents the max horizontal speed (in module) reachable in this environment
@@ -30,7 +30,7 @@ public final class EnvironmentConstants {
 	 * */
 	private static double gravity = 0.000_03;
 	
-	private EnvironmentConstants() {}
+	private EntityVariables() {}
 
 	/**
 	 * @return the max horizontal speed (in module) reachable in this environment
@@ -45,7 +45,7 @@ public final class EnvironmentConstants {
 	 * */
 	public static void setMaxHorizontalSpeed(final double maxHorizontalSpeed) {
 	    moduleCheck(maxHorizontalSpeed);
-		EnvironmentConstants.maxHorizontalSpeed = maxHorizontalSpeed;
+	    EntityVariables.maxHorizontalSpeed = maxHorizontalSpeed;
 	}
 
 	private static void moduleCheck(final double value) {
@@ -67,7 +67,7 @@ public final class EnvironmentConstants {
      * */
 	public static void setMaxVerticalSpeed(final double maxVerticalSpeed) {
 	    moduleCheck(maxVerticalSpeed);
-		EnvironmentConstants.maxVerticalSpeed = maxVerticalSpeed;
+	    EntityVariables.maxVerticalSpeed = maxVerticalSpeed;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class EnvironmentConstants {
 	    if (jump > 0) {
 	        value = -jump;
 	    } //this method doesn't throw an exception because the jump sign depends on which reference system do you use
-		EnvironmentConstants.jump = value;
+	    EntityVariables.jump = value;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public final class EnvironmentConstants {
      * */
 	public static void setDeceleration(final double deceleration) {
 	    moduleCheck(deceleration);
-		EnvironmentConstants.deceleration = deceleration;
+	    EntityVariables.deceleration = deceleration;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public final class EnvironmentConstants {
      * */
 	public static void setHorizontalAcceleration(final double horizontalAcceleration) {
 	    moduleCheck(horizontalAcceleration);
-		EnvironmentConstants.horizontalAcceleration = horizontalAcceleration;
+	    EntityVariables.horizontalAcceleration = horizontalAcceleration;
 	}
 
     /**
@@ -133,7 +133,7 @@ public final class EnvironmentConstants {
      * */
 	public static void setGravity(final double gravity) {
 	    moduleCheck(gravity);
-		EnvironmentConstants.gravity = gravity;
+	    EntityVariables.gravity = gravity;
 	}
 
 }

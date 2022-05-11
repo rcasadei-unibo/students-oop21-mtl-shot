@@ -3,8 +3,7 @@ package controller.player;
 import controller.map.MapController;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
-import model.character.movableentity.EnvironmentConstants;
-import model.character.movableentity.MovableEntity.Crouch;
+import model.character.movableentity.EntityVariables;
 import model.character.tools.health.SimpleHealth;
 import util.Vector2D;
 import view.player.PlayerView;
@@ -35,7 +34,6 @@ public class PlayerController {
 
 	public void check() {
 		player.setFall(true);
-		player.setCrouchCondition(Crouch.FREE);
 		final Vector2D nextPos = new Vector2D(player.getPosition());
         nextPos.add(player.getSpeed());
         nextPos.add(HITBOXSHIFT);
@@ -49,13 +47,12 @@ public class PlayerController {
             }
         }
         if (this.isCollidingLeft(nextPos) && player.isLeft()) {
-            player.setSpeed(EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
+            player.setSpeed(EntityVariables.getHorizontalAcceleration(), player.getSpeed().getY());
         } else if (this.isCollidingRight(nextPos) && player.isRight()) {
-            player.setSpeed(-EnvironmentConstants.getHorizontalAcceleration(), player.getSpeed().getY());
+            player.setSpeed(-EntityVariables.getHorizontalAcceleration(), player.getSpeed().getY());
         }
         if (this.isCollidingUp(new Vector2D(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
                 && player.isCrouching()) {
-            player.setCrouchCondition(Crouch.DOWN);
             player.setJump(false);
         }
         player.moveEntity();
