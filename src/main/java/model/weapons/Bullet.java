@@ -5,11 +5,12 @@ import util.Vector;
 import model.Entity;
 import model.character.Character;
 
-/*
+/**
  * Bullet class models a bullet with its
  * current position, his owner (a reference
  * to the Character who shot it), its movement
  * direction and movement speed.
+ * 
  */
 public class Bullet extends Entity {
 	

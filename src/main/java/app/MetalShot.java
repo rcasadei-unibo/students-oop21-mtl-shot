@@ -18,6 +18,10 @@ import util.Direction;
 import util.Vector;
 import view.BulletsView;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public final class MetalShot extends Application {
 	private TemporaryController controller;
 	private Group mainGroup;
@@ -59,7 +63,12 @@ public final class MetalShot extends Application {
     public static void run(final String... args) {
         launch();
     }
-
+    
+    /**
+     * TODO: write javadoc
+     * @author Andrea Biagini
+     *
+     */
     public static final class Main {
         private Main() {
             // the constructor will never be called directly.

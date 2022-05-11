@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import model.character.Character;
 import model.weapons.Bullet;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public class BulletsController {
 	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
 	private TemporaryController controllerReference;

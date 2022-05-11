@@ -19,6 +19,11 @@ import model.weapons.PeaceKeeper;
 import util.Direction;
 import util.Vector;
 
+/**
+ * TODO: write javadoc
+ * @author Andrea Biagini
+ *
+ */
 public class TemporaryController {
 	private Timeline gameLoop;
 	

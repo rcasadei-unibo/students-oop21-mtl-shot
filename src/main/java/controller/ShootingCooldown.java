@@ -1,12 +1,13 @@
 package controller;
 
-/*
+/**
  * This class models a sort of timer, a counter that
  * is incremented every game tick. This timer has a
  * certain number of total ticks, after which the counter
  * is "over". There's no need to count how many ticks
  * the counter goes over the totalTicks number, so
  * the tick() method can be always called.
+ * 
  */
 public class ShootingCooldown {
 	

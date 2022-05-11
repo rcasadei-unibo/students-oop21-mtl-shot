@@ -10,6 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Vector;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public class BulletsView {
 	private List<ImageView> imageViewList;
 	private final Image BULLET_IMAGE_RIGHT;

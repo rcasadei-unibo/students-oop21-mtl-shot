@@ -5,6 +5,10 @@ import java.util.Map;
 
 import model.character.Character;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public class WeaponController {
 	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
 	private TemporaryController controllerReference;

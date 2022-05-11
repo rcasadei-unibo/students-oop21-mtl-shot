@@ -1,8 +1,9 @@
 package model.weapons;
 
-/*
+/**
  * Weapon class models an infinite-bullets
  * generic weapon
+ * 
  */
 public abstract class Weapon {
 	private final String name;

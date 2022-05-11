@@ -8,6 +8,10 @@ import model.character.tools.health.SimpleHealth;
 import util.Direction;
 import util.Vector;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public class PlayerTest {
 	
 	private final Player player;
