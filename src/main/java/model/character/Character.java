@@ -3,6 +3,7 @@ package model.character;
 import model.character.movableEntity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
+import model.weapons.Weapon;
 import util.Vector;
 
 /**
@@ -21,7 +22,7 @@ public abstract class Character extends MovableEntity {
 	/**
 	 * The weapon held by the character
 	 * */
-	//private Weapon weapon;
+	private Weapon weapon;
 	
 	public Character(final Vector position, final Vector hitbox, final Health health) {
 		super(position, hitbox);
@@ -31,16 +32,16 @@ public abstract class Character extends MovableEntity {
 	/**
 	 * @return the current weapon held by the character
 	 * */
-	/*public Weapon getWeapon() {
+	public Weapon getWeapon() {
 		return this.weapon;
-	}*/
+	}
 
     /**
      * Sets a new weapon for the character
      * */
-	/*public void setWeapon(final Weapon weapon) {
+	public void setWeapon(final Weapon weapon) {
 		this.weapon = weapon;
-	}*/
+	}
 	
 	/**
 	 * @return the character health
