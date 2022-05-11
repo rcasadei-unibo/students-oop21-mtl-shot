@@ -1,10 +1,10 @@
 package model.map.tile;
 
-import util.Vector;
+import util.Vector2D;
 
 public class TileMetal extends AbstractTile {
 	
-	public TileMetal(final Vector position) {
+	public TileMetal(final Vector2D position) {
 		super(position, "src\\main\\resources\\MetalTilesetCompact.png");
 	}
 

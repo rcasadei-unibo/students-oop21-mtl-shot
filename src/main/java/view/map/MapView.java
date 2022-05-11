@@ -9,7 +9,7 @@ import controller.map.MapController;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import util.Vector;
+import util.Vector2D;
 import util.map.MapConstants;
 
 public class MapView {
@@ -17,7 +17,7 @@ public class MapView {
 	private final List<Node> nodes = new LinkedList<>();
 
 	public MapView(final MapController mapController, final double tileSize) throws FileNotFoundException {
-		final List<Vector> list = mapController.getTileables();
+		final List<Vector2D> list = mapController.getTileables();
 		final AutotileManager autotileManager = new AutotileManager(list);
 		for (final var position : list) {
 			//Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,

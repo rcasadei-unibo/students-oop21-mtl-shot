@@ -3,7 +3,7 @@ package model.character;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
-import util.Vector;
+import util.Vector2D;
 
 /**
  * A character is a kind of MovableEntity that also has an health, an aim and a weapon
@@ -26,7 +26,7 @@ public abstract class Character extends MovableEntity {
 	/**
 	 * Character constructor
 	 * */
-	public Character(final Vector position, final Vector hitbox, final Health health) {
+	public Character(final Vector2D position, final Vector2D hitbox, final Health health) {
 		super(position, hitbox);
 		this.health = health;
 		this.aim = new Aim();
@@ -59,6 +59,9 @@ public abstract class Character extends MovableEntity {
 		return this.aim;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + "\n" + 

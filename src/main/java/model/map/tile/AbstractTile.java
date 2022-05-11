@@ -2,19 +2,19 @@ package model.map.tile;
 
 import java.util.Objects;
 
-import util.Vector;
+import util.Vector2D;
 
 public abstract class AbstractTile implements Tile {
 
 	private final String path;
-	private final Vector position;
+	private final Vector2D position;
 
-	public AbstractTile(final Vector position, final String path) {
+	public AbstractTile(final Vector2D position, final String path) {
 		this.position = position;
 		this.path = path;
 	}
 
-	public Vector getPosition(){
+	public Vector2D getPosition(){
 		return this.position;
 	}
 	

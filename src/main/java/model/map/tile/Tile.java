@@ -1,10 +1,10 @@
 package model.map.tile;
 
-import util.Vector;
+import util.Vector2D;
 
 public interface Tile {
 	
-	Vector getPosition();
+	Vector2D getPosition();
 	
     boolean isCollidable();
     

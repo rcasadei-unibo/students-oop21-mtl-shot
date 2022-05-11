@@ -1,10 +1,10 @@
 package model.map.tile;
 
-import util.Vector;
+import util.Vector2D;
 
 public class TileAir extends AbstractTile {
 	
-	public TileAir(final Vector position) {
+	public TileAir(final Vector2D position) {
 		super(position, "src\\main\\resources\\Air.png");
 	}
 

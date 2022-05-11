@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import util.Vector;
+import util.Vector2D;
 import util.map.MapConstants;
 
 public class PlayerView {
@@ -25,7 +25,7 @@ public class PlayerView {
 		this.playerSize = playerSize;
 	}
 	
-    public void updatePlayer(final Vector position, final boolean crouch) {
+    public void updatePlayer(final Vector2D position, final boolean crouch) {
     	playerImageView.setX(position.getX()*playerSize*MapConstants.getTilesize());
     	playerImageView.setY(position.getY()*playerSize*MapConstants.getTilesize());
     	if (crouch && crouch != this.crouch) {

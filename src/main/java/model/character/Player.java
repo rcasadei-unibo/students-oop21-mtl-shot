@@ -1,7 +1,7 @@
 package model.character;
 
 import model.character.tools.health.Health;
-import util.Vector;
+import util.Vector2D;
 
 /**
  * The player is the main character of the game, it can means that can respawn if it dies,
@@ -31,7 +31,7 @@ public class Player extends Character {
 	 * Sets the player position to @position only if it has at least one remaining life
 	 * @throws IllegalStateException if there aren't remaining lives
 	 * */
-	public void respawn(final Vector position) {
+	public void respawn(final Vector2D position) {
 		this.lives--;
 		if (this.lives >= 0) {			
 			super.setPosition(position);
@@ -58,8 +58,8 @@ public class Player extends Character {
 	 * The player builder
 	 * */
 	public static class PlayerBuilder {
-		private Vector hitbox;
-		private Vector position;
+		private Vector2D hitbox;
+		private Vector2D position;
 		private Health health;
 		private int lives;
 		//private Weapon weapon;
@@ -67,7 +67,7 @@ public class Player extends Character {
 		/**
 		 * The method that sets the player hitbox
 		 * */
-		public PlayerBuilder hitbox(final Vector hitbox) {
+		public PlayerBuilder hitbox(final Vector2D hitbox) {
 			this.hitbox = hitbox;
 			return this;
 		}
@@ -75,7 +75,7 @@ public class Player extends Character {
 		/**
 		 * The method that sets the player position
 		 * */
-		public PlayerBuilder position(final Vector position) {
+		public PlayerBuilder position(final Vector2D position) {
 			this.position = position;
 			return this;
 		}

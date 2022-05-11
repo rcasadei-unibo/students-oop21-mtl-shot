@@ -1,7 +1,7 @@
 package model.character.movableentity;
 
 import model.Entity;
-import util.Vector;
+import util.Vector2D;
 /**
  * An extension of the abstract class Entity which also has the ability to move in a 2D world.
  * A MovableEntity can jump, crawl, fall and go left and right.
@@ -47,18 +47,18 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * Field used to create an acceleration and a deceleration
 	 * */
-	private Vector speed;
+	private Vector2D speed;
 	/**
 	 * The movableEntity constructor
 	 * */
-	public MovableEntity(final Vector position, final Vector hitbox) {
+	public MovableEntity(final Vector2D position, final Vector2D hitbox) {
 		super(position, hitbox);
-		this.speed = new Vector();
+		this.speed = new Vector2D();
 	}
 	/**
 	 * A constructor for the movableEntity that already starts with an initial speed (e.g. could be useful for bullets)
 	 * */
-	public MovableEntity(final Vector position, final Vector hitbox, final Vector speed) {
+	public MovableEntity(final Vector2D position, final Vector2D hitbox, final Vector2D speed) {
 		super(position, hitbox);
 		this.speed = speed;
 	}
@@ -143,7 +143,7 @@ public abstract class MovableEntity extends Entity {
 	/**
 	 * @return a vector that represents the actual speed of the entity
 	 * */
-	public Vector getSpeed() {
+	public Vector2D getSpeed() {
 		return this.speed;
 	}
 	/**
@@ -160,7 +160,7 @@ public abstract class MovableEntity extends Entity {
 	    if (this.crouchCondition != Crouch.DOWN) {
 	        this.setCrouchCondition(Crouch.FREE);
 	    }
-		final Vector update = new Vector();
+		final Vector2D update = new Vector2D();
 		if (this.right && !this.left) {
 			update.setX(EnvironmentConstants.getHorizontalAcceleration());
 		} else if (this.left && !this.right) {
@@ -176,7 +176,7 @@ public abstract class MovableEntity extends Entity {
             this.setCrouchCondition(Crouch.UP);
 			update.setY(update.getY() + EnvironmentConstants.getGravity());
 		}
-		this.speed.sum(update);
+		this.speed.add(update);
 		this.maxSpeedCheck();
 		super.setPosition(super.getPosition().getX() + this.speed.getX(),
 				          super.getPosition().getY() + this.speed.getY());
@@ -201,13 +201,13 @@ public abstract class MovableEntity extends Entity {
 	}
 	
 	private void increaseHitbox() {
-	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-        super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()*2));
+	    super.setPosition(new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
+        super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY()*2));
 	}
 	
 	private void decreaseHitbox() {
-	    super.setHitbox(new Vector(super.getHitbox().getX(), super.getHitbox().getY()/2));
-	    super.setPosition(new Vector(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
+	    super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY()/2));
+	    super.setPosition(new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
 	}
 	//TODO make code less ugly
 	
@@ -235,7 +235,7 @@ public abstract class MovableEntity extends Entity {
 		this.crouchCondition = Crouch.FREE;
 		this.jump = false;
 		this.fall = false;
-		this.speed = new Vector();
+		this.speed = new Vector2D();
 	}
 
 	private double decelerate() {
@@ -248,9 +248,11 @@ public abstract class MovableEntity extends Entity {
 		return update;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
-		return super.toString() + "\n" + 
-				"Speed: " + this.speed;
+		return super.toString() +  " SPEED: " + this.speed;
 	}
 }

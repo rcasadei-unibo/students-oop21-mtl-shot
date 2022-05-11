@@ -12,12 +12,12 @@ import model.map.tile.Tile;
 import model.map.tile.TileAir;
 import model.map.tile.TileMetal;
 import model.map.tile.TileStone;
-import util.Vector;
+import util.Vector2D;
 
 public class MapController {
 
 	private final MapModel mapModel;
-	private Vector playerSpawn;
+	private Vector2D playerSpawn;
 
 	public MapController(final TextMap textMap) throws IOException {
 		mapModel = new MapModel();
@@ -28,17 +28,17 @@ public class MapController {
 			while(j < textMap.getWidth()) {
 				final int check = mapTxtInput.read();
 				if(check == '0') {	
-					mapModel.addTile(new TileAir(new Vector(j, i)));
+					mapModel.addTile(new TileAir(new Vector2D(j, i)));
 					j++;
 				} else if(check == '1') {
-					mapModel.addTile(new TileStone(new Vector(j, i)));
+					mapModel.addTile(new TileStone(new Vector2D(j, i)));
 					j++;
 				} else if(check == '2') {
-					mapModel.addTile(new TileMetal(new Vector(j, i)));
+					mapModel.addTile(new TileMetal(new Vector2D(j, i)));
 					j++;
 				} else if(check == 'p')	{
-					mapModel.addTile(new TileAir(new Vector(j, i)));
-					playerSpawn = new Vector(j, i);
+					mapModel.addTile(new TileAir(new Vector2D(j, i)));
+					playerSpawn = new Vector2D(j, i);
 					j++;
 				}
 			}
@@ -46,15 +46,15 @@ public class MapController {
 		mapTxtInput.close();
 	}
 
-	public List<Vector> getTileables(){
+	public List<Vector2D> getTileables(){
 		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).toList();
 	}
 	
-	public List<Vector> getCollidables() {
+	public List<Vector2D> getCollidables() {
 	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
 	}
 
-	public boolean hasSingleCollidable(final Vector position) {
+	public boolean hasSingleCollidable(final Vector2D position) {
 	    final var tmp = mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
                 Math.floor(position.getX())).filter(t -> t.getPosition().getY() == 
                 Math.floor(position.getY())).findFirst();
@@ -64,15 +64,15 @@ public class MapController {
 		return tmp.get().isCollidable();
 	}
 	
-	public Optional<Tile> getTile(final Vector position) {
+	public Optional<Tile> getTile(final Vector2D position) {
 		return mapModel.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
 	
-	public Optional<Tile> getTile(final Vector position, final List<Tile> tileList){
+	public Optional<Tile> getTile(final Vector2D position, final List<Tile> tileList){
 		return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	}
 
-	public Vector getPlayerSpawn() {
+	public Vector2D getPlayerSpawn() {
 		return playerSpawn;
 	}
 
