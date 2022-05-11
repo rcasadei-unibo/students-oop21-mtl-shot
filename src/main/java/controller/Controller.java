@@ -11,9 +11,15 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.character.Enemy;
+import model.character.Player;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
 
+/**
+ * TODO
+ * @author sysosus
+ *
+ */
 public class Controller {
 	private final Timeline gameLoop;
 	
@@ -21,25 +27,25 @@ public class Controller {
 	private final MetalShot viewReference;
 	
 	public Controller(final MetalShot viewReference) {
-		
+
 		//SBAGLIATO, SOLO TEMPORANEO!!!!
 		SimpleBot brain = new RandomBot();
 		brain.getEntity().setPosition(825, 0);
-		
+
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
-				
+
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
-					
+
 					int num = 0;
-					
+
 					@Override
 					public void handle(ActionEvent event) {
 						brain.move();
-						viewReference.setCirclePos(brain.getEntity().getPosition());
+						viewReference.setEnemyPos(brain.getEntity().getPosition());
 						System.out.println("Entity POS: " + brain.getEntity().getPosition());
 						System.out.println("Actual POS: " + viewReference.getX());
-						//viewReference.setCirclePos(new Vector(num++,0));						
+						//viewReference.setCirclePos(new Vector(num++,0));
 					}
 				}));
 		gameLoop.setCycleCount(Timeline.INDEFINITE);
