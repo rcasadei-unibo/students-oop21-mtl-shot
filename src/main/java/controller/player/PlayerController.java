@@ -52,9 +52,9 @@ public class PlayerController {
             }
         }
         if (this.isCollidingLeft(nextPos) && player.isLeft()) {
-            player.setSpeed(EntityVariables.getAcceleration(), player.getSpeed().getY());
+            player.setSpeed(EntityVariables.ACCELERATION, player.getSpeed().getY());
         } else if (this.isCollidingRight(nextPos) && player.isRight()) {
-            player.setSpeed(-EntityVariables.getAcceleration(), player.getSpeed().getY());
+            player.setSpeed(-EntityVariables.ACCELERATION, player.getSpeed().getY());
         }
         if (this.isCollidingUp(new Vector2D(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
                 && player.isCrouching()) {
