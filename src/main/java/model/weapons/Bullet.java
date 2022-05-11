@@ -39,6 +39,10 @@ public class Bullet extends Entity {
 	 */
 	private boolean hit;
 	
+	/**
+	 * TODO: write javadoc.
+	 *
+	 */
 	public Bullet(final Character owner) {
 		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX()/2,
 				owner.getPosition().getY() + owner.getHitbox().getY()/2),
@@ -50,7 +54,7 @@ public class Bullet extends Entity {
 		this.damage = owner.getWeapon().getDamagePerBullet();
 	}
 	
-	/*
+	/**
 	 * Moves the bullet forward. This method is
 	 * called by Controller only when the bullet
 	 * is not colliding with entities or tiles.
