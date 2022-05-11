@@ -1,5 +1,6 @@
 package controller.enemy;
 
+import model.character.Player;
 import model.character.movableentity.MovableEntity;
 /**
  * Bot that make enemy move and take decision
@@ -11,6 +12,8 @@ public interface SimpleBot {
 	 * communicate with the enemy (or MovableEntity) and make it move.
 	 */
 	void move();
+	
+	void setPlayer(Player p);
 	
 	MovableEntity getEntity();
 	

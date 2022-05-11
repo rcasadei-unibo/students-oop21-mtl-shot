@@ -3,6 +3,7 @@ package controller.enemy;
 import java.util.Random;
 
 import model.character.Enemy;
+import model.character.Player;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
@@ -26,6 +27,12 @@ public class RandomBot implements SimpleBot {
 	
 	public MovableEntity getEntity() {
 		return this.entity;
+	}
+
+	@Override
+	public void setPlayer(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -79,7 +79,7 @@ public class Player extends Character {
 			this.position = position;
 			return this;
 		}
-		
+
 		/**
 		 * The method that sets the player health
 		 * */
@@ -87,7 +87,7 @@ public class Player extends Character {
 			this.health = health;
 			return this;
 		}
-		
+
 		/**
 		 * The method that sets the player lives
 		 * */

@@ -2,6 +2,7 @@ package controller;
 import javax.swing.text.html.parser.Entity;
 
 import app.MetalShot;
+import controller.enemy.BasicBot;
 import controller.enemy.RandomBot;
 import controller.enemy.SimpleBot;
 import javafx.animation.KeyFrame;
@@ -11,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.character.Enemy;
+import model.character.Player.PlayerBuilder;
 import model.character.Player;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
@@ -29,8 +31,17 @@ public class Controller {
 	public Controller(final MetalShot viewReference) {
 
 		//SBAGLIATO, SOLO TEMPORANEO!!!!
-		SimpleBot brain = new RandomBot();
+		SimpleBot brain = new BasicBot();
 		brain.getEntity().setPosition(825, 0);
+		
+		Player p = new PlayerBuilder()
+				.health(new SimpleHealth())
+				.hitbox(new Vector(1, 2))
+				.lives(3)
+				.position(new Vector(30,0))
+				.build();
+		
+		brain.setPlayer(p);
 
 		this.viewReference = viewReference;
 		this.gameLoop = new Timeline(
@@ -43,6 +54,7 @@ public class Controller {
 					public void handle(ActionEvent event) {
 						brain.move();
 						viewReference.setEnemyPos(brain.getEntity().getPosition());
+						viewReference.setPlayerPos(p.getPosition());
 						System.out.println("Entity POS: " + brain.getEntity().getPosition());
 						System.out.println("Actual POS: " + viewReference.getX());
 						//viewReference.setCirclePos(new Vector(num++,0));

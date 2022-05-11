@@ -34,7 +34,7 @@ public final class MetalShot extends Application {
     	this.player = new ImageView(new Image(person));
     	this.enemy = new ImageView(new Image(person2));
 
-    	final Group mainGroup = new Group(enemy);
+    	final Group mainGroup = new Group(enemy,player);
 
     	System.out.println(enemy.getX());
 
