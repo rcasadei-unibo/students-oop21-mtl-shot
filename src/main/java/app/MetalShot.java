@@ -33,7 +33,7 @@ public final class MetalShot extends Application {
         final MapView mapView = new MapView(controller.getMapController() , VIEWRESIZE);
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        final Group mainGroup = new Group(totalList);
+        final Group mainGroup = new Group(playerView.getPlayerImageView());
         mainScene = new Scene(mainGroup, 600, 600);
         mainScene.setCamera(camera);
         primaryStage.setScene(mainScene);

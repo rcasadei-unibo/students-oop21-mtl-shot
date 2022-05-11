@@ -21,7 +21,7 @@ public class MapController {
 	private final MapModel mapModel;
 	private Vector playerSpawn;
 
-	public MapController(final TextMap textMap) throws IOException {
+	public MapController(final TextMap textMap, final int offset) throws IOException {
 		mapModel = new MapModel();
 		final File mapTxt = textMap.getFile();
 		final BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
@@ -30,16 +30,16 @@ public class MapController {
 			while(j < textMap.getWidth()) {
 				final int check = mapTxtInput.read();
 				if(check == '0') {	
-					mapModel.addTile(new TileAir(new Vector(j, i)));
+					mapModel.addTile(new TileAir(new Vector(j+offset, i)));
 					j++;
 				} else if(check == '1') {
-					mapModel.addTile(new TileStone(new Vector(j, i)));
+					mapModel.addTile(new TileStone(new Vector(j+offset, i)));
 					j++;
 				} else if(check == '2') {
-					mapModel.addTile(new TileMetal(new Vector(j, i)));
+					mapModel.addTile(new TileMetal(new Vector(j+offset, i)));
 					j++;
 				} else if(check == 'p')	{
-					mapModel.addTile(new TileAir(new Vector(j, i)));
+					mapModel.addTile(new TileAir(new Vector(j+offset, i)));
 					playerSpawn = new Vector(j, i);
 					j++;
 				}

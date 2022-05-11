@@ -24,7 +24,7 @@ public class Controller {
 	
 	public Controller(final MetalShot viewReference) throws IOException {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-	    this.mapController = new MapController(textMap);
+	    this.mapController = new MapController(textMap, 0);
 	    this.viewReference = viewReference;
 	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController); //null -> player view
 		this.gameLoop = new Timeline(
