@@ -12,7 +12,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import util.map.TextMap;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class Controller {
     
     private final PlayerController playerController;

@@ -13,7 +13,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import view.map.MapView;
 import view.player.PlayerView;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public final class MetalShot extends Application {
     
     private PlayerView playerView;
@@ -58,6 +62,11 @@ public final class MetalShot extends Application {
     public PlayerView getPlayerView() {
         return this.playerView;
     }
+    /**
+     * 
+     * @author filippo.gurioli
+     *
+     */
     public static final class Main {
         private Main() {
             // the constructor will never be called directly.

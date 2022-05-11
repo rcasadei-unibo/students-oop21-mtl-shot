@@ -7,7 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import util.Vector2D;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class AutotileManager {
 
 	private final List<Vector2D> tileList;

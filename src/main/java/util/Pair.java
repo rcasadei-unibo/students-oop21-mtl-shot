@@ -1,7 +1,13 @@
 package util;
 
 import java.util.Objects;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ * @param <X>
+ * @param <Y>
+ */
 public class Pair<X, Y> {
 
 	private final X x;

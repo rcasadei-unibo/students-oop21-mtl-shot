@@ -50,9 +50,9 @@ public final class Player extends Character {
         if (this.crouchCondition == Crouch.FREE) {
             super.setCrouch(crouchKey);
         } else if (this.crouchCondition == Crouch.DOWN) {
-            super.setCrouch(false);
-        } else {
             super.setCrouch(true);
+        } else {
+            super.setCrouch(false);
         }
     }
 

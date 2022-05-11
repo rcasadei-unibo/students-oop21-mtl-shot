@@ -13,7 +13,11 @@ import model.map.tile.TileAir;
 import model.map.tile.TileMetal;
 import model.map.tile.TileStone;
 import util.Vector2D;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class MapController {
 
 	private final MapModel mapModel;

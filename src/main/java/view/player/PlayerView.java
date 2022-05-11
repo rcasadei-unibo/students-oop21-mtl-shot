@@ -7,7 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Vector2D;
 import util.map.MapConstants;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class PlayerView {
 
 	private final ImageView playerImageView;

@@ -11,7 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import util.Vector2D;
 import util.map.MapConstants;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class MapView {
 
 	private final List<Node> nodes = new LinkedList<>();
