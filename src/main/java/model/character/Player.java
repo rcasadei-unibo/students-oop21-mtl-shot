@@ -21,7 +21,11 @@ public final class Player extends Character {
         /** Crouch has to be true. */
         DOWN;
     }
-
+    public static final double SLIPPERYCONSTANT = 1;
+    public static final double FRICTIONCONSTANT = 0.1;
+    public static final double FATTYCONSTANT = 1;
+    public static final double LIGHTYCONSTANT = 0.1;
+    public static final double MAXSPEEDREACHABLE = 1;
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.
      */
