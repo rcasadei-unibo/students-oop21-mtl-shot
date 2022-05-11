@@ -52,10 +52,17 @@ public class MapController {
 		return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).collect(Collectors.toList());
 	}
 	
+	public List<Vector> getNonTileables() {
+		return mapModel.getAllTiles().stream().filter(t -> t.isTileable() == false).map(t -> t.getPosition()).collect(Collectors.toList());
+	}
 	public List<Vector> getCollidables() {
 	    return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).collect(Collectors.toList());
 	}
-
+	
+	public List<Vector> getAllTiles(){
+		return mapModel.getAllTiles().stream().map(t -> t.getPosition()).collect(Collectors.toList());
+	}
+	
 	public boolean hasSingleCollidable(final Vector position) {
 	    final var tmp = mapModel.getAllTiles().stream().filter(t -> t.getPosition().getX() == 
                 Math.floor(position.getX())).filter(t -> t.getPosition().getY() == 

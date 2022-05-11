@@ -41,7 +41,7 @@ public class Controller {
 							// Move/shoot enemies (based on Susca's AI)
 							
 							// Check for colliding bullets
-						
+						System.out.println(viewReference.getEntityCount());
 						viewReference.getCamera().setTranslateX((((viewReference.getPlayerView().getPlayerImageView().getX()-192) - viewReference.getCamera().getTranslateX())/20) + viewReference.getCamera().getTranslateX());
 						viewReference.getCamera().setTranslateY((((viewReference.getPlayerView().getPlayerImageView().getY()-192) - viewReference.getCamera().getTranslateY())/20) + viewReference.getCamera().getTranslateY());
 					    playerController.check();
