@@ -177,9 +177,9 @@ public abstract class MovableEntity extends Entity {
     public void moveEntity() {
         final Vector2D update = new Vector2D();
         if (this.right && !this.left) {
-            update.setX(EntityVariables.getHorizontalAcceleration());
+            update.setX(EntityVariables.getAcceleration());
         } else if (this.left && !this.right) {
-            update.setX(-EntityVariables.getHorizontalAcceleration());
+            update.setX(-EntityVariables.getAcceleration());
         } else {
             update.setX(this.decelerate());
         }

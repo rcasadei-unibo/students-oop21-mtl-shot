@@ -7,7 +7,10 @@ import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import util.Direction;
 import util.Vector2D;
-
+/**
+ * 
+ *
+ */
 public class PlayerTest {
 	
 	private final Player player;

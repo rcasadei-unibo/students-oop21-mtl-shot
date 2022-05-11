@@ -6,64 +6,67 @@ package model.character.movableentity;
 public final class EntityVariables {
 	
     /**
-     * Field that represents the max horizontal speed (in module) reachable in this environment
+     * Field that represents the max horizontal speed (in module) reachable in this environment.
      * */
 	private static double maxHorizontalSpeed = 0.01;
 	/**
-	 * Field that represents the max vertical speed (in module) reachable in this environment
+	 * Field that represents the max vertical speed (in module) reachable in this environment.
 	 * */
 	private static double maxVerticalSpeed = 0.02;
 	/**
-	 * Field that represents the speed reached by the jumping subjects in this environment
+	 * Field that represents the speed reached by the jumping subjects in this environment.
 	 * */
 	private static double jump = -0.02;
 	/**
-	 * Field that represents the horizontal deceleration (in module) in this environment
+	 * Field that represents the horizontal deceleration (in module) in this environment.
 	 * */
 	private static double deceleration = 0.000_05;
 	/**
-	 * Field that represents the horizontal acceleration (in module) in this environment
+	 * Field that represents the horizontal acceleration (in module) in this environment.
 	 * */
-	private static double horizontalAcceleration = 0.000_05;
+	private static double acceleration = 0.000_05;
 	/**
-	 * Field that represents the vertical acceleration in this environment
+	 * Field that represents the vertical acceleration in this environment.
 	 * */
 	private static double gravity = 0.000_03;
 	
-	private EntityVariables() {}
-
+	private EntityVariables() {
+	}
+	
 	/**
-	 * @return the max horizontal speed (in module) reachable in this environment
+	 * Gets the max horizontal speed (in module) reachable in this environment.
+	 * @return max horizontal speed
 	 * */
 	public static double getMaxHorizontalSpeed() {
 		return maxHorizontalSpeed;
 	}
 
 	/**
-	 * Sets the max horizontal speed (in module) reachable in this environment
-	 * @throws IllegalArgumentException if @maxHorizontalSpeed is less than 0
+	 * Sets the max horizontal speed (in module) reachable in this environment.
+	 * 
+	 * @throws IllegalArgumentException if max horizontal speed is less than 0
+	 * @param maxHorizontalSpeed
 	 * */
 	public static void setMaxHorizontalSpeed(final double maxHorizontalSpeed) {
 	    moduleCheck(maxHorizontalSpeed);
 	    EntityVariables.maxHorizontalSpeed = maxHorizontalSpeed;
 	}
 
-	private static void moduleCheck(final double value) {
-        if (value < 0) {
-            throw new IllegalArgumentException();
-        }
-    }
 
     /**
-     * @return the max vertical speed (in module) reachable in this environment
+     * Gets the max vertical speed (in module) reachable in this environment.
+     * 
+     * @return max vertical speed
      * */
 	public static double getMaxVerticalSpeed() {
 		return maxVerticalSpeed;
 	}
 
 	/**
-	 * Sets the max vertical speed (in module) reachable in this environment
-     * @throws IllegalArgumentException if @maxVerticalSpeed is less than 0
+	 * Sets the max vertical speed (in module) reachable in this environment.
+	 * 
+     * @throws IllegalArgumentException if maxVerticalSpeed is less than 0
+     * @param maxVerticalSpeed
      * */
 	public static void setMaxVerticalSpeed(final double maxVerticalSpeed) {
 	    moduleCheck(maxVerticalSpeed);
@@ -71,14 +74,18 @@ public final class EntityVariables {
 	}
 
 	/**
-	 * @return the speed reached by the jumping subjects in this environment
+	 * Gets the speed reached by the jumping subjects in this environment.
+	 * 
+	 * @return the jump
 	 * */
 	public static double getJump() {
 		return jump;
 	}
 
 	/**
-	 * Sets the speed reached by the jumping subjects in this environment
+	 * Sets the speed reached by the jumping subjects in this environment.
+	 * 
+	 * @param jump
 	 * */
 	public static void setJump(final double jump) {
 	    double value = jump;
@@ -89,15 +96,19 @@ public final class EntityVariables {
 	}
 
 	/**
-	 * @return the horizontal deceleration (in module) in this environment
+	 * Gets the horizontal deceleration (in module) in this environment.
+	 * 
+	 * @return the horizontal deceleration
 	 * */
 	public static double getDeceleration() {
 		return deceleration;
 	}
 
 	/**
-	 * Sets the horizontal deceleration (in module) in this environment
-     * @throws IllegalArgumentException if @deceleration is less than 0
+	 * Sets the horizontal deceleration (in module) in this environment.
+	 * 
+     * @throws IllegalArgumentException if deceleration is less than 0
+     * @param deceleration
      * */
 	public static void setDeceleration(final double deceleration) {
 	    moduleCheck(deceleration);
@@ -105,35 +116,48 @@ public final class EntityVariables {
 	}
 
 	/**
-	 * @return the horizontal acceleration (in module) in this environment
+	 * Gets the horizontal acceleration (in module) in this environment.
+	 * 
+	 * @return the horizontal acceleration
 	 * */
-	public static double getHorizontalAcceleration() {
-		return horizontalAcceleration;
+	public static double getAcceleration() {
+		return acceleration;
 	}
 
 	/**
-	 * Sets the horizontal acceleration (in module) in this environment
-     * @throws IllegalArgumentException if @horizontalAcceleration is less than 0
+	 * Sets the horizontal acceleration (in module) in this environment.
+	 * 
+     * @throws IllegalArgumentException if horizontal acceleration is less than 0
+     * @param acceleration
      * */
-	public static void setHorizontalAcceleration(final double horizontalAcceleration) {
-	    moduleCheck(horizontalAcceleration);
-	    EntityVariables.horizontalAcceleration = horizontalAcceleration;
+	public static void setAcceleration(final double acceleration) {
+	    moduleCheck(acceleration);
+	    EntityVariables.acceleration = acceleration;
 	}
 
     /**
-     * @return the vertical acceleration in this environment
+     * Gets the vertical acceleration in this environment.
+     * 
+     * @return the gravity
      * */
 	public static double getGravity() {
 		return gravity;
 	}
 
 	/**
-	 * Sets the vertical acceleration in this environment
-     * @throws IllegalArgumentException if @gravity is less than 0
+	 * Sets the vertical acceleration in this environment.
+	 * 
+     * @throws IllegalArgumentException if gravity is less than 0
+     * @param gravity
      * */
 	public static void setGravity(final double gravity) {
 	    moduleCheck(gravity);
 	    EntityVariables.gravity = gravity;
 	}
 
+	private static void moduleCheck(final double value) {
+	    if (value < 0) {
+	        throw new IllegalArgumentException();
+	    }
+	}
 }
