@@ -13,11 +13,10 @@ import model.weapons.Bullet;
  *
  */
 public class BulletsController {
-	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
-	private TemporaryController controllerReference;
+	private Controller controllerReference;
 	private List<Bullet> bullets;
 	
-	public BulletsController(final TemporaryController controllerReference /* final Controller controllerReference TODO UNCOMMENT AFTER MERGING */) {
+	public BulletsController(final Controller controllerReference) {
 		this.controllerReference = controllerReference;
 		this.bullets = new LinkedList<>();
 	}

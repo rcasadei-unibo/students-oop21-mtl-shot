@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import controller.TemporaryController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -25,14 +24,14 @@ import view.BulletsView;
  *
  */
 public final class MetalShot extends Application {
-	private TemporaryController controller;
+	private Controller controller;
 	private Group mainGroup;
 	private BulletsView bulletsView;
 	
     @Override
     public void start(final Stage primaryStage) throws Exception {
         
-        this.controller = new TemporaryController(this);
+        this.controller = new Controller(this);
         
         this.mainGroup = new Group();
         

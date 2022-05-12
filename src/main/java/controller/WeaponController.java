@@ -10,11 +10,10 @@ import model.character.Character;
  *
  */
 public class WeaponController {
-	//private Controller controllerReference; TODO UNCOMMENT AFTER MERGING
-	private TemporaryController controllerReference;
+	private Controller controllerReference;
 	private Map<Character, ShootingCooldown> timers;
 
-	public WeaponController(final TemporaryController controllerReference /* final Controller controllerReference TODO UNCOMMENT AFTER MERGING */) {
+	public WeaponController(final Controller controllerReference) {
 		this.controllerReference = controllerReference;
 		this.timers = new HashMap<>();
 	}

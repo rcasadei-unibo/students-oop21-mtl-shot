@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import app.MetalShot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,29 +11,42 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
+import model.character.Character;
+import util.Direction;
+import util.Vector;
 
+/**
+ * TODO: write javadoc
+ *
+ */
 public class Controller {
 	private Timeline gameLoop;
 	
 	//Instance of model (Stage?)
-	private final MetalShot viewReference;	
+	private final MetalShot viewReference;
+	
+	// Subcontrollers
+	private BulletsController bulletsController;
+	private WeaponController weaponController;
 	
 	public Controller(final MetalShot viewReference) {
 		this.viewReference = viewReference;
+		
+		// Init subcontrollers
+		this.bulletsController = new BulletsController(this);
+		this.weaponController = new WeaponController(this);
+		
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					
 					@Override
 					public void handle(ActionEvent event) {
 						// TODO implement game loop here
-
-							// Move player
-								// Jumping and falling included
-							// Shoot (player)
-							
-							// Move/shoot enemies (based on Susca's AI)
 							
 							// Check for colliding bullets
+							weaponController.controllerTick();
+							bulletsController.controllerTick();
+							viewReference.displayBullets(getBullets());
 					}
 					
 				}));
@@ -52,6 +69,23 @@ public class Controller {
 	
 	public void keyPressed(final KeyCode key) {
 		// TODO
+		if (key.equals(KeyCode.E)) {
+			/*
+			 *     // Shooting sintax
+			 * if (this.weaponController.tryToShoot(this.player)) {
+			 *     this.bulletsController.addBullet(this.player);
+			 * }
+			 * 
+			 */
+			System.out.println("Shooting...");
+		} else if (key.equals(KeyCode.R)) {
+			/*
+			 *     // The player reloads
+			 * this.player.getWeapon().reload();
+			 * 
+			 */
+			System.out.println("Reloading...");
+		}
 	}
 	
 	public void keyReleased(final KeyCode key) {
@@ -68,5 +102,28 @@ public class Controller {
 	
 	public void nextLevel() {
 		// TODO
+	}
+	
+	/*
+	 * Returns every Character (the player, enemies, ...)
+	 * currently in game.
+	 */
+	public Set<Character> getAllCharacters() {
+		// TODO
+		return null;
+	}
+	
+	/*
+	 * Returns a map where every entry represents
+	 * a bullet's position and direction.
+	 */
+	public Map<Vector, Direction> getBullets() {
+		Map<Vector, Direction> ret = new HashMap<>();
+		
+		for (var b : this.bulletsController.getBullets()) {
+			ret.put(b.getPosition(), b.getDirection());
+		}
+		
+		return ret;
 	}
 }
