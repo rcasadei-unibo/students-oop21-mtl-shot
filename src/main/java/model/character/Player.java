@@ -21,10 +21,26 @@ public final class Player extends Character {
         /** Crouch has to be true. */
         DOWN;
     }
+    //!!!!!!!!!!!!!!!!!!!!!!!!!DA RIGUARDARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /**
+     * The coefficient that has to be applied when the player is on a slippery floor.
+     */
     public static final double SLIPPERYCONSTANT = 1;
+    /**
+     * The coefficient that has to be applied when the player is on an adherent floor.
+     */
     public static final double FRICTIONCONSTANT = 0.1;
+    /**
+     * The coefficient that has to be applied when the player is heavier.
+     */
     public static final double FATTYCONSTANT = 1;
+    /**
+     * The coefficient that has to be applied when the player is lighter.
+     */
     public static final double LIGHTYCONSTANT = 0.1;
+    /**
+     * The coefficient that has to be applied when the player is faster.
+     */
     public static final double MAXSPEEDREACHABLE = 1;
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.
@@ -136,7 +152,7 @@ public final class Player extends Character {
     }
 
     /**
-     * The player builder.
+     * The player builder. At the end of the build all fields must be instantiated.
      */
     public static class PlayerBuilder {
         private Vector2D hitbox;
@@ -191,6 +207,8 @@ public final class Player extends Character {
 
         /**
          * The method that sets the player weapon.
+         * 
+         * @param weapon
          */
         /*
          * public PlayerBuilder weapon(final Weapon weapon) { this.weapon = weapon;
@@ -200,8 +218,8 @@ public final class Player extends Character {
          * The method that builds the player with the set up values.
          * 
          * @return the built player
-         * @throws IllegalStateException if at least one is null or if the lives are a
-         *                               negative number.
+         * @throws IllegalStateException if at least one of the fields is null or if the lives are a
+         * negative number.
          */
         public Player build() {
             this.consistencyCheck();

@@ -42,7 +42,9 @@ public abstract class Character extends MovableEntity {
      * @return weapon
      */
     /*
-     * public Weapon getWeapon() { return this.weapon; }
+     * public Weapon getWeapon() { 
+     * return this.weapon; 
+     * }
      */
 
     /**
@@ -51,7 +53,9 @@ public abstract class Character extends MovableEntity {
      * @param weapon
      */
     /*
-     * public void setWeapon(final Weapon weapon) { this.weapon = weapon; }
+     * public void setWeapon(final Weapon weapon) { 
+     * this.weapon = weapon; 
+     * }
      */
 
     /**

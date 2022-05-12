@@ -35,6 +35,7 @@ public abstract class MovableEntity extends Entity {
 
     /**
      * The MovableEntity constructor that sets the position and the hitbox.
+     * 
      * @param position
      * @param hitbox
      */
@@ -227,7 +228,6 @@ public abstract class MovableEntity extends Entity {
         super.setPosition(
                 new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
     }
-    // TODO make code less ugly
 
     private void maxSpeedCheck() {
         if (this.speed.getX() > EntityConstants.MAXHORIZONTALSPEED) {
