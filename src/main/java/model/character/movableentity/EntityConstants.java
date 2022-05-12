@@ -12,7 +12,7 @@ public final class EntityConstants {
 	/**
 	 * Field that represents the max vertical speed (in module) reachable in this environment.
 	 * */
-	public static final double MAXVERTICALSPEED = 0.02;
+	public static final double MAXVERTICALSPEED = 0.08;
 	/**
 	 * Field that represents the speed reached by the jumping subjects in this environment.
 	 * */

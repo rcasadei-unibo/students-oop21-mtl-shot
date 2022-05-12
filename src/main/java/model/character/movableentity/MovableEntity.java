@@ -237,8 +237,8 @@ public abstract class MovableEntity extends Entity {
         }
         if (this.speed.getY() > EntityConstants.MAXVERTICALSPEED) {
             this.speed.setY(EntityConstants.MAXVERTICALSPEED);
-        } else if (this.speed.getY() < -EntityConstants.MAXVERTICALSPEED) {
-            this.speed.setY(-EntityConstants.MAXVERTICALSPEED);
+        } else if (this.speed.getY() < EntityConstants.JUMP) {
+            this.speed.setY(EntityConstants.JUMP);
         }
     }
 

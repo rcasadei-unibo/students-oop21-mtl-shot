@@ -19,8 +19,8 @@ public class PlayerController {
     private final Player player;
     private final PlayerView playerView;
     private final MapController mapController;
-    private final static double DELTA = 0.1; // Constant used to have a shift from the hitbox corners
-    private final static Vector2D HITBOXSHIFT = new Vector2D();
+    private static final double DELTA = 0.2; // Constant used to have a shift from the hitbox corners
+    private static final Vector2D HITBOXSHIFT = new Vector2D();
     // Constant used to have the shift from the playerPos to the hitbox pos
     // (player should penetrate at least a bit the field with the head and the arms)
     // DELTA > HITBOXSHIFT.x
@@ -30,7 +30,7 @@ public class PlayerController {
     public PlayerController(final PlayerView playerView, final Controller controller) {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
-        player = new PlayerBuilder().hitbox(new Vector2D(1, 1.2)).position(mapController.getPlayerSpawn())
+        player = new PlayerBuilder().hitbox(new Vector2D(1, 1)).position(mapController.getPlayerSpawn())
                 .health(new SimpleHealth()).lives(3).build();
     }
 
