@@ -3,7 +3,7 @@ package model.character.movableentity;
  * This is a static class where all the main environment constants are contained.
  * The constants can be modified to fit any possible environment
  * */
-public final class EntityVariables {
+public final class EntityConstants {
 	
     /**
      * Field that represents the max horizontal speed (in module) reachable in this environment.
@@ -30,6 +30,6 @@ public final class EntityVariables {
 	 * */
 	public static final double GRAVITY = 0.000_03;
 	
-	private EntityVariables() {
+	private EntityConstants() {
 	}
 }

@@ -13,22 +13,22 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import view.map.MapView;
 import view.player.PlayerView;
+
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public final class MetalShot extends Application {
-    
+
     private PlayerView playerView;
-    private final static double VIEWRESIZE = 1d;
-    
+    private static final double VIEWRESIZE = 1d;
+
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.playerView = new PlayerView(VIEWRESIZE);
-    	final Controller controller = new Controller(this);
-    	final Scene mainScene;
-        final MapView mapView = new MapView(controller.getMapController() , VIEWRESIZE);
+        final Controller controller = new Controller(this);
+        final Scene mainScene;
+        final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
@@ -42,19 +42,20 @@ public final class MetalShot extends Application {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyPressed(event.getCode());
-            } 
+            }
         });
         mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyReleased(event.getCode());
-            } 
+            }
         });
         mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent event) {}
+            public void handle(final KeyEvent event) {
+            }
         });
     }
-    
+
     public static void run(final String... args) {
         launch();
     }
@@ -62,9 +63,9 @@ public final class MetalShot extends Application {
     public PlayerView getPlayerView() {
         return this.playerView;
     }
+
     /**
      * 
-     * @author filippo.gurioli
      *
      */
     public static final class Main {
@@ -72,7 +73,7 @@ public final class MetalShot extends Application {
             // the constructor will never be called directly.
         }
 
-        public static void main(final String...args) {
+        public static void main(final String... args) {
             Application.launch(MetalShot.class, args);
         }
     }

@@ -177,18 +177,18 @@ public abstract class MovableEntity extends Entity {
     public void moveEntity() {
         final Vector2D update = new Vector2D();
         if (this.right && !this.left) {
-            update.setX(EntityVariables.ACCELERATION);
+            update.setX(EntityConstants.ACCELERATION);
         } else if (this.left && !this.right) {
-            update.setX(-EntityVariables.ACCELERATION);
+            update.setX(-EntityConstants.ACCELERATION);
         } else {
             update.setX(this.decelerate());
         }
         if (this.jump && !this.fall) {
             this.fall = true;
-            update.setY(EntityVariables.JUMP);
+            update.setY(EntityConstants.JUMP);
         }
         if (this.fall) {
-            update.setY(update.getY() + EntityVariables.GRAVITY);
+            update.setY(update.getY() + EntityConstants.GRAVITY);
         }
         this.speed.add(update);
         this.maxSpeedCheck();
@@ -230,24 +230,24 @@ public abstract class MovableEntity extends Entity {
     // TODO make code less ugly
 
     private void maxSpeedCheck() {
-        if (this.speed.getX() > EntityVariables.MAXHORIZONTALSPEED) {
-            this.speed.setX(EntityVariables.MAXHORIZONTALSPEED);
-        } else if (this.speed.getX() < -EntityVariables.MAXHORIZONTALSPEED) {
-            this.speed.setX(-EntityVariables.MAXHORIZONTALSPEED);
+        if (this.speed.getX() > EntityConstants.MAXHORIZONTALSPEED) {
+            this.speed.setX(EntityConstants.MAXHORIZONTALSPEED);
+        } else if (this.speed.getX() < -EntityConstants.MAXHORIZONTALSPEED) {
+            this.speed.setX(-EntityConstants.MAXHORIZONTALSPEED);
         }
-        if (this.speed.getY() > EntityVariables.MAXVERTICALSPEED) {
-            this.speed.setY(EntityVariables.MAXVERTICALSPEED);
-        } else if (this.speed.getY() < -EntityVariables.MAXVERTICALSPEED) {
-            this.speed.setY(-EntityVariables.MAXVERTICALSPEED);
+        if (this.speed.getY() > EntityConstants.MAXVERTICALSPEED) {
+            this.speed.setY(EntityConstants.MAXVERTICALSPEED);
+        } else if (this.speed.getY() < -EntityConstants.MAXVERTICALSPEED) {
+            this.speed.setY(-EntityConstants.MAXVERTICALSPEED);
         }
     }
 
     private double decelerate() {
         double update = -this.speed.getX();
-        if (this.speed.getX() < -EntityVariables.DECELERATION) {
-            update = EntityVariables.DECELERATION;
-        } else if (this.speed.getX() > EntityVariables.DECELERATION) {
-            update = -EntityVariables.DECELERATION;
+        if (this.speed.getX() < -EntityConstants.DECELERATION) {
+            update = EntityConstants.DECELERATION;
+        } else if (this.speed.getX() > EntityConstants.DECELERATION) {
+            update = -EntityConstants.DECELERATION;
         }
         return update;
     }
