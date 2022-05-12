@@ -11,22 +11,46 @@ import util.Vector2D;
 import view.player.PlayerView;
 
 /**
- * 
- *
+ * The player controller. It checks if the player is colliding into the ground, colliding with bullets 
+ * and manages everything about the weapon.
  */
 public class PlayerController {
 
+    /**
+     * The player that has to be controlled.
+     */
     private final Player player;
+    /**
+     * The View part of the player that has to be updated.
+     */
     private final PlayerView playerView;
+    /**
+     * The map controller, used to handle the checks with the ground.
+     */
     private final MapController mapController;
-    private static final double DELTA = 0.2; // Constant used to have a shift from the hitbox corners
-    private static final Vector2D HITBOXSHIFT = new Vector2D();
+    /**
+     * A shift from the hitbox corners.
+     */
+    private static final double DELTA = 0.2; 
+    /**
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME GESTIRLO
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!
+     */
     // Constant used to have the shift from the playerPos to the hitbox pos
     // (player should penetrate at least a bit the field with the head and the arms)
     // DELTA > HITBOXSHIFT.x
     // Il replacing al momento del crouch non funziona più in questo modo
     // TROPPE CONDIZIONI DI ESISTENZA, MEGLIO WRAPPARLE NELLA HITBOX (?)
+    private static final Vector2D HITBOXSHIFT = new Vector2D();
 
+    /**
+     * The player controller constructor: it needs a player representation on a view and a master controller that passes to it 
+     * what it needs.
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DA RIGUARDARE (TOM) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * @param playerView
+     * @param controller
+     */
     public PlayerController(final PlayerView playerView, final Controller controller) {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
@@ -34,6 +58,9 @@ public class PlayerController {
                 .health(new SimpleHealth()).lives(3).build();
     }
 
+    /**
+     * The main method that checks everything about the player.
+     */
     public void check() {
         player.setCrouchCondition(Crouch.FREE);
         player.setFall(true);
@@ -72,6 +99,15 @@ public class PlayerController {
         playerView.updatePlayer(player.getPosition(), player.isCrouching());
     }
 
+    /**
+     * Gets the player who is being controlled. 
+     * 
+     * @return player
+     */
+    public Player getPlayer() {
+        return this.player;
+    }
+
     private boolean isCollidingLeft(final Vector2D nextPos) {
         final Vector2D botLeft = new Vector2D(0, player.getHitbox().getY() - DELTA);
         final Vector2D topLeft = new Vector2D(0, DELTA);
@@ -103,9 +139,4 @@ public class PlayerController {
         botLeft.add(nextPos);
         return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
     }
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
 }

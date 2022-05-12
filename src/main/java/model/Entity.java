@@ -78,6 +78,20 @@ public abstract class Entity {
         this.hitbox = hitbox;
     }
 
+    /**
+     * Sets the hitbox's component of the entity.
+     * 
+     * @param x
+     * @param y
+     */
+    public void setHitbox(final double x, final double y) {
+        if (x <= 0 || y <= 0) {
+            throw new IllegalArgumentException();
+        }
+        this.hitbox.setX(x);
+        this.hitbox.setY(y);
+    }
+
     /*
      * x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1) || x2 <= x1 <= (x2 + w2) && y2
      * <= y1 <= (y2 + h2)

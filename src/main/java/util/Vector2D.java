@@ -156,7 +156,7 @@ public class Vector2D {
      * @return modulus
      */
     public double getModulus() {
-        return Math.sqrt(this.x * this.x + this.y + this.y);
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     /**

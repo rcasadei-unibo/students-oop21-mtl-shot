@@ -22,17 +22,23 @@ public class Controller {
     private final PlayerController playerController;
     private final MapController mapController;
     private final Timeline gameLoop;
+    private static final double FPS = 1000;
 
     // Instance of model (Stage?)
     private final MetalShot viewReference;
 
+    /**
+     * The main controller constructor.
+     * @param viewReference
+     * @throws IOException if the text map is not present
+     */
     public Controller(final MetalShot viewReference) throws IOException {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
         this.mapController = new MapController(textMap);
         this.viewReference = viewReference;
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this); // null ->
                                                                                                          // player view
-        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(0.001), new EventHandler<ActionEvent>() {
+        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
@@ -76,6 +82,9 @@ public class Controller {
         if (key == KeyCode.S) {
             playerController.getPlayer().setCrouchKey(true);
         }
+        if (key == KeyCode.ESCAPE) {
+            this.gamePause();
+        }
     }
 
     public void keyReleased(final KeyCode key) {
@@ -105,7 +114,26 @@ public class Controller {
         // TODO
     }
 
+    /**
+     * Gets the class that handle the map control.
+     * @return MapController
+     */
     public MapController getMapController() {
         return this.mapController;
+    }
+
+    /**
+     * Gets the class that handle the player control.
+     * @return PlayerController
+     */
+    public PlayerController getPlayerController() {
+        return this.playerController;
+    }
+    /**
+     * Gets the view reference.
+     * @return MetalShot
+     */
+    public MetalShot getView() {
+        return this.viewReference;
     }
 }
