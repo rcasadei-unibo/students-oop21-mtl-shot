@@ -9,7 +9,6 @@ import javafx.scene.image.WritableImage;
 import util.Vector2D;
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public class AutotileManager {

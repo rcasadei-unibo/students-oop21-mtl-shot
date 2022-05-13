@@ -31,7 +31,7 @@ public class PlayerController {
     /**
      * A shift from the hitbox corners.
      */
-    private static final double DELTA = 0.2; 
+    private static final double DELTA = 0.01; 
     /**
      * !!!!!!!!!!!!!!!!!!!!!!!!!!!
      * DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME GESTIRLO
@@ -54,8 +54,12 @@ public class PlayerController {
     public PlayerController(final PlayerView playerView, final Controller controller) {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
-        player = new PlayerBuilder().hitbox(new Vector2D(1, 1)).position(mapController.getPlayerSpawn())
-                .health(new SimpleHealth()).lives(3).build();
+        player = new PlayerBuilder()
+                .hitbox(new Vector2D(1, 1))
+                .position(mapController.getPlayerSpawn())
+                .health(new SimpleHealth())
+                .lives(3)
+                .build();
     }
 
     /**

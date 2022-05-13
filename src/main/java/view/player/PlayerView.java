@@ -14,15 +14,18 @@ import util.map.MapConstants;
  */
 public class PlayerView {
 
-    private final PlayerController playerController;
 	private final ImageView playerImageView;
 	private final Image playerIcon;
 	private final Image playerCrawlIcon;
 	private final double playerSize;
 	private boolean crouch;
 	
-	public PlayerView(final PlayerController playerController, final double playerSize) throws FileNotFoundException {
-	    this.playerController = playerController;
+	/**
+	 * 
+	 * @param playerSize
+	 * @throws FileNotFoundException
+	 */
+	public PlayerView(final double playerSize) throws FileNotFoundException {
 		playerIcon = new Image(new FileInputStream("src\\main\\resources\\pleier.png"));
 		playerCrawlIcon = new Image(new FileInputStream("src\\main\\resources\\croulpleier.png"));
 		playerImageView = new ImageView(playerIcon);
@@ -32,8 +35,8 @@ public class PlayerView {
 	}
 	
     public void updatePlayer(final Vector2D position, final boolean crouch) {
-    	playerImageView.setX(position.getX()*playerSize*MapConstants.getTilesize());
-    	playerImageView.setY(position.getY()*playerSize*MapConstants.getTilesize());
+    	playerImageView.setX(position.getX() * playerSize * MapConstants.getTilesize());
+    	playerImageView.setY(position.getY() * playerSize * MapConstants.getTilesize());
     	if (crouch && crouch != this.crouch) {
     	    playerImageView.setImage(playerCrawlIcon);
     	} else if (crouch != this.crouch) {
