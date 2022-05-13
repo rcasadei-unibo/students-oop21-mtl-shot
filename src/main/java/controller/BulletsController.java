@@ -62,7 +62,7 @@ public class BulletsController {
 	 * This method checks if Bullet b
 	 * is colliding with any tile
 	 */
-	private Optional<Character> checkTilesColliding(Bullet b) {
+	private Optional<Character> checkTilesColliding(final Bullet b) {
 		// TODO: implementation based on Map implementation
 		return Optional.empty();
 	}

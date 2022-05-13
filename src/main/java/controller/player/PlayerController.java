@@ -57,7 +57,7 @@ public class PlayerController {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
         player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1.2))
+                .hitbox(new Vector2D(1, 1))
                 .position(mapController.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())

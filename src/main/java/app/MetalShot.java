@@ -36,7 +36,7 @@ public final class MetalShot extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.playerView = new PlayerView(VIEWRESIZE);
-        this.bulletsView = new BulletsView();
+        this.bulletsView = new BulletsView(VIEWRESIZE);
         final Controller controller = new Controller(this);
         final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);

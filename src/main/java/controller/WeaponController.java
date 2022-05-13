@@ -19,7 +19,7 @@ public class WeaponController {
 	}
 
 	public void controllerTick() {
-		this.timers.forEach((c, sc) -> { sc.tick(); });
+		this.timers.forEach((c, sc) -> {sc.tick(); });
 		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 
