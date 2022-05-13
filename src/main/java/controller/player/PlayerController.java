@@ -57,7 +57,7 @@ public class PlayerController {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
         player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
+                .hitbox(new Vector2D(1, 1.2))
                 .position(mapController.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())
@@ -74,41 +74,10 @@ public class PlayerController {
         final Vector2D nextPos = new Vector2D(player.getPosition());
         nextPos.add(player.getSpeed());
         nextPos.add(HITBOXSHIFT);
-        if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
-            player.setSpeed(player.getSpeed().getX(), 0);
-        }
-        if (this.isCollidingDown(nextPos)) {
-            player.setFall(false);
-            if (player.getSpeed().getY() > 0) {
-                player.setSpeed(player.getSpeed().getX(), 0);
-            }
-        }
-        if (this.isCollidingLeft(nextPos) && player.isLeft()) {
-            player.setSpeed(EntityConstants.ACCELERATION, player.getSpeed().getY());
-        } else if (this.isCollidingRight(nextPos) && player.isRight()) {
-            player.setSpeed(-EntityConstants.ACCELERATION, player.getSpeed().getY());
-        }
-        if (this.isCollidingUp(
-                new Vector2D(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
-                && player.isCrouching()) {
-            player.setJump(false);
-        }
-        if (player.isFalling()) {
-            player.setCrouchCondition(Crouch.UP);
-        }
-        if (this.isCollidingUp(
-                new Vector2D(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
-                && player.isCrouching()) {
-            player.setCrouchCondition(Crouch.DOWN);
-            player.setJump(false);
-        }
+        this.movementChecks(nextPos);
         player.moveEntity();
-
-        if (player.isCrouching()) {
-            player.getAim().returnToHorizontal();
-        } else if (!player.isCrouching() && player.getCrouchKey()) {
-            player.getAim().setDirection(Direction.DOWN);
-        }
+        this.aimChecks();
+        this.bulletsChecks();
         playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getAim().getDirection());
     }
 
@@ -119,6 +88,50 @@ public class PlayerController {
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    private void bulletsChecks() {
+        
+    }
+    private void aimChecks() {
+        //if crouching he can't aim at the ground
+        if (player.isCrouching()) {
+            player.getAim().returnToHorizontal();
+        //if fling and pressing the down button he has to aim at the ground
+        } else if (!player.isCrouching() && player.getCrouchKey()) {
+            player.getAim().setDirection(Direction.DOWN);
+        }
+    }
+    private void movementChecks(final Vector2D nextPos) {
+        //Roof collisions
+        if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
+            player.setSpeed(player.getSpeed().getX(), 0);
+        }
+        //Floor collisions
+        if (this.isCollidingDown(nextPos)) {
+            player.setFall(false);
+            if (player.getSpeed().getY() > 0) {
+                player.setSpeed(player.getSpeed().getX(), 0);
+            }
+        }
+        //Left wall collisions
+        if (this.isCollidingLeft(nextPos) /*&& player.isLeft()*/) {
+            player.setSpeed(EntityConstants.ACCELERATION, player.getSpeed().getY());
+        //Right wall collisions
+        } else if (this.isCollidingRight(nextPos) /*&& player.isRight()*/) {
+            player.setSpeed(-EntityConstants.ACCELERATION, player.getSpeed().getY());
+        }
+        //Special case: while fling he can not crouch
+        if (player.isFalling()) {
+            player.setCrouchCondition(Crouch.UP);
+        }
+        //Special case: stuck crouching
+        if (this.isCollidingUp(
+                new Vector2D(player.getPosition().getX(), player.getPosition().getY() - player.getHitbox().getY()))
+                && player.isCrouching()) {
+            player.setCrouchCondition(Crouch.DOWN);
+            player.setJump(false);
+        }
     }
 
     private boolean isCollidingLeft(final Vector2D nextPos) {

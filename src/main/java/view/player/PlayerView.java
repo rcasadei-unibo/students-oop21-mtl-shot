@@ -16,7 +16,6 @@ import util.map.MapConstants;
 public class PlayerView {
 
     private final ImageView playerImageView;
-    private final Image playerIcon;
     private final Image playerCrouchIcon;
     private final Image playerUp;
     private final Image playerDown;
@@ -30,13 +29,12 @@ public class PlayerView {
      * @throws FileNotFoundException
      */
     public PlayerView(final double playerSize) throws FileNotFoundException {
-        playerIcon = new Image(new FileInputStream("src\\main\\resources\\pleier.png"));
         playerCrouchIcon = new Image(new FileInputStream("src\\main\\resources\\croulpleier.png"));
         playerUp = new Image(new FileInputStream("src\\main\\resources\\pleierUP.png"));
         playerDown = new Image(new FileInputStream("src\\main\\resources\\pleierDOWN.png"));
         playerRight = new Image(new FileInputStream("src\\main\\resources\\pleierRIGHT.png"));
         playerLeft = new Image(new FileInputStream("src\\main\\resources\\pleierLEFT.png"));
-        playerImageView = new ImageView(playerIcon);
+        playerImageView = new ImageView(playerRight);
         playerImageView.setScaleX(playerSize);
         playerImageView.setScaleY(playerSize);
         this.playerSize = playerSize;
