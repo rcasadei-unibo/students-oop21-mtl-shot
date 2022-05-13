@@ -14,6 +14,8 @@ import javafx.util.Duration;
 import model.character.Character;
 import util.Direction;
 import util.Vector;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * TODO: write javadoc
@@ -24,6 +26,7 @@ public class Controller {
 	
 	//Instance of model (Stage?)
 	private final MetalShot viewReference;
+	private SoundManager sm;
 	
 	// Subcontrollers
 	private BulletsController bulletsController;
@@ -31,6 +34,8 @@ public class Controller {
 	
 	public Controller(final MetalShot viewReference) {
 		this.viewReference = viewReference;
+		
+		this.sm = new SoundManager();
 		
 		// Init subcontrollers
 		this.bulletsController = new BulletsController(this);
@@ -78,6 +83,7 @@ public class Controller {
 			 * 
 			 */
 			System.out.println("Shooting...");
+			this.sm.playSound(Sounds.BULLET_FIRING);
 		} else if (key.equals(KeyCode.R)) {
 			/*
 			 *     // The player reloads
@@ -85,6 +91,7 @@ public class Controller {
 			 * 
 			 */
 			System.out.println("Reloading...");
+			this.sm.playSound(Sounds.MAIN_THEME);
 		}
 	}
 	
