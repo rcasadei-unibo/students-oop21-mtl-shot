@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import app.MetalShot;
 import controller.map.MapController;
@@ -21,6 +24,8 @@ public class Controller {
 
     private final PlayerController playerController;
     private final MapController mapController;
+	private BulletsController bulletsController;
+	private WeaponController weaponController;
     private final Timeline gameLoop;
     private static final double FPS = 1000;
 
@@ -36,6 +41,8 @@ public class Controller {
         final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
         this.mapController = new MapController(textMap);
         this.viewReference = viewReference;
+		this.bulletsController = new BulletsController(this);
+		this.weaponController = new WeaponController(this);
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this); // null ->
                                                                                                          // player view
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
@@ -49,6 +56,9 @@ public class Controller {
                 // Shoot (player)
                 // Move/shoot enemies (based on Susca's AI)
                 // Check for colliding bullets
+				weaponController.controllerTick();
+				bulletsController.controllerTick();
+				viewReference.displayBullets(getBullets());
                 playerController.check();
             }
         }));
@@ -85,6 +95,23 @@ public class Controller {
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
         }
+		if (key.equals(KeyCode.E)) {
+			/*
+			 *     // Shooting sintax
+			 * if (this.weaponController.tryToShoot(this.player)) {
+			 *     this.bulletsController.addBullet(this.player);
+			 * }
+			 * 
+			 */
+			System.out.println("Shooting...");
+		} else if (key.equals(KeyCode.R)) {
+			/*
+			 *     // The player reloads
+			 * this.player.getWeapon().reload();
+			 * 
+			 */
+			System.out.println("Reloading...");
+		}
     }
 
     public void keyReleased(final KeyCode key) {
@@ -136,4 +163,26 @@ public class Controller {
     public MetalShot getView() {
         return this.viewReference;
     }
+    /*
+	 * Returns every Character (the player, enemies, ...)
+	 * currently in game.
+	 */
+	public Set<Character> getAllCharacters() {
+		// TODO
+		return null;
+	}
+	
+	/*
+	 * Returns a map where every entry represents
+	 * a bullet's position and direction.
+	 */
+	public Map<Vector, Direction> getBullets() {
+		Map<Vector, Direction> ret = new HashMap<>();
+		
+		for (var b : this.bulletsController.getBullets()) {
+			ret.put(b.getPosition(), b.getDirection());
+		}
+		
+		return ret;
+	}
 }

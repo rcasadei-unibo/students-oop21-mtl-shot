@@ -4,6 +4,7 @@ import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
 import util.Vector2D;
+import model.weapons.Weapon;
 
 /**
  * A character is a kind of MovableEntity that also has an health, an aim and a
@@ -22,7 +23,7 @@ public abstract class Character extends MovableEntity {
     /**
      * The weapon held by the character.
      */
-    // private Weapon weapon;
+    private Weapon weapon;
 
     /**
      * Character constructor.
@@ -41,22 +42,22 @@ public abstract class Character extends MovableEntity {
      * 
      * @return weapon
      */
-    /*
-     * public Weapon getWeapon() { 
-     * return this.weapon; 
-     * }
-     */
+    
+    public Weapon getWeapon() { 
+        return this.weapon; 
+    }
+     
 
     /**
      * Sets a new weapon for the character.
      * 
      * @param weapon
      */
-    /*
-     * public void setWeapon(final Weapon weapon) { 
-     * this.weapon = weapon; 
-     * }
-     */
+    
+    public void setWeapon(final Weapon weapon) { 
+        this.weapon = weapon; 
+    }
+    
 
     /**
      * Gets the character health.
@@ -70,7 +71,7 @@ public abstract class Character extends MovableEntity {
     /**
      * Gets the character aim.
      * 
-     * @return aim
+     * @return Aim
      */
     public Aim getAim() {
         return this.aim;

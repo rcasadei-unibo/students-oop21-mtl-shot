@@ -1,9 +1,10 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import controller.Controller;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -57,6 +58,12 @@ public final class MetalShot extends Application {
             public void handle(final KeyEvent event) {
             }
         });
+    }
+    
+    public void displayBullets(final Map<Vector, Direction> bullets) {
+    	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+    	this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+    	this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     public static void run(final String... args) {
