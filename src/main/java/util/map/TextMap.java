@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public class TextMap {

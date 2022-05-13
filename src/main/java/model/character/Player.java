@@ -1,6 +1,7 @@
 package model.character;
 
 import model.character.tools.health.Health;
+import model.weapons.Weapon;
 import util.Vector2D;
 
 /**
@@ -21,13 +22,17 @@ public final class Player extends Character {
         /** Crouch has to be true. */
         DOWN;
     }
-    //!!!!!!!!!!!!!!!!!!!!!!!!!DA RIGUARDARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!DA
+    // RIGUARDARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     /**
-     * The coefficient that has to be applied when the player is on a slippery floor.
+     * The coefficient that has to be applied when the player is on a slippery
+     * floor.
      */
     public static final double SLIPPERYCONSTANT = 1;
     /**
-     * The coefficient that has to be applied when the player is on an adherent floor.
+     * The coefficient that has to be applied when the player is on an adherent
+     * floor.
      */
     public static final double FRICTIONCONSTANT = 0.1;
     /**
@@ -57,7 +62,7 @@ public final class Player extends Character {
     // private final List<Item> items;
 
     private Player(final PlayerBuilder builder) {
-        super(builder.position, builder.hitbox, builder.health/* , builder.weapon */);
+        super(builder.position, builder.hitbox, builder.health, builder.weapon);
         this.lives = builder.lives;
     }
 
@@ -111,6 +116,7 @@ public final class Player extends Character {
     public boolean getCrouchKey() {
         return this.crouchKey;
     }
+
     /**
      * Gets the remaining lives.
      * 
@@ -159,8 +165,8 @@ public final class Player extends Character {
         private Vector2D position;
         private Health health;
         private int lives;
+        private Weapon weapon;
 
-        // private Weapon weapon;
         /**
          * The method that sets the player hitbox.
          * 
@@ -209,17 +215,19 @@ public final class Player extends Character {
          * The method that sets the player weapon.
          * 
          * @param weapon
+         * @return this player builder
          */
-        /*
-         * public PlayerBuilder weapon(final Weapon weapon) { this.weapon = weapon;
-         * return this;
-         */
+        public PlayerBuilder weapon(final Weapon weapon) {
+            this.weapon = weapon;
+            return this;
+        }
+
         /**
          * The method that builds the player with the set up values.
          * 
          * @return the built player
-         * @throws IllegalStateException if at least one of the fields is null or if the lives are a
-         * negative number.
+         * @throws IllegalStateException if at least one of the fields is null or if the
+         *                               lives are a negative number.
          */
         public Player build() {
             this.consistencyCheck();
@@ -227,11 +235,10 @@ public final class Player extends Character {
         }
 
         private void consistencyCheck() {
-            /*
-             * if (this.lives < 0 || this.health == null || this.hitbox == null ||
-             * this.position == null //|| this.weapon == null ) { throw new
-             * IllegalStateException(); }
-             */
+            if (this.lives < 0 || this.health == null || this.hitbox == null || this.position == null
+                    || this.weapon == null) {
+                throw new IllegalStateException();
+            }
         }
     }
 }

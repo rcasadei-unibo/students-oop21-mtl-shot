@@ -31,10 +31,12 @@ public abstract class Character extends MovableEntity {
      * @param position
      * @param hitbox
      * @param health
+     * @param weapon
      */
-    public Character(final Vector2D position, final Vector2D hitbox, final Health health) {
+    public Character(final Vector2D position, final Vector2D hitbox, final Health health, final Weapon weapon) {
         super(position, hitbox);
         this.health = health;
+        this.weapon = weapon;
         this.aim = new Aim();
     }
     /**
@@ -42,22 +44,18 @@ public abstract class Character extends MovableEntity {
      * 
      * @return weapon
      */
-    
     public Weapon getWeapon() { 
         return this.weapon; 
     }
-     
 
     /**
      * Sets a new weapon for the character.
      * 
      * @param weapon
      */
-    
     public void setWeapon(final Weapon weapon) { 
         this.weapon = weapon; 
     }
-    
 
     /**
      * Gets the character health.

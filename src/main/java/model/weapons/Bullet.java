@@ -1,7 +1,7 @@
 package model.weapons;
 
 import util.Direction;
-import util.Vector;
+import util.Vector2D;
 import model.Entity;
 import model.character.Character;
 
@@ -44,9 +44,9 @@ public class Bullet extends Entity {
 	 *
 	 */
 	public Bullet(final Character owner) {
-		super(new Vector(owner.getPosition().getX() + owner.getHitbox().getX()/2,
+		super(new Vector2D(owner.getPosition().getX() + owner.getHitbox().getX()/2,
 				owner.getPosition().getY() + owner.getHitbox().getY()/2),
-				new Vector(5, 5));		// TODO: change magic numbers
+				new Vector2D(5, 5));		// TODO: change magic numbers
 		this.owner = owner;
 		this.direction = owner.getAim().getDirection();
 		this.speed = 3.2;
@@ -62,13 +62,13 @@ public class Bullet extends Entity {
 	public void tick() {
 		// This implementation is in accordance with this (old) implementation of Vector class. TODO: update in the future
 		if (this.direction.equals(Direction.UP)) {
-			super.setPosition(new Vector(super.getPosition().getX(), super.getPosition().getY() - this.speed));
+			super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() - this.speed));
 		} else if (this.direction.equals(Direction.DOWN)) {
-			super.setPosition(new Vector(super.getPosition().getX(), super.getPosition().getY() + this.speed));
+			super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() + this.speed));
 		} else if (this.direction.equals(Direction.LEFT)) {
-			super.setPosition(new Vector(super.getPosition().getX() - this.speed, super.getPosition().getY()));
+			super.setPosition(new Vector2D(super.getPosition().getX() - this.speed, super.getPosition().getY()));
 		} else if (this.direction.equals(Direction.RIGHT)) {
-			super.setPosition(new Vector(super.getPosition().getX() + this.speed, super.getPosition().getY()));
+			super.setPosition(new Vector2D(super.getPosition().getX() + this.speed, super.getPosition().getY()));
 		}
 	}
 
@@ -108,7 +108,7 @@ public class Bullet extends Entity {
 	}
 
 	/**
-	 * Sets hit to true
+	 * Sets hit to true.
 	 */
 	public void hitSomething() {
 		this.hit = true;

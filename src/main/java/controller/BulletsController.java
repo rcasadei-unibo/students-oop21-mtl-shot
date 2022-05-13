@@ -9,7 +9,7 @@ import model.character.Character;
 import model.weapons.Bullet;
 
 /**
- * TODO: write javadoc
+ * TODO: write javadoc.
  *
  */
 public class BulletsController {
@@ -23,9 +23,8 @@ public class BulletsController {
 	
 	public void controllerTick() {
 		bullets.forEach(b -> {
-			var characterColliding = this.checkCharactersColliding(b);
-			var tileColliding = this.checkTilesColliding(b);
-			
+			final var characterColliding = this.checkCharactersColliding(b);
+			final var tileColliding = this.checkTilesColliding(b);
 			if (characterColliding.isPresent()) {
 				b.hitSomething();
 				characterColliding.get().getHealth().hurt(b.getDamage());
@@ -36,7 +35,6 @@ public class BulletsController {
 				b.tick();
 			}
 		});
-		
 		/*
 		 * This line removes from this.bullets bullets that have hit something
 		 */
@@ -51,8 +49,8 @@ public class BulletsController {
 	 * This method checks if Bullet b is colliding with
 	 * any of the current Characters in game
 	 */
-	private Optional<Character> checkCharactersColliding(Bullet b) {
-		for (var c : this.controllerReference.getAllCharacters()) {
+	private Optional<Character> checkCharactersColliding(final Bullet b) {
+		for (final var c : this.controllerReference.getAllCharacters()) {
 			if (b.isColliding(c)) {
 				return Optional.of(c);
 			}

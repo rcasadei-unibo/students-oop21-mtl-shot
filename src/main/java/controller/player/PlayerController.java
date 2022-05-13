@@ -7,6 +7,8 @@ import model.character.Player.Crouch;
 import model.character.Player.PlayerBuilder;
 import model.character.movableentity.EntityConstants;
 import model.character.tools.health.SimpleHealth;
+import model.weapons.P2020;
+import util.Direction;
 import util.Vector2D;
 import view.player.PlayerView;
 
@@ -57,6 +59,7 @@ public class PlayerController {
         player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
                 .position(mapController.getPlayerSpawn())
+                .weapon(new P2020())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
@@ -100,7 +103,13 @@ public class PlayerController {
             player.setJump(false);
         }
         player.moveEntity();
-        playerView.updatePlayer(player.getPosition(), player.isCrouching());
+
+        if (player.isCrouching()) {
+            player.getAim().returnToHorizontal();
+        } else if (!player.isCrouching() && player.getCrouchKey()) {
+            player.getAim().setDirection(Direction.DOWN);
+        }
+        playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getAim().getDirection());
     }
 
     /**

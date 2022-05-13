@@ -1,7 +1,9 @@
 package app;
 
 import controller.Controller;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -12,6 +14,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import util.Direction;
+import util.Vector2D;
+import view.BulletsView;
 import view.map.MapView;
 import view.player.PlayerView;
 
@@ -23,20 +28,22 @@ public final class MetalShot extends Application {
 
     private PlayerView playerView;
     private static final double VIEWRESIZE = 1d;
-
+    private Group mainGroup;
+    private BulletsView bulletsView;
     /**
      * {@inheritDoc}
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.playerView = new PlayerView(VIEWRESIZE);
+        this.bulletsView = new BulletsView();
         final Controller controller = new Controller(this);
         final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        final Group mainGroup = new Group(totalList);
+        this.mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup, 600, 600);
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("メタルショット");
@@ -59,11 +66,15 @@ public final class MetalShot extends Application {
             }
         });
     }
-    
-    public void displayBullets(final Map<Vector, Direction> bullets) {
-    	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-    	this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-    	this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+
+    /**
+     * 
+     * @param bullets
+     */
+    public void displayBullets(final Map<Vector2D, Direction> bullets) {
+        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     public static void run(final String... args) {
