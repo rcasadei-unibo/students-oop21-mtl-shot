@@ -24,7 +24,7 @@ public class WeaponController {
 	}
 
 	public boolean tryToShoot(final Character characterShooting) {
-		if (!this.timers.containsKey(characterShooting) && characterShooting.getWeapon().getBulletsInMag() != 0) {
+		if (!this.timers.containsKey(characterShooting) /*&& characterShooting.getWeapon().getBulletsInMag() != 0*/) {
 			/* If characterShooting is not in this.timers, he can shoot */
 			this.timers.put(characterShooting, new ShootingCooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();

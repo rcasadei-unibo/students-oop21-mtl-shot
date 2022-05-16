@@ -110,7 +110,6 @@ public class Controller {
             }
         } else if (key.equals(KeyCode.R)) {
             this.playerController.getPlayer().getWeapon().reload();
-            System.out.println("Reloading...");
         }
     }
 

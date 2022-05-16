@@ -28,7 +28,7 @@ public class BulletsController {
 			if (characterColliding.isPresent()) {
 				b.hitSomething();
 				characterColliding.get().getHealth().hurt(b.getDamage());
-			} else if (tileColliding.isPresent()) {
+			} else if (this.controllerReference.getMapController().hasSingleCollidable(b.getPosition())) {
 				b.hitSomething();
 				// TODO: if the tile is breakable, tileColliding brakes here
 			} else {
