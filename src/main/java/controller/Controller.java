@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 
 import app.MetalShot;
+import controller.map.LevelController;
 import controller.map.MapController;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
@@ -16,17 +17,16 @@ import util.map.TextMap;
 public class Controller {
     
     private final PlayerController playerController;
-    private final MapController mapController;
 	private final Timeline gameLoop;
+	private final LevelController levelController;
 	
 	//Instance of model (Stage?)
 	private final MetalShot viewReference;
 	
 	public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-	    this.mapController = new MapController(textMap, 0);
+        this.levelController = new LevelController(null);
 	    this.viewReference = viewReference;
-	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), mapController); //null -> player view
+	    this.playerController = new PlayerController(this.viewReference.getPlayerView(), levelController); //null -> player view
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
 					
@@ -106,7 +106,7 @@ public class Controller {
 		// TODO
 	}
 	
-	public MapController getMapController() {
-	    return this.mapController;
+	public LevelController getLevelController() {
+	    return this.levelController;
 	}
 }

@@ -20,9 +20,11 @@ public class MapController {
 
 	private final MapModel mapModel;
 	private Vector playerSpawn;
+	private final TextMap textMap;
 
-	public MapController(final TextMap textMap, final int offset) throws IOException {
+	public MapController(final TextMap textMap, final double offset) throws IOException {
 		mapModel = new MapModel();
+		this.textMap = textMap;
 		final File mapTxt = textMap.getFile();
 		final BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
 		for(int i = 0; i < textMap.getHeight(); i++) {
@@ -83,6 +85,10 @@ public class MapController {
 
 	public Vector getPlayerSpawn() {
 		return playerSpawn;
+	}
+	
+	public TextMap getTextMap() {
+		return this.textMap;
 	}
 
 }

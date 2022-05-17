@@ -1,5 +1,6 @@
 package controller.player;
 
+import controller.map.LevelController;
 import controller.map.MapController;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
@@ -13,15 +14,15 @@ public class PlayerController {
 
 	private final Player player;
 	private final PlayerView playerView;
-	private final MapController mapController;
+	private final LevelController levelController;
 	private final static double DELTA = 0.3;
 
-	public PlayerController(final PlayerView playerView, final MapController mapController) {
+	public PlayerController(final PlayerView playerView, final LevelController levelController) {
 	    this.playerView = playerView;
-	    this.mapController = mapController;
+	    this.levelController = levelController;
 		player = new PlayerBuilder()
 				.hitbox(new Vector(1.25, 2))
-				.position(mapController.getPlayerSpawn())
+				.position(levelController.getPlayerSpawn())
 				.health(new SimpleHealth())
 				.lives(3)
 				.build();
@@ -60,7 +61,7 @@ public class PlayerController {
 	    final Vector topLeft = new Vector(0, DELTA);
 	    botLeft.sum(nextPos);
         topLeft.sum(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
+        return levelController.getController(player.getPosition()).hasSingleCollidable(topLeft) || levelController.getController(player.getPosition()).hasSingleCollidable(botLeft);
 	}
 	
 	private boolean isCollidingRight(final Vector nextPos) {
@@ -68,7 +69,7 @@ public class PlayerController {
         final Vector topRight = new Vector(player.getHitbox().getX(), DELTA);
         botRight.sum(nextPos);
         topRight.sum(nextPos);
-        return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
+        return levelController.getController(player.getPosition()).hasSingleCollidable(topRight) || levelController.getController(player.getPosition()).hasSingleCollidable(botRight);
 	}
 
 	private boolean isCollidingUp(final Vector nextPos) {
@@ -76,7 +77,7 @@ public class PlayerController {
         final Vector topLeft = new Vector(DELTA, 0);
         topLeft.sum(nextPos);
         topRight.sum(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
+        return levelController.getController(player.getPosition()).hasSingleCollidable(topLeft) || levelController.getController(player.getPosition()).hasSingleCollidable(topRight);
 	}
 	
     private boolean isCollidingDown(final Vector nextPos) {
@@ -84,7 +85,7 @@ public class PlayerController {
         final Vector botLeft = new Vector(DELTA, player.getHitbox().getY());
         botRight.sum(nextPos);
         botLeft.sum(nextPos);
-        return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
+        return levelController.getController(player.getPosition()).hasSingleCollidable(botLeft) || levelController.getController(player.getPosition()).hasSingleCollidable(botRight);
     }
 
     public Player getPlayer() {
