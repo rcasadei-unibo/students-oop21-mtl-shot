@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.StageImpl;
 import util.Direction;
 import util.Vector;
 import view.BulletsView;
@@ -27,11 +28,14 @@ public final class MetalShot extends Application {
 	private Controller controller;
 	private Group mainGroup;
 	private BulletsView bulletsView;
+	private StageImpl stage;
 	
     @Override
     public void start(final Stage primaryStage) throws Exception {
         
         this.controller = new Controller(this);
+        
+        this.stage = new Stage();
         
         this.mainGroup = new Group();
         
