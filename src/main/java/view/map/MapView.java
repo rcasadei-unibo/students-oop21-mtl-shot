@@ -15,7 +15,10 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import util.Vector;
 import util.map.MapConstants;
-
+/**
+ * 
+ * 
+ */
 public class MapView {
 
 	private final List<Node> nodes = new LinkedList<>();

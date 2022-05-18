@@ -6,7 +6,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import model.map.tile.Tile;
-
+/**
+ * 
+ * 
+ */
 public class MapModel {
 
 	private final Set<Set<Tile>> map;

@@ -8,7 +8,10 @@ import model.character.movableentity.MovableEntity.Crouch;
 import model.character.tools.health.SimpleHealth;
 import util.Vector;
 import view.player.PlayerView;
-
+/**
+ * 
+ * 
+ */
 public class PlayerController {
 
 	private final Player player;

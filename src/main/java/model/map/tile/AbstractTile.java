@@ -3,7 +3,10 @@ package model.map.tile;
 import java.util.Objects;
 
 import util.Vector;
-
+/**
+ * 
+ * 
+ */
 public abstract class AbstractTile implements Tile {
 
 	private final String path;

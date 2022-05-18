@@ -15,7 +15,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import view.map.MapView;
 import view.player.PlayerView;
-
+/**
+ * 
+ * 
+ */
 public final class MetalShot extends Application {
     
     private PlayerView playerView;
@@ -68,6 +71,10 @@ public final class MetalShot extends Application {
     public PlayerView getPlayerView() {
         return this.playerView;
     }
+    /**
+     * 
+     * 
+     */
     public static final class Main {
         private Main() {
             // the constructor will never be called directly.

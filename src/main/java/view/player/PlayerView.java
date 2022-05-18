@@ -9,7 +9,10 @@ import util.Pair;
 import util.Vector;
 import util.map.MapConstants;
 import util.view.Animation;
-
+/**
+ * 
+ * 
+ */
 public class PlayerView {
 
 	private final ImageView playerImageView;

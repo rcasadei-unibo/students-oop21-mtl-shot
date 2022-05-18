@@ -1,7 +1,10 @@
 package model.map.tile;
 
 import util.Vector;
-
+/**
+ * 
+ * 
+ */
 public class TileMetal extends AbstractTile {
 	
 	public TileMetal(final Vector position) {

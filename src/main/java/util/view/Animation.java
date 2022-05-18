@@ -7,7 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import util.Pair;
-
+/**
+ * 
+ * 
+ */
 public class Animation {
 
 	private int currFrame;

@@ -15,7 +15,10 @@ import model.map.tile.TileAir;
 import model.map.tile.TileMetal;
 import model.map.tile.TileStone;
 import util.Vector;
-
+/**
+ * 
+ * 
+ */
 public class MapController {
 
 	private final MapModel mapModel;
