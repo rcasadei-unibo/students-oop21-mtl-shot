@@ -57,7 +57,7 @@ public class PlayerController {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
         player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
+                .hitbox(new Vector2D(1, 2))
                 .position(mapController.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())
@@ -78,7 +78,7 @@ public class PlayerController {
         player.moveEntity();
         this.aimChecks();
         this.bulletsChecks();
-        playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getAim().getDirection());
+        playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getSpeed(), player.getAim().getDirection());
     }
 
     /**

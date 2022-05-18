@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import util.map.TextMap;
-import model.map.tile.MapModel;
+import model.map.MapModel;
 import model.map.tile.Tile;
 import model.map.tile.TileAir;
 import model.map.tile.TileMetal;

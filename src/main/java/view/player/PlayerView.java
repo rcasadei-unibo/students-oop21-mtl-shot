@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import util.Direction;
 import util.Pair;
-import util.Vector;
+import util.Vector2D;
 import util.map.MapConstants;
 import util.view.Animation;
 /**
@@ -36,14 +36,14 @@ public class PlayerView {
 		playerImageView.setScaleY(playerSize);
 		this.playerSize = playerSize;
 		
-		this.idle = new Animation("src\\main\\resources\\PlayerIdle.png", new Pair<>(64,64), 3, 20);
-		this.walk = new Animation("src\\main\\resources\\PlayerRun.png", new Pair<>(64,64), 7, 10);
-		this.walkup = new Animation("src\\main\\resources\\PlayerAimUpRun.png", new Pair<>(64,64), 7, 10);
-        this.idleup = new Animation("src\\main\\resources\\PlayerIdleUp.png", new Pair<>(64,64), 3, 20);
-        this.idlecrouch = new Animation("src\\main\\resources\\PlayerCrouchIdle.png", new Pair<>(64,64), 3, 20);
+		this.idle = new Animation("src\\main\\resources\\PlayerIdle.png", new Pair<>(64,64), 3, 150);
+		this.walk = new Animation("src\\main\\resources\\PlayerRun.png", new Pair<>(64,64), 7, 50);
+		this.walkup = new Animation("src\\main\\resources\\PlayerAimUpRun.png", new Pair<>(64,64), 7, 50);
+        this.idleup = new Animation("src\\main\\resources\\PlayerIdleUp.png", new Pair<>(64,64), 3, 150);
+        this.idlecrouch = new Animation("src\\main\\resources\\PlayerCrouchIdle.png", new Pair<>(64,64), 3, 150);
 	}
 	
-    public void updatePlayer(final Vector position, final boolean crouch, final Vector speed, final Direction direction) {
+    public void updatePlayer(final Vector2D position, final boolean crouch, final Vector2D speed, final Direction direction) {
     	playerImageView.setX(position.getX()*playerSize*MapConstants.getTilesize());
     	playerImageView.setY(position.getY()*playerSize*MapConstants.getTilesize());
     	switch(direction) {
