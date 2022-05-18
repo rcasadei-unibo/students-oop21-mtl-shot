@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
+/**
+ * 
+ * @author filippo.gurioli
+ *
+ */
 public class MapModel {
 
 	private final Set<Set<Tile>> map;

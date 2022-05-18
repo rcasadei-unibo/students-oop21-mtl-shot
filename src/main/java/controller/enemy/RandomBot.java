@@ -6,7 +6,7 @@ import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.health.SimpleHealth;
-import util.Vector;
+import util.Vector2D;
 /**
  * A SimpleBot that make decision randomly
  * @author Matteo Susca
@@ -14,7 +14,7 @@ import util.Vector;
  */
 public class RandomBot implements SimpleBot {
 	
-	private MovableEntity entity = new Enemy(new Vector(0, 0), null, new SimpleHealth());
+	private MovableEntity entity = new Enemy(new Vector2D(0, 0), null, new SimpleHealth());
 
 	@Override
 	public void move() {

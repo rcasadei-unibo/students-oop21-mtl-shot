@@ -4,7 +4,7 @@ import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.health.SimpleHealth;
-import util.Vector;
+import util.Vector2D;
 
 /**
  * TODO
@@ -13,7 +13,7 @@ import util.Vector;
  */
 public class BasicBot implements SimpleBot {
 	
-	private MovableEntity entity = new Enemy(new Vector(0, 0), null, new SimpleHealth());	
+	private MovableEntity entity = new Enemy(new Vector2D(0, 0), null, new SimpleHealth());	
 	private Player player;
 	
 	public void setPlayer(Player p) {
@@ -23,6 +23,7 @@ public class BasicBot implements SimpleBot {
 	@Override
 	public void move() {
 		if(this.player != null) {
+			System.out.println(player.getPosition());
 			double distance = entity.getPosition().getX() - player.getPosition().getX();
 			boolean dir = distance > 0;
 			entity.setLeft(dir);

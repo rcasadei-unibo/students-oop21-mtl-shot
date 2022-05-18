@@ -1,12 +1,13 @@
 package model.character;
 
 import model.character.tools.health.Health;
-import util.Vector;
+import model.weapons.P2020;
+import util.Vector2D;
 
 public class Enemy extends Character{
 	
-	public Enemy(Vector position, Vector hitbox, Health health) {
-		super(position, hitbox, health);
+	public Enemy(Vector2D position, Vector2D hitbox, Health health) {
+		super(position, hitbox, health, new P2020());
 		// TODO Auto-generated constructor stub
 	}
 	

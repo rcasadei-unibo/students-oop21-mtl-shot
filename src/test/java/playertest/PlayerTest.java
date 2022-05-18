@@ -6,8 +6,11 @@ import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import util.Direction;
-import util.Vector;
-
+import util.Vector2D;
+/**
+ * 
+ *
+ */
 public class PlayerTest {
 	
 	private final Player player;
@@ -15,9 +18,9 @@ public class PlayerTest {
 	public PlayerTest() {
 		player = new PlayerBuilder()
 				.health(new SimpleHealth())
-				.hitbox(new Vector(1, 2))
+				.hitbox(new Vector2D(1, 2))
 				.lives(3)
-				.position(new Vector(0,0))
+				.position(new Vector2D(0,0))
 				.build();
 	}
 	
@@ -40,7 +43,7 @@ public class PlayerTest {
             System.out.println(player.getPosition() + " " + player.getSpeed());
         }
         
-        player.setPosition(new Vector(0,0));
+        player.setPosition(new Vector2D(0,0));
         System.out.println("dx x4");
         player.setRight(true);
         player.moveEntity();
@@ -56,7 +59,7 @@ public class PlayerTest {
             System.out.println(player.getPosition() + " " + player.getSpeed());
         }
         
-        player.setPosition(new Vector(0,0));
+        player.setPosition(new Vector2D(0,0));
         System.out.println("jump");
         player.setJump(true);
         for (int i = 0; i < 60; i++) {
@@ -66,7 +69,7 @@ public class PlayerTest {
         player.reset();
         
         //---------COMBO MOVEMENT-------------
-        player.setPosition(new Vector(0,0));
+        player.setPosition(new Vector2D(0,0));
         System.out.println("dx sx x4");
         System.out.println(player.getPosition() + " " + player.getSpeed());
         player.setLeft(true);
@@ -79,7 +82,7 @@ public class PlayerTest {
         player.setLeft(false);
         player.setRight(false);
         
-        player.setPosition(new Vector(0,0));
+        player.setPosition(new Vector2D(0,0));
         System.out.println("jump dx");
         System.out.println(player.getPosition() + " " + player.getSpeed());
         player.setRight(true);
@@ -90,7 +93,7 @@ public class PlayerTest {
         }
         player.reset();
         
-        player.setPosition(new Vector(0,0));
+        player.setPosition(new Vector2D(0,0));
         
         //-----------AIM-----------
         player.getAim().setDirection(Direction.LEFT);
@@ -134,12 +137,12 @@ public class PlayerTest {
         //-----------RESPAWN--------------
         double i = 0;
         while (player.getLives() > 0) {
-            player.respawn(new Vector(i, 0));
+            player.respawn(new Vector2D(i, 0));
             i++;
             System.out.println(player.getPosition());
         }
         try {
-            player.respawn(new Vector(5,5));
+            player.respawn(new Vector2D(5,5));
         } catch (final IllegalStateException e) {
             System.out.println("non respawnato");
         }
