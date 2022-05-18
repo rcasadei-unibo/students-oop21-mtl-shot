@@ -8,10 +8,17 @@ import model.character.tools.health.SimpleHealth;
 import util.Direction;
 import util.Vector;
 
+/**
+ * 
+ * 
+ */
 public class PlayerTest {
 	
 	private final Player player;
-	
+	/**
+	 * 
+	 * 
+	 */
 	public PlayerTest() {
 		player = new PlayerBuilder()
 				.health(new SimpleHealth())
@@ -22,6 +29,10 @@ public class PlayerTest {
 	}
 	
     @Test 
+    /**
+     * 
+     * 
+     */
     public void movementTest() {
       //--------SIMPLE MOVEMENT-------------
         System.out.println("sx x4");

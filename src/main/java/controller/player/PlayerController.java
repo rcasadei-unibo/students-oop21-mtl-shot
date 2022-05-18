@@ -55,7 +55,7 @@ public class PlayerController {
             player.setJump(false);
         }
         player.moveEntity();
-		playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getSpeed());
+		playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getSpeed(), player.getAim().getDirection());
 	}
 
 	private boolean isCollidingLeft(final Vector nextPos) {
