@@ -1,14 +1,13 @@
-package model.map;
+package model.map.tile;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import model.map.tile.Tile;
 /**
  * 
- * 
+ * @author filippo.gurioli
+ *
  */
 public class MapModel {
 

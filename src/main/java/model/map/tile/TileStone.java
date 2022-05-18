@@ -1,14 +1,15 @@
 package model.map.tile;
 
-import util.Vector;
+import util.Vector2D;
 /**
  * 
- * 
+ * @author filippo.gurioli
+ *
  */
 public class TileStone extends AbstractTile {
 
-	public TileStone(final Vector position) {
-		super(position, "src\\main\\resources\\BlockSimple.png");
+	public TileStone(final Vector2D position) {
+		super(position, "src\\main\\resources\\DesertTilesetCompact.png");
 	}
 
 	@Override
@@ -18,6 +19,6 @@ public class TileStone extends AbstractTile {
 
 	@Override
 	public boolean isTileable() {
-		return false;
+		return true;
 	}
 }
