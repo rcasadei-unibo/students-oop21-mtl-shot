@@ -2,6 +2,7 @@ package app;
 
 import controller.Controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +39,7 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        
-        
-        Image img = new Image(ClassLoader.getSystemResource("prova/pleier.png").toString());
-        System.out.println(img.getUrl());
-        
+
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);

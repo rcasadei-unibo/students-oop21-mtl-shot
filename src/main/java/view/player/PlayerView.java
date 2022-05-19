@@ -28,12 +28,12 @@ public class PlayerView {
      * @param playerSize
      * @throws FileNotFoundException
      */
-    public PlayerView(final double playerSize) throws FileNotFoundException {
-        playerCrouchIcon = new Image(new FileInputStream(ClassLoader.getSystemResource("prova/croulpleier.png").toString()));
-        playerUp = new Image(new FileInputStream(ClassLoader.getSystemResource("pleierUP.png").toString()));
-        playerDown = new Image(new FileInputStream(ClassLoader.getSystemResource("pleierDOWN.png").toString()));
-        playerRight = new Image(new FileInputStream(ClassLoader.getSystemResource("pleierRIGHT.png").toString()));
-        playerLeft = new Image(new FileInputStream(ClassLoader.getSystemResource("pleierLEFT.png").toString()));
+    public PlayerView(final double playerSize) {
+        playerCrouchIcon = new Image(ClassLoader.getSystemResourceAsStream("croulpleier.png"));
+        playerUp = new Image(ClassLoader.getSystemResourceAsStream("pleierUP.png"));
+        playerDown = new Image(ClassLoader.getSystemResourceAsStream("pleierDOWN.png"));
+        playerRight = new Image(ClassLoader.getSystemResourceAsStream("pleierRIGHT.png"));
+        playerLeft = new Image(ClassLoader.getSystemResourceAsStream("pleierLEFT.png"));
         playerImageView = new ImageView(playerRight);
         playerImageView.setScaleX(playerSize);
         playerImageView.setScaleY(playerSize);

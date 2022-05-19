@@ -39,7 +39,7 @@ public class StageImpl {
 
     public Player getPlayer() {
         // TODO Auto-generated method stub
-        return null;
+        return this.player;
     }
 
     public MapModel getMapModel() {

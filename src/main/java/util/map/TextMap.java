@@ -12,11 +12,11 @@ public class TextMap {
 
     private final double width;
     private final double height;
-    
+
     private final String path;
-    
+
     public TextMap(final String path) throws IOException {
-    	var br = new BufferedReader(new FileReader(path));
+        var br = new BufferedReader(new FileReader(path));
     	this.height = br.lines().count();
     	br.close();
     	br = new BufferedReader(new FileReader(path));

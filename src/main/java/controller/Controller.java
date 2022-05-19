@@ -46,7 +46,7 @@ public class Controller {
      * @throws IOException if the text map is not present
      */
     public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").toString());
+        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
         this.stage = new StageImpl(textMap);
         this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
