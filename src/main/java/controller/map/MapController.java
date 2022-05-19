@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import util.map.TextMap;
 import model.map.tile.MapModel;
 import model.map.tile.Tile;
@@ -23,8 +25,8 @@ public class MapController {
     private final MapModel mapModel;
     private Vector2D playerSpawn;
 
-    public MapController(final TextMap textMap) throws IOException {
-        mapModel = new MapModel();
+    public MapController(final MapModel mapModel) throws IOException {
+        /*mapModel = new MapModel();
         final File mapTxt = textMap.getFile();
         final BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
         for (int i = 0; i < textMap.getHeight(); i++) {
@@ -47,15 +49,24 @@ public class MapController {
                 }
             }
         }
-        mapTxtInput.close();
+        mapTxtInput.close();*/
+        this.mapModel = mapModel;
     }
 
     public List<Vector2D> getTileables() {
-        return mapModel.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition()).toList();
+        return mapModel.getAllTiles()
+                .stream()
+                .filter(t -> t.isTileable())
+                .map(t -> t.getPosition())
+        	    .collect(Collectors.toList());
     }
 
     public List<Vector2D> getCollidables() {
-        return mapModel.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition()).toList();
+        return mapModel.getAllTiles()
+                .stream()
+        		.filter(t -> t.isCollidable())
+        		.map(t -> t.getPosition())
+        		.collect(Collectors.toList());
     }
 
     public boolean hasSingleCollidable(final Vector2D position) {

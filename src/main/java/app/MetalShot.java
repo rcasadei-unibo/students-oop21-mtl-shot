@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.StageImpl;
@@ -37,6 +38,11 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
+        
+        
+        Image img = new Image(ClassLoader.getSystemResource("prova/pleier.png").toString());
+        System.out.println(img.getUrl());
+        
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);

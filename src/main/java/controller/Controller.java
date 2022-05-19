@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import app.MetalShot;
+import model.StageImpl;
 import model.character.Character;
 import controller.map.MapController;
 import controller.player.PlayerController;
@@ -28,6 +30,7 @@ public class Controller {
 
     private final PlayerController playerController;
     private final MapController mapController;
+    private final StageImpl stage;
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
@@ -43,12 +46,13 @@ public class Controller {
      * @throws IOException if the text map is not present
      */
     public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-        this.mapController = new MapController(textMap);
+        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").toString());
+        this.stage = new StageImpl(textMap);
+        this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this); // null ->
+        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
                                                                                                 // player view
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
 
@@ -65,6 +69,7 @@ public class Controller {
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
                 playerController.check();
+                viewReference.refresh(null);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
