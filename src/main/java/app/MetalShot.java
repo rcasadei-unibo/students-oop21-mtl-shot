@@ -1,78 +1,105 @@
 package app;
 
-
 import controller.Controller;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.StageImpl;
 import util.Direction;
-import util.Vector;
+import util.Vector2D;
 import view.BulletsView;
+import view.map.MapView;
+import view.player.PlayerView;
 
 /**
- * TODO: write javadoc
+ * 
  *
  */
 public final class MetalShot extends Application {
-	private Controller controller;
-	private Group mainGroup;
-	private BulletsView bulletsView;
-	private StageImpl stage;
 	
+	private Controller controller;	
+    private PlayerView playerView;
+    private static final double VIEWRESIZE = 1d;
+    private Group mainGroup;
+    private BulletsView bulletsView;
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        
+        this.playerView = new PlayerView(VIEWRESIZE);
+        this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
-        
-        this.stage = new Stage();
-        
-        this.mainGroup = new Group();
-        
-        this.bulletsView = new BulletsView();
-        
-        var s = new Scene(mainGroup, 700, 700);
-        s.setOnKeyPressed(new EventHandler<KeyEvent>() {
-        	
-			@Override
-			public void handle(KeyEvent event) {
-				controller.keyPressed(event.getCode());
-			}
-			
-        });
-        
-        //primaryStage.setFullScreen(true);
-        primaryStage.setScene(s);
-        
-        primaryStage.setTitle("Hello");
+
+        final Scene mainScene;
+        final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
+        final List<Node> totalList = new ArrayList<>();
+
+        totalList.addAll(mapView.getNodes());
+        totalList.add(playerView.getPlayerImageView());
+        this.mainGroup = new Group(totalList);
+        mainScene = new Scene(mainGroup, 600, 600);
+        primaryStage.setScene(mainScene);
+        primaryStage.setTitle("メタルショット");
         primaryStage.show();
-        
-        this.controller.gameStart();
+        controller.gameStart();
+        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(final KeyEvent event) {
+                controller.keyPressed(event.getCode());
+            }
+        });
+        mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(final KeyEvent event) {
+                controller.keyReleased(event.getCode());
+            }
+        });
+        mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            public void handle(final KeyEvent event) {
+            }
+        });
     }
-    
-    public void displayBullets(final Map<Vector, Direction> bullets) {
-    	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-    	this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-    	this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+
+    /**
+     * 
+     * @param bullets
+     */
+    public void displayBullets(final Map<Vector2D, Direction> bullets) {
+        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     public static void run(final String... args) {
         launch();
     }
-    
+
     /**
-     * TODO: write javadoc
-     * @author Andrea Biagini
+     * Gets the visible part of the player.
+     * 
+     * @return PlayerView
+     */
+    public PlayerView getPlayerView() {
+        return this.playerView;
+    }
+    
+    public void refresh(StageImpl stage) {
+    	
+    }
+
+    /**
+     * 
      *
      */
     public static final class Main {
@@ -80,7 +107,7 @@ public final class MetalShot extends Application {
             // the constructor will never be called directly.
         }
 
-        public static void main(final String...args) {
+        public static void main(final String... args) {
             Application.launch(MetalShot.class, args);
         }
     }

@@ -1,67 +1,85 @@
 package model.character;
 
-import model.character.movableEntity.MovableEntity;
+import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
+import util.Vector2D;
 import model.weapons.Weapon;
-import util.Vector;
 
 /**
- * A character is a kind of MovableEntity that also has an health, an aim and a weapon
- * */
+ * A character is a kind of MovableEntity that also has an health, an aim and a
+ * weapon.
+ */
 public abstract class Character extends MovableEntity {
 
     /**
-     * The health of the character
-     * */
-	private final Health health;
-	/**
-	 * The aim of the character
-	 * */
-	private final Aim aim;
-	/**
-	 * The weapon held by the character
-	 * */
-	private Weapon weapon;
-	
-	public Character(final Vector position, final Vector hitbox, final Health health) {
-		super(position, hitbox);
-		this.health = health;
-		this.aim = new Aim();
-	}
-	/**
-	 * @return the current weapon held by the character
-	 * */
-	public Weapon getWeapon() {
-		return this.weapon;
-	}
+     * The health of the character.
+     */
+    private final Health health;
+    /**
+     * The aim of the character.
+     */
+    private final Aim aim;
+    /**
+     * The weapon held by the character.
+     */
+    private Weapon weapon;
 
     /**
-     * Sets a new weapon for the character
-     * */
-	public void setWeapon(final Weapon weapon) {
-		this.weapon = weapon;
-	}
-	
-	/**
-	 * @return the character health
-	 * */
-	public Health getHealth() {
-		return this.health;
-	}
-	
-	/**
-	 * @return the character aim
-	 * */
-	public Aim getAim() {
-		return this.aim;
-	}
-	
-	@Override
-	public String toString() {
-		return super.toString() + "\n" + 
-				health.toString() + "\n" + 
-				//weapon.toString() + "\n" +
-				aim.toString();
-	}
+     * Character constructor.
+     * 
+     * @param position
+     * @param hitbox
+     * @param health
+     * @param weapon
+     */
+    public Character(final Vector2D position, final Vector2D hitbox, final Health health, final Weapon weapon) {
+        super(position, hitbox);
+        this.health = health;
+        this.weapon = weapon;
+        this.aim = new Aim();
+    }
+    /**
+     * Gets the current held weapon.
+     * 
+     * @return weapon
+     */
+    public Weapon getWeapon() { 
+        return this.weapon; 
+    }
+
+    /**
+     * Sets a new weapon for the character.
+     * 
+     * @param weapon
+     */
+    public void setWeapon(final Weapon weapon) { 
+        this.weapon = weapon; 
+    }
+
+    /**
+     * Gets the character health.
+     * 
+     * @return health
+     */
+    public Health getHealth() {
+        return this.health;
+    }
+
+    /**
+     * Gets the character aim.
+     * 
+     * @return Aim
+     */
+    public Aim getAim() {
+        return this.aim;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " " + health.toString() + " " + /*weapon.toString() +*/ " " + aim.toString();
+    }
 }

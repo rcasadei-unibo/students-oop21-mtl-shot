@@ -1,85 +1,108 @@
 package model.character.tools.health;
 
 /**
- * A simple implementation of the Health interface
- * */
+ * A simple implementation of the Health interface.
+ */
 public class SimpleHealth implements Health {
 
     /**
-     * The value that can be increased and decreased
-     * */
-	private int health;
-	/**
-	 * The maximum value that @health can reach
-	 * */
-	private int maxHealth;
-	
-	public SimpleHealth() {
-		this.maxHealth = 100;
-		this.health = this.maxHealth;
-	}
-	
-	public SimpleHealth(final int maxHealth) {
-		this.maxHealth = maxHealth;
-		this.health = maxHealth;
-	}
-	
-	/**
-     * @throws IllegalArgumentException if @amount is negative or 0
-	 */
-	@Override
-	public void heal(final int amount) {
-		this.consistencyCheck(amount);
-		this.health += amount;
-		if (health > this.maxHealth) {
-			this.health = maxHealth;
-		}
-	}
+     * The value that can be increased and decreased.
+     */
+    private int health;
+    /**
+     * The maximum value that health can reach.
+     */
+    private int maxHealth;
 
-	private void consistencyCheck(final int amount) {
-		if (amount <= 0) {
-			throw new IllegalArgumentException();
-		}
-	}
+    /**
+     * The SimpleHealth constructor.
+     */
+    public SimpleHealth() {
+        this.maxHealth = 100;
+        this.health = this.maxHealth;
+    }
 
-	/**
-     * @throws IllegalArgumentException if @amount is negative or 0
-	 */
-	@Override
-	public void hurt(final int amount) {
-		this.consistencyCheck(amount);
-		this.health -= amount;
-		if (health < 0) {
-			this.health = 0;
-		}
-	}
+    /**
+     * The simpleHealth constructor that puts the maxHealth to the passed parameter.
+     * 
+     * @param maxHealth
+     */
+    public SimpleHealth(final int maxHealth) {
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+    }
 
-	@Override
-	public int getHealth() {
-		return this.health;
-	}
+    /**
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if the parameter is negative or 0.
+     */
+    @Override
+    public void heal(final int amount) {
+        this.consistencyCheck(amount);
+        this.health += amount;
+        if (health > this.maxHealth) {
+            this.health = maxHealth;
+        }
+    }
 
-	@Override
-	public boolean isDead() {
-		return this.health == 0;
-	}
+    private void consistencyCheck(final int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException();
+        }
+    }
 
-	/**
-     * @throws IllegalArgumentException if @amount is negative or 0
-	 */
-	@Override
-	public void setMaxHealth(final int amount) {
-		this.consistencyCheck(amount);
-		this.maxHealth = amount;
-	}
+    /**
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if the parameter is negative or 0.
+     */
+    @Override
+    public void hurt(final int amount) {
+        this.consistencyCheck(amount);
+        this.health -= amount;
+        if (health < 0) {
+            this.health = 0;
+        }
+    }
 
-	@Override
-	public int getMaxHealth() {
-		return this.maxHealth;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
 
-	@Override
-	public String toString() {
-		return "Health: " + this.getHealth();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isDead() {
+        return this.health == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws IllegalArgumentException if @amount is negative or 0.
+     */
+    @Override
+    public void setMaxHealth(final int amount) {
+        this.consistencyCheck(amount);
+        this.maxHealth = amount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Health: " + this.getHealth();
+    }
 }
