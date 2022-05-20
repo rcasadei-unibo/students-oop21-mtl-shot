@@ -28,11 +28,10 @@ public class BulletsView {
 	
     public void updateBullets(final List<Vector2D> bullets) {
     	for (int i = 0; i < this.imageViewList.size() && i < bullets.size(); i++) {
-    		this.imageViewList.get(i).setX(bullets.get(i).getX());
-    		this.imageViewList.get(i).setY(bullets.get(i).getY());
+    		this.imageViewList.get(i).setX(bullets.get(i).getX() * this.scale * MapConstants.getTilesize());
+    		this.imageViewList.get(i).setY(bullets.get(i).getY() * this.scale * MapConstants.getTilesize());
     	}
     	for (int i = this.imageViewList.size(); i < bullets.size(); i++) {
-    		System.out.println("SECONDO FOR");
     		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
     		iv.setX(bullets.get(i).getX() * this.scale * MapConstants.getTilesize());
     		iv.setY(bullets.get(i).getY() * this.scale * MapConstants.getTilesize());
@@ -41,7 +40,6 @@ public class BulletsView {
     		this.imageViewList.add(iv);
     	}
     	while (bullets.size() < this.imageViewList.size()) {
-    		System.out.println("WHILE");
     		this.imageViewList.remove(this.imageViewList.size() - 1);
     	}
     	/*this.imageViewList.clear();
