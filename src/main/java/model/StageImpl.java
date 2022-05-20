@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
@@ -19,7 +20,7 @@ import util.map.TextMap;
 public class StageImpl {
 
     private Player player;
-    private final Collection<Bullet> bullets = null;
+    private Collection<Bullet> bullets;
     private final MapModel mapModel;
 
     public StageImpl(final TextMap textMap) throws IOException {        
@@ -31,6 +32,7 @@ public class StageImpl {
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
+        this.bullets = new LinkedList<>();
     }
 
     public void setPlayer(final Player player) {
@@ -46,5 +48,6 @@ public class StageImpl {
         // TODO Auto-generated method stub
         return this.mapModel;
     }
-
+    
+    // public Collection<Enemy> getEnemies();
 }
