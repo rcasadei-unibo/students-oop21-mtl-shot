@@ -126,8 +126,8 @@ public class PlayerController {
         final Vector2D topLeft = new Vector2D(0, DELTA);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topLeft) ||
-        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botLeft);
+        return levelController.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) ||
+        		levelController.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
@@ -135,8 +135,8 @@ public class PlayerController {
         final Vector2D topRight = new Vector2D(player.getHitbox().getX(), DELTA);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topRight) ||
-        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botRight);
+        return levelController.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight) ||
+        		levelController.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
@@ -144,8 +144,8 @@ public class PlayerController {
         final Vector2D topLeft = new Vector2D(DELTA, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topLeft) || 
-        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topRight);
+        return levelController.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) || 
+        		levelController.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
@@ -153,8 +153,8 @@ public class PlayerController {
         final Vector2D botLeft = new Vector2D(DELTA, player.getHitbox().getY());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botLeft) || 
-        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botRight);
+        return levelController.getSegmentAtPosition(botRight).isCollidableAtPosition(botLeft) || 
+        		levelController.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
     
 }
