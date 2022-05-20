@@ -34,7 +34,7 @@ public class Controller {
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
-    private static final double FPS = 120;
+    public static final double TPS = 60;
 
     // Instance of model (Stage?)
     private final MetalShot viewReference;
@@ -53,7 +53,7 @@ public class Controller {
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
         this.playerController = new PlayerController(this.stage.getPlayer(), this.mapController, this.viewReference.getPlayerView());
-        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
+        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
