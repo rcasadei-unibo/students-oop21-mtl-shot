@@ -16,11 +16,11 @@ import util.map.MapConstants;
  * @author filippo.gurioli
  *
  */
-public class MapView {
+public class LevelView {
 
 	private final List<Node> nodes = new LinkedList<>();
 
-	public MapView(final MapController mapController, final double tileSize) throws FileNotFoundException {
+	public LevelView(final MapController mapController, final double tileSize) throws FileNotFoundException {
 		final List<Vector2D> list = mapController.getTileables();
 		final AutotileManager autotileManager = new AutotileManager(list);
 		for (final var position : list) {

@@ -18,7 +18,7 @@ import model.StageImpl;
 import util.Direction;
 import util.Vector2D;
 import view.BulletsView;
-import view.map.MapView;
+import view.map.LevelView;
 import view.player.PlayerView;
 
 /**
@@ -43,7 +43,7 @@ public final class MetalShot extends Application {
         this.controller = new Controller(this);
 
         final Scene mainScene;
-        final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
+        final LevelView levelView = new LevelView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
 
         totalList.addAll(mapView.getNodes());

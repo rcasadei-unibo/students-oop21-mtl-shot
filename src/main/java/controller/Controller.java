@@ -10,7 +10,6 @@ import java.util.Set;
 import app.MetalShot;
 import model.StageImpl;
 import model.character.Character;
-import controller.map.MapController;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -29,7 +28,6 @@ import util.map.TextMap;
 public class Controller {
 
     private final PlayerController playerController;
-    private final MapController mapController;
     private final StageImpl stage;
     private BulletsController bulletsController;
     private WeaponController weaponController;
@@ -48,11 +46,10 @@ public class Controller {
     public Controller(final MetalShot viewReference) throws IOException {
         final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
         this.stage = new StageImpl(textMap);
-        this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.stage.getPlayer(), this.mapController, this.viewReference.getPlayerView());
+        this.playerController = new PlayerController(this.stage.getPlayer(), this.stage.getLevel(), this.viewReference.getPlayerView());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -157,16 +154,7 @@ public class Controller {
     }
 
     /**
-     * Gets the class that handle the map control.
-     * 
-     * @return MapController
-     */
-    public MapController getMapController() {
-        return this.mapController;
-    }
-
-    /**
-     * Gets the class that handle the player control.
+     * Gets the class that handles the player control.
      * 
      * @return PlayerController
      */
@@ -206,5 +194,9 @@ public class Controller {
             ret.put(b.getPosition(), b.getDirection());
         }
         return ret;
+    }
+    
+    public StageImpl getStage() {
+    	return this.stage;
     }
 }

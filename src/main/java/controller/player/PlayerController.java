@@ -1,6 +1,7 @@
 package controller.player;
 
-import controller.map.MapController;
+
+import model.map.Level;
 import model.character.Player;
 import model.character.Player.Crouch;
 import model.character.movableentity.EntityConstants;
@@ -23,9 +24,9 @@ public class PlayerController {
      */
     private final PlayerView playerView;
     /**
-     * The map controller, used to handle the checks with the ground.
+     * The level controller, used to handle the checks with the ground.
      */
-    private final MapController mapController;
+    private final Level levelController;
     /**
      * A shift from the hitbox corners.
      */
@@ -48,9 +49,9 @@ public class PlayerController {
      * @param mapController
      * @param playerView
      */
-    public PlayerController(final Player player, final MapController mapController, final PlayerView playerView) {
+    public PlayerController(final Player player, final Level levelController, final PlayerView playerView) {
         this.playerView = playerView;
-        this.mapController = mapController;
+        this.levelController = levelController;
         this.player = player;
     }
 
@@ -125,7 +126,8 @@ public class PlayerController {
         final Vector2D topLeft = new Vector2D(0, DELTA);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
+        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topLeft) ||
+        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
@@ -133,7 +135,8 @@ public class PlayerController {
         final Vector2D topRight = new Vector2D(player.getHitbox().getX(), DELTA);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
+        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topRight) ||
+        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
@@ -141,7 +144,8 @@ public class PlayerController {
         final Vector2D topLeft = new Vector2D(DELTA, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
+        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topLeft) || 
+        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
@@ -149,6 +153,7 @@ public class PlayerController {
         final Vector2D botLeft = new Vector2D(DELTA, player.getHitbox().getY());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
+        return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botLeft) || 
+        		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botRight);
     }
 }

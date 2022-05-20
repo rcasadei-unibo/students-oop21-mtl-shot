@@ -6,7 +6,8 @@ import java.util.Collection;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import model.map.tile.MapModel;
+import model.map.Level;
+import model.map.Segment;
 import model.weapons.Bullet;
 import model.weapons.P2020;
 import util.Vector2D;
@@ -20,13 +21,13 @@ public class StageImpl {
 
     private Player player;
     private final Collection<Bullet> bullets = null;
-    private final MapModel mapModel;
+    private final Level level;
 
     public StageImpl(final TextMap textMap) throws IOException {        
-        this.mapModel = new MapModel(textMap);
+        this.level = new Level(null);
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
-                .position(mapModel.getPlayerSpawn())
+                .position(level.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())
                 .lives(3)
@@ -38,13 +39,11 @@ public class StageImpl {
     }
 
     public Player getPlayer() {
-        // TODO Auto-generated method stub
         return this.player;
     }
 
-    public MapModel getMapModel() {
-        // TODO Auto-generated method stub
-        return this.mapModel;
+    public Level getLevel() {
+        return this.level;
     }
 
 }
