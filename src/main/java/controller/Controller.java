@@ -1,20 +1,15 @@
 package controller;
 
-import javax.swing.text.html.parser.Entity;
-
 import app.MetalShot;
 import controller.enemy.BasicBot;
-import controller.enemy.RandomBot;
 import controller.enemy.SimpleBot;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import app.MetalShot;
 import model.StageImpl;
 import model.character.Character;
 import controller.map.MapController;
@@ -27,21 +22,17 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 
-import model.character.Enemy;
-import model.character.Player.PlayerBuilder;
 import model.character.Player;
-import model.character.tools.health.SimpleHealth;
 import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
 
 /**
  * TODO
- * @author sysosus
  *
  */
 /*public class Controller {
-	private final Timeline gameLoop;
+    private final Timeline gameLoop;
 	
 	//Instance of model (Stage?)
 	private final MetalShot viewReference;
@@ -51,14 +42,14 @@ import util.map.TextMap;
 		//SBAGLIATO, SOLO TEMPORANEO!!!!
 		SimpleBot brain = new BasicBot();
 		brain.getEntity().setPosition(825, 0);
-		
+
 		Player p = new PlayerBuilder()
 				.health(new SimpleHealth())
 				.hitbox(new Vector(1, 2))
 				.lives(3)
 				.position(new Vector(30,0))
 				.build();
-		
+
 		brain.setPlayer(p);
 
 		this.viewReference = viewReference;
@@ -138,20 +129,16 @@ public class Controller {
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
+        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(), this.stage.getPlayer()); // null ->
                                                                                                 // player view
-        
+
         //SBAGLIATO, SOLO TEMPORANEO!!!!
   		SimpleBot brain = new BasicBot();
   		brain.getEntity().setPosition(25, 0);
-  		Player p = playerController.getPlayer();
-  		brain.setPlayer(p);
-  		
-  		
+  		brain.setPlayer(stage.getPlayer());
+
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
-        
-        
-        	
+
             @Override
             public void handle(final ActionEvent event) {
                 // TODO implement game loop here
@@ -169,7 +156,7 @@ public class Controller {
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
                 playerController.check();
-                viewReference.refresh(null);
+                viewReference.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -191,30 +178,30 @@ public class Controller {
 
     public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
-            playerController.getPlayer().setLeft(true);
-            playerController.getPlayer().getAim().setDirection(Direction.LEFT);
+            playerController.getCharacter().setLeft(true);
+            playerController.getCharacter().getAim().setDirection(Direction.LEFT);
         }
         if (key == KeyCode.D) {
-            playerController.getPlayer().setRight(true);
-            playerController.getPlayer().getAim().setDirection(Direction.RIGHT);
+            playerController.getCharacter().setRight(true);
+            playerController.getCharacter().getAim().setDirection(Direction.RIGHT);
         }
         if (key == KeyCode.W) {
-            playerController.getPlayer().getAim().setDirection(Direction.UP);
+            playerController.getCharacter().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
-            playerController.getPlayer().setJump(true);
+            playerController.getCharacter().setJump(true);
         }
         if (key == KeyCode.S) {
-            playerController.getPlayer().setCrouchKey(true);
-            playerController.getPlayer().getAim().setDirection(Direction.DOWN);
+            playerController.getCharacter().setCrouchKey(true);
+            playerController.getCharacter().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.playerController.getPlayer())) {
-                this.bulletsController.addBullet(this.playerController.getPlayer());
+            if (this.weaponController.tryToShoot(this.playerController.getCharacter())) {
+                this.bulletsController.addBullet(this.playerController.getCharacter());
                 System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
-            this.playerController.getPlayer().getWeapon().reload();
+            this.playerController.getCharacter().getWeapon().reload();
         }
     }
 
@@ -224,20 +211,20 @@ public class Controller {
      */
     public void keyReleased(final KeyCode key) {
         if (key == KeyCode.A) {
-            playerController.getPlayer().setLeft(false);
+            playerController.getCharacter().setLeft(false);
         }
         if (key == KeyCode.D) {
-            playerController.getPlayer().setRight(false);
+            playerController.getCharacter().setRight(false);
         }
         if (key == KeyCode.W) {
-            playerController.getPlayer().getAim().returnToHorizontal();
+            playerController.getCharacter().getAim().returnToHorizontal();
         }
         if (key == KeyCode.SPACE) {
-            playerController.getPlayer().setJump(false);
+            playerController.getCharacter().setJump(false);
         }
         if (key == KeyCode.S) {
-            playerController.getPlayer().setCrouchKey(false);
-            playerController.getPlayer().getAim().returnToHorizontal();
+            playerController.getCharacter().setCrouchKey(false);
+            playerController.getCharacter().getAim().returnToHorizontal();
         }
     }
 
@@ -288,7 +275,7 @@ public class Controller {
     public Set<Character> getAllCharacters() {
         // TODO
         final var set = new HashSet<Character>();
-        set.add(playerController.getPlayer());
+        set.add(playerController.getCharacter());
         return set;
     }
 

@@ -97,18 +97,18 @@ public final class MetalShot extends Application {
 
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        
+
         FileInputStream person = new FileInputStream("src/main/resources/person.png");
     	FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
 
     	this.enemy = new ImageView(new Image(person2));
-    	
+
     	totalList.add(enemy);
-    	
+
 
         this.mainGroup = new Group(totalList);
-        
-        mainScene = new Scene(mainGroup, 600, 600);
+
+        mainScene = new Scene(mainGroup);
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("メタルショット");
         primaryStage.show();
@@ -154,27 +154,18 @@ public final class MetalShot extends Application {
         return this.playerView;
     }
     public void refresh(StageImpl stage) {
-    	
+        playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(), stage.getPlayer().getAim().getDirection());
     }
 
     /**
      * 
      *
      */
-    public static final class Main {
-        private Main() {
-            // the constructor will never be called directly.
-        }
-
-        public static void main(final String... args) {
-            Application.launch(MetalShot.class, args);
-        }
-    }
 
     public void setEnemyPos(Vector2D pos) {
     	this.enemy.setX(pos.getX()*MapConstants.getTilesize());
     }
-    
+
 //    public void setPlayerPos(Vector2D pos) {
 //    	this.player.setX(pos.getX());
 //    }
@@ -182,7 +173,7 @@ public final class MetalShot extends Application {
     public double getX() {
     	return this.enemy.getX();
     }
-    
+
     public Dimension getDim() {
     	return new Dimension(this.res);
     }

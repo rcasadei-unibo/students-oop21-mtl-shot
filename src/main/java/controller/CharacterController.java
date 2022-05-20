@@ -7,12 +7,13 @@ import view.CharacterView;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.character.Character;
+import model.character.Player;
 
 
 /**
  * TODO: javadoc.
  */
-public class CharacterController {
+public abstract class CharacterController {
 
     private final MapController mapController;
 
@@ -41,7 +42,10 @@ public class CharacterController {
         this.characterView = characterView;
         this.mapController = mapController;
     }
-
+    
+    /**
+     * The main method that checks everything about the player.
+     */
     public void check() {
         character.setCrouchCondition(Crouch.FREE);
         character.setFall(true);
@@ -51,9 +55,18 @@ public class CharacterController {
         this.movementChecks(nextPos);
         this.character.moveEntity();
         this.aimChecks();
-        //characterView.updatePlayer(this.character.getPosition(), this.character.isCrouching(), this.character.getAim().getDirection());
+        //characterView.updateCharacter(this.character.getPosition(), this.character.isCrouching(), this.character.getAim().getDirection());
     }
-    
+
+    /**
+     * Gets the player who is being controlled. 
+     * 
+     * @return player
+     */
+    public Character getCharacter() {
+        return this.character;
+    }
+
     private void aimChecks() {
         //if crouching he can't aim at the ground
         if (this.character.isCrouching()) {
