@@ -6,17 +6,20 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import util.Vector;
-
+import util.Vector2D;
+/**
+ * 
+ *
+ */
 public class AutotileManager {
 
-	private final List<Vector> tileList;
+	private final List<Vector2D> tileList;
 
-	public AutotileManager(final List<Vector> tileList) throws FileNotFoundException {
+	public AutotileManager(final List<Vector2D> tileList) throws FileNotFoundException {
 		this.tileList = tileList;
 	}
 
-	public Group autotile(final Vector position, final double tileSize, PixelReader reader) {
+	public Group autotile(final Vector2D position, final double tileSize, PixelReader reader) {
 		// First we check adjacent tiles, then corners.
 
 		final ImageView topLeftDef = new ImageView(new WritableImage(reader, 0, 0, 32, 32));
@@ -36,7 +39,7 @@ public class AutotileManager {
 
 		for (int j = -1; j < 2; j++) {
 			for (int i = -1; i < 2; i++) {
-				if (tileList.contains(new Vector(position.getX() + j, position.getY() + i))) {
+				if (tileList.contains(new Vector2D(position.getX() + j, position.getY() + i))) {
 					// TOP
 					if (i == -1 && j == 0) {
 						if (topLeft.equals(topLeftDef)) {
@@ -92,23 +95,23 @@ public class AutotileManager {
 
 				} else {
 					// TOP-LEFT CORNER
-					if (i == -1 && j == -1 && tileList.contains(new Vector(position.getX() - 1, position.getY()))
-							&& tileList.contains(new Vector(position.getX(), position.getY() - 1))) {
+					if (i == -1 && j == -1 && tileList.contains(new Vector2D(position.getX() - 1, position.getY()))
+							&& tileList.contains(new Vector2D(position.getX(), position.getY() - 1))) {
 						topLeftCorner = new ImageView(new WritableImage(reader, 32, 96, 32, 32));
 					}
 					// TOP-RIGHT CORNER
-					if (i == -1 && j == 1 && tileList.contains(new Vector(position.getX() + 1, position.getY()))
-							&& tileList.contains(new Vector(position.getX(), position.getY() - 1))) {
+					if (i == -1 && j == 1 && tileList.contains(new Vector2D(position.getX() + 1, position.getY()))
+							&& tileList.contains(new Vector2D(position.getX(), position.getY() - 1))) {
 						topRightCorner = new ImageView(new WritableImage(reader, 0, 96, 32, 32));
 					}
 					// BOT-RIGHT CORNER
-					if (i == 1 && j == 1 && tileList.contains(new Vector(position.getX() + 1, position.getY()))
-							&& tileList.contains(new Vector(position.getX(), position.getY() + 1))) {
+					if (i == 1 && j == 1 && tileList.contains(new Vector2D(position.getX() + 1, position.getY()))
+							&& tileList.contains(new Vector2D(position.getX(), position.getY() + 1))) {
 						botRightCorner = new ImageView(new WritableImage(reader, 0, 64, 32, 32));
 					}
 					// BOT-LEFT CORNER
-					if (i == 1 && j == -1 && tileList.contains(new Vector(position.getX() - 1, position.getY()))
-							&& tileList.contains(new Vector(position.getX(), position.getY() + 1))) {
+					if (i == 1 && j == -1 && tileList.contains(new Vector2D(position.getX() - 1, position.getY()))
+							&& tileList.contains(new Vector2D(position.getX(), position.getY() + 1))) {
 						botLeftCorner = new ImageView(new WritableImage(reader, 32, 64, 32, 32));
 					}
 				}
@@ -116,9 +119,9 @@ public class AutotileManager {
 			}
 		}
 
-		final Vector tempPos = new Vector(position);
+		final Vector2D tempPos = new Vector2D(position);
 
-		tempPos.mlt(new Vector(tileSize, tileSize));
+		tempPos.mlt(new Vector2D(tileSize, tileSize));
 
 		topLeft.setX(tempPos.getX());
 		topLeft.setY(tempPos.getY());

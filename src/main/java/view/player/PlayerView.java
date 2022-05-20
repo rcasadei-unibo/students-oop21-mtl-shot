@@ -5,58 +5,68 @@ import java.io.FileNotFoundException;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import util.Pair;
-import util.Vector;
+import util.Direction;
+import util.Vector2D;
 import util.map.MapConstants;
-import util.view.Animation;
 
+/**
+ * 
+ *
+ */
 public class PlayerView {
 
-	private final ImageView playerImageView;
-	private final Image playerIcon;
-	private final Image playerCrawlIcon;
-	private final double playerSize;
-	private boolean crawl;
-	
-	private Animation idle;
-	private Animation walk;
-	
-	public PlayerView(final double playerSize) throws FileNotFoundException {
-		playerIcon = new Image(new FileInputStream("src\\main\\resources\\pleier.png"));
-		playerCrawlIcon = new Image(new FileInputStream("src\\main\\resources\\croulpleier.png"));
-		playerImageView = new ImageView(playerIcon);
-		playerImageView.setScaleX(playerSize);
-		playerImageView.setScaleY(playerSize);
-		this.playerSize = playerSize;
-		
-		this.idle = new Animation("src\\main\\resources\\MSPlayerIdle.png", new Pair<>(64,64), 3, 20);
-		this.walk = new Animation("src\\main\\resources\\MSPlayerRun.png", new Pair<>(64,64), 7, 10);
-		
-	}
-	
-    public void updatePlayer(final Vector position, final boolean crawl, final Vector speed) {
-    	playerImageView.setX(position.getX()*playerSize*MapConstants.getTilesize());
-    	playerImageView.setY(position.getY()*playerSize*MapConstants.getTilesize());
-    	if (crawl && crawl != this.crawl) {
-    	    playerImageView.setImage(playerCrawlIcon);
-    	} else if (!crawl && crawl != this.crawl){
-    	    playerImageView.setImage(idle.get(true));
-    	}
-    	if(speed.getX() > 0) {
-    		playerImageView.setImage(walk.get(true));
-    		walk.animate();
-    	} else if(speed.getX() < 0) {
-    		playerImageView.setImage(walk.get(false));
-    		walk.animate();
-    	} else {
-    		playerImageView.setImage(idle.get(true));
-    		idle.animate();
-    	}
-    	this.crawl = crawl;
+    private final ImageView playerImageView;
+    private final Image playerCrouchIcon;
+    private final Image playerUp;
+    private final Image playerDown;
+    private final Image playerLeft;
+    private final Image playerRight;
+    private final double playerSize;
+
+    /**
+     * 
+     * @param playerSize
+     * @throws FileNotFoundException
+     */
+    public PlayerView(final double playerSize) {
+        playerCrouchIcon = new Image(ClassLoader.getSystemResourceAsStream("croulpleier.png"));
+        playerUp = new Image(ClassLoader.getSystemResourceAsStream("pleierUP.png"));
+        playerDown = new Image(ClassLoader.getSystemResourceAsStream("pleierDOWN.png"));
+        playerRight = new Image(ClassLoader.getSystemResourceAsStream("pleierRIGHT.png"));
+        playerLeft = new Image(ClassLoader.getSystemResourceAsStream("pleierLEFT.png"));
+        playerImageView = new ImageView(playerRight);
+        playerImageView.setScaleX(playerSize);
+        playerImageView.setScaleY(playerSize);
+        this.playerSize = playerSize;
     }
 
-	public ImageView getPlayerImageView() {
-		return playerImageView;
-	}
-	
+    public void updatePlayer(final Vector2D position, final boolean crouch, final Direction direction) {
+        playerImageView.setX(position.getX() * playerSize * MapConstants.getTilesize());
+        playerImageView.setY(position.getY() * playerSize * MapConstants.getTilesize());
+        switch (direction) {
+        case UP:
+            playerImageView.setImage(playerUp);
+            break;
+        case DOWN:
+            playerImageView.setImage(playerDown);
+            break;
+        case RIGHT:
+            playerImageView.setImage(playerRight);
+            break;
+        case LEFT:
+            playerImageView.setImage(playerLeft);
+            break;
+        case NEUTRAL:
+        default:
+            break;
+        }
+        if (crouch) {
+            playerImageView.setImage(playerCrouchIcon);
+        }
+    }
+
+    public ImageView getPlayerImageView() {
+        return playerImageView;
+    }
+
 }
