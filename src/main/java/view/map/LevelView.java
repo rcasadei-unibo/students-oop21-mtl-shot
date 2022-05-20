@@ -4,11 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-
-import controller.map.MapController;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import model.map.Level;
 import util.Vector2D;
 import util.map.MapConstants;
 /**
@@ -18,27 +17,42 @@ import util.map.MapConstants;
  */
 public class LevelView {
 
-	private final List<Node> nodes = new LinkedList<>();
+	private final Level level;
+	private final double tileSize;
 
-	public LevelView(final MapController mapController, final double tileSize) throws FileNotFoundException {
-		final List<Vector2D> list = mapController.getTileables();
-		final AutotileManager autotileManager = new AutotileManager(list);
+	public LevelView(final Level level, final double tileSize) {
+		this.level = level;
+		this.tileSize = tileSize;
+	}
+	
+    public List<Node> displaySegments(final Vector2D playerPosition) {
+    	final List<Node> nodes = new LinkedList<>();
+		final List<Vector2D> list = this.level.getSegmentAtPosition(playerPosition).getTileables();
+		AutotileManager autotileManager = null;
+		try {
+			autotileManager = new AutotileManager(list);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (final var position : list) {
 			//Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,
 									// and as such will never evade the if construct.
 
-			final Group tileImage = autotileManager.autotile(position, tileSize*MapConstants.getTilesize(),
-					new Image(new FileInputStream(mapController.getTile(position).get().getPath())).getPixelReader());
+			Group tileImage = null;
+			try {
+				tileImage = autotileManager.autotile(position, this.tileSize*MapConstants.getTilesize(),
+						new Image(new FileInputStream(this.level.getSegmentAtPosition(playerPosition).getTile(position).get().getPath())).getPixelReader());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			tileImage.setScaleX(tileSize);
-			tileImage.setScaleY(tileSize);
-
+			tileImage.setScaleX(this.tileSize);
+			tileImage.setScaleY(this.tileSize);
 			nodes.add(tileImage);
+				
 		}
-	}
-
-	public List<Node> getNodes() {
-		return this.nodes;
-	}
-
+		return nodes;
+    }
 }

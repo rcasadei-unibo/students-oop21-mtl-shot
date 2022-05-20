@@ -2,12 +2,14 @@ package model;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
-import model.map.Segment;
 import model.weapons.Bullet;
 import model.weapons.P2020;
 import util.Vector2D;
@@ -24,7 +26,7 @@ public class StageImpl {
     private final Level level;
 
     public StageImpl(final TextMap textMap) throws IOException {        
-        this.level = new Level(null);
+        this.level = new Level(Stream.of("src/main/resources/map.txt","src/main/resources/map2.txt","src/main/resources/map3.txt").collect(Collectors.toList()));
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
                 .position(level.getPlayerSpawn())

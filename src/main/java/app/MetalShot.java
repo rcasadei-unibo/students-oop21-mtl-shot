@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.StageImpl;
+import model.map.Segment;
 import util.Direction;
 import util.Vector2D;
 import view.BulletsView;
@@ -29,9 +30,11 @@ public final class MetalShot extends Application {
 	
 	private Controller controller;	
     private PlayerView playerView;
+    private LevelView levelView;
     private static final double VIEWRESIZE = 1d;
     private Group mainGroup;
     private BulletsView bulletsView;
+    private Segment lastSegment;
     /**
      * {@inheritDoc}
      */
@@ -43,10 +46,11 @@ public final class MetalShot extends Application {
         this.controller = new Controller(this);
 
         final Scene mainScene;
-        final LevelView levelView = new LevelView(controller.getMapController(), VIEWRESIZE);
+        this.levelView = new LevelView(controller.getStage().getLevel(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
 
-        totalList.addAll(mapView.getNodes());
+        lastSegment = this.controller.getStage().getLevel().getSegmentAtPosition(this.controller.getStage().getPlayer().getPosition());
+        totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
         totalList.add(playerView.getPlayerImageView());
         this.mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup, 600, 600);
@@ -95,8 +99,14 @@ public final class MetalShot extends Application {
         return this.playerView;
     }
     
-    public void refresh(StageImpl stage) {
-    	
+    public void refresh(final StageImpl stage) {
+    	if(lastSegment != stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) {
+    		this.mainGroup.getChildren().clear();
+    		this.mainGroup.getChildren().addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
+    		this.mainGroup.getChildren().add(playerView.getPlayerImageView());
+    		System.out.println("Changed!");
+    	}
+    	lastSegment = stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition());
     }
 
     /**

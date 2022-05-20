@@ -156,4 +156,5 @@ public class PlayerController {
         return levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botLeft) || 
         		levelController.getSegmentAtPosition(nextPos).isCollidableAtPosition(botRight);
     }
+    
 }

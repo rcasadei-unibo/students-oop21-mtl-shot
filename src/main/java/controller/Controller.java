@@ -33,8 +33,6 @@ public class Controller {
     private WeaponController weaponController;
     private final Timeline gameLoop;
     public static final double TPS = 60;
-
-    // Instance of model (Stage?)
     private final MetalShot viewReference;
 
     /**
@@ -65,7 +63,7 @@ public class Controller {
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
                 playerController.controllerTick();
-                viewReference.refresh(null);
+                viewReference.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);

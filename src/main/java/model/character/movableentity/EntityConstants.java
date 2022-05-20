@@ -22,7 +22,7 @@ public final class EntityConstants {
      * Field that represents the speed reached by the jumping subjects in this
      * environment.
      */
-    public static final double JUMP = -13 / Controller.TPS;
+    public static final double JUMP = -5 / Controller.TPS;
     /**
      * Field that represents the horizontal deceleration (in module) in this
      * environment.
