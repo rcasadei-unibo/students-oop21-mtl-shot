@@ -46,11 +46,12 @@ public class Controller {
      * @throws IOException if the text map is not present
      */
     public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
+    	
+        final TextMap textMap = new TextMap("/home/andrea/Documenti/Università/ilProggetto/progetto/OOP21-Mtl-Shot/bin/main/map.txt"/*ClassLoader.getSystemResource("map.txt").getPath()*/);
         this.stage = new StageImpl(textMap);
         this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
-        this.bulletsController = new BulletsController(this);
+        this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets2(), null);
         this.weaponController = new WeaponController(this);
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
                                                                                                 // player view
@@ -67,9 +68,8 @@ public class Controller {
                 // Check for colliding bullets
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                viewReference.displayBullets(getBullets());
                 playerController.check();
-                viewReference.refresh(null);
+                viewReference.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -109,8 +109,8 @@ public class Controller {
             playerController.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.playerController.getPlayer())) {
-                this.bulletsController.addBullet(this.playerController.getPlayer());
+            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
+                this.bulletsController.addBullet(this.stage.getPlayer());
                 System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
@@ -190,18 +190,5 @@ public class Controller {
         final var set = new HashSet<Character>();
         set.add(playerController.getPlayer());
         return set;
-    }
-
-    /**
-     * Returns a map where every entry represents a bullet's position and direction.
-     * 
-     * @return a Map
-     */
-    public Map<Vector2D, Direction> getBullets() {
-        final Map<Vector2D, Direction> ret = new HashMap<>();
-        for (final var b : this.bulletsController.getBullets()) {
-            ret.put(b.getPosition(), b.getDirection());
-        }
-        return ret;
     }
 }

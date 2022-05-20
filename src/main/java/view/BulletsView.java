@@ -18,24 +18,41 @@ import util.map.MapConstants;
 public class BulletsView {
 	private List<ImageView> imageViewList;
 	private final Image BULLET_IMAGE_RIGHT;
-	private final double SCALE;
+	private final double scale;
 	
 	public BulletsView(final double scale) throws FileNotFoundException {
-	    this.SCALE = scale;
+	    this.scale = scale;
 		this.imageViewList = new LinkedList<>();
 		BULLET_IMAGE_RIGHT = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
 	}
 	
     public void updateBullets(final List<Vector2D> bullets) {
-    	this.imageViewList.clear();
-    	for (final var v : bullets) {
+    	for (int i = 0; i < this.imageViewList.size() && i < bullets.size(); i++) {
+    		this.imageViewList.get(i).setX(bullets.get(i).getX());
+    		this.imageViewList.get(i).setY(bullets.get(i).getY());
+    	}
+    	for (int i = this.imageViewList.size(); i < bullets.size(); i++) {
+    		System.out.println("SECONDO FOR");
     		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
-    		iv.setX(v.getX() * this.SCALE * MapConstants.getTilesize());
-    		iv.setY(v.getY() * this.SCALE * MapConstants.getTilesize());
-    		iv.setScaleX(this.SCALE);
-    		iv.setScaleY(this.SCALE);
+    		iv.setX(bullets.get(i).getX() * this.scale * MapConstants.getTilesize());
+    		iv.setY(bullets.get(i).getY() * this.scale * MapConstants.getTilesize());
+    		iv.setScaleX(this.scale);
+    		iv.setScaleY(this.scale);
     		this.imageViewList.add(iv);
     	}
+    	while (bullets.size() < this.imageViewList.size()) {
+    		System.out.println("WHILE");
+    		this.imageViewList.remove(this.imageViewList.size() - 1);
+    	}
+    	/*this.imageViewList.clear();
+    	for (final var v : bullets) {
+    		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
+    		iv.setX(v.getX() * this.scale * MapConstants.getTilesize());
+    		iv.setY(v.getY() * this.scale * MapConstants.getTilesize());
+    		iv.setScaleX(this.scale);
+    		iv.setScaleY(this.scale);
+    		this.imageViewList.add(iv);
+    	}*/
     }
 
 	public List<ImageView> getImageViewList() {

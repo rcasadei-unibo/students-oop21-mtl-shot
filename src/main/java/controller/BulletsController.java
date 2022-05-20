@@ -38,7 +38,7 @@ public class BulletsController {
 			if (playerColliding && !this.playerReference.equals(b.getOwner())) {
 				b.hitSomething();
 				this.playerReference.getHealth().hurt(b.getDamage());
-			} else if (false /*this.controllerReference.getMapController().hasSingleCollidable(b.getPosition())*/) {
+			} else if (false /*this.mapReference.hasSingleCollidable(b.getPosition())*/) {
 				b.hitSomething();
 				// TODO: if the tile is breakable, tile brakes here
 			} else if (enemyColliding.isPresent() /* && !this.enemiesReference.contains(b.getOwner()) */) {

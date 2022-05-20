@@ -2,7 +2,9 @@ package model;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
@@ -10,6 +12,8 @@ import model.character.tools.health.SimpleHealth;
 import model.map.tile.MapModel;
 import model.weapons.Bullet;
 import model.weapons.P2020;
+import model.weapons.PeaceKeeper;
+import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
 
@@ -28,7 +32,7 @@ public class StageImpl {
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
                 .position(mapModel.getPlayerSpawn())
-                .weapon(new P2020())
+                .weapon(new PeaceKeeper())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
@@ -47,6 +51,23 @@ public class StageImpl {
     public MapModel getMapModel() {
         // TODO Auto-generated method stub
         return this.mapModel;
+    }
+    
+    /**
+     * Returns a map where every entry represents a bullet's position and direction.
+     * 
+     * @return a Map
+     */
+    public Map<Vector2D, Direction> getBullets() {
+        final Map<Vector2D, Direction> ret = new HashMap<>();
+        for (final var b : this.bullets) {
+            ret.put(b.getPosition(), b.getDirection());
+        }
+        return ret;
+    }
+    
+    public Collection<Bullet> getBullets2() {
+    	return this.bullets;
     }
     
     // public Collection<Enemy> getEnemies();

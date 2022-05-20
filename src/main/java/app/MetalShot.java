@@ -77,9 +77,7 @@ public final class MetalShot extends Application {
      * @param bullets
      */
     public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+        
     }
 
     public static void run(final String... args) {
@@ -96,7 +94,9 @@ public final class MetalShot extends Application {
     }
     
     public void refresh(StageImpl stage) {
-    	
+    	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.bulletsView.updateBullets(stage.getBullets2().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     /**
