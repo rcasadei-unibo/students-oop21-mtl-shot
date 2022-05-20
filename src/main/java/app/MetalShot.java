@@ -94,9 +94,15 @@ public final class MetalShot extends Application {
     }
     
     public void refresh(StageImpl stage) {
-    	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
-        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+    	// Updates bullets
+    	if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
+    		this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    		this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());    		
+    	} else {
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    	}
+    	
     }
 
     /**
