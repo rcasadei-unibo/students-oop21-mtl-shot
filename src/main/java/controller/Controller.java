@@ -111,7 +111,7 @@ public class Controller {
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
-    private static final double FPS = 1000;
+    public static final double TPS = 60;
 
     // Instance of model (Stage?)
     private final MetalShot viewReference;
@@ -136,8 +136,7 @@ public class Controller {
   		SimpleBot brain = new BasicBot();
   		brain.getEntity().setPosition(25, 0);
   		brain.setPlayer(stage.getPlayer());
-
-        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
+        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
@@ -155,7 +154,7 @@ public class Controller {
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
-                playerController.check();
+                playerController.controllerTick();
                 viewReference.refresh(stage);
             }
         }));
@@ -176,6 +175,10 @@ public class Controller {
         // TODO
     }
 
+    /**
+     * Handle the input key from standard input on it's press.
+     * @param key
+     */
     public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
             playerController.getCharacter().setLeft(true);
@@ -206,7 +209,7 @@ public class Controller {
     }
 
     /**
-     * 
+     * Handle the input key from standard input on it's release.
      * @param key
      */
     public void keyReleased(final KeyCode key) {

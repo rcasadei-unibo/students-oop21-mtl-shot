@@ -23,13 +23,11 @@ public class PlayerController extends CharacterController{
 //     */
 //    private final MapController mapController;
 
-
     /**
-     * The player controller constructor: it needs a player representation on a view and a master controller that passes to it 
-     * what it needs.
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DA RIGUARDARE (TOM) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * The player controller constructor.
+     * @param player
+     * @param mapController
      * @param playerView
-     * @param controller
      */
     public PlayerController(final PlayerView playerView, final MapController mapController, final Player player) {
         super(playerView, mapController, player);

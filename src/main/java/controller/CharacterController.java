@@ -46,7 +46,7 @@ public abstract class CharacterController {
     /**
      * The main method that checks everything about the player.
      */
-    public void check() {
+    public void controllerTick() {
         character.setCrouchCondition(Crouch.FREE);
         character.setFall(true);
         final Vector2D nextPos = new Vector2D(character.getPosition());
