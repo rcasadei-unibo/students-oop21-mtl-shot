@@ -61,6 +61,7 @@ import javafx.stage.Stage;
  */
 
 
+import model.StageImpl;
 import util.Direction;
 import util.Vector2D;
 import util.map.MapConstants;
@@ -73,13 +74,12 @@ import view.player.PlayerView;
  *
  */
 public final class MetalShot extends Application {
-
+	
+	private Controller controller;	
     private PlayerView playerView;
     private static final double VIEWRESIZE = 1d;
     private Group mainGroup;
     private BulletsView bulletsView;
-    
-    private Controller controller;
     private ImageView enemy;
     private Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     /**
@@ -87,12 +87,14 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
+
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
         final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
+
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
         
@@ -151,7 +153,14 @@ public final class MetalShot extends Application {
     public PlayerView getPlayerView() {
         return this.playerView;
     }
-    
+    public void refresh(StageImpl stage) {
+    	
+    }
+
+    /**
+     * 
+     *
+     */
     public static final class Main {
         private Main() {
             // the constructor will never be called directly.

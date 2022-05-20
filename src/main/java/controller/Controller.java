@@ -7,6 +7,7 @@ import controller.enemy.BasicBot;
 import controller.enemy.RandomBot;
 import controller.enemy.SimpleBot;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import app.MetalShot;
+import model.StageImpl;
 import model.character.Character;
 import controller.map.MapController;
 import controller.player.PlayerController;
@@ -114,6 +116,7 @@ public class Controller {
 
     private final PlayerController playerController;
     private final MapController mapController;
+    private final StageImpl stage;
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
@@ -129,12 +132,13 @@ public class Controller {
      * @throws IOException if the text map is not present
      */
     public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-        this.mapController = new MapController(textMap);
+        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
+        this.stage = new StageImpl(textMap);
+        this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this); // null ->
+        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
                                                                                                 // player view
         
         //SBAGLIATO, SOLO TEMPORANEO!!!!
@@ -165,6 +169,7 @@ public class Controller {
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
                 playerController.check();
+                viewReference.refresh(null);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -210,7 +215,6 @@ public class Controller {
             }
         } else if (key.equals(KeyCode.R)) {
             this.playerController.getPlayer().getWeapon().reload();
-            System.out.println("Reloading...");
         }
     }
 

@@ -53,16 +53,10 @@ public class PlayerController {
      * @param playerView
      * @param controller
      */
-    public PlayerController(final PlayerView playerView, final Controller controller) {
+    public PlayerController(final PlayerView playerView, final Controller controller, final Player player) {
         this.playerView = playerView;
         this.mapController = controller.getMapController();
-        player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
-                .position(mapController.getPlayerSpawn())
-                .weapon(new P2020())
-                .health(new SimpleHealth())
-                .lives(3)
-                .build();
+        this.player = player;
     }
 
     /**

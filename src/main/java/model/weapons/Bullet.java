@@ -26,7 +26,7 @@ public class Bullet extends Entity {
     /*
      * Space traveled in a tick's time
      */
-    private double speed;
+    private Vector2D speed;
 
     /*
      * Bullet's damage (based on the weapon held by owner)
@@ -49,7 +49,7 @@ public class Bullet extends Entity {
                                                                                              // numbers
         this.owner = owner;
         this.direction = owner.getAim().getDirection();
-        this.speed = 0.01;
+        this.speed = new Vector2D(0.05, 0.05);
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
     }
@@ -62,13 +62,13 @@ public class Bullet extends Entity {
         // This implementation is in accordance with this (old) implementation of Vector
         // class. TODO: update in the future
         if (this.direction.equals(Direction.UP)) {
-            super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() - this.speed));
+            super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() - this.speed.getY()));
         } else if (this.direction.equals(Direction.DOWN)) {
-            super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() + this.speed));
+            super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() + this.speed.getY()));
         } else if (this.direction.equals(Direction.LEFT)) {
-            super.setPosition(new Vector2D(super.getPosition().getX() - this.speed, super.getPosition().getY()));
+            super.setPosition(new Vector2D(super.getPosition().getX() - this.speed.getX(), super.getPosition().getY()));
         } else if (this.direction.equals(Direction.RIGHT)) {
-            super.setPosition(new Vector2D(super.getPosition().getX() + this.speed, super.getPosition().getY()));
+            super.setPosition(new Vector2D(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY()));
         }
     }
 
@@ -89,7 +89,7 @@ public class Bullet extends Entity {
     /**
      * @return the bullet's speed
      */
-    public double getSpeed() {
+    public Vector2D getSpeed() {
         return this.speed;
     }
 
