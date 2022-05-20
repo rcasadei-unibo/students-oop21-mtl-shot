@@ -13,7 +13,7 @@ import util.Vector2D;
  */
 public class BasicBot implements SimpleBot {
 	
-	private MovableEntity entity = new Enemy(new Vector2D(0, 0), null, new SimpleHealth());	
+	private MovableEntity enemy = new Enemy(new Vector2D(), null, new SimpleHealth());	
 	private Player player;
 	
 	public void setPlayer(Player p) {
@@ -24,22 +24,22 @@ public class BasicBot implements SimpleBot {
 	public void move() {
 		if(this.player != null) {
 			System.out.println(player.getPosition());
-			double distance = entity.getPosition().getX() - player.getPosition().getX();
+			double distance = enemy.getPosition().getX() - player.getPosition().getX();
 			boolean dir = distance > 0;
-			entity.setLeft(dir);
-			entity.setRight(!dir);
-			if(distance < 100) {
-				entity.setRight(false);
-				entity.setLeft(false);
+			enemy.setLeft(dir);
+			enemy.setRight(!dir);
+			if(Math.abs(distance) < 0.5) {
+				enemy.setRight(false);
+				enemy.setLeft(false);
 			}
-			entity.moveEntity();
+			enemy.moveEntity();
 		}
 	}
 
 	@Override
 	public MovableEntity getEntity() {
 		// TODO Auto-generated method stub
-		return this.entity;
+		return this.enemy;
 	}
 
 }

@@ -3,11 +3,8 @@ package controller.player;
 import controller.Controller;
 import controller.map.MapController;
 import model.character.Player;
-import model.character.Player.Crouch;
-import model.character.Player.PlayerBuilder;
+import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
-import model.character.tools.health.SimpleHealth;
-import model.weapons.P2020;
 import util.Direction;
 import util.Vector2D;
 import view.player.PlayerView;
@@ -30,21 +27,7 @@ public class PlayerController {
      * The map controller, used to handle the checks with the ground.
      */
     private final MapController mapController;
-    /**
-     * A shift from the hitbox corners.
-     */
-    private static final double DELTA = 0.01; 
-    /**
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!
-     * DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME GESTIRLO
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!
-     */
-    // Constant used to have the shift from the playerPos to the hitbox pos
-    // (player should penetrate at least a bit the field with the head and the arms)
-    // DELTA > HITBOXSHIFT.x
-    // Il replacing al momento del crouch non funziona più in questo modo
-    // TROPPE CONDIZIONI DI ESISTENZA, MEGLIO WRAPPARLE NELLA HITBOX (?)
-    private static final Vector2D HITBOXSHIFT = new Vector2D();
+    
 
     /**
      * The player controller constructor: it needs a player representation on a view and a master controller that passes to it 
@@ -85,7 +68,7 @@ public class PlayerController {
     }
 
     private void bulletsChecks() {
-        
+
     }
     private void aimChecks() {
         //if crouching he can't aim at the ground
