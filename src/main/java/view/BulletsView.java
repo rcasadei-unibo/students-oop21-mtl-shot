@@ -42,15 +42,6 @@ public class BulletsView {
     	while (bullets.size() < this.imageViewList.size()) {
     		this.imageViewList.remove(this.imageViewList.size() - 1);
     	}
-    	/*this.imageViewList.clear();
-    	for (final var v : bullets) {
-    		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
-    		iv.setX(v.getX() * this.scale * MapConstants.getTilesize());
-    		iv.setY(v.getY() * this.scale * MapConstants.getTilesize());
-    		iv.setScaleX(this.scale);
-    		iv.setScaleY(this.scale);
-    		this.imageViewList.add(iv);
-    	}*/
     }
 
 	public List<ImageView> getImageViewList() {

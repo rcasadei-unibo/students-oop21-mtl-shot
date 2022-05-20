@@ -53,20 +53,7 @@ public class StageImpl {
         return this.mapModel;
     }
     
-    /**
-     * Returns a map where every entry represents a bullet's position and direction.
-     * 
-     * @return a Map
-     */
-    public Map<Vector2D, Direction> getBullets() {
-        final Map<Vector2D, Direction> ret = new HashMap<>();
-        for (final var b : this.bullets) {
-            ret.put(b.getPosition(), b.getDirection());
-        }
-        return ret;
-    }
-    
-    public Collection<Bullet> getBullets2() {
+    public Collection<Bullet> getBullets() {
     	return this.bullets;
     }
     

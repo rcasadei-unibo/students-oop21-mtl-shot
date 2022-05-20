@@ -95,7 +95,7 @@ public final class MetalShot extends Application {
     
     public void refresh(StageImpl stage) {
     	this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(stage.getBullets2().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+        this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
