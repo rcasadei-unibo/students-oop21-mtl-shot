@@ -111,7 +111,6 @@ public class Controller {
         if (key.equals(KeyCode.J)) {
             if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
                 this.bulletsController.addBullet(this.stage.getPlayer());
-                System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
             this.playerController.getPlayer().getWeapon().reload();
