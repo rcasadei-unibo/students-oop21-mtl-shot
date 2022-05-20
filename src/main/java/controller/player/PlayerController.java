@@ -1,13 +1,9 @@
 package controller.player;
 
-import controller.Controller;
 import controller.map.MapController;
 import model.character.Player;
 import model.character.Player.Crouch;
-import model.character.Player.PlayerBuilder;
 import model.character.movableentity.EntityConstants;
-import model.character.tools.health.SimpleHealth;
-import model.weapons.P2020;
 import util.Direction;
 import util.Vector2D;
 import view.player.PlayerView;
@@ -33,7 +29,7 @@ public class PlayerController {
     /**
      * A shift from the hitbox corners.
      */
-    private static final double DELTA = 0.01; 
+    private static final double DELTA = 0.075; 
     /**
      * !!!!!!!!!!!!!!!!!!!!!!!!!!!
      * DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME GESTIRLO
@@ -47,22 +43,21 @@ public class PlayerController {
     private static final Vector2D HITBOXSHIFT = new Vector2D();
 
     /**
-     * The player controller constructor: it needs a player representation on a view and a master controller that passes to it 
-     * what it needs.
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DA RIGUARDARE (TOM) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * The player controller constructor.
+     * @param player
+     * @param mapController
      * @param playerView
-     * @param controller
      */
-    public PlayerController(final PlayerView playerView, final Controller controller, final Player player) {
+    public PlayerController(final Player player, final MapController mapController, final PlayerView playerView) {
         this.playerView = playerView;
-        this.mapController = controller.getMapController();
+        this.mapController = mapController;
         this.player = player;
     }
 
     /**
      * The main method that checks everything about the player.
      */
-    public void check() {
+    public void controllerTick() {
         player.setCrouchCondition(Crouch.FREE);
         player.setFall(true);
         final Vector2D nextPos = new Vector2D(player.getPosition());
@@ -71,7 +66,6 @@ public class PlayerController {
         this.movementChecks(nextPos);
         player.moveEntity();
         this.aimChecks();
-        this.bulletsChecks();
         playerView.updatePlayer(player.getPosition(), player.isCrouching(), player.getAim().getDirection());
     }
 
@@ -84,23 +78,16 @@ public class PlayerController {
         return this.player;
     }
 
-    private void bulletsChecks() {
-        
-    }
     private void aimChecks() {
         //if crouching he can't aim at the ground
         if (player.isCrouching()) {
             player.getAim().returnToHorizontal();
-        //if fling and pressing the down button he has to aim at the ground
+        //if flying and pressing the down button he has to aim at the ground
         } else if (!player.isCrouching() && player.getCrouchKey()) {
             player.getAim().setDirection(Direction.DOWN);
         }
     }
     private void movementChecks(final Vector2D nextPos) {
-        //Roof collisions
-        if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
-            player.setSpeed(player.getSpeed().getX(), 0);
-        }
         //Floor collisions
         if (this.isCollidingDown(nextPos)) {
             player.setFall(false);
@@ -108,11 +95,16 @@ public class PlayerController {
                 player.setSpeed(player.getSpeed().getX(), 0);
             }
         }
+        //Roof collisions
+        if (this.isCollidingUp(nextPos) && player.getSpeed().getY() < 0) {
+            player.setSpeed(player.getSpeed().getX(), 0);
+            player.setJump(false);
+        }
         //Left wall collisions
-        if (this.isCollidingLeft(nextPos) /*&& player.isLeft()*/) {
+        if (this.isCollidingLeft(nextPos)) {
             player.setSpeed(EntityConstants.ACCELERATION, player.getSpeed().getY());
         //Right wall collisions
-        } else if (this.isCollidingRight(nextPos) /*&& player.isRight()*/) {
+        } else if (this.isCollidingRight(nextPos)) {
             player.setSpeed(-EntityConstants.ACCELERATION, player.getSpeed().getY());
         }
         //Special case: while fling he can not crouch

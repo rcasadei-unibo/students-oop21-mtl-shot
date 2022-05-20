@@ -34,7 +34,7 @@ public class Controller {
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
-    private static final double FPS = 1000;
+    private static final double FPS = 120;
 
     // Instance of model (Stage?)
     private final MetalShot viewReference;
@@ -52,8 +52,7 @@ public class Controller {
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
-                                                                                                // player view
+        this.playerController = new PlayerController(this.stage.getPlayer(), this.mapController, this.viewReference.getPlayerView());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -68,7 +67,7 @@ public class Controller {
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 viewReference.displayBullets(getBullets());
-                playerController.check();
+                playerController.controllerTick();
                 viewReference.refresh(null);
             }
         }));
@@ -89,6 +88,10 @@ public class Controller {
         // TODO
     }
 
+    /**
+     * Handle the input key from standard input on it's press.
+     * @param key
+     */
     public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
             playerController.getPlayer().setLeft(true);
@@ -119,7 +122,7 @@ public class Controller {
     }
 
     /**
-     * 
+     * Handle the input key from standard input on it's release.
      * @param key
      */
     public void keyReleased(final KeyCode key) {

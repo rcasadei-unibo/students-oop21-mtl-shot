@@ -1,19 +1,12 @@
 package controller.map;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import util.map.TextMap;
 import model.map.tile.MapModel;
 import model.map.tile.Tile;
-import model.map.tile.TileAir;
-import model.map.tile.TileMetal;
-import model.map.tile.TileStone;
 import util.Vector2D;
 
 /**
@@ -26,30 +19,6 @@ public class MapController {
     private Vector2D playerSpawn;
 
     public MapController(final MapModel mapModel) throws IOException {
-        /*mapModel = new MapModel();
-        final File mapTxt = textMap.getFile();
-        final BufferedReader mapTxtInput = new BufferedReader(new FileReader(mapTxt));
-        for (int i = 0; i < textMap.getHeight(); i++) {
-            int j = 0;
-            while (j < textMap.getWidth()) {
-                final int check = mapTxtInput.read();
-                if (check == '0') {
-                    mapModel.addTile(new TileAir(new Vector2D(j, i)));
-                    j++;
-                } else if (check == '1') {
-                    mapModel.addTile(new TileStone(new Vector2D(j, i)));
-                    j++;
-                } else if (check == '2') {
-                    mapModel.addTile(new TileMetal(new Vector2D(j, i)));
-                    j++;
-                } else if (check == 'p') {
-                    mapModel.addTile(new TileAir(new Vector2D(j, i)));
-                    playerSpawn = new Vector2D(j, i);
-                    j++;
-                }
-            }
-        }
-        mapTxtInput.close();*/
         this.mapModel = mapModel;
     }
 
