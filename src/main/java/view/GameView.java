@@ -47,6 +47,7 @@ public class GameView {
      */
     public GameView(final Stage stage) throws IOException {
         this.stage = stage;
+        this.stage.setFullScreen(true);
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
