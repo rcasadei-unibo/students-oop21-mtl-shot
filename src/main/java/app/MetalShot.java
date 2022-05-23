@@ -25,8 +25,8 @@ public final class MetalShot extends Application {
         final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
-        //primaryStage.setFullScreen(true);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }
