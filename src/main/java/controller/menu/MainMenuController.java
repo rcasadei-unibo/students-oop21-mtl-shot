@@ -39,7 +39,7 @@ public class MainMenuController {
      */
     @FXML
     public void startPressed(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) startButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/startButtonPressed.png")));
+        ((ImageView) startButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/startButtonPressed.png")));
     }
 
     /**
@@ -49,7 +49,7 @@ public class MainMenuController {
      */
     @FXML
     public void startReleased(final MouseEvent event) throws IOException {
-        ((ImageView) startButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/startButton.png")));
+        ((ImageView) startButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/startButton.png")));
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/SignIn.fxml"))));
         stage.show();
@@ -62,7 +62,7 @@ public class MainMenuController {
      */
     @FXML
     public void closePressed(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) closeButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/closeButtonPressed.png")));
+        ((ImageView) closeButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/closeButtonPressed.png")));
     }
 
     /**
@@ -72,7 +72,7 @@ public class MainMenuController {
      */
     @FXML
     public void closeReleased(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) closeButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/closeButton.png")));
+        ((ImageView) closeButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/closeButton.png")));
         Platform.exit();
     }
     /**
@@ -82,7 +82,7 @@ public class MainMenuController {
      */
     @FXML
     public void optionPressed(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) optionButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/optionButtonPressed.png")));
+        ((ImageView) optionButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/optionButtonPressed.png")));
     }
 
     /**
@@ -92,7 +92,7 @@ public class MainMenuController {
      */
     @FXML
     public void optionReleased(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) optionButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/optionButton.png")));
+        ((ImageView) optionButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/optionButton.png")));
     }
 
     /**
@@ -102,7 +102,7 @@ public class MainMenuController {
      */
     @FXML
     public void leaderboardPressed(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) leaderboardButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/leaderboardButtonPressed.png")));
+        ((ImageView) leaderboardButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/leaderboardButtonPressed.png")));
     }
 
     /**
@@ -112,6 +112,6 @@ public class MainMenuController {
      */
     @FXML
     public void leaderboardReleased(final MouseEvent event) throws FileNotFoundException {
-        ((ImageView) leaderboardButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/button/leaderboardButton.png")));
+        ((ImageView) leaderboardButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/leaderboardButton.png")));
     }
 }

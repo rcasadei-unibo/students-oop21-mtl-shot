@@ -30,36 +30,36 @@
          <children>
             <Button fx:id="startButton" mnemonicParsing="false" onMousePressed="#startPressed" onMouseReleased="#startReleased" styleClass="rectangularButton" GridPane.halignment="CENTER">
                <graphic>
-                  <ImageView fx:id="startImg" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../button/StartButton.png" />
+                        <Image url="@../buttons/StartButton.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Button fx:id="leaderboardButton" mnemonicParsing="false" onMousePressed="#leaderboardPressed" onMouseReleased="#leaderboardReleased" styleClass="rectangularButton" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <graphic>
-                  <ImageView fx:id="leaderboardImg" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../button/leaderboardButton.png" />
+                        <Image url="@../buttons/leaderboardButton.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Button fx:id="optionButton" mnemonicParsing="false" onMousePressed="#optionPressed" onMouseReleased="#optionReleased" styleClass="rectangularButton" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <graphic>
-                  <ImageView fx:id="optionImg" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../button/optionButton.png" />
+                        <Image url="@../buttons/optionButton.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Button fx:id="closeButton" mnemonicParsing="false" onMousePressed="#closePressed" onMouseReleased="#closeReleased" styleClass="rectangularButton" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <graphic>
-                  <ImageView fx:id="closeImg" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../button/closeButton.png" />
+                        <Image url="@../buttons/closeButton.png" />
                      </image>
                   </ImageView>
                </graphic>
