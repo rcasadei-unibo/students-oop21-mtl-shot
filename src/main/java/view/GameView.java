@@ -38,6 +38,7 @@ public class GameView {
     private final ImageView enemy;
     private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     private final Controller controller;
+    private final Stage stage;
 
     /**
      * The GameView constructor.
@@ -45,6 +46,7 @@ public class GameView {
      * @throws IOException if files are not found.
      */
     public GameView(final Stage stage) throws IOException {
+        this.stage = stage;
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
@@ -71,7 +73,11 @@ public class GameView {
         mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
-                controller.keyReleased(event.getCode());
+                try {
+                    controller.keyReleased(event.getCode());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
@@ -130,5 +136,9 @@ public class GameView {
      */
     public Dimension getDim() {
         return new Dimension(this.res);
+    }
+    
+    public Stage getStage() {
+        return this.stage;
     }
 }

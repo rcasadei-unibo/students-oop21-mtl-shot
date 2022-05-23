@@ -1,7 +1,5 @@
 .rectangularButton {
 	-fx-shape: "M 100 300 L 100 200 L 350 200 L 350 300 L 100 300 ";
-	-fx-background: transparent;
-	-fx-padding: 0;
-	background: transparent;
-	padding: 0;
+	-fx-padding: 10;
+	padding: 10;
 }

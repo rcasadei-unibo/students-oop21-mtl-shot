@@ -23,9 +23,10 @@ public final class MetalShot extends Application {
     @Override
     public void start(final Stage primaryStage) throws IOException {
         final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
-        primaryStage.setScene(new Scene(root));
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setFullScreen(true);
+        final Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }

@@ -17,6 +17,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
@@ -25,78 +28,6 @@ import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
 import view.GameView;
-
-/**
- * TODO
- *
- */
-/*public class Controller {
-    private final Timeline gameLoop;
-	
-	//Instance of model (Stage?)
-	private final MetalShot viewReference;
-	
-	public Controller(final MetalShot viewReference) {
-
-		//SBAGLIATO, SOLO TEMPORANEO!!!!
-		SimpleBot brain = new BasicBot();
-		brain.getEntity().setPosition(825, 0);
-
-		Player p = new PlayerBuilder()
-				.health(new SimpleHealth())
-				.hitbox(new Vector(1, 2))
-				.lives(3)
-				.position(new Vector(30,0))
-				.build();
-
-		brain.setPlayer(p);
-
-		this.viewReference = viewReference;
-		this.gameLoop = new Timeline(
-
-				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
-
-					int num = 0;
-
-					@Override
-					public void handle(ActionEvent event) {
-						brain.move();
-						viewReference.setEnemyPos(brain.getEntity().getPosition());
-						viewReference.setPlayerPos(p.getPosition());
-						System.out.println("Entity POS: " + brain.getEntity().getPosition());
-						System.out.println("Actual POS: " + viewReference.getX());
-						//viewReference.setCirclePos(new Vector(num++,0));
-					}
-				}));
-		gameLoop.setCycleCount(Timeline.INDEFINITE);
-	}
-	
-	public void gameStart() {
-		gameLoop.play();
-		// TODO
-	}
-	
-	public void gamePause() {		// not in UML
-		gameLoop.pause();
-		// TODO show pause menu
-	}
-	
-	public void gameReset() {
-		// TODO
-	}
-	
-	public void save() {
-		// TODO
-	}
-	
-	public void load() {
-		// TODO
-	}
-	
-	public void nextLevel() {
-		// TODO
-	}*/
-
 
 /**
  * 
@@ -165,9 +96,11 @@ public class Controller {
         // TODO
     }
 
-    public void gamePause() { // not in UML
+    public void gamePause() throws IOException { // not in UML
         gameLoop.pause();
-        // TODO show pause menu
+        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
+        final Scene scene = new Scene(root);
+        this.viewReference.getStage().setScene(scene);
     }
 
     public void gameReset() {
@@ -210,8 +143,9 @@ public class Controller {
     /**
      * Handle the input key from standard input on it's release.
      * @param key
+     * @throws IOException 
      */
-    public void keyReleased(final KeyCode key) {
+    public void keyReleased(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
             playerController.getCharacter().setLeft(false);
         }
@@ -227,6 +161,9 @@ public class Controller {
         if (key == KeyCode.S) {
             playerController.getCharacter().setCrouchKey(false);
             playerController.getCharacter().getAim().returnToHorizontal();
+        }
+        if (key == KeyCode.ESCAPE) {
+            this.gamePause();
         }
     }
 

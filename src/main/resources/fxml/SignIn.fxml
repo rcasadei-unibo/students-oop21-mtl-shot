@@ -5,14 +5,15 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.SignInController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@Rules.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.SignInController">
    <top>
       <Label text="Write your name" BorderPane.alignment="CENTER">
          <font>
@@ -33,15 +34,37 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="insert" mnemonicParsing="false" onMousePressed="#insertPressed" onMouseReleased="#insertReleased" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <ImageView fitHeight="34.0" fitWidth="267.0" pickOnBounds="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../buttons/base.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="name" prefHeight="21.0" prefWidth="172.0" styleClass="rectangularButton" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Pixel_Madness.ttf" size="12.0" url="@../Pixel_Madness.ttf" />
+               </font></TextField>
+            <Button fx:id="insertButton" mnemonicParsing="false" onMousePressed="#insertPressed" onMouseReleased="#insertReleased" styleClass="rectangularButton" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../buttons/insertButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </GridPane>
    </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button fx:id="back" mnemonicParsing="false" onMousePressed="#backPressed" onMouseReleased="#backReleased" text="Back" />
+          <Button fx:id="backButton" mnemonicParsing="false" onMousePressed="#backPressed" onMouseReleased="#backReleased" styleClass="rectangularButton">
+               <graphic>
+                  <ImageView fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../buttons/backButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
         </buttons>
          <BorderPane.margin>
             <Insets bottom="10.0" right="10.0" />

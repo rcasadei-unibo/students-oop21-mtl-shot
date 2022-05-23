@@ -1,14 +1,19 @@
 package controller.menu;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 import util.UserData;
 import view.GameView;
 
@@ -20,14 +25,20 @@ public class SignInController {
 
     private UserData userData;
     @FXML
-    private TextField name;
+    public TextField name;
+    @FXML
+    public Button insertButton;
+    @FXML
+    public Button backButton;
 
     /**
      * Executes when the insert button is pressed.
      * @param event
+     * @throws FileNotFoundException 
      */
     @FXML
-    public void insertPressed(final MouseEvent event) {
+    public void insertPressed(final MouseEvent event) throws FileNotFoundException {
+        ((ImageView) insertButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/insertButtonPressed.png")));
     }
 
     /**
@@ -37,19 +48,20 @@ public class SignInController {
      */
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException {
+        ((ImageView) insertButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/insertButton.png")));
         if (this.isValid(name.getText())) {
             this.userData = new UserData(name.getText());
-            //show next scene
-            System.out.println("Game launch");
             new GameView((Stage) ((Node) event.getSource()).getScene().getWindow());
         }
     }
     /**
      * Executes when the back button is pressed.
      * @param event
+     * @throws FileNotFoundException 
      */
     @FXML
-    public void backPressed(final MouseEvent event) {
+    public void backPressed(final MouseEvent event) throws FileNotFoundException {
+        ((ImageView) backButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/backButtonPressed.png")));
     }
 
     /**
@@ -59,6 +71,7 @@ public class SignInController {
      */
     @FXML
     public void backReleased(final MouseEvent event) throws IOException {
+        ((ImageView) backButton.getGraphic()).setImage(new Image(new FileInputStream("src/main/resources/buttons/backButton.png")));
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"))));
         stage.show();
