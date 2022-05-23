@@ -1,6 +1,5 @@
 package controller;
 
-import app.MetalShot;
 import controller.enemy.BasicBot;
 import controller.enemy.SimpleBot;
 
@@ -22,10 +21,10 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 
-import model.character.Player;
 import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
+import view.GameView;
 
 /**
  * TODO
@@ -114,19 +113,19 @@ public class Controller {
     public static final double TPS = 60;
 
     // Instance of model (Stage?)
-    private final MetalShot viewReference;
+    private final GameView viewReference;
 
     /**
      * The main controller constructor.
      * 
-     * @param viewReference
+     * @param gameView
      * @throws IOException if the text map is not present
      */
-    public Controller(final MetalShot viewReference) throws IOException {
+    public Controller(final GameView gameView) throws IOException {
         final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
         this.stage = new StageImpl(textMap);
         this.mapController = new MapController(this.stage.getMapModel());
-        this.viewReference = viewReference;
+        this.viewReference = gameView;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(), this.stage.getPlayer()); // null ->
@@ -148,14 +147,14 @@ public class Controller {
                 // Move/shoot enemies (based on Susca's AI)
                 // Check for colliding bullets
             	brain.move();
-				viewReference.setEnemyPos(brain.getEntity().getPosition());
+				gameView.setEnemyPos(brain.getEntity().getPosition());
 				System.out.println("Entity POS: " + brain.getEntity().getPosition());
-				System.out.println("Actual POS: " + viewReference.getX());
+				System.out.println("Actual POS: " + gameView.getX());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                viewReference.displayBullets(getBullets());
+                gameView.displayBullets(getBullets());
                 playerController.controllerTick();
-                viewReference.refresh(stage);
+                gameView.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -266,7 +265,7 @@ public class Controller {
      * 
      * @return MetalShot
      */
-    public MetalShot getView() {
+    public GameView getView() {
         return this.viewReference;
     }
 
