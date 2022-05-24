@@ -17,7 +17,7 @@ public class PauseMenuController {
 
     @FXML
     void optionReleased(final MouseEvent event) {
-        //show option scene
+        // show option scene
     }
 
     @FXML
@@ -28,11 +28,13 @@ public class PauseMenuController {
 
     @FXML
     void restartReleased(final MouseEvent event) throws Throwable {
+        final GameView gv = (GameView) ((Node) event.getSource()).getScene().getWindow();
+        new GameView(gv.getUserData().getName());
+        gv.close();
     }
 
     @FXML
     void resumeReleased(final MouseEvent event) throws IOException {
-        final GameView gameView = (GameView) ((Node) event.getSource()).getScene().getWindow();
-        gameView.disposePauseMenu();
+        ((GameView) ((Node) event.getSource()).getScene().getWindow()).disposePauseMenu();
     }
 }

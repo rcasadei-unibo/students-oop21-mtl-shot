@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import util.UserData;
 import view.GameView;
 
 /**

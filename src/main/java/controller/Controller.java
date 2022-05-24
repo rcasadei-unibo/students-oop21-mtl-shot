@@ -91,7 +91,6 @@ public class Controller {
     public void gameStart() {
         gameLoop.play();
         paused = false;
-        // TODO
     }
 
     public void gamePause() throws IOException { // not in UML

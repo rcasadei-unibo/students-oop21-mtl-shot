@@ -34,12 +34,13 @@ import view.player.PlayerView;
 public class GameView extends Stage {
 
     private static final double VIEWRESIZE = 1d;
-    private final PlayerView playerView;
-    private final BulletsView bulletsView;
-    private final Group mainGroup;
+    private final PlayerView playerView = new PlayerView(VIEWRESIZE);
+    private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
+    private final MapView mapView;
     private final ImageView enemy;
-    private final Controller controller;
-    private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Group mainGroup;
+
+    private final Controller controller = new Controller(this);
     private final UserData userData;
 
     /**
@@ -48,11 +49,9 @@ public class GameView extends Stage {
      * @throws IOException 
      */
     public GameView(final String username) throws IOException {
+        this.setFullScreenExitHint("");
         this.userData = new UserData(username);
-        this.playerView = new PlayerView(VIEWRESIZE);
-        this.bulletsView = new BulletsView(VIEWRESIZE);
-        this.controller = new Controller(this);
-        final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
+        this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
@@ -104,13 +103,12 @@ public class GameView extends Stage {
         return this.playerView;
     }
 
-    /**
-     * Updates the current visual frame using the info of the stage.
-     * @param stage
-     */
-    public void refresh(final StageImpl stage) {
-        playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
-                stage.getPlayer().getAim().getDirection());
+    public MapView getMapView() {
+        return this.mapView;
+    }
+
+    public BulletsView getBulletsView() {
+        return this.bulletsView;
     }
 
     /**
@@ -122,23 +120,20 @@ public class GameView extends Stage {
     }
 
     /**
-     * TODO: Matteo Susca.
-     * @return double
+     * Updates the current visual frame using the info of the stage.
+     * @param stage
      */
-    public double getEnemyX() {
-        return this.enemy.getX();
-    }
-
-    /**
-     * TODO: Matteo Susca.
-     * @return dim
-     */
-    public Dimension getDim() {
-        return new Dimension(this.res);
+    public void refresh(final StageImpl stage) {
+        playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
+                stage.getPlayer().getAim().getDirection());
     }
 
     public Controller getController() {
         return this.controller;
+    }
+    
+    public UserData getUserData() {
+        return this.userData;
     }
 
     public void displayPauseMenu() throws IOException {
