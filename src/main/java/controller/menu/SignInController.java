@@ -22,12 +22,14 @@ public class SignInController {
     /**
      * Executes when the insert button is released.
      * @param event
-     * @throws IOException
+     * @throws IOException 
+     * @throws Throwable 
      */
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException {
         if (this.isValid(name.getText())) {
-            new GameView((Stage) ((Node) event.getSource()).getScene().getWindow(), name.getText());
+            new GameView(name.getText());
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
         }
     }
     /**
@@ -41,7 +43,7 @@ public class SignInController {
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
         stage.show();
     }
-    
+
     private boolean isValid(final String text) {
         return !text.isBlank();
     }

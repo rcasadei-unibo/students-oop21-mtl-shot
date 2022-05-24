@@ -14,12 +14,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.StageImpl;
 import util.Direction;
@@ -33,31 +31,27 @@ import view.player.PlayerView;
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
-public class GameView {
+public class GameView extends Stage {
 
     private static final double VIEWRESIZE = 1d;
     private final PlayerView playerView;
     private final BulletsView bulletsView;
     private final Group mainGroup;
     private final ImageView enemy;
-    private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     private final Controller controller;
-    private final Stage stage;
+    private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     private final UserData userData;
 
     /**
      * The GameView constructor.
-     * @param stage the stage where the GameView is launched
      * @param username
-     * @throws IOException if files are not found.
+     * @throws IOException 
      */
-    public GameView(final Stage stage, final String username) throws IOException {
+    public GameView(final String username) throws IOException {
         this.userData = new UserData(username);
-        this.stage = stage;
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
-        final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
@@ -65,18 +59,16 @@ public class GameView {
         this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
         totalList.add(enemy);
         this.mainGroup = new Group(totalList);
-        mainScene = new Scene(mainGroup);
-        stage.setScene(mainScene);
-        stage.setFullScreen(true);
-        stage.show();
+        this.setScene(new Scene(mainGroup));
+        this.setFullScreen(true);
         controller.gameStart();
-        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        this.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyPressed(event.getCode());
             }
         });
-        mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        this.getScene().setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 try {
@@ -86,10 +78,11 @@ public class GameView {
                 }
             }
         });
-        mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        this.getScene().setOnKeyTyped(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent event) {
             }
         });
+        this.show();
     }
 
     /**
@@ -132,7 +125,7 @@ public class GameView {
      * TODO: Matteo Susca.
      * @return double
      */
-    public double getX() {
+    public double getEnemyX() {
         return this.enemy.getX();
     }
 
@@ -144,20 +137,18 @@ public class GameView {
         return new Dimension(this.res);
     }
 
-    /**
-     * 
-     * @return Stage
-     */
-    public Stage getStage() {
-        return this.stage;
+    public Controller getController() {
+        return this.controller;
     }
 
     public void displayPauseMenu() throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
-        final Scene scene = new Scene(root);
-        ((GridPane) scene.getRoot()).getChildren().add(0, this.stage.getScene().getRoot());
-        this.stage.setScene(scene);
-        this.stage.setFullScreen(true);
-        this.stage.show();
+        this.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
+        this.show();
+    }
+
+    public void disposePauseMenu() {
+        this.getScene().setRoot(mainGroup);
+        this.controller.gameStart();
+        this.show();
     }
 }

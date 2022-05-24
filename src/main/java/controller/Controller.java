@@ -70,7 +70,7 @@ public class Controller {
             @Override
             public void handle(final ActionEvent event) {
                 // TODO implement game loop here
-
+ 
                 // Move player
                 // Jumping and falling included
                 // Shoot (player)
