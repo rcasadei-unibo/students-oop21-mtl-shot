@@ -16,14 +16,13 @@ public class BasicBot implements SimpleBot {
 	private MovableEntity enemy = new Enemy(new Vector2D(), null, new SimpleHealth());	
 	private Player player;
 	
-	public void setPlayer(Player p) {
+	public void setPlayer(final Player p) {
 		this.player = p;
 	}
 
 	@Override
 	public void move() {
-		if(this.player != null) {
-			System.out.println(player.getPosition());
+		if (this.player != null) {
 			double distance = enemy.getPosition().getX() - player.getPosition().getX();
 			boolean dir = distance > 0;
 			enemy.setLeft(dir);

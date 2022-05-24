@@ -11,15 +11,19 @@ import java.util.stream.Collectors;
 
 import controller.Controller;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.StageImpl;
 import util.Direction;
+import util.UserData;
 import util.Vector2D;
 import util.map.MapConstants;
 import view.map.MapView;
@@ -39,13 +43,16 @@ public class GameView {
     private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     private final Controller controller;
     private final Stage stage;
+    private final UserData userData;
 
     /**
      * The GameView constructor.
      * @param stage the stage where the GameView is launched
+     * @param username
      * @throws IOException if files are not found.
      */
-    public GameView(final Stage stage) throws IOException {
+    public GameView(final Stage stage, final String username) throws IOException {
+        this.userData = new UserData(username);
         this.stage = stage;
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
@@ -55,8 +62,7 @@ public class GameView {
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        final FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
-        this.enemy = new ImageView(new Image(person2));
+        this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
         totalList.add(enemy);
         this.mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup);
@@ -84,7 +90,6 @@ public class GameView {
             public void handle(final KeyEvent event) {
             }
         });
-        person2.close();
     }
 
     /**
@@ -139,11 +144,20 @@ public class GameView {
         return new Dimension(this.res);
     }
 
+    /**
+     * 
+     * @return Stage
+     */
     public Stage getStage() {
         return this.stage;
     }
-    
-    public Group getGroup() {
-        return this.mainGroup;
+
+    public void displayPauseMenu() throws IOException {
+        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
+        final Scene scene = new Scene(root);
+        ((GridPane) scene.getRoot()).getChildren().add(0, this.stage.getScene().getRoot());
+        this.stage.setScene(scene);
+        this.stage.setFullScreen(true);
+        this.stage.show();
     }
 }

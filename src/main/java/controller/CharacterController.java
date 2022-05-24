@@ -24,7 +24,7 @@ public abstract class CharacterController {
     /**
      * A shift from the hitbox corners.
      */
-    private static final double DELTA = 0.01; 
+    private static final double DELTA = 0.075; 
     /**
      * !!!!!!!!!!!!!!!!!!!!!!!!!!!
      * DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME GESTIRLO
@@ -42,7 +42,7 @@ public abstract class CharacterController {
         this.characterView = characterView;
         this.mapController = mapController;
     }
-    
+
     /**
      * The main method that checks everything about the player.
      */
@@ -76,7 +76,7 @@ public abstract class CharacterController {
             this.character.getAim().setDirection(Direction.DOWN);
         }
     }
-    
+
     private void movementChecks(final Vector2D nextPos) {
         //Roof collisions
         if (this.isCollidingUp(nextPos) && this.character.getSpeed().getY() < 0) {
@@ -108,7 +108,7 @@ public abstract class CharacterController {
             this.character.setJump(false);
         }
     }
-    
+
     private boolean isCollidingLeft(final Vector2D nextPos) {
         final Vector2D botLeft = new Vector2D(0, this.character.getHitbox().getY() - DELTA);
         final Vector2D topLeft = new Vector2D(0, DELTA);

@@ -17,9 +17,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
@@ -40,9 +37,12 @@ public class Controller {
     private BulletsController bulletsController;
     private WeaponController weaponController;
     private final Timeline gameLoop;
+    private boolean paused;
+    /**
+     * Tick per second. A unit that represent how many frames are calculated in a second.
+     */
     public static final double TPS = 60;
 
-    // Instance of model (Stage?)
     private final GameView viewReference;
 
     /**
@@ -61,9 +61,8 @@ public class Controller {
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(),
                 this.stage.getPlayer()); // null ->
         // player view
-
         // SBAGLIATO, SOLO TEMPORANEO!!!!
-        SimpleBot brain = new BasicBot();
+        final SimpleBot brain = new BasicBot();
         brain.getEntity().setPosition(25, 0);
         brain.setPlayer(stage.getPlayer());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
@@ -91,16 +90,16 @@ public class Controller {
 
     public void gameStart() {
         gameLoop.play();
+        paused = false;
         // TODO
     }
 
     public void gamePause() throws IOException { // not in UML
-        gameLoop.pause();
-        this.viewReference.getGroup().getChildren().add(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
-        //final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
-        //this.viewReference.getStage().getScene().setRoot(root);
-        this.viewReference.getStage().setFullScreen(true);
-        this.viewReference.getStage().show();
+        if (!paused) {
+            gameLoop.pause();
+            this.viewReference.displayPauseMenu();
+        }
+        paused = true;
     }
 
     public void gameReset() {
@@ -164,7 +163,7 @@ public class Controller {
             playerController.getCharacter().setCrouchKey(false);
             playerController.getCharacter().getAim().returnToHorizontal();
         }
-        if (key == KeyCode.ESCAPE) {
+        if (key == KeyCode.P) {
             this.gamePause();
         }
     }

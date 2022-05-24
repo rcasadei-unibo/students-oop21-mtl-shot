@@ -16,8 +16,6 @@ import view.GameView;
  * 
  */
 public class SignInController {
-
-    private UserData userData;
     @FXML
     public TextField name;
 
@@ -29,8 +27,7 @@ public class SignInController {
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException {
         if (this.isValid(name.getText())) {
-            this.userData = new UserData(name.getText());
-            new GameView((Stage) ((Node) event.getSource()).getScene().getWindow());
+            new GameView((Stage) ((Node) event.getSource()).getScene().getWindow(), name.getText());
         }
     }
     /**
@@ -44,15 +41,7 @@ public class SignInController {
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
         stage.show();
     }
-
-    /**
-     * Returns the userData inserted.
-     * @return UserData
-     */
-    public UserData getUserData() {
-        return this.userData;
-    }
-
+    
     private boolean isValid(final String text) {
         return !text.isBlank();
     }
