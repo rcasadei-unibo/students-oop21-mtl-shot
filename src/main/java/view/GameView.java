@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.StageImpl;
 import util.Direction;
 import util.UserData;
@@ -49,6 +50,7 @@ public class GameView extends Stage {
      * @throws IOException 
      */
     public GameView(final String username) throws IOException {
+        this.initStyle(StageStyle.TRANSPARENT);
         this.setFullScreenExitHint("");
         this.userData = new UserData(username);
         this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
@@ -59,7 +61,6 @@ public class GameView extends Stage {
         totalList.add(enemy);
         this.mainGroup = new Group(totalList);
         this.setScene(new Scene(mainGroup));
-        this.setFullScreen(true);
         controller.gameStart();
         this.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -81,7 +82,6 @@ public class GameView extends Stage {
             public void handle(final KeyEvent event) {
             }
         });
-        this.show();
     }
 
     /**

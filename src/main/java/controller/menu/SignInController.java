@@ -26,9 +26,14 @@ public class SignInController {
      */
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException {
+        final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         if (this.isValid(name.getText())) {
-            new GameView(name.getText());
-            ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+            final GameView gv = new GameView(name.getText());
+            gv.setHeight(stage.getHeight());
+            gv.setWidth(stage.getWidth());
+            gv.setFullScreen(stage.isFullScreen());
+            stage.close();
+            gv.show();
         }
     }
     /**

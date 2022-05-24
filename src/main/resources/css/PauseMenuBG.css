@@ -1,5 +1,6 @@
 .pmBG {
 	-fx-background-color: rgba(0,0,0,0.5);
 	-fx-background-size: cover;
+	background-size: cover;
 	background-color: rgba(0,0,0,0.5);
 }

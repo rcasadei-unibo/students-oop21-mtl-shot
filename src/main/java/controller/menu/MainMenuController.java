@@ -42,11 +42,13 @@ public class MainMenuController {
     /**
      * Executes when the option button is released.
      * @param event
-     * @throws FileNotFoundException
+     * @throws IOException 
      */
     @FXML
-    public void optionReleased(final MouseEvent event) throws FileNotFoundException {
-        //Show option panel
+    public void optionReleased(final MouseEvent event) throws IOException {
+        final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/OptionsMenu.fxml")));
+        stage.show();
     }
 
     /**

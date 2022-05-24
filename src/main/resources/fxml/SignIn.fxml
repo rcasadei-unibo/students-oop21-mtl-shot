@@ -33,11 +33,6 @@
          </BorderPane.margin>
       </ButtonBar>
    </bottom>
-   <stylesheets>
-      <URL value="@RectangularButton.css" />
-      <URL value="@RectangularButtonPressed.css" />
-      <URL value="@MainMenuBG.css" />
-   </stylesheets>
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -64,4 +59,9 @@
          </children>
       </GridPane>
    </center>
+   <stylesheets>
+      <URL value="@../css/MainMenuBG.css" />
+      <URL value="@../css/RectangularButton.css" />
+      <URL value="@../css/RectangularButtonPressed.css" />
+   </stylesheets>
 </BorderPane>

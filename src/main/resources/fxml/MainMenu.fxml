@@ -66,8 +66,8 @@
       <Region minWidth="400.0" prefHeight="200.0" prefWidth="400.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
    </children>
    <stylesheets>
-      <URL value="@RectangularButton.css" />
-      <URL value="@RectangularButtonPressed.css" />
-      <URL value="@MainMenuBG.css" />
+      <URL value="@../css/MainMenuBG.css" />
+      <URL value="@../css/RectangularButton.css" />
+      <URL value="@../css/RectangularButtonPressed.css" />
    </stylesheets>
 </GridPane>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.GameView;
@@ -16,20 +17,33 @@ import view.GameView;
 public class PauseMenuController {
 
     @FXML
-    void optionReleased(final MouseEvent event) {
-        // show option scene
+    void optionReleased(final MouseEvent event) throws IOException {
+        final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/OptionsMenu.fxml")));
     }
 
     @FXML
     void quitReleased(final MouseEvent event) throws IOException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
+        final Stage s = new Stage();
+        s.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"))));
+        s.setWidth(stage.getWidth());
+        s.setHeight(stage.getHeight());
+        s.setFullScreen(stage.isFullScreen());
+        s.setFullScreenExitHint("");
+        s.show();
+        stage.close();
     }
 
     @FXML
-    void restartReleased(final MouseEvent event) throws Throwable {
+    void restartReleased(final MouseEvent event) throws IOException {
         final GameView gv = (GameView) ((Node) event.getSource()).getScene().getWindow();
-        new GameView(gv.getUserData().getName());
+        final GameView gv1 = new GameView(gv.getUserData().getName());
+        gv1.setWidth(gv.getWidth());
+        gv1.setHeight(gv.getHeight());
+        gv1.setFullScreen(gv.isFullScreen());
+        gv1.setFullScreenExitHint("");
+        gv1.show();
         gv.close();
     }
 
