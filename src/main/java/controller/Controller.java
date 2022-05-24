@@ -23,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
-
 import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
@@ -59,13 +58,14 @@ public class Controller {
         this.viewReference = gameView;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(), this.stage.getPlayer()); // null ->
-                                                                                                // player view
+        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(),
+                this.stage.getPlayer()); // null ->
+        // player view
 
-        //SBAGLIATO, SOLO TEMPORANEO!!!!
-  		SimpleBot brain = new BasicBot();
-  		brain.getEntity().setPosition(25, 0);
-  		brain.setPlayer(stage.getPlayer());
+        // SBAGLIATO, SOLO TEMPORANEO!!!!
+        SimpleBot brain = new BasicBot();
+        brain.getEntity().setPosition(25, 0);
+        brain.setPlayer(stage.getPlayer());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -77,10 +77,8 @@ public class Controller {
                 // Shoot (player)
                 // Move/shoot enemies (based on Susca's AI)
                 // Check for colliding bullets
-            	brain.move();
-				gameView.setEnemyPos(brain.getEntity().getPosition());
-				System.out.println("Entity POS: " + brain.getEntity().getPosition());
-				System.out.println("Actual POS: " + gameView.getX());
+                brain.move();
+                gameView.setEnemyPos(brain.getEntity().getPosition());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 gameView.displayBullets(getBullets());
@@ -98,9 +96,11 @@ public class Controller {
 
     public void gamePause() throws IOException { // not in UML
         gameLoop.pause();
-        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
-        final Scene scene = new Scene(root);
-        this.viewReference.getStage().setScene(scene);
+        this.viewReference.getGroup().getChildren().add(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
+        //final Parent root = FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml"));
+        //this.viewReference.getStage().getScene().setRoot(root);
+        this.viewReference.getStage().setFullScreen(true);
+        this.viewReference.getStage().show();
     }
 
     public void gameReset() {
@@ -109,6 +109,7 @@ public class Controller {
 
     /**
      * Handle the input key from standard input on it's press.
+     * 
      * @param key
      */
     public void keyPressed(final KeyCode key) {
@@ -142,8 +143,9 @@ public class Controller {
 
     /**
      * Handle the input key from standard input on it's release.
+     * 
      * @param key
-     * @throws IOException 
+     * @throws IOException
      */
     public void keyReleased(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {

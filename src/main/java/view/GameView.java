@@ -47,7 +47,6 @@ public class GameView {
      */
     public GameView(final Stage stage) throws IOException {
         this.stage = stage;
-        this.stage.setFullScreen(true);
         this.playerView = new PlayerView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
@@ -56,13 +55,13 @@ public class GameView {
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
+        final FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
         this.enemy = new ImageView(new Image(person2));
         totalList.add(enemy);
         this.mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup);
         stage.setScene(mainScene);
-        stage.setTitle("メタルショット");
+        stage.setFullScreen(true);
         stage.show();
         controller.gameStart();
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -85,6 +84,7 @@ public class GameView {
             public void handle(final KeyEvent event) {
             }
         });
+        person2.close();
     }
 
     /**
@@ -138,8 +138,12 @@ public class GameView {
     public Dimension getDim() {
         return new Dimension(this.res);
     }
-    
+
     public Stage getStage() {
         return this.stage;
+    }
+    
+    public Group getGroup() {
+        return this.mainGroup;
     }
 }

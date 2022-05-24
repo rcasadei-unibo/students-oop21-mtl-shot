@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.SignInController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mmBG" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.SignInController">
    <top>
       <Label text="Write your name" BorderPane.alignment="CENTER">
          <font>
@@ -36,6 +36,7 @@
    <stylesheets>
       <URL value="@RectangularButton.css" />
       <URL value="@RectangularButtonPressed.css" />
+      <URL value="@MainMenuBG.css" />
    </stylesheets>
    <center>
       <GridPane BorderPane.alignment="CENTER">
