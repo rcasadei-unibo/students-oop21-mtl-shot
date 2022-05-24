@@ -19,6 +19,7 @@ public class MapModel {
 
 	private final Set<Set<Tile>> map;
 	private Vector2D playerSpawn;
+	private Vector2D enemySpawn;
 	
 	public MapModel(final TextMap textMap) throws IOException {
 		this.map = new HashSet<>();
@@ -40,6 +41,10 @@ public class MapModel {
                 } else if (check == 'p') {
                     this.addTile(new TileAir(new Vector2D(j, i)));
                     playerSpawn = new Vector2D(j, i);
+                    j++;
+                } else if (check == 'e') {
+                    this.addTile(new TileAir(new Vector2D(j, i)));
+                    enemySpawn = new Vector2D(j, i);
                     j++;
                 }
             }
@@ -78,6 +83,10 @@ public class MapModel {
 	
 	public Vector2D getPlayerSpawn() {
         return playerSpawn;
+    }
+	
+	public Vector2D getEnemySpawn() {
+        return enemySpawn;
     }
 	
 	private void addTile(final Tile tile) {

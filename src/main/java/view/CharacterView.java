@@ -56,7 +56,7 @@ public abstract class CharacterView {
         }
     }
 
-    public ImageView getPlayerImageView() {
+    public ImageView getCharacterImageView() {
         return characterImageView;
     }
 

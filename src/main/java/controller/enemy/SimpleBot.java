@@ -1,5 +1,6 @@
 package controller.enemy;
 
+import model.character.Character;
 import model.character.Player;
 import model.character.movableentity.MovableEntity;
 /**
@@ -16,5 +17,7 @@ public interface SimpleBot {
 	void setPlayer(Player p);
 	
 	MovableEntity getEntity();
+
+	void setEnemy(Character character);
 	
 }

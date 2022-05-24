@@ -1,6 +1,7 @@
 package controller;
 
 import controller.enemy.BasicBot;
+import controller.enemy.EnemyController;
 import controller.enemy.SimpleBot;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ import view.GameView;
 public class Controller {
 
     private final PlayerController playerController;
+	private final EnemyController enemyController;
     private final MapController mapController;
     private final StageImpl stage;
     private BulletsController bulletsController;
@@ -62,10 +64,12 @@ public class Controller {
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(), this.stage.getPlayer()); // null ->
                                                                                                 // player view
 
+        this.enemyController = new EnemyController(this.viewReference.getEnemyView(), this.getMapController(), this.stage.getEnemy());
+        this.enemyController.getBrain().setPlayer(this.stage.getPlayer());
         //SBAGLIATO, SOLO TEMPORANEO!!!!
-  		SimpleBot brain = new BasicBot();
-  		brain.getEntity().setPosition(25, 0);
-  		brain.setPlayer(stage.getPlayer());
+//  		SimpleBot brain = new BasicBot();
+//  		brain.getEntity().setPosition(25, 0);
+//  		brain.setPlayer(stage.getPlayer());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -77,10 +81,9 @@ public class Controller {
                 // Shoot (player)
                 // Move/shoot enemies (based on Susca's AI)
                 // Check for colliding bullets
-            	brain.move();
-				gameView.setEnemyPos(brain.getEntity().getPosition());
-				System.out.println("Entity POS: " + brain.getEntity().getPosition());
-				System.out.println("Actual POS: " + gameView.getX());
+            	enemyController.brainTick();
+            	enemyController.controllerTick();
+				System.out.println("Entity POS: " + stage.getEnemy().getPosition());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 gameView.displayBullets(getBullets());

@@ -33,9 +33,9 @@ public class GameView {
 
     private static final double VIEWRESIZE = 1d;
     private final PlayerView playerView;
+    private final EnemyView enemyView;
     private final BulletsView bulletsView;
     private final Group mainGroup;
-    private final ImageView enemy;
     private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
     private final Controller controller;
     private final Stage stage;
@@ -49,16 +49,18 @@ public class GameView {
         this.stage = stage;
         this.stage.setFullScreen(true);
         this.playerView = new PlayerView(VIEWRESIZE);
+        this.enemyView = new EnemyView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
         final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
-        totalList.add(playerView.getPlayerImageView());
-        FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
-        this.enemy = new ImageView(new Image(person2));
-        totalList.add(enemy);
+        totalList.add(playerView.getCharacterImageView());
+        totalList.add(enemyView.getCharacterImageView());
+//        FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
+//        this.enemy = new ImageView(new Image(person2));
+//        totalList.add(enemy);
         this.mainGroup = new Group(totalList);
         mainScene = new Scene(mainGroup);
         stage.setScene(mainScene);
@@ -113,22 +115,9 @@ public class GameView {
     public void refresh(final StageImpl stage) {
         playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
                 stage.getPlayer().getAim().getDirection());
-    }
-
-    /**
-     * TODO: Matteo Susca.
-     * @param pos
-     */
-    public void setEnemyPos(final Vector2D pos) {
-        this.enemy.setX(pos.getX() * MapConstants.getTilesize());
-    }
-
-    /**
-     * TODO: Matteo Susca.
-     * @return double
-     */
-    public double getX() {
-        return this.enemy.getX();
+        enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
+        		stage.getEnemy().getAim().getDirection());
+        
     }
 
     /**
@@ -142,4 +131,9 @@ public class GameView {
     public Stage getStage() {
         return this.stage;
     }
+
+	public EnemyView getEnemyView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
