@@ -1,8 +1,6 @@
 package controller;
 
-import controller.enemy.BasicBot;
 import controller.enemy.EnemyController;
-import controller.enemy.SimpleBot;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -66,10 +64,7 @@ public class Controller {
 
         this.enemyController = new EnemyController(this.viewReference.getEnemyView(), this.getMapController(), this.stage.getEnemy());
         this.enemyController.getBrain().setPlayer(this.stage.getPlayer());
-        //SBAGLIATO, SOLO TEMPORANEO!!!!
-//  		SimpleBot brain = new BasicBot();
-//  		brain.getEntity().setPosition(25, 0);
-//  		brain.setPlayer(stage.getPlayer());
+        
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -83,11 +78,12 @@ public class Controller {
                 // Check for colliding bullets
             	enemyController.brainTick();
             	enemyController.controllerTick();
-				System.out.println("Entity POS: " + stage.getEnemy().getPosition());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                gameView.displayBullets(getBullets());
                 playerController.controllerTick();
+                
+                //TODO: da sistemare
+                gameView.displayBullets(getBullets());
                 gameView.refresh(stage);
             }
         }));

@@ -31,9 +31,13 @@ public class BasicBot implements SimpleBot {
 			boolean dir = distance > 0;
 			enemy.setLeft(dir);
 			enemy.setRight(!dir);
-			if(Math.abs(distance) < 2) {
+			if(Math.abs(distance) < 4) {
 				enemy.setRight(false);
 				enemy.setLeft(false);
+				if(Math.abs(distance) < 3) {
+					enemy.setRight(dir);
+					enemy.setLeft(!dir);
+				}
 			}
 		}
 	}

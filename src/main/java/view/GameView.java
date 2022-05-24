@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +13,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.StageImpl;
 import util.Direction;
 import util.Vector2D;
-import util.map.MapConstants;
 import view.map.MapView;
 import view.player.PlayerView;
 
@@ -47,26 +43,31 @@ public class GameView {
      */
     public GameView(final Stage stage) throws IOException {
         this.stage = stage;
-        this.stage.setFullScreen(true);
         this.playerView = new PlayerView(VIEWRESIZE);
         this.enemyView = new EnemyView(VIEWRESIZE);
         this.bulletsView = new BulletsView(VIEWRESIZE);
         this.controller = new Controller(this);
+        
         final Scene mainScene;
         final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
+        
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getCharacterImageView());
         totalList.add(enemyView.getCharacterImageView());
-//        FileInputStream person2 = new FileInputStream("src/main/resources/person2.png");
-//        this.enemy = new ImageView(new Image(person2));
-//        totalList.add(enemy);
+        
+
         this.mainGroup = new Group(totalList);
+
         mainScene = new Scene(mainGroup);
-        stage.setScene(mainScene);
-        stage.setTitle("メタルショット");
-        stage.show();
-        controller.gameStart();
+        
+        this.stage.setFullScreen(true);
+        this.stage.setScene(mainScene);
+        this.stage.setTitle("メタルショット");
+        this.stage.show();
+        
+        this.controller.gameStart();
+        
         mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
