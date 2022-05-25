@@ -31,6 +31,7 @@ public class PauseMenuController {
         s.setHeight(stage.getHeight());
         s.setFullScreen(stage.isFullScreen());
         s.setFullScreenExitHint("");
+        s.initStyle(stage.getStyle());
         s.show();
         stage.close();
     }
@@ -42,6 +43,7 @@ public class PauseMenuController {
         gv1.setWidth(gv.getWidth());
         gv1.setHeight(gv.getHeight());
         gv1.setFullScreen(gv.isFullScreen());
+        gv1.initStyle(gv.getStyle());
         gv1.setFullScreenExitHint("");
         gv1.show();
         gv.close();
