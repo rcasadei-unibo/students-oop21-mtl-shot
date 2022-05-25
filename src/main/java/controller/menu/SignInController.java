@@ -15,6 +15,10 @@ import view.GameView;
  * 
  */
 public class SignInController {
+
+    /**
+     * The TextField where the user has to put its username.
+     */
     @FXML
     public TextField name;
 
@@ -22,17 +26,20 @@ public class SignInController {
      * Executes when the insert button is released.
      * @param event
      * @throws IOException 
-     * @throws Throwable 
+     * @throws InterruptedException
      */
     @FXML
-    public void insertReleased(final MouseEvent event) throws IOException {
+    public void insertReleased(final MouseEvent event) throws IOException, InterruptedException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         if (this.isValid(name.getText())) {
+            stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
             final GameView gv = new GameView(name.getText());
+            gv.setOnShown(e -> stage.close());
             gv.setHeight(stage.getHeight());
             gv.setWidth(stage.getWidth());
             gv.setFullScreen(stage.isFullScreen());
-            stage.close();
+            gv.setTitle(stage.getTitle());
+            gv.initStyle(stage.getStyle());
             gv.show();
         }
     }

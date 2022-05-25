@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.Controller;
+import controller.menu.PauseMenuController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -137,12 +136,19 @@ public class GameView extends Stage {
     }
 
     public void displayPauseMenu() throws IOException {
-        this.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
+        final Group group = new Group(mainGroup);
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        group.getChildren().add(loader.load());
+        //group.getChildren().add(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
+        final PauseMenuController pmc = (PauseMenuController) loader.getController();
+        pmc.setStage(this);
+        this.getScene().setRoot(group);
         this.show();
     }
 
     public void disposePauseMenu() {
-        this.getScene().setRoot(mainGroup);
+        final Group group = new Group(mainGroup);
+        this.getScene().setRoot(group);
         this.controller.gameStart();
         this.show();
     }

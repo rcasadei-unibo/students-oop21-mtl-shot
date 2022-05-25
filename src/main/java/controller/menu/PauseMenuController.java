@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.GameView;
 
@@ -15,6 +16,9 @@ import view.GameView;
  *
  */
 public class PauseMenuController {
+
+    @FXML
+    public GridPane pane;
 
     @FXML
     void optionReleased(final MouseEvent event) throws IOException {
@@ -31,6 +35,8 @@ public class PauseMenuController {
         s.setHeight(stage.getHeight());
         s.setFullScreen(stage.isFullScreen());
         s.setFullScreenExitHint("");
+        s.setTitle(stage.getTitle());
+        s.initStyle(stage.getStyle());
         s.show();
         stage.close();
     }
@@ -43,6 +49,8 @@ public class PauseMenuController {
         gv1.setHeight(gv.getHeight());
         gv1.setFullScreen(gv.isFullScreen());
         gv1.setFullScreenExitHint("");
+        gv1.setTitle(gv.getTitle());
+        gv1.initStyle(gv.getStyle());
         gv1.show();
         gv.close();
     }
@@ -50,5 +58,9 @@ public class PauseMenuController {
     @FXML
     void resumeReleased(final MouseEvent event) throws IOException {
         ((GameView) ((Node) event.getSource()).getScene().getWindow()).disposePauseMenu();
+    }
+
+    public void setStage(final Stage stage) {
+        pane.setPrefSize(stage.getWidth(), stage.getHeight());
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="pmBG" stylesheets="@../css/PauseMenuBG.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <ButtonBar prefHeight="51.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <buttons>
+            <Label text="Loading">
+               <font>
+                  <Font name="PixelMadness" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="45.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../3face8da2a6c3dcd27cb4a1aaa32c926_w200.gif" />
+               </image>
+            </ImageView>
+         </buttons>
+      </ButtonBar>
+   </bottom>
+</BorderPane>
