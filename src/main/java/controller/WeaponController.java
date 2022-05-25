@@ -6,15 +6,13 @@ import java.util.Map;
 import model.character.Character;
 
 /**
- * TODO: write javadoc
+ * TODO: write javadoc.
  *
  */
 public class WeaponController {
-	private Controller controllerReference;
-	private Map<Character, ShootingCooldown> timers;
+    private Map<Character, ShootingCooldown> timers;
 
-	public WeaponController(final Controller controllerReference) {
-		this.controllerReference = controllerReference;
+	public WeaponController() {
 		this.timers = new HashMap<>();
 	}
 

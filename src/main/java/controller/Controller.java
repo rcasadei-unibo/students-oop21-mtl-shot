@@ -48,7 +48,7 @@ public class Controller {
         this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
         this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(), null);
-        this.weaponController = new WeaponController(this);
+        this.weaponController = new WeaponController();
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this, this.stage.getPlayer()); // null ->
                                                                                                 // player view
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
