@@ -31,13 +31,15 @@ import view.player.PlayerView;
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
-public class GameView extends Stage {
+public class GameView {
 
     private static final double VIEWRESIZE = 1d;
     private final PlayerView playerView = new PlayerView(VIEWRESIZE);
     private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
     private final MapView mapView;
     private final ImageView enemy;
+
+    private final Scene mainScene;
     private final Group mainGroup;
 
     private final Controller controller = new Controller(this);
@@ -49,8 +51,6 @@ public class GameView extends Stage {
      * @throws IOException 
      */
     public GameView(final String username) throws IOException {
-        this.initStyle(StageStyle.TRANSPARENT);
-        this.setFullScreenExitHint("");
         this.userData = new UserData(username);
         this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
@@ -59,15 +59,15 @@ public class GameView extends Stage {
         this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
         totalList.add(enemy);
         this.mainGroup = new Group(totalList);
-        this.setScene(new Scene(mainGroup));
+        this.mainScene = new Scene(mainGroup);
         controller.gameStart();
-        this.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyPressed(event.getCode());
             }
         });
-        this.getScene().setOnKeyReleased(new EventHandler<KeyEvent>() {
+        mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 try {
@@ -77,7 +77,7 @@ public class GameView extends Stage {
                 }
             }
         });
-        this.getScene().setOnKeyTyped(new EventHandler<KeyEvent>() {
+        mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent event) {
             }
         });
@@ -130,26 +130,32 @@ public class GameView extends Stage {
     public Controller getController() {
         return this.controller;
     }
-    
+
     public UserData getUserData() {
         return this.userData;
+    }
+
+    public Group getGroup() {
+        return this.mainGroup;
+    }
+
+    public Scene getScene() {
+        return this.mainScene;
     }
 
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(mainGroup);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
         group.getChildren().add(loader.load());
-        //group.getChildren().add(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
-        pmc.setStage(this);
+        pmc.setSize(this.getScene().getWidth(), this.getScene().getHeight());
+        pmc.setGameView(this);
         this.getScene().setRoot(group);
-        this.show();
     }
 
     public void disposePauseMenu() {
         final Group group = new Group(mainGroup);
         this.getScene().setRoot(group);
         this.controller.gameStart();
-        this.show();
     }
 }

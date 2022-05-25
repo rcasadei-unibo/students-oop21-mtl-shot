@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import util.Pair;
 import view.GameView;
 
 /**
@@ -31,16 +32,15 @@ public class SignInController {
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException, InterruptedException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
+        final boolean fs = stage.isFullScreen();
         if (this.isValid(name.getText())) {
             stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
             final GameView gv = new GameView(name.getText());
-            gv.setOnShown(e -> stage.close());
-            gv.setHeight(stage.getHeight());
-            gv.setWidth(stage.getWidth());
-            gv.setFullScreen(stage.isFullScreen());
-            gv.setTitle(stage.getTitle());
-            gv.initStyle(stage.getStyle());
-            gv.show();
+            stage.setScene(gv.getScene());
+            stage.setFullScreen(fs);
+            stage.setWidth(dim.getX());
+            stage.setHeight(dim.getY());
         }
     }
     /**
