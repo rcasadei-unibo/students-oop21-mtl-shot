@@ -12,27 +12,38 @@ import util.Vector2D;
 import util.map.MapConstants;
 
 /**
- * TODO: write javadoc.
- *
+ * This class holds the instances
+ * of the imageViews representing
+ * bullets.
  */
 public class BulletsView {
-	private List<ImageView> imageViewList;
-	private final Image BULLET_IMAGE_RIGHT;
-	private final double scale;
+    private List<ImageView> imageViewList;
+    private final Image bulletTexture;
+    private final double scale;
 	
+	/**
+	 * 
+	 * @param scale - imageViews scale
+	 * @throws FileNotFoundException
+	 */
 	public BulletsView(final double scale) throws FileNotFoundException {
 	    this.scale = scale;
 		this.imageViewList = new LinkedList<>();
-		BULLET_IMAGE_RIGHT = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
+		//bulletTexture = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
+		bulletTexture = new Image(new FileInputStream(ClassLoader.getSystemResource("bullet6x4.png").getPath()));
 	}
 	
+	/**
+	 * 
+	 * @param bullets - new bullets coordinates.
+	 */
     public void updateBullets(final List<Vector2D> bullets) {
     	for (int i = 0; i < this.imageViewList.size() && i < bullets.size(); i++) {
     		this.imageViewList.get(i).setX(bullets.get(i).getX() * this.scale * MapConstants.getTilesize());
     		this.imageViewList.get(i).setY(bullets.get(i).getY() * this.scale * MapConstants.getTilesize());
     	}
     	for (int i = this.imageViewList.size(); i < bullets.size(); i++) {
-    		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
+    		final var iv = new ImageView(this.bulletTexture);
     		iv.setX(bullets.get(i).getX() * this.scale * MapConstants.getTilesize());
     		iv.setY(bullets.get(i).getY() * this.scale * MapConstants.getTilesize());
     		iv.setScaleX(this.scale);
@@ -44,6 +55,9 @@ public class BulletsView {
     	}
     }
 
+    /**
+     * @return bullets ImageView list.
+     */
 	public List<ImageView> getImageViewList() {
 		return this.imageViewList;
 	}

@@ -1,10 +1,7 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import app.MetalShot;
@@ -19,7 +16,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import util.Direction;
-import util.Vector2D;
 import util.map.TextMap;
 
 /**
@@ -46,8 +42,8 @@ public class Controller {
      * @throws IOException if the text map is not present
      */
     public Controller(final MetalShot viewReference) throws IOException {
-    	
-        final TextMap textMap = new TextMap("/home/andrea/Documenti/Università/ilProggetto/progetto/OOP21-Mtl-Shot/bin/main/map.txt"/*ClassLoader.getSystemResource("map.txt").getPath()*/);
+
+        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
         this.stage = new StageImpl(textMap);
         this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = viewReference;
