@@ -1,6 +1,9 @@
 package view;
-
-public class EnemyView extends CharacterView{
+/**
+ * TODO: javadoc.
+ *
+ */
+public class EnemyView extends CharacterView {
 
 	public EnemyView(final double characterSize) {
 		super(characterSize);

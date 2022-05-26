@@ -4,7 +4,10 @@ import controller.CharacterController;
 import controller.map.MapController;
 import model.character.Character;
 import view.EnemyView;
-
+/**
+ * TODO: javadoc.
+ *
+ */
 public class EnemyController extends CharacterController{
 	
 	private final SimpleBot brain;
