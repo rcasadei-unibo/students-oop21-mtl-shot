@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,7 +32,7 @@ import view.player.PlayerView;
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
-public class GameView {
+public class GameView extends Scene {
 
     private static final double VIEWRESIZE = 1d;
     private final PlayerView playerView = new PlayerView(VIEWRESIZE);
@@ -39,8 +40,7 @@ public class GameView {
     private final MapView mapView;
     private final ImageView enemy;
 
-    private final Scene mainScene;
-    private final Group mainGroup;
+    private final Group root;
 
     private final Controller controller = new Controller(this);
     private final UserData userData;
@@ -51,6 +51,7 @@ public class GameView {
      * @throws IOException 
      */
     public GameView(final String username) throws IOException {
+        super(new Group());
         this.userData = new UserData(username);
         this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
@@ -58,16 +59,16 @@ public class GameView {
         totalList.add(playerView.getPlayerImageView());
         this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
         totalList.add(enemy);
-        this.mainGroup = new Group(totalList);
-        this.mainScene = new Scene(mainGroup);
+        this.root = new Group(totalList);
+        this.setRoot(root);
         controller.gameStart();
-        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyPressed(event.getCode());
             }
         });
-        mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        this.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 try {
@@ -77,10 +78,11 @@ public class GameView {
                 }
             }
         });
-        mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        this.setOnKeyTyped(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent event) {
             }
         });
+        System.out.println(this);
     }
 
     /**
@@ -88,9 +90,9 @@ public class GameView {
      * @param bullets
      */
     public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
         this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     /**
@@ -135,27 +137,20 @@ public class GameView {
         return this.userData;
     }
 
-    public Group getGroup() {
-        return this.mainGroup;
-    }
-
-    public Scene getScene() {
-        return this.mainScene;
-    }
-
     public void displayPauseMenu() throws IOException {
-        final Group group = new Group(mainGroup);
+        final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
         group.getChildren().add(loader.load());
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
-        pmc.setSize(this.getScene().getWidth(), this.getScene().getHeight());
+        pmc.setSize(this.getWidth(), this.getHeight());
         pmc.setGameView(this);
-        this.getScene().setRoot(group);
+        this.setRoot(group);
+        System.out.println(this);
     }
 
     public void disposePauseMenu() {
-        final Group group = new Group(mainGroup);
-        this.getScene().setRoot(group);
+        final Group group = new Group(root);
+        this.setRoot(group);
         this.controller.gameStart();
     }
 }

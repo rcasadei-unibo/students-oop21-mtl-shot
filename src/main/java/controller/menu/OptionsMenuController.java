@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -28,13 +27,7 @@ public class OptionsMenuController {
     @FXML
     void backReleased(final MouseEvent event) throws IOException {
         if (gameView.isPresent()) {
-            final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-            final Group group = new Group(gameView.get().getGroup());
-            group.getChildren().add(loader.load());
-            final PauseMenuController pmc = (PauseMenuController) loader.getController();
-            pmc.setSize(pane.getWidth(), pane.getHeight());
-            ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene().setRoot(group);
-            pmc.setGameView(this.gameView.get());
+            gameView.get().displayPauseMenu();
         } else {
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene()
                     .setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
@@ -60,7 +53,7 @@ public class OptionsMenuController {
      * @param gameView
      */
     public void setGameView(final Optional<GameView> gameView) {
+        System.out.println(gameView);
         this.gameView = gameView;
-
     }
 }
