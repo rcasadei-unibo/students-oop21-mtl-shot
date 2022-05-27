@@ -81,16 +81,6 @@ public class GameView extends Scene {
     }
 
     /**
-     * TODO: Andrea Biagini.
-     * @param bullets
-     */
-    public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
-    }
-
-    /**
      * Gets the visible part of the player.
      * 
      * @return PlayerView
@@ -122,6 +112,15 @@ public class GameView extends Scene {
     public void refresh(final StageImpl stage) {
         playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
                 stage.getPlayer().getAim().getDirection());
+        
+     // Updates bullets
+    	if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
+    		this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    		this.root.getChildren().addAll(this.bulletsView.getImageViewList());    		
+    	} else {
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    	}
     }
 
     public Controller getController() {
