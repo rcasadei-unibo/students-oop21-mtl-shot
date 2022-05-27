@@ -205,8 +205,6 @@ public abstract class MovableEntity extends Entity {
         this.right = false;
         this.crouch = false;
         this.jump = false;
-        this.fall = false;
-        this.speed = new Vector2D();
     }
 
     /**

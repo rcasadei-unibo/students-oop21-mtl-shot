@@ -59,11 +59,10 @@ public class Controller {
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
         this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(),
-                this.stage.getPlayer()); // null ->
-        // player view
+                this.stage.getPlayer());
         // SBAGLIATO, SOLO TEMPORANEO!!!!
         final SimpleBot brain = new BasicBot();
-        brain.getEntity().setPosition(25, 0);
+        brain.getEntity().setPosition(30, 0);
         brain.setPlayer(stage.getPlayer());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
@@ -82,6 +81,9 @@ public class Controller {
                 bulletsController.controllerTick();
                 gameView.displayBullets(getBullets());
                 playerController.controllerTick();
+                if (!viewReference.getWindow().isFocused()) {
+                    stage.getPlayer().reset();
+                }
                 gameView.refresh(stage);
             }
         }));
