@@ -31,7 +31,7 @@ public abstract class MovableEntity extends Entity {
     /**
      * Field used to create an acceleration and a deceleration.
      */
-    private Vector2D speed;
+    private final Vector2D speed;
 
     /**
      * The MovableEntity constructor that sets the position and the hitbox.

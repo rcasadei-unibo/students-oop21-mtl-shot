@@ -13,13 +13,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.StageImpl;
 import util.Direction;
 import util.UserData;
@@ -40,11 +37,10 @@ public class GameView extends Scene {
     private final MapView mapView;
     private final ImageView enemy;
 
-    private final Group root;
-
     private final Controller controller = new Controller(this);
     private final UserData userData;
 
+    private final Group root;
     /**
      * The GameView constructor.
      * @param username
