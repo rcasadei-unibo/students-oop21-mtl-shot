@@ -14,16 +14,16 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="mmBG" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.SignInController">
    <top>
-      <Label text="Write your name" BorderPane.alignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Write your name" BorderPane.alignment="CENTER">
          <font>
-            <Font name="PixelMadness" size="70.0" />
+            <Font name="PixelMadness" size="70.0" url="@../Pixel_Madness.ttf" />
          </font>
       </Label>
    </top>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button fx:id="backButton" mnemonicParsing="false" onMouseReleased="#backReleased" styleClass="rectangularButton" text="Back">
+          <Button mnemonicParsing="false" onMouseReleased="#backReleased" styleClass="rectangularButton" text="Back">
                <font>
                   <Font name="PixelMadness" size="30.0" />
                </font></Button>

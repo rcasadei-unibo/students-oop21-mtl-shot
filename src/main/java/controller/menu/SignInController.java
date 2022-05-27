@@ -21,7 +21,7 @@ public class SignInController {
      * The TextField where the user has to put its username.
      */
     @FXML
-    public TextField name;
+    private TextField name;
 
     /**
      * Executes when the insert button is released.

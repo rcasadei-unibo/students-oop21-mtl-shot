@@ -21,7 +21,7 @@ public class PauseMenuController {
     private GameView gameView;
 
     @FXML
-    public GridPane pane;
+    private GridPane pane;
 
     @FXML
     void optionReleased(final MouseEvent event) throws IOException {
@@ -55,10 +55,19 @@ public class PauseMenuController {
         this.gameView.disposePauseMenu();
     }
 
+    /**
+     * Sets the size of the options menu panel.
+     * @param width
+     * @param height
+     */
     public void setSize(final double width, final double height) {
         pane.setPrefSize(width, height);
     }
 
+    /**
+     * Sets the reference to the GameView.
+     * @param gameView
+     */
     public void setGameView(final GameView gameView) {
         this.gameView = gameView;
     }

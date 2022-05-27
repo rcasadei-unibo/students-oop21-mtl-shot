@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.Pair;
 import view.GameView;
 
 /**
@@ -19,9 +20,10 @@ import view.GameView;
 public class OptionsMenuController {
 
     private Optional<GameView> gameView;
+    private static final Pair<Integer, Integer> PREFSIZE = new Pair<>(800, 600);
 
     @FXML
-    public BorderPane pane;
+    private BorderPane pane;
 
     @FXML
     void backReleased(final MouseEvent event) throws IOException {
@@ -44,13 +46,19 @@ public class OptionsMenuController {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         if (stage.isFullScreen()) {
             stage.setFullScreen(false);
-            stage.setWidth(800);
-            stage.setHeight(600);
+            stage.setWidth(PREFSIZE.getX());
+            stage.setHeight(PREFSIZE.getY());
         } else {
             stage.setFullScreen(true);
         }
     }
 
+    /**
+     * Sets the reference to the possible GameView (the options pane could be
+     * displayed both in MainMenu and in PauseMenu).
+     * 
+     * @param gameView
+     */
     public void setGameView(final Optional<GameView> gameView) {
         this.gameView = gameView;
 

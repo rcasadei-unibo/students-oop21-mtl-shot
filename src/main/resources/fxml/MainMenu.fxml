@@ -23,7 +23,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="startButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#startReleased" styleClass="rectangularButton" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#startReleased" styleClass="rectangularButton" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
          </GridPane.margin>
@@ -31,7 +31,7 @@
                   <Font name="Pixel_Madness.ttf" size="40.0" url="@../Pixel_Madness.ttf" />
                </font>
       </Button>
-      <Button fx:id="leaderboardButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#leaderboardReleased" styleClass="rectangularButton" text="Leaderboard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#leaderboardReleased" styleClass="rectangularButton" text="Leaderboard" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
          </GridPane.margin>
@@ -39,7 +39,7 @@
                   <Font name="Pixel_Madness.ttf" size="40.0" url="@../Pixel_Madness.ttf" />
                </font>
       </Button>
-      <Button fx:id="optionButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#optionReleased" styleClass="rectangularButton" text="Option" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#optionReleased" styleClass="rectangularButton" text="Option" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
          </GridPane.margin>
@@ -47,7 +47,7 @@
                   <Font name="Pixel_Madness.ttf" size="40.0" url="@../Pixel_Madness.ttf" />
                </font>
       </Button>
-      <Button fx:id="closeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#closeReleased" styleClass="rectangularButton" text="Quit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#closeReleased" styleClass="rectangularButton" text="Quit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
          </GridPane.margin>

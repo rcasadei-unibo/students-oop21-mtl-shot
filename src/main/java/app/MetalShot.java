@@ -26,7 +26,7 @@ public final class MetalShot extends Application {
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("メタルショット");
-        //primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setFullScreen(true);
         primaryStage.show();
     }
