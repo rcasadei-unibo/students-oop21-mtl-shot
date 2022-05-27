@@ -45,7 +45,6 @@ public class PauseMenuController {
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
         final GameView gv = new GameView(this.gameView.getUserData().getName());
         stage.setScene(gv);
-        stage.setFullScreenExitHint("");
         stage.setFullScreen(fs);
         stage.setWidth(dim.getX());
         stage.setHeight(dim.getY());
