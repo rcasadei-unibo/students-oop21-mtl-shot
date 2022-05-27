@@ -30,7 +30,7 @@ public class SignInController {
      * @throws InterruptedException
      */
     @FXML
-    public void insertReleased(final MouseEvent event) throws IOException, InterruptedException {
+    public void insertReleased(final MouseEvent event) throws IOException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
@@ -38,6 +38,7 @@ public class SignInController {
             stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
             final GameView gv = new GameView(name.getText());
             stage.setScene(gv);
+            stage.setFullScreenExitHint("");
             stage.setFullScreen(fs);
             stage.setWidth(dim.getX());
             stage.setHeight(dim.getY());

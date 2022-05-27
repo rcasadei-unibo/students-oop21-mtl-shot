@@ -13,7 +13,7 @@ import util.Pair;
 import view.GameView;
 
 /**
- * 
+ * The controller class for the in game pause menu (managed by FXML sheet).
  *
  */
 public class PauseMenuController {
@@ -45,6 +45,7 @@ public class PauseMenuController {
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
         final GameView gv = new GameView(this.gameView.getUserData().getName());
         stage.setScene(gv);
+        stage.setFullScreenExitHint("");
         stage.setFullScreen(fs);
         stage.setWidth(dim.getX());
         stage.setHeight(dim.getY());
@@ -70,6 +71,5 @@ public class PauseMenuController {
      */
     public void setGameView(final GameView gameView) {
         this.gameView = gameView;
-        System.out.println(gameView);
     }
 }

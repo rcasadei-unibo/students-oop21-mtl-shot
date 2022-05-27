@@ -13,7 +13,7 @@ import util.Pair;
 import view.GameView;
 
 /**
- * 
+ * The controller class for the Options menu (managed by FXML sheet).
  * 
  */
 public class OptionsMenuController {
@@ -53,7 +53,6 @@ public class OptionsMenuController {
      * @param gameView
      */
     public void setGameView(final Optional<GameView> gameView) {
-        System.out.println(gameView);
         this.gameView = gameView;
     }
 }

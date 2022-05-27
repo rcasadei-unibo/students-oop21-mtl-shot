@@ -82,7 +82,6 @@ public class GameView extends Scene {
             public void handle(final KeyEvent event) {
             }
         });
-        System.out.println(this);
     }
 
     /**
@@ -145,7 +144,6 @@ public class GameView extends Scene {
         pmc.setSize(this.getWidth(), this.getHeight());
         pmc.setGameView(this);
         this.setRoot(group);
-        System.out.println(this);
     }
 
     public void disposePauseMenu() {
