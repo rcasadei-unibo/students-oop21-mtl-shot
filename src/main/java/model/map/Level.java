@@ -3,6 +3,9 @@ package model.map;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import util.Vector2D;
 import util.map.TextMap;
 
@@ -25,7 +28,7 @@ public class Level {
 		return this.segments;
 	}
 	
-	public Segment getSegmentAtPosition(Vector2D position) {
+	public Segment getSegmentAtPosition(final Vector2D position) {
 		double i = 0;
 		for(Segment tempSegment : this.getSegments()) {
 			if(position.getX() >= i && position.getX() < i + tempSegment.getTextMap().getWidth()) {
@@ -34,6 +37,13 @@ public class Level {
 			i += tempSegment.getTextMap().getWidth(); 			
 		}
 		return null;
+	}
+	
+	public Optional<Segment> getSegmentAtPositionOffset(final Vector2D position, final int offset) {
+		if(this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset >= this.getSegments().size()) {
+			return Optional.empty();
+		}
+		return Optional.of(this.getSegments().get(this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset));
 	}
 	
 	public Vector2D getPlayerSpawn() {

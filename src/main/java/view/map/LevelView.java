@@ -27,7 +27,11 @@ public class LevelView {
 	
     public List<Node> displaySegments(final Vector2D playerPosition) {
     	final List<Node> nodes = new LinkedList<>();
-		final List<Vector2D> list = this.level.getSegmentAtPosition(playerPosition).getTileables();
+		final List<Vector2D> list = new LinkedList<>();
+		list.addAll(this.level.getSegmentAtPosition(playerPosition).getTileables());
+		if(this.level.getSegmentAtPositionOffset(playerPosition, 1).isPresent()) {
+			list.addAll(this.level.getSegmentAtPositionOffset(playerPosition, 1).get().getTileables());			
+		}
 		AutotileManager autotileManager = null;
 		try {
 			autotileManager = new AutotileManager(list);
@@ -42,7 +46,7 @@ public class LevelView {
 			Group tileImage = null;
 			try {
 				tileImage = autotileManager.autotile(position, this.tileSize*MapConstants.getTilesize(),
-						new Image(new FileInputStream(this.level.getSegmentAtPosition(playerPosition).getTile(position).get().getPath())).getPixelReader());
+						new Image(new FileInputStream(this.level.getSegmentAtPosition(position).getTile(position).get().getPath())).getPixelReader());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

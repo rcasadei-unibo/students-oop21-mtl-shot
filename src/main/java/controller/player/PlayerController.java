@@ -153,7 +153,7 @@ public class PlayerController {
         final Vector2D botLeft = new Vector2D(DELTA, player.getHitbox().getY());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return levelController.getSegmentAtPosition(botRight).isCollidableAtPosition(botLeft) || 
+        return levelController.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft) || 
         		levelController.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
     
