@@ -95,16 +95,12 @@ public class Controller {
         paused = false;
     }
 
-    public void gamePause() throws IOException { // not in UML
+    public void gamePause() throws IOException {
         if (!paused) {
             gameLoop.pause();
             this.viewReference.displayPauseMenu();
         }
         paused = true;
-    }
-
-    public void gameReset() {
-        // TODO
     }
 
     /**

@@ -20,7 +20,7 @@
    <top>
       <Label text="Options" BorderPane.alignment="CENTER">
          <font>
-            <Font name="PixelMadness" size="70.0" url="@../Pixel_Madness.ttf" />
+            <Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf" />
          </font>
       </Label>
    </top>

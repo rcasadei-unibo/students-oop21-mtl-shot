@@ -18,7 +18,7 @@
             </Label>
             <ImageView fitHeight="45.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../3face8da2a6c3dcd27cb4a1aaa32c926_w200.gif" />
+                  <Image url="@../menusResources/HourGlass.gif" />
                </image>
             </ImageView>
          </buttons>

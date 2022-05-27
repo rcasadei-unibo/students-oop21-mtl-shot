@@ -56,7 +56,7 @@
       </Region>
       <Label text="Pause" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="PixelMadness" size="70.0" />
+            <Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf"/>
          </font>
       </Label>
    </children>

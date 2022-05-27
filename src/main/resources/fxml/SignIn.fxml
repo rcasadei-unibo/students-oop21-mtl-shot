@@ -16,7 +16,7 @@
    <top>
       <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Write your name" BorderPane.alignment="CENTER">
          <font>
-            <Font name="PixelMadness" size="70.0" url="@../Pixel_Madness.ttf" />
+            <Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf" />
          </font>
       </Label>
    </top>
