@@ -1,0 +1,10 @@
+.logo {
+	-fx-background-image: url('../MSLogo.png');
+	-fx-background-size: contain;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	background-image: url('../MSLogo.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}

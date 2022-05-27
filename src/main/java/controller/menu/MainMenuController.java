@@ -4,12 +4,15 @@ import java.io.FileNotFoundException;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+
 import java.io.IOException;
 import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
