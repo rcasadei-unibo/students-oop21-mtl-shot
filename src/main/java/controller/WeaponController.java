@@ -10,24 +10,45 @@ import model.character.Character;
  *
  */
 public class WeaponController {
-    private Map<Character, ShootingCooldown> timers;
+    private Map<Character, WeaponCooldown> shootingTimers;
+    private Map<Character, WeaponCooldown> reloadingTimers;
 
 	public WeaponController() {
-		this.timers = new HashMap<>();
+		this.shootingTimers = new HashMap<>();
+		this.reloadingTimers = new HashMap<>();
 	}
 
 	public void controllerTick() {
-		this.timers.forEach((c, sc) -> {sc.tick(); });
-		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
+		this.shootingTimers.forEach((c, sc) -> { sc.tick(); });
+		this.shootingTimers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
+		
+		this.reloadingTimers.forEach((c, sc) -> { sc.tick(); });
+		this.reloadingTimers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 
 	public boolean tryToShoot(final Character characterShooting) {
-		if (!this.timers.containsKey(characterShooting) && characterShooting.getWeapon().getBulletsInMag() != 0) {
+		if (!this.shootingTimers.containsKey(characterShooting) &&
+				characterShooting.getWeapon().getBulletsInMag() != 0 &&
+				!this.reloadingTimers.containsKey(characterShooting)) {
+			
 			/* If characterShooting is not in this.timers, he can shoot */
-			this.timers.put(characterShooting, new ShootingCooldown(characterShooting.getWeapon().getFireRate()));
+			this.shootingTimers.put(characterShooting, new WeaponCooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
+			return true;
+			
+		} else if (characterShooting.getWeapon().getBulletsInMag() == 0) {
+			this.tryToReload(characterShooting);
+		}
+		return false;
+	}
+	
+	public boolean tryToReload(final Character characterReloading) {
+		if (!this.reloadingTimers.containsKey(characterReloading)) {
+			this.reloadingTimers.put(characterReloading, new WeaponCooldown(characterReloading.getWeapon().getReloadTime()));
+			characterReloading.getWeapon().reload();
 			return true;
 		}
 		return false;
 	}
+	
 }

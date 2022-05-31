@@ -32,7 +32,7 @@ public class StageImpl {
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
                 .position(mapModel.getPlayerSpawn())
-                .weapon(new PeaceKeeper())
+                .weapon(new P2020())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();

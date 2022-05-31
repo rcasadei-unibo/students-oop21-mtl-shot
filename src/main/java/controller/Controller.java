@@ -65,13 +65,6 @@ public class Controller {
             
         	@Override
             public void handle(final ActionEvent event) {
-                // TODO implement game loop here
- 
-                // Move player
-                // Jumping and falling included
-                // Shoot (player)
-                // Move/shoot enemies (based on Susca's AI)
-                // Check for colliding bullets
                 brain.move();
                 gameView.setEnemyPos(brain.getEntity().getPosition());
                 weaponController.controllerTick();
@@ -127,11 +120,16 @@ public class Controller {
         }
         if (key.equals(KeyCode.J)) {
             if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
+            	// Play shoot sound
                 this.bulletsController.addBullet(this.stage.getPlayer());
-                System.out.println("Shooting...");
+                //System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
-            this.playerController.getCharacter().getWeapon().reload();
+        	 if (this.weaponController.tryToReload(this.stage.getPlayer())) {
+                 // Play reload sound
+        		 // Play reload animation
+                 //System.out.println("Reloading...");
+             }
         }
     }
 
