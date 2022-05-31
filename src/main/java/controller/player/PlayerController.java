@@ -1,15 +1,15 @@
 package controller.player;
 
 import controller.CharacterController;
-import controller.map.MapController;
 import model.character.Player;
+import model.map.Level;
 import view.player.PlayerView;
 
 /**
- * The player controller. It checks if the player is colliding into the ground, colliding with bullets 
- * and manages everything about the weapon.
+ * The player controller. It checks if the player is colliding into the ground,
+ * colliding with bullets and manages everything about the weapon.
  */
-public class PlayerController extends CharacterController{
+public class PlayerController extends CharacterController {
 //    /**
 //     * The player that has to be controlled.
 //     */
@@ -23,13 +23,14 @@ public class PlayerController extends CharacterController{
 //     */
 //    private final MapController mapController;
 
-    /**
-     * The player controller constructor.
-     * @param player
-     * @param mapController
-     * @param playerView
-     */
-    public PlayerController(final PlayerView playerView, final MapController mapController, final Player player) {
-        super(playerView, mapController, player);
-    }
+	/**
+	 * The player controller constructor.
+	 * 
+	 * @param player
+	 * @param mapController
+	 * @param playerView
+	 */
+	public PlayerController(final PlayerView playerView, final Level level, final Player player) {
+		super(playerView, level, player);
+	}
 }

@@ -25,9 +25,11 @@ public class Segment {
 
 	private final Set<Set<Tile>> map;
 	private Vector2D playerSpawn;
-	final TextMap textMap;
+	private final TextMap textMap;
+	private final double offset;
 	
-	public Segment(final TextMap textMap, double offset) throws IOException {
+	public Segment(final TextMap textMap, final double offset) throws IOException {
+		this.offset = offset;
 		this.textMap = textMap;
 		this.map = new HashSet<>();
 		final File mapTxt = textMap.getFile();
@@ -137,5 +139,8 @@ public class Segment {
 	    public Optional<Tile> getTile(final Vector2D position, final List<Tile> tileList) {
 	        return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	    }
-	
+	    
+	    public Vector2D getCenter() {
+	    	return new Vector2D(this.offset + (textMap.getWidth()/2), textMap.getHeight()/2);
+	    }
 }

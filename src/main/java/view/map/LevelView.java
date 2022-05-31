@@ -4,12 +4,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import model.map.Level;
 import util.Vector2D;
 import util.map.MapConstants;
+
 /**
  * 
  * @author filippo.gurioli
@@ -19,44 +24,33 @@ public class LevelView {
 
 	private final Level level;
 	private final double tileSize;
+	private List<Group> displayed;
+	private final AutotileManager atManager;
 
-	public LevelView(final Level level, final double tileSize) {
+	public LevelView(final Level level, final double tileSize) throws FileNotFoundException {
 		this.level = level;
 		this.tileSize = tileSize;
+		final List<List<Vector2D>> segments = new LinkedList<>();
+		List<Vector2D> tiles = new LinkedList<>();
+		for(int i = 0; i < level.getSegments().size(); i++) {
+			tiles = new LinkedList<>();
+			for(int j = 0; j < level.getSegments().get(i).getTileables().size(); j++) {
+				tiles.add(level.getSegments().get(i).getTileables().get(j));
+			}
+			segments.add(tiles);
+		}
+		this.atManager = new AutotileManager(segments, this.tileSize * MapConstants.getTilesize(), level);	
+	}
+
+	public List<Group> displaySegments(final Vector2D playerPosition) {
+		final List<Group> nodes = atManager.getSegment(level.getSegments().indexOf(level.getSegmentAtPosition(playerPosition)));
+		
+		displayed = nodes;
+		return nodes;
 	}
 	
-    public List<Node> displaySegments(final Vector2D playerPosition) {
-    	final List<Node> nodes = new LinkedList<>();
-		final List<Vector2D> list = new LinkedList<>();
-		list.addAll(this.level.getSegmentAtPosition(playerPosition).getTileables());
-		if(this.level.getSegmentAtPositionOffset(playerPosition, 1).isPresent()) {
-			list.addAll(this.level.getSegmentAtPositionOffset(playerPosition, 1).get().getTileables());			
-		}
-		AutotileManager autotileManager = null;
-		try {
-			autotileManager = new AutotileManager(list);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (final var position : list) {
-			//Group tileImage = null; // Will never be null, map is composed of solely PASSABLE or NON-PASSABLE tiles,
-									// and as such will never evade the if construct.
-
-			Group tileImage = null;
-			try {
-				tileImage = autotileManager.autotile(position, this.tileSize*MapConstants.getTilesize(),
-						new Image(new FileInputStream(this.level.getSegmentAtPosition(position).getTile(position).get().getPath())).getPixelReader());
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			tileImage.setScaleX(this.tileSize);
-			tileImage.setScaleY(this.tileSize);
-			nodes.add(tileImage);
-				
-		}
-		return nodes;
-    }
+	public List<Group> getDisplayed(){
+		return displayed;
+	}
+	
 }

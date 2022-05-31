@@ -1,25 +1,52 @@
 package view.map;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.List;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import model.map.Level;
 import util.Vector2D;
+
 /**
  * 
  *
  */
 public class AutotileManager {
 
-	private final List<Vector2D> tileList;
+	private List<List<Group>> renderedSegments = new LinkedList<>();
 
-	public AutotileManager(final List<Vector2D> tileList) throws FileNotFoundException {
-		this.tileList = tileList;
+	private final double tileSize;
+
+	public AutotileManager(final List<List<Vector2D>> segmentList, final double tileSize, final Level level)
+			throws FileNotFoundException {
+		this.tileSize = tileSize;
+		final List<Vector2D> toBeTiled = new LinkedList<>();
+		for (final var segment : segmentList) {
+			toBeTiled.addAll(segment);
+		}
+		List<Group> tilesInSegment = new LinkedList<>();
+		for (final var segment : segmentList) {
+			tilesInSegment = new LinkedList<>();
+			for (final var tile : segment) {
+				
+				tilesInSegment.add(autotile(tile, toBeTiled,
+						new Image(new FileInputStream(level.getSegmentAtPosition(tile).getTile(tile).get().getPath()))
+								.getPixelReader()));
+			}
+			renderedSegments.add(tilesInSegment);
+		}
 	}
 
-	public Group autotile(final Vector2D position, final double tileSize, PixelReader reader) {
+	public List<Group> getSegment(final int index) {
+		return renderedSegments.get(index);
+	}
+
+	private Group autotile(final Vector2D position, final List<Vector2D> tileList, final PixelReader reader) {
 		// First we check adjacent tiles, then corners.
 
 		final ImageView topLeftDef = new ImageView(new WritableImage(reader, 0, 0, 32, 32));
@@ -121,7 +148,7 @@ public class AutotileManager {
 
 		final Vector2D tempPos = new Vector2D(position);
 
-		tempPos.mlt(new Vector2D(tileSize, tileSize));
+		tempPos.mlt(new Vector2D(this.tileSize, this.tileSize));
 
 		topLeft.setX(tempPos.getX());
 		topLeft.setY(tempPos.getY());
@@ -145,6 +172,8 @@ public class AutotileManager {
 		final Group result = new Group(topLeft, topRight, botRight, botLeft, topLeftCorner, topRightCorner,
 				botRightCorner, botLeftCorner);
 
+		//result.setScaleX(this.tileSize);
+		//result.setScaleY(this.tileSize);
 		return result;
 	}
 
