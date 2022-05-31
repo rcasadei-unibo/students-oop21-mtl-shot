@@ -40,7 +40,8 @@ public class Level {
 	}
 
 	public Optional<Segment> getSegmentAtPositionOffset(final Vector2D position, final int offset) {
-		if (this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset >= this.getSegments().size()) {
+		if (this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset >= this.getSegments().size() || 
+				this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset < 0) {
 			return Optional.empty();
 		}
 		return Optional

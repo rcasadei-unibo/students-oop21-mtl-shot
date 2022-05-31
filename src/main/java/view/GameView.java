@@ -17,6 +17,7 @@ import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.ParallelCamera;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,6 +41,7 @@ public class GameView extends Scene {
 	private final PlayerView playerView = new PlayerView(VIEWRESIZE);
 	private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
 	private final LevelView levelView;
+	private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
 	private final ImageView enemy;
 
 	private final Controller controller = new Controller(this);
@@ -61,10 +63,11 @@ public class GameView extends Scene {
 		this.levelView = new LevelView(this.controller.getStage().getLevel(), VIEWRESIZE);
 		final List<Node> totalList = new ArrayList<>();
 		prevPos = new Vector2D(controller.getStage().getPlayer().getPosition());
+		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getPlayerImageView());
 		this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
-		//totalList.add(enemy);
+		totalList.add(enemy);
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.setCamera(camera);

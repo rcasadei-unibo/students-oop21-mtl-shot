@@ -43,8 +43,14 @@ public class LevelView {
 	}
 
 	public List<Group> displaySegments(final Vector2D playerPosition) {
-		final List<Group> nodes = atManager.getSegment(level.getSegments().indexOf(level.getSegmentAtPosition(playerPosition)));
-		
+		final List<Group> nodes = new LinkedList<>();
+		nodes.addAll(atManager.getSegment(level.getSegments().indexOf(level.getSegmentAtPosition(playerPosition))));
+		if(level.getSegmentAtPositionOffset(playerPosition, 1).isPresent()) {
+			nodes.addAll(atManager.getSegment(level.getSegments().indexOf(level.getSegmentAtPositionOffset(playerPosition, 1).get())));			
+		}
+		if(level.getSegmentAtPositionOffset(playerPosition, -1).isPresent()) {			
+			nodes.addAll(atManager.getSegment(level.getSegments().indexOf(level.getSegmentAtPositionOffset(playerPosition, -1).get())));
+		}
 		displayed = nodes;
 		return nodes;
 	}

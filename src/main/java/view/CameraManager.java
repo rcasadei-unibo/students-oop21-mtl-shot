@@ -14,6 +14,8 @@ public class CameraManager {
 	public CameraManager(final GameView viewReference, final Camera camera) {
 		//this.viewReference = viewReference;
 		this.camera = camera;
+		this.camera.setScaleX(0.75);
+		this.camera.setScaleY(0.75);
 		this.target = new Vector2D(viewReference.getController().getStage().getLevel().getSegmentAtPosition(viewReference.getController().getStage().getPlayer().getPosition()).getCenter());
 	}
 	
