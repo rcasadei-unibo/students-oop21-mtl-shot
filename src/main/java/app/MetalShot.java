@@ -28,7 +28,7 @@ public final class MetalShot extends Application {
         primaryStage.setTitle("メタルショット");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setFullScreenExitHint("");
-        primaryStage.setFullScreen(true);
+        //primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }

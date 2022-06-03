@@ -17,23 +17,21 @@ public abstract class CharacterView {
     private final Image characterDown;
     private final Image characterLeft;
     private final Image characterRight;
-    private final double characterSize;
 
-    public CharacterView(final double characterSize) {
+    public CharacterView() {
         characterCrouchIcon = new Image(ClassLoader.getSystemResourceAsStream("croulpleier.png"));
         characterUp = new Image(ClassLoader.getSystemResourceAsStream("pleierUP.png"));
         characterDown = new Image(ClassLoader.getSystemResourceAsStream("pleierDOWN.png"));
         characterRight = new Image(ClassLoader.getSystemResourceAsStream("pleierRIGHT.png"));
         characterLeft = new Image(ClassLoader.getSystemResourceAsStream("pleierLEFT.png"));
         characterImageView = new ImageView(characterRight);
-        characterImageView.setScaleX(characterSize);
-        characterImageView.setScaleY(characterSize);
-        this.characterSize = characterSize;
+        //characterImageView.setScaleX(GameView.VIEWRESIZE);
+        //characterImageView.setScaleY(GameView.VIEWRESIZE);
     }
 
     public void updateCharacter(final Vector2D position, final boolean crouch, final Direction direction) {
-        characterImageView.setX(position.getX() * characterSize * MapConstants.getTilesize());
-        characterImageView.setY(position.getY() * characterSize * MapConstants.getTilesize());
+        characterImageView.setX(position.getX() * MapConstants.getTilesize());
+        characterImageView.setY(position.getY() * MapConstants.getTilesize());
         switch (direction) {
         case UP:
             characterImageView.setImage(characterUp);

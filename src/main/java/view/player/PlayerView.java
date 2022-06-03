@@ -12,8 +12,8 @@ public class PlayerView extends CharacterView {
      * @param playerSize
      * @throws FileNotFoundException
      */
-    public PlayerView(final double playerSize) {
-        super(playerSize);
+    public PlayerView() {
+        super();
     }
 
 }

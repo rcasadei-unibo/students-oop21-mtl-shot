@@ -28,7 +28,7 @@ public class StageImpl {
     public StageImpl(final TextMap textMap) throws IOException {        
         this.level = new Level(Stream.of("src/main/resources/map.txt","src/main/resources/map2.txt","src/main/resources/map3.txt").collect(Collectors.toList()));
         this.player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
+                .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())

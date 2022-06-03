@@ -40,7 +40,7 @@ public class Controller {
 	 * Ticks per second. A unit that represent how many steps are calculated in a
 	 * second.
 	 */
-	public static final double TPS = 60;
+	public static final double TPS = 120;
 
 	private final GameView viewReference;
 

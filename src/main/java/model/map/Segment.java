@@ -140,7 +140,7 @@ public class Segment {
 	        return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	    }
 	    
-	    public Vector2D getCenter() {
-	    	return new Vector2D(this.offset + (textMap.getWidth()/2), textMap.getHeight()/2);
+	    public Vector2D getOrigin() {
+	    	return new Vector2D(this.offset, textMap.getHeight());
 	    }
 }
