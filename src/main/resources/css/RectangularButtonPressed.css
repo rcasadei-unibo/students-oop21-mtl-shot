@@ -1,4 +1,7 @@
 .rectangularButton:pressed {
 	-fx-color: #5a6889;
 	color: #5a6889;
+
+	-fx-font-size: 30;
+	font-size: 30;
 }

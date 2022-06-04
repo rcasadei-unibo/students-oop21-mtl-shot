@@ -2,12 +2,15 @@ package model;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import model.character.Enemy;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import model.map.tile.MapModel;
+import model.map.Level;
 import model.weapons.Bullet;
 import model.weapons.P2020;
 import util.Vector2D;
@@ -22,15 +25,16 @@ public class StageImpl {
     private final Player player;
     private final Enemy enemy;
     private final Collection<Bullet> bullets = null;
-    private final MapModel mapModel;
-
-    public StageImpl(final TextMap textMap) throws IOException {
-		this.mapModel = new MapModel(textMap);  
-		System.out.println(mapModel.getEnemySpawn());
-        this.enemy = new Enemy(mapModel.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
+    private final Level level;
+    
+    public StageImpl(final TextMap textMap) throws IOException {        
+        this.level = new Level(Stream.of("src/main/resources/map.txt"
+                ,"src/main/resources/map2.txt"
+                ,"src/main/resources/map3.txt").collect(Collectors.toList()));
+        this.enemy = new Enemy(level.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
         this.player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
-                .position(mapModel.getPlayerSpawn())
+                .hitbox(new Vector2D(1, 1.5))
+                .position(level.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())
                 .lives(3)
@@ -44,13 +48,11 @@ public class StageImpl {
     */
 
     public Player getPlayer() {
-        // TODO Auto-generated method stub
         return this.player;
     }
 
-    public MapModel getMapModel() {
-        // TODO Auto-generated method stub
-        return this.mapModel;
+    public Level getLevel() {
+        return this.level;
     }
 
 	public Enemy getEnemy() {

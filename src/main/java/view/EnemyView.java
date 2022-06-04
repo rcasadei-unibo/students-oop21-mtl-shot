@@ -5,8 +5,8 @@ package view;
  */
 public class EnemyView extends CharacterView {
 
-	public EnemyView(final double characterSize) {
-		super(characterSize);
+	public EnemyView() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

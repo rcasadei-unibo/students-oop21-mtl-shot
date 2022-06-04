@@ -1,7 +1,6 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,72 +8,74 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.Controller;
+import controller.menu.PauseMenuController;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.StageImpl;
 import util.Direction;
+import util.UserData;
 import util.Vector2D;
-import view.map.MapView;
+import util.map.MapConstants;
+import view.map.LevelView;
 import view.player.PlayerView;
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
-public class GameView {
+public class GameView extends Scene {
 
-    private static final double VIEWRESIZE = 1d;
-    private final PlayerView playerView;
-    private final EnemyView enemyView;
-    private final BulletsView bulletsView;
-    private final Group mainGroup;
-    private final Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-    private final Controller controller;
-    private final Stage stage;
+    //public static final int VIEWRESIZE = 2;
+    private final PlayerView playerView = new PlayerView();
+    private final EnemyView enemyView = new EnemyView();
+    private final BulletsView bulletsView = new BulletsView();
+    private final LevelView levelView;
+    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
 
+    private final Controller controller = new Controller(this);
+    private final UserData userData;
+
+    private final Group root;
+    private Vector2D prevPos;
+    private final Camera camera = new PerspectiveCamera();
     /**
      * The GameView constructor.
-     * @param stage the stage where the GameView is launched
-     * @throws IOException if files are not found.
+     * 
+     * @param username
+     * @throws IOException
      */
-    public GameView(final Stage stage) throws IOException {
-        this.stage = stage;
-        this.playerView = new PlayerView(VIEWRESIZE);
-        this.enemyView = new EnemyView(VIEWRESIZE);
-        this.bulletsView = new BulletsView(VIEWRESIZE);
-        this.controller = new Controller(this);
-        
-        final Scene mainScene;
-        final MapView mapView = new MapView(controller.getMapController(), VIEWRESIZE);
+    public GameView(final String username) throws IOException {
+        super(new Group());
+        this.userData = new UserData(username);
+        this.levelView = new LevelView(this.controller.getStage().getLevel());
         final List<Node> totalList = new ArrayList<>();
-        
-        totalList.addAll(mapView.getNodes());
+        prevPos = new Vector2D(controller.getStage().getPlayer().getPosition());
+        totalList.add(background);
+        totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
         totalList.add(playerView.getCharacterImageView());
         totalList.add(enemyView.getCharacterImageView());
-        
-
-        this.mainGroup = new Group(totalList);
-
-        mainScene = new Scene(mainGroup);
-        
-        this.stage.setFullScreen(true);
-        this.stage.setScene(mainScene);
-        this.stage.setTitle("メタルショット");
-        this.stage.show();
-        
-        this.controller.gameStart();
-        
-        mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        this.root = new Group(totalList);
+        this.setRoot(root);
+        //this.setCamera(camera);
+        controller.gameStart();
+        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 controller.keyPressed(event.getCode());
             }
         });
-        mainScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        this.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(final KeyEvent event) {
                 try {
@@ -84,7 +85,7 @@ public class GameView {
                 }
             }
         });
-        mainScene.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        this.setOnKeyTyped(new EventHandler<KeyEvent>() {
             public void handle(final KeyEvent event) {
             }
         });
@@ -92,14 +93,14 @@ public class GameView {
 
     /**
      * TODO: Andrea Biagini.
+     * 
      * @param bullets
      */
     public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
         this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
     }
-
     /**
      * Gets the visible part of the player.
      * 
@@ -109,32 +110,63 @@ public class GameView {
         return this.playerView;
     }
 
+    public EnemyView getEnemyView() {
+        return this.enemyView;
+    }
+
+    public LevelView getLevelView() {
+        return this.levelView;
+    }
+
+    public BulletsView getBulletsView() {
+        return this.bulletsView;
+    }
+
     /**
      * Updates the current visual frame using the info of the stage.
+     * 
      * @param stage
      */
     public void refresh(final StageImpl stage) {
         playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
                 stage.getPlayer().getAim().getDirection());
         enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
-        		stage.getEnemy().getAim().getDirection());
-        
+                stage.getEnemy().getAim().getDirection());
+        System.out.println("Enemy view POS: " + stage.getEnemy().getPosition());
+
+        if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPos))) {
+            prevPos = new Vector2D(stage.getPlayer().getPosition());
+            this.root.getChildren().removeAll(levelView.getDisplayed());
+            this.root.getChildren().addAll(levelView.displaySegments(stage.getPlayer().getPosition()));
+            TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
+            tt.setToX(new Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX() * MapConstants.getTilesize() * -1);
+            ParallelTransition pt = new ParallelTransition();
+            pt.getChildren().add(tt);
+            pt.play();
+        }
     }
 
-    /**
-     * TODO: Matteo Susca.
-     * @return dim
-     */
-    public Dimension getDim() {
-        return new Dimension(this.res);
-    }
-    
-    public Stage getStage() {
-        return this.stage;
+    public Controller getController() {
+        return this.controller;
     }
 
-	public EnemyView getEnemyView() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public UserData getUserData() {
+        return this.userData;
+    }
+
+    public void displayPauseMenu() throws IOException {
+        final Group group = new Group(root);
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        group.getChildren().add(loader.load());
+        final PauseMenuController pmc = (PauseMenuController) loader.getController();
+        pmc.setSize(this.getWidth(), this.getHeight());
+        pmc.setGameView(this);
+        this.setRoot(group);
+    }
+
+    public void disposePauseMenu() {
+        final Group group = new Group(root);
+        this.setRoot(group);
+        this.controller.gameStart();
+    }
 }

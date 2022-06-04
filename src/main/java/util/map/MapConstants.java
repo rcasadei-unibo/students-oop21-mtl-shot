@@ -5,9 +5,9 @@ package util.map;
  *
  */
 public final class MapConstants {
-	private static final double TILESIZE = 32;
+	private static final int TILESIZE = 64;
 
-	public static double getTilesize() {
+	public static int getTilesize() {
 		return TILESIZE;
 	}
 	

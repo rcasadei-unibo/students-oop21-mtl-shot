@@ -8,7 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import util.UserData;
+import util.Pair;
 import view.GameView;
 
 /**
@@ -17,20 +17,30 @@ import view.GameView;
  */
 public class SignInController {
 
-    private UserData userData;
+    /**
+     * The TextField where the user has to put its username.
+     */
     @FXML
-    public TextField name;
+    private TextField name;
 
     /**
      * Executes when the insert button is released.
      * @param event
-     * @throws IOException
+     * @throws IOException 
+     * @throws InterruptedException
      */
     @FXML
     public void insertReleased(final MouseEvent event) throws IOException {
+        final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
+        final boolean fs = stage.isFullScreen();
         if (this.isValid(name.getText())) {
-            this.userData = new UserData(name.getText());
-            new GameView((Stage) ((Node) event.getSource()).getScene().getWindow());
+            stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
+            final GameView gv = new GameView(name.getText());
+            stage.setScene(gv);
+            stage.setFullScreen(fs);
+            stage.setWidth(dim.getX());
+            stage.setHeight(dim.getY());
         }
     }
     /**
@@ -43,14 +53,6 @@ public class SignInController {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
         stage.show();
-    }
-
-    /**
-     * Returns the userData inserted.
-     * @return UserData
-     */
-    public UserData getUserData() {
-        return this.userData;
     }
 
     private boolean isValid(final String text) {

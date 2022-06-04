@@ -17,7 +17,7 @@ public class BasicBot implements SimpleBot {
 	private Enemy enemy;	
 	private Player player;
 	
-	public void setPlayer(Player p) {
+	public void setPlayer(final Player p) {
 		this.player = p;
 	}
 
