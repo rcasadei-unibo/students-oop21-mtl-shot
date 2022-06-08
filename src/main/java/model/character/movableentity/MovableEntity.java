@@ -218,16 +218,14 @@ public abstract class MovableEntity extends Entity {
 
     private void increaseHitbox() {
         super.setPosition(
-                new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-        super.getHitbox().setWidth(super.getHitbox().getWidth() * 2);
-        //super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() * 2));
+                new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getHeight()));
+        super.getHitbox().setHeight(super.getHitbox().getHeight() * 2);
     }
 
     private void decreaseHitbox() {
-        super.getHitbox().setWidth(super.getHitbox().getWidth() / 2);
-        //super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() / 2));
+        super.getHitbox().setHeight(super.getHitbox().getHeight() / 2);
         super.setPosition(
-                new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
+                new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getHeight()));
     }
 
     private void maxSpeedCheck() {
