@@ -2,6 +2,7 @@ package playertest;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.shape.Rectangle;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -18,7 +19,7 @@ public class PlayerTest {
 	public PlayerTest() {
 		player = new PlayerBuilder()
 				.health(new SimpleHealth())
-				.hitbox(new Vector2D(1, 2))
+				.hitbox(new Rectangle(1, 2))
 				.lives(3)
 				.position(new Vector2D(0,0))
 				.build();

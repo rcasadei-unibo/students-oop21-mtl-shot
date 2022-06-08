@@ -1,5 +1,6 @@
 package model.character;
 
+import javafx.scene.shape.Rectangle;
 import model.character.tools.health.Health;
 import model.weapons.P2020;
 import util.Vector2D;
@@ -9,8 +10,7 @@ import util.Vector2D;
  */
 public class Enemy extends Character{
 	
-	public Enemy(Vector2D position, Vector2D hitbox, Health health) {
+	public Enemy(final Vector2D position, final Rectangle hitbox, final Health health) {
 		super(position, hitbox, health, new P2020());
-		// TODO Auto-generated constructor stub
 	}
 }

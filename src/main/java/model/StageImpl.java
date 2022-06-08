@@ -3,6 +3,7 @@ package model;
 import java.io.IOException;
 import java.util.Collection;
 
+import javafx.scene.shape.Rectangle;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -25,7 +26,7 @@ public class StageImpl {
     public StageImpl(final TextMap textMap) throws IOException {        
         this.mapModel = new MapModel(textMap);
         this.player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1))
+                .hitbox(new Rectangle(1, 1))
                 .position(mapModel.getPlayerSpawn())
                 .weapon(new P2020())
                 .health(new SimpleHealth())
@@ -38,12 +39,10 @@ public class StageImpl {
     }
 
     public Player getPlayer() {
-        // TODO Auto-generated method stub
         return this.player;
     }
 
     public MapModel getMapModel() {
-        // TODO Auto-generated method stub
         return this.mapModel;
     }
 

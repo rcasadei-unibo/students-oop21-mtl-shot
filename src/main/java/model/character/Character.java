@@ -1,5 +1,6 @@
 package model.character;
 
+import javafx.scene.shape.Rectangle;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
@@ -54,7 +55,7 @@ public abstract class Character extends MovableEntity {
      * @param health
      * @param weapon
      */
-    public Character(final Vector2D position, final Vector2D hitbox, final Health health, final Weapon weapon) {
+    public Character(final Vector2D position, final Rectangle hitbox, final Health health, final Weapon weapon) {
         super(position, hitbox);
         this.health = health;
         this.weapon = weapon;
@@ -108,7 +109,7 @@ public abstract class Character extends MovableEntity {
      * 
      * @return crouch key
      */
-    public boolean getCrouchKey() {
+    public boolean isCrouchKey() {
         return this.crouchKey;
     }
 

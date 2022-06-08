@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.shape.Rectangle;
 import util.Vector2D;
 
 /**
@@ -11,7 +12,7 @@ public abstract class Entity {
     /**
      * It represents a box that has width and height.
      */
-    private Vector2D hitbox;
+    private Rectangle hitbox;
     /**
      * It represents a point in the playable space.
      */
@@ -23,7 +24,7 @@ public abstract class Entity {
      * @param position
      * @param hitbox
      */
-    public Entity(final Vector2D position, final Vector2D hitbox) {
+    public Entity(final Vector2D position, final Rectangle hitbox) {
         this.hitbox = hitbox;
         this.position = position;
     }
@@ -33,7 +34,7 @@ public abstract class Entity {
      * 
      * @return the hitbox
      */
-    public Vector2D getHitbox() {
+    public Rectangle getHitbox() {
         return this.hitbox;
     }
 
@@ -71,7 +72,7 @@ public abstract class Entity {
      * 
      * @param hitbox
      */
-    public void setHitbox(final Vector2D hitbox) {
+    public void setHitbox(final Rectangle hitbox) {
         if (hitbox.getX() <= 0 || hitbox.getY() <= 0) {
             throw new IllegalArgumentException();
         }
@@ -88,13 +89,14 @@ public abstract class Entity {
         if (x <= 0 || y <= 0) {
             throw new IllegalArgumentException();
         }
-        this.hitbox.setX(x);
-        this.hitbox.setY(y);
+        this.hitbox.setWidth(x);
+        this.hitbox.setHeight(y);
     }
 
     /*
-     * x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1) || x2 <= x1 <= (x2 + w2) && y2
-     * <= y1 <= (y2 + h2)
+     * x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1) 
+     *                       || 
+     * x2 <= x1 <= (x2 + w2) && y2 <= y1 <= (y2 + h2)
      */
     /**
      * Returns if the current entity and the passed entity are overlapped.
@@ -103,14 +105,17 @@ public abstract class Entity {
      * @return if the entities are colliding
      */
     public boolean isColliding(final Entity entity) {
-        return this.getPosition().getX() <= entity.getPosition().getX()
-                && entity.getPosition().getX() <= (this.getPosition().getX() + this.getHitbox().getX())
-                && this.getPosition().getY() <= entity.getPosition().getY()
-                && entity.getPosition().getY() <= (this.getPosition().getY() + this.getHitbox().getY())
-                || entity.getPosition().getX() <= this.getPosition().getX()
-                        && this.getPosition().getX() <= (entity.getPosition().getX() + entity.getHitbox().getX())
-                        && entity.getPosition().getY() <= this.getPosition().getY()
-                        && this.getPosition().getY() <= (entity.getPosition().getY() + entity.getHitbox().getY());
+        final double x1 = this.getPosition().getX();
+        final double y1 = this.getPosition().getY();
+        final double w1 = this.getHitbox().getWidth();
+        final double h1 = this.getHitbox().getHeight();
+        final double x2 = entity.getPosition().getX();
+        final double y2 = entity.getPosition().getY();
+        final double w2 = entity.getHitbox().getWidth();
+        final double h2 = entity.getHitbox().getHeight();
+        return (x1 <= x2 && x2 <= (x1 + w1)) && (y1 <= y2 && y2 <= (y1 + h1))
+                                             || 
+               (x2 <= x1 && x1 <= (x2 + w2)) && (y2 <= y1 && y1 <= (y2 + h2));
     }
 
     /**

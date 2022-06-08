@@ -72,7 +72,7 @@ public abstract class CharacterController {
         if (this.character.isCrouching()) {
             this.character.getAim().returnToHorizontal();
         //if fling and pressing the down button he has to aim at the ground
-        } else if (!this.character.isCrouching() && this.character.getCrouchKey()) {
+        } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
             this.character.getAim().setDirection(Direction.DOWN);
         }
     }
@@ -102,7 +102,7 @@ public abstract class CharacterController {
         }
         //Special case: stuck crouching
         if (this.isCollidingUp(
-                new Vector2D(this.character.getPosition().getX(), this.character.getPosition().getY() - this.character.getHitbox().getY()))
+                new Vector2D(this.character.getPosition().getX(), this.character.getPosition().getY() - this.character.getHitbox().getHeight()))
                 && this.character.isCrouching()) {
             this.character.setCrouchCondition(Crouch.DOWN);
             this.character.setJump(false);
@@ -110,7 +110,7 @@ public abstract class CharacterController {
     }
 
     private boolean isCollidingLeft(final Vector2D nextPos) {
-        final Vector2D botLeft = new Vector2D(0, this.character.getHitbox().getY() - DELTA);
+        final Vector2D botLeft = new Vector2D(0, this.character.getHitbox().getHeight() - DELTA);
         final Vector2D topLeft = new Vector2D(0, DELTA);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
@@ -118,15 +118,15 @@ public abstract class CharacterController {
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
-        final Vector2D botRight = new Vector2D(this.character.getHitbox().getX(), this.character.getHitbox().getY() - DELTA);
-        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX(), DELTA);
+        final Vector2D botRight = new Vector2D(this.character.getHitbox().getWidth(), this.character.getHitbox().getHeight() - DELTA);
+        final Vector2D topRight = new Vector2D(this.character.getHitbox().getWidth(), DELTA);
         botRight.add(nextPos);
         topRight.add(nextPos);
         return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
-        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX() - DELTA, 0);
+        final Vector2D topRight = new Vector2D(this.character.getHitbox().getWidth() - DELTA, 0);
         final Vector2D topLeft = new Vector2D(DELTA, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
@@ -134,8 +134,8 @@ public abstract class CharacterController {
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
-        final Vector2D botRight = new Vector2D(this.character.getHitbox().getX() - DELTA, this.character.getHitbox().getY());
-        final Vector2D botLeft = new Vector2D(DELTA, this.character.getHitbox().getY());
+        final Vector2D botRight = new Vector2D(this.character.getHitbox().getWidth() - DELTA, this.character.getHitbox().getHeight());
+        final Vector2D botLeft = new Vector2D(DELTA, this.character.getHitbox().getHeight());
         botRight.add(nextPos);
         botLeft.add(nextPos);
         return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);

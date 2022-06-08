@@ -1,5 +1,6 @@
 package model.character.movableentity;
 
+import javafx.scene.shape.Rectangle;
 import model.Entity;
 import util.Vector2D;
 
@@ -39,7 +40,7 @@ public abstract class MovableEntity extends Entity {
      * @param position
      * @param hitbox
      */
-    public MovableEntity(final Vector2D position, final Vector2D hitbox) {
+    public MovableEntity(final Vector2D position, final Rectangle hitbox) {
         super(position, hitbox);
         this.speed = new Vector2D();
     }
@@ -51,7 +52,7 @@ public abstract class MovableEntity extends Entity {
      * @param hitbox
      * @param speed
      */
-    public MovableEntity(final Vector2D position, final Vector2D hitbox, final Vector2D speed) {
+    public MovableEntity(final Vector2D position, final Rectangle hitbox, final Vector2D speed) {
         super(position, hitbox);
         this.speed = speed;
     }
@@ -218,11 +219,13 @@ public abstract class MovableEntity extends Entity {
     private void increaseHitbox() {
         super.setPosition(
                 new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-        super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() * 2));
+        super.getHitbox().setWidth(super.getHitbox().getWidth() * 2);
+        //super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() * 2));
     }
 
     private void decreaseHitbox() {
-        super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() / 2));
+        super.getHitbox().setWidth(super.getHitbox().getWidth() / 2);
+        //super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() / 2));
         super.setPosition(
                 new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
     }
