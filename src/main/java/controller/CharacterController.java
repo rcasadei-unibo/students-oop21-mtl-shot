@@ -7,7 +7,6 @@ import view.CharacterView;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.character.Character;
-import model.character.Player;
 
 
 /**
@@ -19,7 +18,8 @@ public abstract class CharacterController {
 
     private final Character character;
 
-    
+    //private final CharacterView characterView;
+
     /**
      * A shift from the hitbox corners.
      */
@@ -45,15 +45,19 @@ public abstract class CharacterController {
      * The main method that checks everything about the player.
      */
     public void controllerTick() {
-        character.setCrouchCondition(Crouch.FREE);
-        character.setFall(true);
-        final Vector2D nextPos = new Vector2D(character.getPosition());
-        nextPos.add(character.getSpeed());
-        nextPos.add(HITBOXSHIFT);
-        this.movementChecks(nextPos);
+        this.movementChecks();
         this.character.moveEntity();
         this.aimChecks();
         //characterView.updateCharacter(this.character.getPosition(), this.character.isCrouching(), this.character.getAim().getDirection());
+    }
+
+    /**
+     * Gets the character who is being controlled. 
+     * 
+     * @return character
+     */
+    public Character getCharacter() {
+        return this.character;
     }
 
     private void aimChecks() {
@@ -66,7 +70,14 @@ public abstract class CharacterController {
         }
     }
 
-    private void movementChecks(final Vector2D nextPos) {
+    private void movementChecks() {
+        //Setting default values
+        character.setCrouchCondition(Crouch.FREE);
+        //character.setFall(true);
+        final Vector2D nextPos = new Vector2D(character.getPosition());
+        //The next frame the character will be in character.pos + character.speed
+        nextPos.add(character.getSpeed());
+        nextPos.add(HITBOXSHIFT);
         //Roof collisions
         if (this.isCollidingUp(nextPos) && this.character.getSpeed().getY() < 0) {
             this.character.setSpeed(this.character.getSpeed().getX(), 0);
@@ -74,12 +85,13 @@ public abstract class CharacterController {
         //Floor collisions
         if (this.isCollidingDown(nextPos)) {
             this.character.setFall(false);
+            this.character.setPosition(this.character.getPosition().getX(), this.mapController.getTilePos(nextPos.sum(new Vector2D(this.character.getHitbox().getWidth(), this.character.getHitbox().getHeight()))).getY()-this.character.getHitbox().getHeight());
             if (this.character.getSpeed().getY() > 0) {
                 this.character.setSpeed(this.character.getSpeed().getX(), 0);
             }
-        } /*else {
+        } else if (this.character.getSpeed().getX() != 0) {
             this.character.setFall(true);
-        }*/
+        }
         //Left wall collisions
         if (this.isCollidingLeft(nextPos)) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
@@ -105,8 +117,7 @@ public abstract class CharacterController {
         final Vector2D topLeft = new Vector2D(0, DELTA);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return false;
-        //return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
+        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
@@ -114,8 +125,7 @@ public abstract class CharacterController {
         final Vector2D topRight = new Vector2D(this.character.getHitbox().getWidth(), DELTA);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return false;
-        //return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
+       return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
@@ -123,8 +133,7 @@ public abstract class CharacterController {
         final Vector2D topLeft = new Vector2D(DELTA, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return false;
-        //return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
+        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
@@ -132,8 +141,7 @@ public abstract class CharacterController {
         final Vector2D botLeft = new Vector2D(DELTA, this.character.getHitbox().getHeight());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return false;
-        //return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
+        return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
     }
 
 }

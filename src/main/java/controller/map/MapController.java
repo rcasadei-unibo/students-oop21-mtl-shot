@@ -38,12 +38,12 @@ public class MapController {
         		.collect(Collectors.toList());
     }
 
-    public Optional<Tile> getSingleCollidable(final Vector2D position) {
+    public boolean hasSingleCollidable(final Vector2D position) {
         return mapModel.getAllTiles().stream()
                 .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
                 .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
-                .filter(t -> t.isCollidable())
-                .findFirst();
+                .map(t -> t.isCollidable())
+                .findFirst().get();
     }
 
     public Optional<Tile> getTile(final Vector2D position) {
@@ -52,6 +52,14 @@ public class MapController {
 
     public Optional<Tile> getTile(final Vector2D position, final List<Tile> tileList) {
         return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
+    }
+    
+    public Vector2D getTilePos(final Vector2D position) {
+        return mapModel.getAllTiles().stream()
+                .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
+                .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
+                .map(t -> t.getPosition())
+                .findFirst().get();
     }
 
     public Vector2D getPlayerSpawn() {

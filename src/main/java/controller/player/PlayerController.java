@@ -9,18 +9,6 @@ import model.character.Player;
  * and manages everything about the weapon.
  */
 public class PlayerController extends CharacterController {
-//    /**
-//     * The player that has to be controlled.
-//     */
-//    private final Player player;
-//    /**
-//     * The View part of the player that has to be updated.
-//     */
-//    private final PlayerView playerView;
-//    /**
-//     * The map controller, used to handle the checks with the ground.
-//     */
-//    private final MapController mapController;
 
     /**
      * The player controller constructor.
