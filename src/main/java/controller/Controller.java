@@ -58,8 +58,7 @@ public class Controller {
         this.viewReference = gameView;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(),
-                this.stage.getPlayer());
+        this.playerController = new PlayerController(this.mapController, this.stage.getPlayer());
         // SBAGLIATO, SOLO TEMPORANEO!!!!
         final SimpleBot brain = new BasicBot();
         brain.getEntity().setPosition(30, 0);
@@ -110,30 +109,30 @@ public class Controller {
      */
     public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
-            playerController.getCharacter().setLeft(true);
-            playerController.getCharacter().getAim().setDirection(Direction.LEFT);
+            stage.getPlayer().setLeft(true);
+            stage.getPlayer().getAim().setDirection(Direction.LEFT);
         }
         if (key == KeyCode.D) {
-            playerController.getCharacter().setRight(true);
-            playerController.getCharacter().getAim().setDirection(Direction.RIGHT);
+            stage.getPlayer().setRight(true);
+            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
         }
         if (key == KeyCode.W) {
-            playerController.getCharacter().getAim().setDirection(Direction.UP);
+            stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
-            playerController.getCharacter().setJump(true);
+            stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
-            playerController.getCharacter().setCrouchKey(true);
-            playerController.getCharacter().getAim().setDirection(Direction.DOWN);
+            stage.getPlayer().setCrouchKey(true);
+            stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.playerController.getCharacter())) {
-                this.bulletsController.addBullet(this.playerController.getCharacter());
+            if (this.weaponController.tryToShoot(stage.getPlayer())) {
+                this.bulletsController.addBullet(stage.getPlayer());
                 System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
-            this.playerController.getCharacter().getWeapon().reload();
+            stage.getPlayer().getWeapon().reload();
         }
     }
 
@@ -145,20 +144,20 @@ public class Controller {
      */
     public void keyReleased(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
-            playerController.getCharacter().setLeft(false);
+            stage.getPlayer().setLeft(false);
         }
         if (key == KeyCode.D) {
-            playerController.getCharacter().setRight(false);
+            stage.getPlayer().setRight(false);
         }
         if (key == KeyCode.W) {
-            playerController.getCharacter().getAim().returnToHorizontal();
+            stage.getPlayer().getAim().returnToHorizontal();
         }
         if (key == KeyCode.SPACE) {
-            playerController.getCharacter().setJump(false);
+            stage.getPlayer().setJump(false);
         }
         if (key == KeyCode.S) {
-            playerController.getCharacter().setCrouchKey(false);
-            playerController.getCharacter().getAim().returnToHorizontal();
+            stage.getPlayer().setCrouchKey(false);
+            stage.getPlayer().getAim().returnToHorizontal();
         }
         if (key == KeyCode.P) {
             this.gamePause();
@@ -212,7 +211,7 @@ public class Controller {
     public Set<Character> getAllCharacters() {
         // TODO
         final var set = new HashSet<Character>();
-        set.add(playerController.getCharacter());
+        set.add(stage.getPlayer());
         return set;
     }
 

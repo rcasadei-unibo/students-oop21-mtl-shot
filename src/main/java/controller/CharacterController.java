@@ -19,7 +19,6 @@ public abstract class CharacterController {
 
     private final Character character;
 
-    private final CharacterView characterView;
     
     /**
      * A shift from the hitbox corners.
@@ -37,9 +36,8 @@ public abstract class CharacterController {
     // TROPPE CONDIZIONI DI ESISTENZA, MEGLIO WRAPPARLE NELLA HITBOX (?)
     private static final Vector2D HITBOXSHIFT = new Vector2D();
 
-    public CharacterController(final CharacterView characterView, final MapController mapController, final Character character) {
+    public CharacterController(final MapController mapController, final Character character) {
         this.character = character;
-        this.characterView = characterView;
         this.mapController = mapController;
     }
 
@@ -56,15 +54,6 @@ public abstract class CharacterController {
         this.character.moveEntity();
         this.aimChecks();
         //characterView.updateCharacter(this.character.getPosition(), this.character.isCrouching(), this.character.getAim().getDirection());
-    }
-
-    /**
-     * Gets the player who is being controlled. 
-     * 
-     * @return player
-     */
-    public Character getCharacter() {
-        return this.character;
     }
 
     private void aimChecks() {
@@ -88,12 +77,14 @@ public abstract class CharacterController {
             if (this.character.getSpeed().getY() > 0) {
                 this.character.setSpeed(this.character.getSpeed().getX(), 0);
             }
-        }
+        } /*else {
+            this.character.setFall(true);
+        }*/
         //Left wall collisions
-        if (this.isCollidingLeft(nextPos) /*&& player.isLeft()*/) {
+        if (this.isCollidingLeft(nextPos)) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         //Right wall collisions
-        } else if (this.isCollidingRight(nextPos) /*&& player.isRight()*/) {
+        } else if (this.isCollidingRight(nextPos)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
         //Special case: while fling he can not crouch
@@ -114,7 +105,8 @@ public abstract class CharacterController {
         final Vector2D topLeft = new Vector2D(0, DELTA);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
+        return false;
+        //return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
@@ -122,7 +114,8 @@ public abstract class CharacterController {
         final Vector2D topRight = new Vector2D(this.character.getHitbox().getWidth(), DELTA);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
+        return false;
+        //return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
@@ -130,7 +123,8 @@ public abstract class CharacterController {
         final Vector2D topLeft = new Vector2D(DELTA, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
+        return false;
+        //return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
@@ -138,7 +132,8 @@ public abstract class CharacterController {
         final Vector2D botLeft = new Vector2D(DELTA, this.character.getHitbox().getHeight());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
+        return false;
+        //return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
     }
 
 }

@@ -38,14 +38,12 @@ public class MapController {
         		.collect(Collectors.toList());
     }
 
-    public boolean hasSingleCollidable(final Vector2D position) {
-        final var tmp = mapModel.getAllTiles().stream()
+    public Optional<Tile> getSingleCollidable(final Vector2D position) {
+        return mapModel.getAllTiles().stream()
                 .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
-                .filter(t -> t.getPosition().getY() == Math.floor(position.getY())).findFirst();
-        if (tmp.equals(Optional.empty())) {
-            return false;
-        }
-        return tmp.get().isCollidable();
+                .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
+                .filter(t -> t.isCollidable())
+                .findFirst();
     }
 
     public Optional<Tile> getTile(final Vector2D position) {

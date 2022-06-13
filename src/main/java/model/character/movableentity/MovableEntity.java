@@ -199,7 +199,7 @@ public abstract class MovableEntity extends Entity {
     }
 
     /**
-     * Resets the entity's fields and the speed.
+     * Resets the entity's fields.
      */
     public void reset() {
         this.left = false;
