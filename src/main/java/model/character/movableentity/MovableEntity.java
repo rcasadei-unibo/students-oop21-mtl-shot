@@ -1,6 +1,5 @@
 package model.character.movableentity;
 
-import javafx.scene.shape.Rectangle;
 import model.Entity;
 import util.Vector2D;
 
@@ -40,7 +39,7 @@ public abstract class MovableEntity extends Entity {
      * @param position
      * @param hitbox
      */
-    public MovableEntity(final Vector2D position, final Rectangle hitbox) {
+    public MovableEntity(final Vector2D position, final Vector2D hitbox) {
         super(position, hitbox);
         this.speed = new Vector2D();
     }
@@ -52,7 +51,7 @@ public abstract class MovableEntity extends Entity {
      * @param hitbox
      * @param speed
      */
-    public MovableEntity(final Vector2D position, final Rectangle hitbox, final Vector2D speed) {
+    public MovableEntity(final Vector2D position, final Vector2D hitbox, final Vector2D speed) {
         super(position, hitbox);
         this.speed = speed;
     }
@@ -218,14 +217,14 @@ public abstract class MovableEntity extends Entity {
 
     private void increaseHitbox() {
         super.setPosition(
-                new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getHeight()));
-        super.getHitbox().setHeight(super.getHitbox().getHeight() * 2);
+                new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
+        super.getHitbox().setY(super.getHitbox().getY() * 2);
     }
 
     private void decreaseHitbox() {
-        super.getHitbox().setHeight(super.getHitbox().getHeight() / 2);
+        super.getHitbox().setY(super.getHitbox().getY() / 2);
         super.setPosition(
-                new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getHeight()));
+                new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
     }
 
     private void maxSpeedCheck() {

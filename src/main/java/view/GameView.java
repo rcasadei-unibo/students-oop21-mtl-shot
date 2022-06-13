@@ -35,7 +35,7 @@ public class GameView extends Scene {
     private final PlayerView playerView = new PlayerView(VIEWRESIZE);
     private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
     private final MapView mapView;
-    private final ImageView enemy;
+    //private final ImageView enemy;
 
     private final Controller controller = new Controller(this);
     private final UserData userData;
@@ -53,8 +53,8 @@ public class GameView extends Scene {
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
-        totalList.add(enemy);
+        //this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
+        //totalList.add(enemy);
         this.root = new Group(totalList);
         this.setRoot(root);
         controller.gameStart();
@@ -112,7 +112,7 @@ public class GameView extends Scene {
      * @param pos
      */
     public void setEnemyPos(final Vector2D pos) {
-        this.enemy.setX(pos.getX() * MapConstants.getTilesize());
+        //this.enemy.setX(pos.getX() * MapConstants.getTilesize());
     }
 
     /**

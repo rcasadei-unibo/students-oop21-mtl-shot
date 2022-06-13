@@ -1,6 +1,5 @@
 package model.character;
 
-import javafx.scene.shape.Rectangle;
 import model.character.tools.health.Health;
 import model.weapons.Weapon;
 import util.Vector2D;
@@ -66,7 +65,7 @@ public final class Player extends Character {
      * The player builder. At the end of the build all fields must be instantiated.
      */
     public static class PlayerBuilder {
-        private Rectangle hitbox;
+        private Vector2D hitbox;
         private Vector2D position;
         private Health health;
         private int lives;
@@ -78,7 +77,7 @@ public final class Player extends Character {
          * @param hitbox
          * @return this player builder
          */
-        public PlayerBuilder hitbox(final Rectangle hitbox) {
+        public PlayerBuilder hitbox(final Vector2D hitbox) {
             this.hitbox = hitbox;
             return this;
         }

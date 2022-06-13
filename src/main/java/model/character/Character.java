@@ -55,7 +55,7 @@ public abstract class Character extends MovableEntity {
      * @param health
      * @param weapon
      */
-    public Character(final Vector2D position, final Rectangle hitbox, final Health health, final Weapon weapon) {
+    public Character(final Vector2D position, final Vector2D hitbox, final Health health, final Weapon weapon) {
         super(position, hitbox);
         this.health = health;
         this.weapon = weapon;
@@ -154,6 +154,6 @@ public abstract class Character extends MovableEntity {
      */
     @Override
     public String toString() {
-        return super.toString() + " " + health.toString() + " " + /*weapon.toString() +*/ " " + aim.toString();
+        return super.toString() + " " + health.toString() + " " + weapon.toString() + " " + aim.toString();
     }
 }
