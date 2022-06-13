@@ -12,6 +12,7 @@ public class PlayerController extends CharacterController {
 
     /**
      * The player controller constructor.
+     * 
      * @param player
      * @param mapController
      */

@@ -1,6 +1,5 @@
 package view;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +13,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import model.StageImpl;
 import util.Direction;
 import util.UserData;
 import util.Vector2D;
-import util.map.MapConstants;
 import view.map.MapView;
 import view.player.PlayerView;
 
@@ -99,10 +95,20 @@ public class GameView extends Scene {
         return this.playerView;
     }
 
+    /**
+     * Gets the visible part of the map.
+     * 
+     * @return MapView
+     */
     public MapView getMapView() {
         return this.mapView;
     }
 
+    /**
+     * Gets the visible part of the bullets.
+     * 
+     * @return BulletsView.
+     */
     public BulletsView getBulletsView() {
         return this.bulletsView;
     }
@@ -124,14 +130,20 @@ public class GameView extends Scene {
                 stage.getPlayer().getAim().getDirection());
     }
 
-    public Controller getController() {
-        return this.controller;
-    }
-
+    /**
+     * Gets the datas of the person who's playing Metal Shot.
+     * 
+     * @return UserData
+     */
     public UserData getUserData() {
         return this.userData;
     }
 
+    /**
+     * Display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
@@ -142,6 +154,9 @@ public class GameView extends Scene {
         this.setRoot(group);
     }
 
+    /**
+     * Dispose the pause menu.
+     */
     public void disposePauseMenu() {
         final Group group = new Group(root);
         this.setRoot(group);

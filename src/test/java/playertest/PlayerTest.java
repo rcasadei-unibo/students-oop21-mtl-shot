@@ -1,150 +1,72 @@
 package playertest;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 
-import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import util.Direction;
 import util.Vector2D;
+
 /**
  * 
  *
  */
 public class PlayerTest {
-	
-	private final Player player;
-	
-	public PlayerTest() {
-		player = new PlayerBuilder()
-				.health(new SimpleHealth())
-				.hitbox(new Vector2D(1, 2))
-				.lives(3)
-				.position(new Vector2D(0,0))
-				.build();
-	}
-	
-    @Test 
-    public void movementTest() {
-      //--------SIMPLE MOVEMENT-------------
-        System.out.println("sx x4");
-        System.out.println(player.getPosition() + " " + player.getSpeed());
+
+    @Test
+    void builderFailingTest() {
+        assertThrows(IllegalStateException.class, () -> {
+            new PlayerBuilder().build();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new PlayerBuilder().health(new SimpleHealth(100)).build();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new PlayerBuilder().hitbox(new Vector2D(1, 1)).build();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new PlayerBuilder().lives(-1).build();
+        });
+    }
+
+    @Test
+    void builderCorrectTest() {
+        try {
+            new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
+                    .position(new Vector2D(0, 0)).build();
+        } catch (final Exception e) {
+            fail("Builder doesn't work");
+        }
+    }
+
+    @Test
+    void goRightTest() {
+        final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
+                .position(new Vector2D(0, 0)).build();
+        final var pos = player.getPosition();
+        player.setRight(true);
+        player.moveEntity();
+        assertTrue(player.getSpeed().getX() > 0);
+        assertEquals(0, player.getSpeed().getY());
+        assertEquals(player.getSpeed().getX(), player.getPosition().getX() - pos.getX());
+        player.setRight(false);
+    }
+
+    @Test
+    void goLeftTest() {
+        final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
+                .position(new Vector2D(0, 0)).build();
+        final var pos = player.getPosition();
         player.setLeft(true);
         player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        System.out.println(player.getPosition() + " " + player.getSpeed());
-        
-        System.out.println("rallenta");
+        assertTrue(player.getSpeed().getX() < 0);
+        assertEquals(0, player.getSpeed().getY());
+        assertEquals(player.getSpeed().getX(), player.getPosition().getX() - pos.getX());
         player.setLeft(false);
-        while (player.getSpeed().getX() != 0) {
-            player.moveEntity();
-            System.out.println(player.getPosition() + " " + player.getSpeed());
-        }
-        
-        player.setPosition(new Vector2D(0,0));
-        System.out.println("dx x4");
-        player.setRight(true);
-        player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        System.out.println(player.getPosition() + " " + player.getSpeed());
-        
-        System.out.println("rallenta");
-        player.setRight(false);
-        while (player.getSpeed().getX() != 0) {
-            player.moveEntity();
-            System.out.println(player.getPosition() + " " + player.getSpeed());
-        }
-        
-        player.setPosition(new Vector2D(0,0));
-        System.out.println("jump");
-        player.setJump(true);
-        for (int i = 0; i < 60; i++) {
-            System.out.println(player.getPosition() + " " + player.getSpeed());
-            player.moveEntity();
-        }
-        player.reset();
-        
-        //---------COMBO MOVEMENT-------------
-        player.setPosition(new Vector2D(0,0));
-        System.out.println("dx sx x4");
-        System.out.println(player.getPosition() + " " + player.getSpeed());
-        player.setLeft(true);
-        player.setRight(true);
-        player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        player.moveEntity();
-        System.out.println(player.getPosition() + " " + player.getSpeed());
-        player.setLeft(false);
-        player.setRight(false);
-        
-        player.setPosition(new Vector2D(0,0));
-        System.out.println("jump dx");
-        System.out.println(player.getPosition() + " " + player.getSpeed());
-        player.setRight(true);
-        player.setJump(true);
-        for (int i = 0; i < 50; i++) {
-            player.moveEntity();
-            System.out.println(player.getPosition() + " " + player.getSpeed());
-        }
-        player.reset();
-        
-        player.setPosition(new Vector2D(0,0));
-        
-        //-----------AIM-----------
-        player.getAim().setDirection(Direction.LEFT);
-        System.out.println(player.getAim());
-        player.getAim().setDirection(Direction.DOWN);
-        System.out.println(player.getAim());
-        player.getAim().returnToHorizontal();
-        System.out.println(player.getAim());
-        player.getAim().setDirection(Direction.UP);
-        System.out.println(player.getAim());
-        player.getAim().returnToHorizontal();
-        System.out.println(player.getAim());
-        player.getAim().setDirection(Direction.NEUTRAL);
-        System.out.println(player.getAim());
-        
-        //-----------HEALTH-----------------
-        System.out.println(player.getHealth());
-        player.getHealth().hurt(10);
-        System.out.println(player.getHealth());
-        player.getHealth().heal(1);
-        System.out.println(player.getHealth());
-        player.getHealth().setMaxHealth(120);
-        player.getHealth().heal(player.getHealth().getMaxHealth());
-        System.out.println(player.getHealth());
-        player.getHealth().heal(1000);
-        System.out.println(player.getHealth());
-        player.getHealth().hurt(1000);
-        System.out.println(player.getHealth());
-        System.out.println(player.getHealth().isDead());
-        try {
-            player.getHealth().heal(-1);
-        } catch(final IllegalStateException e) {
-            System.out.println("errore preso");
-        }
-        try {
-            player.getHealth().hurt(-1);
-        } catch(final IllegalStateException e) {
-            System.out.println("errore preso");
-        }
-        
-        //-----------RESPAWN--------------
-        double i = 0;
-        while (player.getLives() > 0) {
-            player.respawn(new Vector2D(i, 0));
-            i++;
-            System.out.println(player.getPosition());
-        }
-        try {
-            player.respawn(new Vector2D(5,5));
-        } catch (final IllegalStateException e) {
-            System.out.println("non respawnato");
-        }
     }
 }

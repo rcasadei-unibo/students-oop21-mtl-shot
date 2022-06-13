@@ -10,7 +10,7 @@ import model.character.Character;
 /**
  * TODO: javadoc.
  */
-public abstract class CharacterController {
+public class CharacterController {
 
     private final MapController mapController;
 
@@ -22,15 +22,12 @@ public abstract class CharacterController {
      * A shift from the hitbox corners.
      */
     private static final double DELTA = 0.075;
-    /**
-     * !!!!!!!!!!!!!!!!!!!!!!!!!!! DEVO ANCORA CAPIRE SE SERVE E NEL CASO COME
-     * GESTIRLO !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /*
+     * Constant used to have the shift from the playerPos to the hitbox pos
+     * (player should penetrate at least a bit the field with the head and the arms)
      */
-    // Constant used to have the shift from the playerPos to the hitbox pos
-    // (player should penetrate at least a bit the field with the head and the arms)
     // DELTA > HITBOXSHIFT.x
     // Il replacing al momento del crouch non funziona più in questo modo
-    // TROPPE CONDIZIONI DI ESISTENZA, MEGLIO WRAPPARLE NELLA HITBOX (?)
     private static final Vector2D HITBOXSHIFT = new Vector2D();
 
     /**
@@ -51,8 +48,6 @@ public abstract class CharacterController {
         this.movementChecks();
         this.character.moveEntity();
         this.aimChecks();
-        // characterView.updateCharacter(this.character.getPosition(),
-        // this.character.isCrouching(), this.character.getAim().getDirection());
     }
 
     /**
@@ -68,7 +63,7 @@ public abstract class CharacterController {
         // if crouching he can't aim at the ground
         if (this.character.isCrouching()) {
             this.character.getAim().returnToHorizontal();
-            // if fling and pressing the down button he has to aim at the ground
+        // if fling and pressing the down button he has to aim at the ground
         } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
             this.character.getAim().setDirection(Direction.DOWN);
         }
@@ -101,7 +96,7 @@ public abstract class CharacterController {
         // Left wall collisions
         if (this.isCollidingLeft(nextPos)) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
-            // Right wall collisions
+        // Right wall collisions
         } else if (this.isCollidingRight(nextPos)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }

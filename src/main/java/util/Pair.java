@@ -72,6 +72,8 @@ public class Pair<X, Y> {
         if (getClass() != obj.getClass()) {
             return false;
         }
+        //It will always be a pair.
+        @SuppressWarnings("unchecked")
         final Pair<X, Y> other = (Pair<X, Y>) obj;
         return Objects.equals(x, other.x) && Objects.equals(y, other.y);
     }

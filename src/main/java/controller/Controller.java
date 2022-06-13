@@ -26,16 +26,15 @@ import util.map.TextMap;
 import view.GameView;
 
 /**
- * 
- *
+ * The main controller. It contains all sub-controllers and it manages the game loop.
  */
 public class Controller {
 
     private final PlayerController playerController;
     private final MapController mapController;
     private final StageImpl stage;
-    private BulletsController bulletsController;
-    private WeaponController weaponController;
+    private final BulletsController bulletsController;
+    private final WeaponController weaponController;
     private final Timeline gameLoop;
     private boolean paused;
     /**
@@ -67,13 +66,6 @@ public class Controller {
 
             @Override
             public void handle(final ActionEvent event) {
-                // TODO implement game loop here
- 
-                // Move player
-                // Jumping and falling included
-                // Shoot (player)
-                // Move/shoot enemies (based on Susca's AI)
-                // Check for colliding bullets
                 brain.move();
                 gameView.setEnemyPos(brain.getEntity().getPosition());
                 weaponController.controllerTick();
@@ -89,11 +81,19 @@ public class Controller {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Starts the game loop.
+     */
     public void gameStart() {
         gameLoop.play();
         paused = false;
     }
 
+    /**
+     * Pause the game loop and display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
     public void gamePause() throws IOException {
         if (!paused) {
             gameLoop.pause();
@@ -103,9 +103,9 @@ public class Controller {
     }
 
     /**
-     * Handle the input key from standard input on it's press.
+     * Handles the input key from standard input on it's press.
      * 
-     * @param key
+     * @param key the key pressed
      */
     public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
@@ -137,10 +137,10 @@ public class Controller {
     }
 
     /**
-     * Handle the input key from standard input on it's release.
+     * Handles the input key from standard input on it's release.
      * 
-     * @param key
-     * @throws IOException
+     * @param key the key released
+     * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
     public void keyReleased(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
@@ -164,14 +164,23 @@ public class Controller {
         }
     }
 
+    /**
+     * Saves the current game state.
+     */
     public void save() {
         // TODO
     }
 
+    /**
+     * Loads the selected game.
+     */
     public void load() {
         // TODO
     }
 
+    /**
+     * Loads the next level.
+     */
     public void nextLevel() {
         // TODO
     }
@@ -192,15 +201,6 @@ public class Controller {
      */
     public PlayerController getPlayerController() {
         return this.playerController;
-    }
-
-    /**
-     * Gets the view reference.
-     * 
-     * @return MetalShot
-     */
-    public GameView getView() {
-        return this.viewReference;
     }
 
     /**

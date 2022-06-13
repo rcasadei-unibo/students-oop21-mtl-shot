@@ -1,6 +1,5 @@
 package model.character;
 
-import javafx.scene.shape.Rectangle;
 import model.character.movableentity.MovableEntity;
 import model.character.tools.Aim;
 import model.character.tools.health.Health;
@@ -11,7 +10,7 @@ import model.weapons.Weapon;
  * A character is a kind of MovableEntity that also has an health, an aim and a
  * weapon.
  */
-public abstract class Character extends MovableEntity {
+public class Character extends MovableEntity {
 
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.
