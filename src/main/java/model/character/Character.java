@@ -28,6 +28,11 @@ public class Character extends MovableEntity {
      * Delineates the conditions which limit the entity's crouching capabilities.
      */
     private Crouch crouchCondition = Crouch.FREE;
+    /*
+     * When it crouches it should not modify directly the crouch state but it should
+     * pass through another variable that represents the crouch key.
+     * (As it does with movement that does not modify directly the position but instead it modifies the speed).
+     */
     /**
      * Represent the entity intention to crouch.
      */
@@ -117,8 +122,8 @@ public class Character extends MovableEntity {
      * 
      * @return weapon
      */
-    public Weapon getWeapon() { 
-        return this.weapon; 
+    public Weapon getWeapon() {
+        return this.weapon;
     }
 
     /**
@@ -126,8 +131,8 @@ public class Character extends MovableEntity {
      * 
      * @param weapon
      */
-    public void setWeapon(final Weapon weapon) { 
-        this.weapon = weapon; 
+    public void setWeapon(final Weapon weapon) {
+        this.weapon = weapon;
     }
 
     /**

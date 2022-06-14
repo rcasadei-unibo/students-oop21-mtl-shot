@@ -22,8 +22,12 @@ public class Entity {
      * 
      * @param position
      * @param hitbox
+     * @throws IllegalArgumentException if the hitbox has a 0 or negative values in its parameters
      */
     public Entity(final Vector2D position, final Vector2D hitbox) {
+        if (hitbox.getX() <= 0 || hitbox.getY() <= 0) {
+            throw new IllegalArgumentException();
+        }
         this.hitbox = hitbox;
         this.position = position;
     }
