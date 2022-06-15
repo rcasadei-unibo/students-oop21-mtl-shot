@@ -25,7 +25,7 @@ public final class MetalShot extends Application {
     public void start(final Stage primaryStage) throws IOException {
         final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
         final Scene scene = new Scene(root);
-        primaryStage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F12"));
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setScene(scene);
         primaryStage.setTitle("メタルショット");
         primaryStage.initStyle(StageStyle.TRANSPARENT);

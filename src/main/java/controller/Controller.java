@@ -17,10 +17,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import util.Direction;
+import util.Pair;
 import util.Vector2D;
 import util.map.TextMap;
 import view.GameView;
@@ -67,7 +70,6 @@ public class Controller {
             @Override
             public void handle(final ActionEvent event) {
                 brain.move();
-                gameView.setEnemyPos(brain.getEntity().getPosition());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 gameView.displayBullets(getBullets());
