@@ -3,8 +3,10 @@ package controller;
 import controller.enemy.EnemyController;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.character.Enemy;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,6 +26,7 @@ import javafx.util.Duration;
 import util.Direction;
 import util.Vector2D;
 import util.map.TextMap;
+import view.EnemyView;
 import view.GameView;
 
 /**
@@ -30,7 +34,8 @@ import view.GameView;
  */
 public class Controller {
     private final PlayerController playerController;
-	private final EnemyController enemyController;
+	//private final EnemyController enemyController;
+    private final Collection<EnemyController> enemiesController;
     private final StageImpl stage;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
@@ -55,14 +60,27 @@ public class Controller {
 		final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
 		this.stage = new StageImpl(textMap);
 		this.viewReference = gameView;
+		this.enemiesController = new LinkedList<>();
 		this.bulletsController = new BulletsController(this);
 		this.weaponController = new WeaponController(this);
-		this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.stage.getLevel(),
+		this.playerController = new PlayerController(this.stage.getLevel(),
 				this.stage.getPlayer());
 		
-        this.enemyController = new EnemyController(this.viewReference.getEnemyView(), this.stage.getLevel(), this.stage.getEnemy());
-        this.enemyController.getBrain().setPlayer(this.stage.getPlayer());
+        //this.enemyController = new EnemyController(this.viewReference.getEnemyView(), this.stage.getLevel(), this.stage.getEnemy());
+        //this.enemyController.getBrain().setPlayer(this.stage.getPlayer());
         
+        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
+        System.out.println(enemiesController.size());
+		
+		/*for(Map.Entry<Enemy, EnemyView> enemy : this.viewReference.getEnemiesView().entrySet()) {
+		    System.out.println("cisono");
+		    enemiesController.add(new EnemyController(enemy.getValue(), this.stage.getLevel(), enemy.getKey()));
+		}*/
+		
+		for(EnemyController enemyController : this.enemiesController) {
+		    enemyController.getBrain().setPlayer(this.stage.getPlayer());
+		}
+		
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
@@ -74,11 +92,16 @@ public class Controller {
                 // Shoot (player)
                 // Move/shoot enemies (based on Susca's AI)
                 // Check for colliding bullets
-            	enemyController.brainTick();
-            	enemyController.controllerTick();
+            	//enemyController.brainTick();
+            	//enemyController.controllerTick();
+                for(EnemyController enemyController : enemiesController) {
+                    //enemyController.brainTick();
+                    enemyController.controllerTick();
+                    System.out.println(enemyController.getCharacter().getPosition());
+                }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                playerController.controllerTick();
+                playerController.controllerTick();                
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }

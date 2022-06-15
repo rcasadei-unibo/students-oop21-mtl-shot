@@ -19,8 +19,6 @@ public class CharacterController {
 
 	private final Character character;
 
-    private final CharacterView characterView;
-
     /**
      * A shift from the hitbox corners.
      */
@@ -39,9 +37,8 @@ public class CharacterController {
      * @param mapController
      * @param character
      */
-    public CharacterController(final CharacterView characterView, final Level level, final Character character) {
+    public CharacterController(final Level level, final Character character) {
         this.character = character;
-        this.characterView = characterView;
         this.level = level;
     }
 

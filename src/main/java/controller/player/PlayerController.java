@@ -30,7 +30,7 @@ public class PlayerController extends CharacterController {
 	 * @param mapController
 	 * @param playerView
 	 */
-	public PlayerController(final PlayerView playerView, final Level level, final Player player) {
-		super(playerView, level, player);
+	public PlayerController(final Level level, final Player player) {
+		super(level, player);
 	}
 }

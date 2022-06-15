@@ -23,7 +23,8 @@ import util.map.TextMap;
 public class StageImpl {
 
     private final Player player;
-    private final Enemy enemy;
+    //private final Enemy enemy;
+    private final Collection<Enemy> enemies;
     private final Collection<Bullet> bullets = null;
     private final Level level;
 
@@ -38,7 +39,9 @@ public class StageImpl {
         this.level = new Level(Stream.of("src/main/resources/map.txt"
                 ,"src/main/resources/map2.txt"
                 ,"src/main/resources/map3.txt").collect(Collectors.toList()));
-        this.enemy = new Enemy(level.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
+        //this.enemy = new Enemy(level.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
+        this.enemies = new LinkedList<Enemy>();
+        addEnemies();
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
@@ -48,6 +51,12 @@ public class StageImpl {
                 .build();
     }
     
+    private void addEnemies() {
+        for(Vector2D pos : level.getEnemiesSpawn()) {
+            enemies.add(new Enemy(pos, new Vector2D(1, 1), new SimpleHealth()));
+        }
+    }
+
     /*
     public void setPlayer(final Player player) {
         this.player = player;
@@ -62,9 +71,13 @@ public class StageImpl {
         return this.level;
     }
 
-	public Enemy getEnemy() {
+	/*public Enemy getEnemy() {
 		// TODO Auto-generated method stub
 		return this.enemy;
-	}
+	}*/
+
+    public Collection<Enemy> getEnemies(){
+        return this.enemies;
+    }
 
 }

@@ -1,6 +1,7 @@
 package model.map;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -70,13 +71,21 @@ public class Level {
 		throw new IllegalArgumentException();
 	}
 	
-	public Vector2D getEnemySpawn() {
+	/*public Vector2D getEnemySpawn() {
         for (Segment tempSegment : this.getSegments()) {
             if (tempSegment.getPlayerSpawn() != null) {
                 return tempSegment.getEnemySpawn();
             }
         }
         return null;
+    }*/
+	
+	public Collection<Vector2D> getEnemiesSpawn() {
+	    Collection<Vector2D> positions = new LinkedList<>();
+        for (Segment tempSegment : this.getSegments()) {
+            positions.addAll(tempSegment.getEnemiesSpawn());
+        }
+        return positions;
     }
 
 }

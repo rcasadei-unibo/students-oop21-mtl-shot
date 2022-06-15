@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,11 +26,12 @@ public class Segment {
 
 	private final Set<Set<Tile>> map;
 	private Vector2D playerSpawn;
-	private Vector2D enemySpawn;
+	private Collection<Vector2D> enemiesSpawn;
 	private final TextMap textMap;
 	private final double offset;
 	
 	public Segment(final TextMap textMap, final double offset) throws IOException {
+	    this.enemiesSpawn = new LinkedList<>();
 		this.offset = offset;
 		this.textMap = textMap;
 		this.map = new HashSet<>();
@@ -54,7 +56,7 @@ public class Segment {
 					j++;
 				} else if(check == 'e') {
                     this.addTile(new TileAir(new Vector2D(j+offset, i)));
-                    enemySpawn = new Vector2D(j+offset, i);
+                    enemiesSpawn.add(new Vector2D(j+offset, i));
                     j++;
                 }
 			}
@@ -95,8 +97,8 @@ public class Segment {
         return playerSpawn;
     }
 	
-	public Vector2D getEnemySpawn() {
-        return enemySpawn;
+	public Collection<Vector2D> getEnemiesSpawn() {
+        return this.enemiesSpawn;
     }
 	
 	private void addTile(final Tile tile) {

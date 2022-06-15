@@ -1,7 +1,10 @@
-		package view;
+package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import model.StageImpl;
+import model.character.Enemy;
 import util.Direction;
 import util.UserData;
 import util.Vector2D;
@@ -38,7 +42,9 @@ public class GameView extends Scene {
 
     //public static final int VIEWRESIZE = 2;
     private final PlayerView playerView = new PlayerView();
-    private final EnemyView enemyView = new EnemyView();
+    //private final EnemyView enemyView = new EnemyView();
+    private final Map<Enemy,EnemyView> enemiesView = new HashMap<>();
+    //private final Collection<EnemyView> enemiesView = new LinkedList<>();
     private final BulletsView bulletsView = new BulletsView();
     private final LevelView levelView;
     private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
@@ -64,7 +70,13 @@ public class GameView extends Scene {
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
-		totalList.add(enemyView.getCharacterImageView());
+		//totalList.add(enemyView.getCharacterImageView());
+		for(Enemy enemy : controller.getStage().getEnemies()) {
+		    enemiesView.put(enemy, new EnemyView());		    
+		}
+		for(EnemyView enemyView : this.enemiesView.values()) {
+		    totalList.add(enemyView.getCharacterImageView());
+		}
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.setCamera(camera);
@@ -121,9 +133,9 @@ public class GameView extends Scene {
         return this.playerView;
     }
 
-    public EnemyView getEnemyView() {
+    /*public EnemyView getEnemyView() {
         return this.enemyView;
-    }
+    }*/
 
     /**
      * Gets the visible part of the map.
@@ -152,14 +164,17 @@ public class GameView extends Scene {
 		if(stage.getPlayer().getSpeed().getX() > 0 
 				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
 				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );		
-			System.out.println(playerView.getCharacterImageView().getTranslateX());
+			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );
+		}
+		
+		for(Enemy enemy : stage.getEnemies()) {
+		    enemiesView.get(enemy).updateCharacter(enemy.getPosition(), enemy.isCrouching(), enemy.getAim().getDirection());
 		}
 		
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
-		enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
-                stage.getEnemy().getAim().getDirection());
+		/*enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
+                stage.getEnemy().getAim().getDirection());*/
 
 		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPosSegment))) {
 			prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
@@ -205,5 +220,12 @@ public class GameView extends Scene {
         final Group group = new Group(root);
         this.setRoot(group);
         this.controller.gameStart();
+    }
+
+    public Map<Enemy, EnemyView> getEnemiesView() {
+
+        System.out.println("size " + enemiesView.size());
+        // TODO Auto-generated method stub
+        return enemiesView;
     }
 }

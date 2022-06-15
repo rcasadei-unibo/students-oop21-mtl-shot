@@ -12,8 +12,8 @@ public class EnemyController extends CharacterController{
 	
 	private final SimpleBot brain;
 
-	public EnemyController(EnemyView characterView, Level level, Character character) {
-		super(characterView, level, character);
+	public EnemyController(Level level, Character character) {
+		super(level, character);
 		this.brain = new BasicBot();
 		this.brain.setEnemy(character);
 		// TODO Auto-generated constructor stub
