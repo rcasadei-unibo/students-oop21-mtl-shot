@@ -23,9 +23,9 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button mnemonicParsing="false" onMouseReleased="#backReleased" styleClass="rectangularButton" text="Back">
+          <Button cancelButton="true" mnemonicParsing="false" onAction="#backReleased" styleClass="rectangularButton" text="Back">
                <font>
-                  <Font name="PixelMadness" size="30.0" />
+                  <Font name="PixelMadness" size="30.0"  url="@../menusResources/Pixel_Madness.ttf"/>
                </font></Button>
         </buttons>
          <BorderPane.margin>
@@ -51,9 +51,9 @@
                   <Font name="PixelMadness" size="30.0" />
                </font>
             </TextField>
-            <Button mnemonicParsing="false" onMouseReleased="#insertReleased" styleClass="rectangularButton" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#insertReleased" styleClass="rectangularButton" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
-                  <Font name="PixelMadness" size="30.0" />
+                  <Font name="PixelMadness" size="30.0"  url="@../menusResources/Pixel_Madness.ttf"/>
                </font>
             </Button>
          </children>

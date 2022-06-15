@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -24,6 +25,7 @@ public final class MetalShot extends Application {
     public void start(final Stage primaryStage) throws IOException {
         final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
         final Scene scene = new Scene(root);
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("F12"));
         primaryStage.setScene(scene);
         primaryStage.setTitle("メタルショット");
         primaryStage.initStyle(StageStyle.TRANSPARENT);

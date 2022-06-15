@@ -3,6 +3,7 @@ package controller.menu;
 import java.io.IOException;
 import java.util.Optional;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,7 +26,7 @@ public class OptionsMenuController {
     private BorderPane pane;
 
     @FXML
-    void backReleased(final MouseEvent event) throws IOException {
+    void backReleased(final Event event) throws IOException {
         if (gameView.isPresent()) {
             gameView.get().displayPauseMenu();
         } else {

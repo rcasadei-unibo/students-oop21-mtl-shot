@@ -5,9 +5,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.management.InstanceNotFoundException;
-
+import model.character.Enemy;
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -23,12 +22,22 @@ import util.map.TextMap;
  */
 public class StageImpl {
 
-    private Player player;
+    private final Player player;
+    private final Enemy enemy;
     private final Collection<Bullet> bullets = null;
     private final Level level;
 
-    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {        
-        this.level = new Level(Stream.of("src/main/resources/map.txt","src/main/resources/map2.txt","src/main/resources/map3.txt").collect(Collectors.toList()));
+    /**
+     * The stage constructor.
+     * 
+     * @param textMap
+     * @throws IOException if the txt map sheet doesn't exist.
+     */
+    public StageImpl(final TextMap textMap) throws IOException {        
+        this.level = new Level(Stream.of("src/main/resources/map.txt"
+                ,"src/main/resources/map2.txt"
+                ,"src/main/resources/map3.txt").collect(Collectors.toList()));
+        this.enemy = new Enemy(level.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
@@ -37,10 +46,12 @@ public class StageImpl {
                 .lives(3)
                 .build();
     }
-
+    
+    /*
     public void setPlayer(final Player player) {
         this.player = player;
     }
+    */
 
     public Player getPlayer() {
         return this.player;
@@ -49,5 +60,10 @@ public class StageImpl {
     public Level getLevel() {
         return this.level;
     }
+
+	public Enemy getEnemy() {
+		// TODO Auto-generated method stub
+		return this.enemy;
+	}
 
 }

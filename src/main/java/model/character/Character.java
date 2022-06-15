@@ -10,7 +10,7 @@ import model.weapons.Weapon;
  * A character is a kind of MovableEntity that also has an health, an aim and a
  * weapon.
  */
-public abstract class Character extends MovableEntity {
+public class Character extends MovableEntity {
 
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.
@@ -28,6 +28,11 @@ public abstract class Character extends MovableEntity {
      * Delineates the conditions which limit the entity's crouching capabilities.
      */
     private Crouch crouchCondition = Crouch.FREE;
+    /*
+     * When it crouches it should not modify directly the crouch state but it should
+     * pass through another variable that represents the crouch key.
+     * (As it does with movement that does not modify directly the position but instead it modifies the speed).
+     */
     /**
      * Represent the entity intention to crouch.
      */
@@ -108,7 +113,7 @@ public abstract class Character extends MovableEntity {
      * 
      * @return crouch key
      */
-    public boolean getCrouchKey() {
+    public boolean isCrouchKey() {
         return this.crouchKey;
     }
 
@@ -117,8 +122,8 @@ public abstract class Character extends MovableEntity {
      * 
      * @return weapon
      */
-    public Weapon getWeapon() { 
-        return this.weapon; 
+    public Weapon getWeapon() {
+        return this.weapon;
     }
 
     /**
@@ -126,8 +131,8 @@ public abstract class Character extends MovableEntity {
      * 
      * @param weapon
      */
-    public void setWeapon(final Weapon weapon) { 
-        this.weapon = weapon; 
+    public void setWeapon(final Weapon weapon) {
+        this.weapon = weapon;
     }
 
     /**
@@ -153,6 +158,6 @@ public abstract class Character extends MovableEntity {
      */
     @Override
     public String toString() {
-        return super.toString() + " " + health.toString() + " " + /*weapon.toString() +*/ " " + aim.toString();
+        return super.toString() + " " + health.toString() + " " + weapon.toString() + " " + aim.toString();
     }
 }

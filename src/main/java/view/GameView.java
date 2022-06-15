@@ -1,12 +1,11 @@
 		package view;
 
-import java.awt.Toolkit;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.io.FileInputStream;
 
 import javax.management.InstanceNotFoundException;
 
@@ -14,17 +13,14 @@ import controller.Controller;
 import controller.menu.PauseMenuController;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import model.StageImpl;
 import util.Direction;
@@ -40,15 +36,15 @@ import view.player.PlayerView;
  */
 public class GameView extends Scene {
 
-	//public static final int VIEWRESIZE = 2;
-	private final PlayerView playerView = new PlayerView();
-	private final BulletsView bulletsView = new BulletsView();
-	private final LevelView levelView;
-	private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
-	private final ImageView enemy;
+    //public static final int VIEWRESIZE = 2;
+    private final PlayerView playerView = new PlayerView();
+    private final EnemyView enemyView = new EnemyView();
+    private final BulletsView bulletsView = new BulletsView();
+    private final LevelView levelView;
+    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
 
-	private final Controller controller = new Controller(this);
-	private final UserData userData;
+    private final Controller controller = new Controller(this);
+    private final UserData userData;
 
 	private final Group root;
 	private Vector2D prevPosSegment;
@@ -68,15 +64,13 @@ public class GameView extends Scene {
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getPlayerImageView());
-		this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
-		totalList.add(enemy);
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.setCamera(camera);
 		//camera.setScaleX(0.5);
 		//camera.setScaleY(0.5);
 		controller.gameStart();
-		this.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		/*this.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(final KeyEvent event) {
 				controller.keyPressed(event.getCode());
@@ -95,45 +89,58 @@ public class GameView extends Scene {
 		this.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent event) {
 			}
-		});
+		});*/
+		 this.setOnKeyPressed(e -> {
+            try {
+                controller.keyPressed(e.getCode());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
+        this.setOnKeyTyped(e -> { });
 	}
 
-	/**
-	 * TODO: Andrea Biagini.
-	 * 
-	 * @param bullets
-	 */
-	public void displayBullets(final Map<Vector2D, Direction> bullets) {
-		this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
-		this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-		this.root.getChildren().addAll(this.bulletsView.getImageViewList());
-	}
+    /**
+     * TODO: Andrea Biagini.
+     * 
+     * @param bullets
+     */
+    public void displayBullets(final Map<Vector2D, Direction> bullets) {
+        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
+        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
+    }
+    /**
+     * Gets the visible part of the player.
+     * 
+     * @return PlayerView
+     */
+    public PlayerView getPlayerView() {
+        return this.playerView;
+    }
 
-	/**
-	 * Gets the visible part of the player.
-	 * 
-	 * @return PlayerView
-	 */
-	public PlayerView getPlayerView() {
-		return this.playerView;
-	}
+    public EnemyView getEnemyView() {
+        return this.enemyView;
+    }
 
-	public LevelView getLevelView() {
-		return this.levelView;
-	}
+    /**
+     * Gets the visible part of the map.
+     * 
+     * @return LevelView
+     */
+    public LevelView getLevelView() {
+        return this.levelView;
+    }
 
-	public BulletsView getBulletsView() {
-		return this.bulletsView;
-	}
-
-	/**
-	 * TODO: Matteo Susca.
-	 * 
-	 * @param pos
-	 */
-	public void setEnemyPos(final Vector2D pos) {
-		this.enemy.setX(pos.getX() * MapConstants.getTilesize());
-	}
+    /**
+     * Gets the visible part of the bullets.
+     * 
+     * @return BulletsView.
+     */
+    public BulletsView getBulletsView() {
+        return this.bulletsView;
+    }
 
 	/**
 	 * Updates the current visual frame using the info of the stage.
@@ -149,6 +156,8 @@ public class GameView extends Scene {
 		
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
+		enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
+                stage.getEnemy().getAim().getDirection());
 
 		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPosSegment))) {
 			prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
@@ -163,27 +172,36 @@ public class GameView extends Scene {
 		}
 	}
 
-	public Controller getController() {
-		return this.controller;
-	}
+    /**
+     * Gets the datas of the person who's playing Metal Shot.
+     * 
+     * @return UserData
+     */
+    public UserData getUserData() {
+        return this.userData;
+    }
 
-	public UserData getUserData() {
-		return this.userData;
-	}
+    /**
+     * Display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void displayPauseMenu() throws IOException {
+        final Group group = new Group(root);
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        group.getChildren().add(loader.load());
+        final PauseMenuController pmc = (PauseMenuController) loader.getController();
+        pmc.setSize(this.getWidth(), this.getHeight());
+        pmc.setGameView(this);
+        this.setRoot(group);
+    }
 
-	public void displayPauseMenu() throws IOException {
-		final Group group = new Group(root);
-		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-		group.getChildren().add(loader.load());
-		final PauseMenuController pmc = (PauseMenuController) loader.getController();
-		pmc.setSize(this.getWidth()/2, this.getHeight()/2);
-		pmc.setGameView(this);
-		this.setRoot(group);
-	}
-
-	public void disposePauseMenu() {
-		final Group group = new Group(root);
-		this.setRoot(group);
-		this.controller.gameStart();
-	}
+    /**
+     * Dispose the pause menu.
+     */
+    public void disposePauseMenu() {
+        final Group group = new Group(root);
+        this.setRoot(group);
+        this.controller.gameStart();
+    }
 }

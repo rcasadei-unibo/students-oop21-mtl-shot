@@ -26,8 +26,10 @@ public class SimpleHealth implements Health {
      * The simpleHealth constructor that puts the maxHealth to the passed parameter.
      * 
      * @param maxHealth
+     * @throws IllegalArgumentException if the parameter is negative or 0.
      */
     public SimpleHealth(final int maxHealth) {
+        this.consistencyCheck(maxHealth);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
     }

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -18,14 +19,13 @@ import javafx.stage.Stage;
  * 
  */
 public class MainMenuController {
-
     /**
      * Executes when the start button is released.
      * @param event
      * @throws IOException
      */
     @FXML
-    public void startReleased(final MouseEvent event) throws IOException {
+    public void startReleased(final Event event) throws IOException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/SignIn.fxml")));
         stage.show();
@@ -37,7 +37,7 @@ public class MainMenuController {
      * @throws FileNotFoundException
      */
     @FXML
-    public void closeReleased(final MouseEvent event) throws FileNotFoundException {
+    public void closeReleased(final Event event) throws FileNotFoundException {
         Platform.exit();
     }
 

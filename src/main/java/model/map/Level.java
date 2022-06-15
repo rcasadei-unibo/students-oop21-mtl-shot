@@ -69,5 +69,14 @@ public class Level {
 		}
 		throw new IllegalArgumentException();
 	}
+	
+	public Vector2D getEnemySpawn() {
+        for (Segment tempSegment : this.getSegments()) {
+            if (tempSegment.getPlayerSpawn() != null) {
+                return tempSegment.getEnemySpawn();
+            }
+        }
+        return null;
+    }
 
 }

@@ -25,6 +25,7 @@ public class Segment {
 
 	private final Set<Set<Tile>> map;
 	private Vector2D playerSpawn;
+	private Vector2D enemySpawn;
 	private final TextMap textMap;
 	private final double offset;
 	
@@ -51,7 +52,11 @@ public class Segment {
 					this.addTile(new TileAir(new Vector2D(j+offset, i)));
 					playerSpawn = new Vector2D(j+offset, i);
 					j++;
-				}
+				} else if(check == 'e') {
+                    this.addTile(new TileAir(new Vector2D(j+offset, i)));
+                    enemySpawn = new Vector2D(j+offset, i);
+                    j++;
+                }
 			}
 		}
 		mapTxtInput.close();
@@ -88,6 +93,10 @@ public class Segment {
 	
 	public Vector2D getPlayerSpawn() {
         return playerSpawn;
+    }
+	
+	public Vector2D getEnemySpawn() {
+        return enemySpawn;
     }
 	
 	private void addTile(final Tile tile) {
@@ -138,6 +147,14 @@ public class Segment {
 
 	    public Optional<Tile> getTile(final Vector2D position, final List<Tile> tileList) {
 	        return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
+	    }
+	    
+	    public Vector2D getTilePos(final Vector2D position) {
+	        return this.getAllTiles().stream()
+	                .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
+	                .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
+	                .map(t -> t.getPosition())
+	                .findFirst().get();
 	    }
 	    
 	    public Vector2D getOrigin() {
