@@ -16,6 +16,9 @@ public final class Player extends Character {
     private int lives;
     // private final List<Item> items;
 
+    //?????????????????????????????????
+    public static final long serialVersionUID = 0L;
+
     private Player(final PlayerBuilder builder) {
         super(builder.position, builder.hitbox, builder.health, builder.weapon);
         this.lives = builder.lives;

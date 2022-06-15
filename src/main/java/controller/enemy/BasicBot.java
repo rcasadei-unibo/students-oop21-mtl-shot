@@ -13,8 +13,8 @@ import util.Vector2D;
  *
  */
 public class BasicBot implements SimpleBot {
-	
-	private Enemy enemy;	
+
+	private Enemy enemy;
 	private Player player;
 	
 	public void setPlayer(final Player p) {

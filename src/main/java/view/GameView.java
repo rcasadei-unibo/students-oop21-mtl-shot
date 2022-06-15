@@ -1,17 +1,16 @@
 package view;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.io.FileInputStream;
 
 import controller.Controller;
 import controller.menu.PauseMenuController;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Camera;
 import javafx.scene.Group;
@@ -20,7 +19,6 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import model.StageImpl;
 import util.Direction;
@@ -69,26 +67,15 @@ public class GameView extends Scene {
         this.setRoot(root);
         //this.setCamera(camera);
         controller.gameStart();
-        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                controller.keyPressed(event.getCode());
+        this.setOnKeyPressed(e -> {
+            try {
+                controller.keyPressed(e.getCode());
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         });
-        this.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                try {
-                    controller.keyReleased(event.getCode());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        this.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent event) {
-            }
-        });
+        this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
+        this.setOnKeyTyped(e -> { });
     }
 
     /**
@@ -114,15 +101,36 @@ public class GameView extends Scene {
         return this.enemyView;
     }
 
+    /**
+     * Gets the visible part of the map.
+     * 
+     * @return LevelView
+     */
     public LevelView getLevelView() {
         return this.levelView;
     }
 
+    /**
+     * Gets the visible part of the bullets.
+     * 
+     * @return BulletsView.
+     */
     public BulletsView getBulletsView() {
         return this.bulletsView;
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * TODO: Matteo Susca.
+     * @param pos
+     */
+    public void setEnemyPos(final Vector2D pos) {
+        //this.enemy.setX(pos.getX() * MapConstants.getTilesize());
+    }
+
+    /**
+>>>>>>> master
      * Updates the current visual frame using the info of the stage.
      * 
      * @param stage
@@ -146,14 +154,20 @@ public class GameView extends Scene {
         }
     }
 
-    public Controller getController() {
-        return this.controller;
-    }
-
+    /**
+     * Gets the datas of the person who's playing Metal Shot.
+     * 
+     * @return UserData
+     */
     public UserData getUserData() {
         return this.userData;
     }
 
+    /**
+     * Display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
@@ -164,6 +178,9 @@ public class GameView extends Scene {
         this.setRoot(group);
     }
 
+    /**
+     * Dispose the pause menu.
+     */
     public void disposePauseMenu() {
         final Group group = new Group(root);
         this.setRoot(group);

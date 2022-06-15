@@ -7,7 +7,7 @@ import util.Vector2D;
  * any game. It's composed by an hitbox and a position, each one of them is
  * identified by a Vector.
  */
-public abstract class Entity {
+public class Entity {
     /**
      * It represents a box that has width and height.
      */
@@ -22,8 +22,12 @@ public abstract class Entity {
      * 
      * @param position
      * @param hitbox
+     * @throws IllegalArgumentException if the hitbox has a 0 or negative values in its parameters
      */
     public Entity(final Vector2D position, final Vector2D hitbox) {
+        if (hitbox.getX() <= 0 || hitbox.getY() <= 0) {
+            throw new IllegalArgumentException();
+        }
         this.hitbox = hitbox;
         this.position = position;
     }
@@ -93,8 +97,9 @@ public abstract class Entity {
     }
 
     /*
-     * x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1) || x2 <= x1 <= (x2 + w2) && y2
-     * <= y1 <= (y2 + h2)
+     * x1 <= x2 <= (x1 + w1) && y1 <= y2 <= (y1 + h1) 
+     *                       || 
+     * x2 <= x1 <= (x2 + w2) && y2 <= y1 <= (y2 + h2)
      */
     /**
      * Returns if the current entity and the passed entity are overlapped.
@@ -103,14 +108,17 @@ public abstract class Entity {
      * @return if the entities are colliding
      */
     public boolean isColliding(final Entity entity) {
-        return this.getPosition().getX() <= entity.getPosition().getX()
-                && entity.getPosition().getX() <= (this.getPosition().getX() + this.getHitbox().getX())
-                && this.getPosition().getY() <= entity.getPosition().getY()
-                && entity.getPosition().getY() <= (this.getPosition().getY() + this.getHitbox().getY())
-                || entity.getPosition().getX() <= this.getPosition().getX()
-                        && this.getPosition().getX() <= (entity.getPosition().getX() + entity.getHitbox().getX())
-                        && entity.getPosition().getY() <= this.getPosition().getY()
-                        && this.getPosition().getY() <= (entity.getPosition().getY() + entity.getHitbox().getY());
+        final double x1 = this.getPosition().getX();
+        final double y1 = this.getPosition().getY();
+        final double w1 = this.getHitbox().getX();
+        final double h1 = this.getHitbox().getY();
+        final double x2 = entity.getPosition().getX();
+        final double y2 = entity.getPosition().getY();
+        final double w2 = entity.getHitbox().getX();
+        final double h2 = entity.getHitbox().getY();
+        return (x1 <= x2 && x2 <= (x1 + w1)) && (y1 <= y2 && y2 <= (y1 + h1))
+                                             || 
+               (x2 <= x1 && x1 <= (x2 + w2)) && (y2 <= y1 && y1 <= (y2 + h2));
     }
 
     /**

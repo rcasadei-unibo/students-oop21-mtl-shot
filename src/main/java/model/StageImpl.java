@@ -26,7 +26,13 @@ public class StageImpl {
     private final Enemy enemy;
     private final Collection<Bullet> bullets = null;
     private final Level level;
-    
+
+    /**
+     * The stage constructor.
+     * 
+     * @param textMap
+     * @throws IOException if the txt map sheet doesn't exist.
+     */
     public StageImpl(final TextMap textMap) throws IOException {        
         this.level = new Level(Stream.of("src/main/resources/map.txt"
                 ,"src/main/resources/map2.txt"

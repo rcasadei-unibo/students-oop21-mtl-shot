@@ -3,6 +3,7 @@ package controller.menu;
 import java.io.IOException;
 import java.util.Optional;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -33,7 +34,7 @@ public class PauseMenuController {
     }
 
     @FXML
-    void quitReleased(final MouseEvent event) throws IOException {
+    void quitReleased(final Event event) throws IOException {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
     }
 
@@ -51,7 +52,7 @@ public class PauseMenuController {
     }
 
     @FXML
-    void resumeReleased(final MouseEvent event) throws IOException {
+    void resumeReleased(final Event event) throws IOException {
         this.gameView.disposePauseMenu();
     }
 

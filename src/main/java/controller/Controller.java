@@ -24,15 +24,14 @@ import util.map.TextMap;
 import view.GameView;
 
 /**
- * 
- *
+ * The main controller. It contains all sub-controllers and it manages the game loop.
  */
 public class Controller {
     private final PlayerController playerController;
 	private final EnemyController enemyController;
     private final StageImpl stage;
-    private BulletsController bulletsController;
-    private WeaponController weaponController;
+    private final BulletsController bulletsController;
+    private final WeaponController weaponController;
     private final Timeline gameLoop;
 	private boolean paused;
 	/**
@@ -88,92 +87,109 @@ public class Controller {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
     }
 
-	public void gameStart() {
-		gameLoop.play();
-		paused = false;
-	}
+    /**
+     * Starts the game loop.
+     */
+    public void gameStart() {
+        gameLoop.play();
+        paused = false;
+    }
 
-	public void gamePause() throws IOException {
-		if (!paused) {
-			gameLoop.pause();
-			this.viewReference.displayPauseMenu();
-		}
-		paused = true;
-	}
+    /**
+     * Pause the game loop and display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void gamePause() throws IOException {
+        if (!paused) {
+            gameLoop.pause();
+            this.viewReference.displayPauseMenu();
+        }
+        paused = true;
+    }
 
-	/**
-	 * Handle the input key from standard input on it's press.
-	 * 
-	 * @param key
-	 */
-	public void keyPressed(final KeyCode key) {
-		if (key == KeyCode.A) {
-			playerController.getCharacter().setLeft(true);
-			playerController.getCharacter().getAim().setDirection(Direction.LEFT);
-		}
-		if (key == KeyCode.D) {
-			playerController.getCharacter().setRight(true);
-			playerController.getCharacter().getAim().setDirection(Direction.RIGHT);
-		}
-		if (key == KeyCode.W) {
-			playerController.getCharacter().getAim().setDirection(Direction.UP);
-		}
-		if (key == KeyCode.SPACE) {
-			playerController.getCharacter().setJump(true);
-		}
-		if (key == KeyCode.S) {
-			playerController.getCharacter().setCrouchKey(true);
-			playerController.getCharacter().getAim().setDirection(Direction.DOWN);
-		}
-		if (key.equals(KeyCode.J)) {
-			if (this.weaponController.tryToShoot(this.playerController.getCharacter())) {
-				this.bulletsController.addBullet(this.playerController.getCharacter());
-				System.out.println("Shooting...");
-			}
-		} else if (key.equals(KeyCode.R)) {
-			this.playerController.getCharacter().getWeapon().reload();
-		}
-	}
+    /**
+     * Handles the input key from standard input on it's press.
+     * 
+     * @param key the key pressed
+     * @throws IOException if the pause menu fxml sheet doesn't exist.
+     */
+    public void keyPressed(final KeyCode key) throws IOException {
+        if (key == KeyCode.A) {
+            stage.getPlayer().setLeft(true);
+            stage.getPlayer().getAim().setDirection(Direction.LEFT);
+        }
+        if (key == KeyCode.D) {
+            stage.getPlayer().setRight(true);
+            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
+        }
+        if (key == KeyCode.W) {
+            stage.getPlayer().getAim().setDirection(Direction.UP);
+        }
+        if (key == KeyCode.SPACE) {
+            stage.getPlayer().setJump(true);
+        }
+        if (key == KeyCode.S) {
+            stage.getPlayer().setCrouchKey(true);
+            stage.getPlayer().getAim().setDirection(Direction.DOWN);
+        }
+        if (key.equals(KeyCode.J)) {
+            if (this.weaponController.tryToShoot(stage.getPlayer())) {
+                this.bulletsController.addBullet(stage.getPlayer());
+                System.out.println("Shooting...");
+            }
+        } else if (key.equals(KeyCode.R)) {
+            stage.getPlayer().getWeapon().reload();
+        }
+        if (key == KeyCode.ESCAPE) {
+            this.gamePause();
+        }
+    }
 
-	/**
-	 * Handle the input key from standard input on it's release.
-	 * 
-	 * @param key
-	 * @throws IOException
-	 */
-	public void keyReleased(final KeyCode key) throws IOException {
-		if (key == KeyCode.A) {
-			playerController.getCharacter().setLeft(false);
-		}
-		if (key == KeyCode.D) {
-			playerController.getCharacter().setRight(false);
-		}
-		if (key == KeyCode.W) {
-			playerController.getCharacter().getAim().returnToHorizontal();
-		}
-		if (key == KeyCode.SPACE) {
-			playerController.getCharacter().setJump(false);
-		}
-		if (key == KeyCode.S) {
-			playerController.getCharacter().setCrouchKey(false);
-			playerController.getCharacter().getAim().returnToHorizontal();
-		}
-		if (key == KeyCode.P) {
-			this.gamePause();
-		}
-	}
+    /**
+     * Handles the input key from standard input on it's release.
+     * 
+     * @param key the key released
+     */
+    public void keyReleased(final KeyCode key) {
+        if (key == KeyCode.A) {
+            stage.getPlayer().setLeft(false);
+        }
+        if (key == KeyCode.D) {
+            stage.getPlayer().setRight(false);
+        }
+        if (key == KeyCode.W) {
+            stage.getPlayer().getAim().returnToHorizontal();
+        }
+        if (key == KeyCode.SPACE) {
+            stage.getPlayer().setJump(false);
+        }
+        if (key == KeyCode.S) {
+            stage.getPlayer().setCrouchKey(false);
+            stage.getPlayer().getAim().returnToHorizontal();
+        }
+    }
 
-	public void save() {
-		// TODO
-	}
+    /**
+     * Saves the current game state.
+     */
+    public void save() {
+        // TODO
+    }
 
-	public void load() {
-		// TODO
-	}
+    /**
+     * Loads the selected game.
+     */
+    public void load() {
+        // TODO
+    }
 
-	public void nextLevel() {
-		// TODO
-	}
+    /**
+     * Loads the next level.
+     */
+    public void nextLevel() {
+        // TODO
+    }
 
 	/**
 	 * Gets the class that handle the player control.

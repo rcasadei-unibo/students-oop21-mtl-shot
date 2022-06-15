@@ -13,7 +13,7 @@
          <buttons>
             <Label text="Loading">
                <font>
-                  <Font name="PixelMadness" size="40.0" />
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf"/>
                </font>
             </Label>
             <ImageView fitHeight="45.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">

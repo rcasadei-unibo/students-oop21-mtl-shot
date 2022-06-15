@@ -27,10 +27,12 @@ public final class Aim {
 
     /**
      * Starts aiming at the passed direction.
+     * If the direction is NEUTRAL it calls the default constructor.
      * 
      * @param direction
      */
     public Aim(final Direction direction) {
+        this();
         this.setDirection(direction);
     }
 

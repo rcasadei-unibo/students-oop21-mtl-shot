@@ -7,10 +7,9 @@ import util.Vector2D;
  * TODO: javadoc.
  *
  */
-public class Enemy extends Character{
+public class Enemy extends Character {
 	
-	public Enemy(Vector2D position, Vector2D hitbox, Health health) {
+	public Enemy(final Vector2D position, final Vector2D hitbox, final Health health) {
 		super(position, hitbox, health, new P2020());
-		// TODO Auto-generated constructor stub
 	}
 }
