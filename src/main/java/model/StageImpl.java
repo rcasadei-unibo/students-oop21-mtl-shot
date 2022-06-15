@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.management.InstanceNotFoundException;
+
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -25,7 +27,7 @@ public class StageImpl {
     private final Collection<Bullet> bullets = null;
     private final Level level;
 
-    public StageImpl(final TextMap textMap) throws IOException {        
+    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {        
         this.level = new Level(Stream.of("src/main/resources/map.txt","src/main/resources/map2.txt","src/main/resources/map3.txt").collect(Collectors.toList()));
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))

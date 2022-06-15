@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import javax.management.InstanceNotFoundException;
+
 import util.Vector2D;
 import util.map.TextMap;
 
@@ -36,7 +38,7 @@ public class Level {
 			}
 			i += tempSegment.getTextMap().getWidth();
 		}
-		return null;
+		throw new IllegalArgumentException();
 	}
 
 	public Optional<Segment> getSegmentAtPositionOffset(final Vector2D position, final int offset) {
@@ -48,13 +50,24 @@ public class Level {
 				.of(this.getSegments().get(this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset));
 	}
 
-	public Vector2D getPlayerSpawn() {
+	public Vector2D getPlayerSpawn() throws InstanceNotFoundException {
 		for (Segment tempSegment : this.getSegments()) {
 			if (tempSegment.getPlayerSpawn() != null) {
 				return tempSegment.getPlayerSpawn();
 			}
 		}
-		return null;
+		throw new InstanceNotFoundException();
+	}
+	
+	public double getDistance(final Segment target) {
+		double dist = 0;
+		for(Segment temp : this.getSegments()) {
+			dist += temp.getTextMap().getWidth();
+			if(temp.equals(target)) {
+				return dist;
+			}
+		}
+		throw new IllegalArgumentException();
 	}
 
 }

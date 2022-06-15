@@ -1,4 +1,4 @@
-package view;
+		package view;
 
 import java.awt.Toolkit;
 import java.io.FileInputStream;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.management.InstanceNotFoundException;
 
 import controller.Controller;
 import controller.menu.PauseMenuController;
@@ -49,7 +51,7 @@ public class GameView extends Scene {
 	private final UserData userData;
 
 	private final Group root;
-	private Vector2D prevPos;
+	private Vector2D prevPosSegment;
 	private final Camera camera = new PerspectiveCamera();
 	/**
 	 * The GameView constructor.
@@ -57,12 +59,12 @@ public class GameView extends Scene {
 	 * @param username
 	 * @throws IOException
 	 */
-	public GameView(final String username) throws IOException {
+	public GameView(final String username) throws IOException, InstanceNotFoundException {
 		super(new Group());
 		this.userData = new UserData(username);
 		this.levelView = new LevelView(this.controller.getStage().getLevel());
 		final List<Node> totalList = new ArrayList<>();
-		prevPos = new Vector2D(controller.getStage().getPlayer().getPosition());
+		prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getPlayerImageView());
@@ -70,7 +72,9 @@ public class GameView extends Scene {
 		totalList.add(enemy);
 		this.root = new Group(totalList);
 		this.setRoot(root);
-		//this.setCamera(camera);
+		this.setCamera(camera);
+		//camera.setScaleX(0.5);
+		//camera.setScaleY(0.5);
 		controller.gameStart();
 		this.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -137,16 +141,23 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
 	public void refresh(final StageImpl stage) {
+		if(stage.getPlayer().getSpeed().getX() > 0 
+				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
+				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
+			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );			
+		}
+		
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
 
-		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPos))) {
-			prevPos = new Vector2D(stage.getPlayer().getPosition());
+		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPosSegment))) {
+			prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
 			this.root.getChildren().removeAll(levelView.getDisplayed());
 			this.root.getChildren().addAll(levelView.displaySegments(stage.getPlayer().getPosition()));
 			TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
 			tt.setToX(new Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX() * MapConstants.getTilesize() * -1);
 			ParallelTransition pt = new ParallelTransition();
+			
 			pt.getChildren().add(tt);
 			pt.play();
 		}
@@ -165,7 +176,7 @@ public class GameView extends Scene {
 		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
 		group.getChildren().add(loader.load());
 		final PauseMenuController pmc = (PauseMenuController) loader.getController();
-		pmc.setSize(this.getWidth(), this.getHeight());
+		pmc.setSize(this.getWidth()/2, this.getHeight()/2);
 		pmc.setGameView(this);
 		this.setRoot(group);
 	}

@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.management.InstanceNotFoundException;
+
 import model.StageImpl;
 import model.character.Character;
 import controller.player.PlayerController;
@@ -49,8 +51,9 @@ public class Controller {
 	 * 
 	 * @param gameView
 	 * @throws IOException if the text map is not present
+	 * @throws InstanceNotFoundException if player spawn is not set in any text map
 	 */
-	public Controller(final GameView gameView) throws IOException {
+	public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
 		final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
 		this.stage = new StageImpl(textMap);
 		this.viewReference = gameView;
