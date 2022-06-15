@@ -63,7 +63,8 @@ public class GameView extends Scene {
 		prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
-		totalList.add(playerView.getPlayerImageView());
+		totalList.add(playerView.getCharacterImageView());
+		totalList.add(enemyView.getCharacterImageView());
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.setCamera(camera);
@@ -151,7 +152,8 @@ public class GameView extends Scene {
 		if(stage.getPlayer().getSpeed().getX() > 0 
 				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
 				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );			
+			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );		
+			System.out.println(playerView.getCharacterImageView().getTranslateX());
 		}
 		
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
