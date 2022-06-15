@@ -3,9 +3,9 @@ package controller;
 import controller.map.MapController;
 import util.Direction;
 import util.Vector2D;
+import model.character.Character;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
-import model.character.Character;
 
 /**
  * TODO: javadoc.

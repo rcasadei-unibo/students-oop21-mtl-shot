@@ -106,8 +106,9 @@ public class Controller {
      * Handles the input key from standard input on it's press.
      * 
      * @param key the key pressed
+     * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
-    public void keyPressed(final KeyCode key) {
+    public void keyPressed(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
             stage.getPlayer().setLeft(true);
             stage.getPlayer().getAim().setDirection(Direction.LEFT);
@@ -134,15 +135,17 @@ public class Controller {
         } else if (key.equals(KeyCode.R)) {
             stage.getPlayer().getWeapon().reload();
         }
+        if (key == KeyCode.ESCAPE) {
+            this.gamePause();
+        }
     }
 
     /**
      * Handles the input key from standard input on it's release.
      * 
      * @param key the key released
-     * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
-    public void keyReleased(final KeyCode key) throws IOException {
+    public void keyReleased(final KeyCode key) {
         if (key == KeyCode.A) {
             stage.getPlayer().setLeft(false);
         }
@@ -158,9 +161,6 @@ public class Controller {
         if (key == KeyCode.S) {
             stage.getPlayer().setCrouchKey(false);
             stage.getPlayer().getAim().returnToHorizontal();
-        }
-        if (key == KeyCode.P) {
-            this.gamePause();
         }
     }
 

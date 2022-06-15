@@ -54,26 +54,15 @@ public class GameView extends Scene {
         this.root = new Group(totalList);
         this.setRoot(root);
         controller.gameStart();
-        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                controller.keyPressed(event.getCode());
+        this.setOnKeyPressed(e -> {
+            try {
+                controller.keyPressed(e.getCode());
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         });
-        this.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                try {
-                    controller.keyReleased(event.getCode());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        this.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent event) {
-            }
-        });
+        this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
+        this.setOnKeyTyped(e -> { });
     }
 
     /**
