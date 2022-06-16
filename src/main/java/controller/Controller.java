@@ -97,7 +97,6 @@ public class Controller {
                 for(EnemyController enemyController : enemiesController) {
                     //enemyController.brainTick();
                     enemyController.controllerTick();
-                    System.out.println(enemyController.getCharacter().getPosition());
                 }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();

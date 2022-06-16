@@ -7,6 +7,7 @@ import model.character.Character;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
+import model.map.Segment;
 import model.character.Character;
 import model.character.Player;
 
@@ -94,11 +95,7 @@ public class CharacterController {
             this.character.setCrouchCondition(Crouch.DOWN);
             this.character.setJump(false);
         }*/
-        
-        
-        
-        
-        
+
         // Setting default values
         character.setCrouchCondition(Crouch.FREE);
         final Vector2D nextPos = new Vector2D(character.getPosition());
