@@ -140,7 +140,7 @@ public class GameView extends Scene {
 				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
 			camera.setTranslateX(playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize()));
 		}
-		
+		System.out.println(camera.translateXProperty().get()-playerView.getCharacterImageView().xProperty().get());
 		for(Enemy enemy : stage.getEnemies()) {
 		    enemiesView.get(enemy).updateCharacter(enemy.getPosition(), enemy.isCrouching(), enemy.getAim().getDirection());
 		}
@@ -157,7 +157,6 @@ public class GameView extends Scene {
 			TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
 			tt.setToX(new Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX() * MapConstants.getTilesize() * -1);
 			ParallelTransition pt = new ParallelTransition();
-			
 			pt.getChildren().add(tt);
 			pt.play();
 		}
