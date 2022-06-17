@@ -31,6 +31,7 @@ public class Controller {
 	// Subcontrollers
 	private BulletsController bulletsController;
 	private WeaponController weaponController;
+	private SoundsController soundsController;
 	
 	public Controller(final MetalShot viewReference) {
 		this.viewReference = viewReference;
@@ -40,6 +41,7 @@ public class Controller {
 		// Init subcontrollers
 		this.bulletsController = new BulletsController(this);
 		this.weaponController = new WeaponController(this);
+		this.soundsController = new SoundsController(this);
 		
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {
@@ -51,6 +53,7 @@ public class Controller {
 							// Check for colliding bullets
 							weaponController.controllerTick();
 							bulletsController.controllerTick();
+							soundsController.controllerTick();
 							viewReference.displayBullets(getBullets());
 					}
 					
@@ -83,7 +86,7 @@ public class Controller {
 			 * 
 			 */
 			System.out.println("Shooting...");
-			this.sm.playSound(Sounds.BULLET_FIRING);
+			this.soundsController.tryToPlaySound(Sounds.BULLET_FIRING);
 		} else if (key.equals(KeyCode.R)) {
 			/*
 			 *     // The player reloads
@@ -91,7 +94,7 @@ public class Controller {
 			 * 
 			 */
 			System.out.println("Reloading...");
-			this.sm.playSound(Sounds.MAIN_THEME);
+			this.soundsController.tryToPlaySound(Sounds.MAIN_THEME);
 		}
 	}
 	
