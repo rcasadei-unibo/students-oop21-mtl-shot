@@ -2,6 +2,8 @@ package controller.menu;
 
 import java.io.IOException;
 
+import javax.management.InstanceNotFoundException;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,10 +30,11 @@ public class SignInController {
      * Executes when the insert button is released.
      * @param event
      * @throws IOException 
+     * @throws InstanceNotFoundException 
      * @throws InterruptedException
      */
     @FXML
-    public void insertReleased(final Event event) throws IOException {
+    public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();

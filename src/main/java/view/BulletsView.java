@@ -18,10 +18,8 @@ import util.map.MapConstants;
 public class BulletsView {
 	private List<ImageView> imageViewList;
 	private final Image BULLET_IMAGE_RIGHT;
-	private final double SCALE;
 	
-	public BulletsView(final double scale) throws FileNotFoundException {
-	    this.SCALE = scale;
+	public BulletsView() throws FileNotFoundException {
 		this.imageViewList = new LinkedList<>();
 		BULLET_IMAGE_RIGHT = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
 	}
@@ -30,10 +28,8 @@ public class BulletsView {
     	this.imageViewList.clear();
     	for (final var v : bullets) {
     		final var iv = new ImageView(this.BULLET_IMAGE_RIGHT);
-    		iv.setX(v.getX() * this.SCALE * MapConstants.getTilesize());
-    		iv.setY(v.getY() * this.SCALE * MapConstants.getTilesize());
-    		iv.setScaleX(this.SCALE);
-    		iv.setScaleY(this.SCALE);
+    		iv.setX(v.getX() * MapConstants.getTilesize());
+    		iv.setY(v.getY() * MapConstants.getTilesize());
     		this.imageViewList.add(iv);
     	}
     }

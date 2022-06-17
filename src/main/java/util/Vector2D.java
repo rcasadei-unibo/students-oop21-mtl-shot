@@ -91,6 +91,17 @@ public class Vector2D {
     }
 
     /**
+     * Sums the values of the current vector with given x,y coordinates.
+     * 
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return summed vector
+     */
+    public Vector2D sum(double x, double y) {
+        return new Vector2D(this.x + x, this.y + y);
+    }
+
+    /**
      * Subtracts two vectors.
      * 
      * @param vec second vector

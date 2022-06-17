@@ -1,18 +1,18 @@
 package controller;
 
-import controller.map.MapController;
 import util.Direction;
 import util.Vector2D;
-import model.character.Character;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
+import model.map.Level;
+import model.character.Character;
 
 /**
  * TODO: javadoc.
  */
 public class CharacterController {
 
-    private final MapController mapController;
+    private final Level level;
 
     private final Character character;
 
@@ -21,7 +21,8 @@ public class CharacterController {
     /**
      * A shift from the hitbox corners.
      */
-    private static final double DELTA = 0.075;
+    private static final double DELTAX = 0.25;
+    private static final double DELTAY = 0.075;
     /*
      * Constant used to have the shift from the playerPos to the hitbox pos
      * (player should penetrate at least a bit the field with the head and the arms)
@@ -36,9 +37,9 @@ public class CharacterController {
      * @param mapController
      * @param character
      */
-    public CharacterController(final MapController mapController, final Character character) {
+    public CharacterController(final Level level, final Character character) {
         this.character = character;
-        this.mapController = mapController;
+        this.level = level;
     }
 
     /**
@@ -72,7 +73,6 @@ public class CharacterController {
     private void movementChecks() {
         // Setting default values
         character.setCrouchCondition(Crouch.FREE);
-        // character.setFall(true);
         final Vector2D nextPos = new Vector2D(character.getPosition());
         // The next frame the character will be in character.pos + character.speed
         nextPos.add(character.getSpeed());
@@ -83,10 +83,10 @@ public class CharacterController {
         }
         // Floor collisions
         if (this.isCollidingDown(nextPos)) {
+        	final var target = nextPos.sum(this.character.getHitbox());
             this.character.setFall(false);
             this.character.setPosition(this.character.getPosition().getX(),
-                    this.mapController.getTilePos(nextPos.sum(this.character.getHitbox())).getY()
-                            - this.character.getHitbox().getY());
+                    this.level.getSegmentAtPosition(target).getTilePos(target).getY() - this.character.getHitbox().getY());
             if (this.character.getSpeed().getY() > 0) {
                 this.character.setSpeed(this.character.getSpeed().getX(), 0);
             }
@@ -114,37 +114,37 @@ public class CharacterController {
     }
 
     private boolean isCollidingLeft(final Vector2D nextPos) {
-        final Vector2D botLeft = new Vector2D(0, this.character.getHitbox().getY() - DELTA);
-        final Vector2D topLeft = new Vector2D(0, DELTA);
+        final Vector2D botLeft = new Vector2D(0, this.character.getHitbox().getY() - DELTAX);
+        final Vector2D topLeft = new Vector2D(0, DELTAX);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(botLeft);
+        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) || level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
         final Vector2D botRight = new Vector2D(this.character.getHitbox().getX(),
-                this.character.getHitbox().getY() - DELTA);
-        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX(), DELTA);
+                this.character.getHitbox().getY() - DELTAX);
+        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX(), DELTAX);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topRight) || mapController.hasSingleCollidable(botRight);
+        return level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight) || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
-        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX() - DELTA, 0);
-        final Vector2D topLeft = new Vector2D(DELTA, 0);
+        final Vector2D topRight = new Vector2D(this.character.getHitbox().getX() - DELTAY, 0);
+        final Vector2D topLeft = new Vector2D(DELTAY, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return mapController.hasSingleCollidable(topLeft) || mapController.hasSingleCollidable(topRight);
+        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) || level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
-        final Vector2D botRight = new Vector2D(this.character.getHitbox().getX() - DELTA,
+        final Vector2D botRight = new Vector2D(this.character.getHitbox().getX() - DELTAY,
                 this.character.getHitbox().getY());
-        final Vector2D botLeft = new Vector2D(DELTA, this.character.getHitbox().getY());
+        final Vector2D botLeft = new Vector2D(DELTAY, this.character.getHitbox().getY());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return mapController.hasSingleCollidable(botLeft) || mapController.hasSingleCollidable(botRight);
+        return level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft) || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
 
 }
