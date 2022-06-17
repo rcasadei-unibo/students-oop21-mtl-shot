@@ -36,9 +36,9 @@ public class Controller {
     private final PlayerController playerController;
 	//private final EnemyController enemyController;
     private final Collection<EnemyController> enemiesController;
-    private final StageImpl stage;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
+    private final StageImpl stage;
     private final Timeline gameLoop;
 	private boolean paused;
 	/**
@@ -94,8 +94,7 @@ public class Controller {
                 // Check for colliding bullets
             	//enemyController.brainTick();
             	//enemyController.controllerTick();
-                for(EnemyController enemyController : enemiesController) {
-                    //enemyController.brainTick();
+                for (EnemyController enemyController : enemiesController) {
                     enemyController.controllerTick();
                 }
                 weaponController.controllerTick();

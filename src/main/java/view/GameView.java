@@ -83,26 +83,7 @@ public class GameView extends Scene {
 		//camera.setScaleX(0.5);
 		//camera.setScaleY(0.5);
 		controller.gameStart();
-		/*this.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(final KeyEvent event) {
-				controller.keyPressed(event.getCode());
-			}
-		});
-		this.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(final KeyEvent event) {
-				try {
-					controller.keyReleased(event.getCode());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		this.setOnKeyTyped(new EventHandler<KeyEvent>() {
-			public void handle(final KeyEvent event) {
-			}
-		});*/
+
 		 this.setOnKeyPressed(e -> {
             try {
                 controller.keyPressed(e.getCode());
@@ -132,10 +113,6 @@ public class GameView extends Scene {
     public PlayerView getPlayerView() {
         return this.playerView;
     }
-
-    /*public EnemyView getEnemyView() {
-        return this.enemyView;
-    }*/
 
     /**
      * Gets the visible part of the map.

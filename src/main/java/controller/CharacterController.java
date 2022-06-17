@@ -109,9 +109,7 @@ public class CharacterController {
         // Floor collisions
         if (this.isCollidingDown(nextPos)) {
             this.character.setFall(false);
-            this.character.setPosition(this.character.getPosition().getX(),
-                    this.level.getSegmentAtPosition(nextPos).getTilePos(nextPos.sum(this.character.getHitbox())).getY()
-                            - this.character.getHitbox().getY());
+            
             if (this.character.getSpeed().getY() > 0) {
                 this.character.setSpeed(this.character.getSpeed().getX(), 0);
             }

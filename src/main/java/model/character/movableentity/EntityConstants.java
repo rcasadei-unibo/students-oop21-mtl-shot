@@ -43,7 +43,7 @@ public final class EntityConstants {
     /**
      * Field that represent the distance that the enemy keeps from the player.
      */
-    public static final double ENEMY_DISTANCE = 12;
+    public static final double ENEMY_DISTANCE = 7;
 
     private EntityConstants() {
     }

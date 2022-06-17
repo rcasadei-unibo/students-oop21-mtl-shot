@@ -5,10 +5,8 @@ import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.EntityConstants;
 import model.character.movableentity.MovableEntity;
-import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.map.Segment;
-import util.Vector2D;
 
 /**
  * TODO
@@ -41,21 +39,19 @@ public class BasicBot implements SimpleBot {
     public void move() {
         if (this.player != null) {
             double distance = enemy.getPosition().getX() - player.getPosition().getX();
-            boolean dir = distance > 0;
-            enemy.setLeft(dir);
-            enemy.setRight(!dir);
-            if (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE) {
-                enemy.setRight(false);
+            if (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE + 0.5
+                    && Math.abs(distance) > EntityConstants.ENEMY_DISTANCE - 0.5) {
                 enemy.setLeft(false);
-                if (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE - 1) {
-                    enemy.setRight(dir);
-                    enemy.setLeft(!dir);
-                }
+                enemy.setRight(false);
+            } else {
+                boolean dir = distance > 0;
+                dir = (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE) ? !dir : dir;
+                enemy.setLeft(dir);
+                enemy.setRight(!dir);
+                enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
+                        this.enemy.getPosition().sum((dir ? -0.5 : 1.5), 0)));
             }
-            enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                    this.enemy.getPosition().sum((dir ? -0.5 : 1.5), 0)));
         }
-
     }
 
     public Segment getCurrentCharacterSegment() {
