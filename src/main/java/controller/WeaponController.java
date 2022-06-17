@@ -11,7 +11,7 @@ import model.character.Character;
  */
 public class WeaponController {
 	private Controller controllerReference;
-	private Map<Character, ShootingCooldown> timers;
+	private Map<Character, Cooldown> timers;
 
 	public WeaponController(final Controller controllerReference) {
 		this.controllerReference = controllerReference;
@@ -26,7 +26,7 @@ public class WeaponController {
 	public boolean tryToShoot(final Character characterShooting) {
 		if (!this.timers.containsKey(characterShooting) && characterShooting.getWeapon().getBulletsInMag() != 0) {
 			/* If characterShooting is not in this.timers, he can shoot */
-			this.timers.put(characterShooting, new ShootingCooldown(characterShooting.getWeapon().getFireRate()));
+			this.timers.put(characterShooting, new Cooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
 			return true;
 		}
