@@ -87,5 +87,4 @@ public class Level {
         }
         return positions;
     }
-
 }
