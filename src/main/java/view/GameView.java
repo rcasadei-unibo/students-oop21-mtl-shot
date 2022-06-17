@@ -44,7 +44,6 @@ public class GameView extends Scene {
     private final PlayerView playerView = new PlayerView();
     //private final EnemyView enemyView = new EnemyView();
     private final Map<Enemy,EnemyView> enemiesView = new HashMap<>();
-    //private final Collection<EnemyView> enemiesView = new LinkedList<>();
     private final BulletsView bulletsView = new BulletsView();
     private final LevelView levelView;
     private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
@@ -141,7 +140,7 @@ public class GameView extends Scene {
 		if(stage.getPlayer().getSpeed().getX() > 0 
 				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
 				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX((stage.getPlayer().getPosition().getX() - 4)*MapConstants.getTilesize() );
+			camera.setTranslateX(playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize()));
 		}
 		
 		for(Enemy enemy : stage.getEnemies()) {
@@ -191,7 +190,7 @@ public class GameView extends Scene {
     }
 
     /**
-     * Dispose the pause menu.
+     * Dispose of the pause menu.
      */
     public void disposePauseMenu() {
         final Group group = new Group(root);

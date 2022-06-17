@@ -142,6 +142,14 @@ public class Segment {
 	        }
 	        return tmp.get().isCollidable();
 	    }
+	    
+	    public Optional<Tile> getCollidableAtPosition(final Vector2D position) {
+	        final var tmp = this.getAllTiles().stream()
+	                .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
+	                .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
+	                .filter(t -> t.isCollidable()).findFirst();
+	        return tmp;
+	    }
 
 	    public Optional<Tile> getTile(final Vector2D position) {
 	        return this.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
@@ -151,15 +159,15 @@ public class Segment {
 	        return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
 	    }
 	    
+	    public Vector2D getOrigin() {
+	    	return new Vector2D(this.offset, textMap.getHeight());
+	    }
+	    
 	    public Vector2D getTilePos(final Vector2D position) {
 	        return this.getAllTiles().stream()
 	                .filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
 	                .filter(t -> t.getPosition().getY() == Math.floor(position.getY()))
 	                .map(t -> t.getPosition())
 	                .findFirst().get();
-	    }
-	    
-	    public Vector2D getOrigin() {
-	    	return new Vector2D(this.offset, textMap.getHeight());
 	    }
 }
