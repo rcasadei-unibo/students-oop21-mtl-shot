@@ -10,8 +10,8 @@ import model.character.Character;
  *
  */
 public class WeaponController {
-    private Map<Character, WeaponCooldown> shootingTimers;
-    private Map<Character, WeaponCooldown> reloadingTimers;
+    private Map<Character, Cooldown> shootingTimers;
+    private Map<Character, Cooldown> reloadingTimers;
 
 	public WeaponController() {
 		this.shootingTimers = new HashMap<>();
@@ -32,7 +32,7 @@ public class WeaponController {
 				!this.reloadingTimers.containsKey(characterShooting)) {
 			
 			/* If characterShooting is not in this.timers, he can shoot */
-			this.shootingTimers.put(characterShooting, new WeaponCooldown(characterShooting.getWeapon().getFireRate()));
+			this.shootingTimers.put(characterShooting, new Cooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
 			return true;
 			
@@ -44,7 +44,7 @@ public class WeaponController {
 	
 	public boolean tryToReload(final Character characterReloading) {
 		if (!this.reloadingTimers.containsKey(characterReloading)) {
-			this.reloadingTimers.put(characterReloading, new WeaponCooldown(characterReloading.getWeapon().getReloadTime()));
+			this.reloadingTimers.put(characterReloading, new Cooldown(characterReloading.getWeapon().getReloadTime()));
 			characterReloading.getWeapon().reload();
 			return true;
 		}
