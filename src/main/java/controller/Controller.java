@@ -41,7 +41,7 @@ public class Controller {
 		// Init subcontrollers
 		this.bulletsController = new BulletsController(this);
 		this.weaponController = new WeaponController(this);
-		this.soundsController = new SoundsController(this);
+		this.soundsController = new SoundsController();
 		
 		this.gameLoop = new Timeline(
 				new KeyFrame(Duration.seconds(0.01), new EventHandler<ActionEvent>() {

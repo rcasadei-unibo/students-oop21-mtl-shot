@@ -7,12 +7,10 @@ import view.sounds.SoundManager;
 import view.sounds.SoundManager.Sounds;
 
 public class SoundsController {
-	private Controller controllerReference;
 	private Map<Sounds, Cooldown> timers;
 	private SoundManager soundManager;
 
-	public SoundsController(final Controller controllerReference) {
-		this.controllerReference = controllerReference;
+	public SoundsController() {
 		this.timers = new HashMap<>();
 		this.soundManager = new SoundManager();
 	}
