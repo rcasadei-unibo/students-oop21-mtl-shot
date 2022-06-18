@@ -43,7 +43,7 @@ public class GameView extends Scene {
     private final PlayerView playerView = new PlayerView();
     //private final EnemyView enemyView = new EnemyView();
     private final Map<Enemy,EnemyView> enemiesView = new HashMap<>();
-    private final BulletsView bulletsView = new BulletsView();
+    private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
     private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
 
@@ -99,16 +99,6 @@ public class GameView extends Scene {
 	}
 
     /**
-     * TODO: Andrea Biagini.
-     * 
-     * @param bullets
-     */
-    public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
-    }
-    /**
      * Gets the visible part of the player.
      * 
      * @return PlayerView
@@ -163,6 +153,17 @@ public class GameView extends Scene {
 
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
+		/*enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
+                stage.getEnemy().getAim().getDirection());*/
+		
+		// Updates bullets
+    	if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
+    		this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    		this.root.getChildren().addAll(this.bulletsView.getImageViewList());    		
+    	} else {
+    		this.bulletsView.updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+    	}
 
 		if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX() > stage.getLevel()
                 .getSegmentAtPosition(prevPosSegment).getOrigin().getX()) {
@@ -190,7 +191,7 @@ public class GameView extends Scene {
             camera.setTranslateX(playerView.getCharacterImageView().getX() - (4 * MapConstants.getTilesize()) - (segOffset));
         }
 	}
-
+	
     /**
      * Gets the datas of the person who's playing Metal Shot.
      * 
