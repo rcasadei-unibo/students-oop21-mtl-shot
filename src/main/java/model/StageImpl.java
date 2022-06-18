@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.management.InstanceNotFoundException;
 import model.character.Enemy;
+
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
@@ -25,7 +26,7 @@ public class StageImpl {
     private final Player player;
     //private final Enemy enemy;
     private final Collection<Enemy> enemies;
-    private final Collection<Bullet> bullets = null;
+    private final Collection<Bullet> bullets;
     private final Level level;
 
     /**
@@ -49,6 +50,7 @@ public class StageImpl {
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
+        this.bullets = new LinkedList<>();
     }
     
     private void addEnemies() {
@@ -79,5 +81,10 @@ public class StageImpl {
     public Collection<Enemy> getEnemies(){
         return this.enemies;
     }
-
+    
+    public Collection<Bullet> getBullets() {
+    	return this.bullets;
+    }
+    
+    // public Collection<Enemy> getEnemies();
 }

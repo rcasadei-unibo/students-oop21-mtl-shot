@@ -4,32 +4,24 @@ import controller.enemy.EnemyController;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Set;
 
 import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
-import model.character.Enemy;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import util.Direction;
-import util.Pair;
-import util.Vector2D;
 import util.map.TextMap;
-import view.EnemyView;
 import view.GameView;
 
 /**
@@ -64,8 +56,8 @@ public class Controller {
 		this.stage = new StageImpl(textMap);
 		this.viewReference = gameView;
 		this.enemiesController = new LinkedList<>();
-		this.bulletsController = new BulletsController(this);
-		this.weaponController = new WeaponController(this);
+		this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets());
+		this.weaponController = new WeaponController();
 		this.playerController = new PlayerController(this.stage.getLevel(),
 				this.stage.getPlayer());
 		
@@ -83,10 +75,9 @@ public class Controller {
 		for(EnemyController enemyController : this.enemiesController) {
 		    enemyController.getBrain().setPlayer(this.stage.getPlayer());
 		}
-		
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
-
-            @Override
+            
+        	@Override
             public void handle(final ActionEvent event) {
                 // TODO implement game loop here
 
@@ -100,13 +91,13 @@ public class Controller {
                 }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                playerController.controllerTick();                
+                playerController.controllerTick();
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
                 //TODO: da sistemare
-                gameView.displayBullets(getBullets());
                 gameView.refresh(stage);
+                
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -159,12 +150,17 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(stage.getPlayer())) {
-                this.bulletsController.addBullet(stage.getPlayer());
-                System.out.println("Shooting...");
+            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
+            	// Play shoot sound
+                this.bulletsController.addBullet(this.stage.getPlayer());
+                //System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
-            stage.getPlayer().getWeapon().reload();
+        	 if (this.weaponController.tryToReload(this.stage.getPlayer())) {
+                 // Play reload sound
+        		 // Play reload animation
+                 //System.out.println("Reloading...");
+             }
         }
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
@@ -245,20 +241,7 @@ public class Controller {
 		set.add(playerController.getCharacter());
 		return set;
 	}
-
-	/**
-	 * Returns a map where every entry represents a bullet's position and direction.
-	 * 
-	 * @return a Map
-	 */
-	public Map<Vector2D, Direction> getBullets() {
-		final Map<Vector2D, Direction> ret = new HashMap<>();
-		for (final var b : this.bulletsController.getBullets()) {
-			ret.put(b.getPosition(), b.getDirection());
-		}
-		return ret;
-	}
-
+	
 	public StageImpl getStage() {
 		return this.stage;
 	}
