@@ -7,6 +7,7 @@ import javafx.application.Application;
  *
  */
 public final class App {
+    
 	private App() {
 		// the constructor will never be called directly.
 	}

@@ -22,6 +22,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
@@ -52,6 +53,10 @@ public class GameView extends Scene {
 	private final Group root;
 	private Vector2D prevPosSegment;
 	private final Camera camera = new PerspectiveCamera();
+	
+	//FORSE SBAGLIATO
+    double offset = 0;
+    double segOffset = 0;
 	/**
 	 * The GameView constructor.
 	 * 
@@ -68,12 +73,13 @@ public class GameView extends Scene {
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
 		//totalList.add(enemyView.getCharacterImageView());
-		for(Enemy enemy : controller.getStage().getEnemies()) {
-		    enemiesView.put(enemy, new EnemyView());		    
+        for (Enemy enemy : controller.getStage().getEnemies()) {
+            enemiesView.put(enemy, new EnemyView());
+        }
+        for (EnemyView enemyView : this.enemiesView.values()) {
+            totalList.add(enemyView.getCharacterImageView());
 		}
-		for(EnemyView enemyView : this.enemiesView.values()) {
-		    totalList.add(enemyView.getCharacterImageView());
-		}
+		//totalList.add(camera);
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.setCamera(camera);
@@ -128,38 +134,61 @@ public class GameView extends Scene {
     public BulletsView getBulletsView() {
         return this.bulletsView;
     }
-    
+
 	/**
 	 * Updates the current visual frame using the info of the stage.
 	 * 
 	 * @param stage
 	 */
 	public void refresh(final StageImpl stage) {
-		if(stage.getPlayer().getSpeed().getX() > 0 
+		/*if(stage.getPlayer().getSpeed().getX() > 0 
 				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
 				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
 			camera.setTranslateX(playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize()));
-		}
-		System.out.println(camera.translateXProperty().get()-playerView.getCharacterImageView().xProperty().get());
-		for(Enemy enemy : stage.getEnemies()) {
+			System.out.println("Nice " + (playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize())));
+		}*/
+
+	    double actualWidth = Screen.getPrimary().getBounds().getWidth();
+	    double actualSegWidth = stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getTextMap().getWidth()*MapConstants.getTilesize();
+
+	    /*if(stage.getPlayer().getSpeed().getX() > 0
+	            && (stage.getPlayer().getPosition().getX()*MapConstants.getTilesize()-(offset*1920)) - (camera.getTranslateX()) > 4*MapConstants.getTilesize()
+	            && (camera.getTranslateX()+offset*actualWidth) + actualWidth < 1920+offset*1920) {
+            camera.setTranslateX(playerView.getCharacterImageView().getX() - (4*MapConstants.getTilesize()) - (offset*1920));
+        }*/
+
+        for (Enemy enemy : stage.getEnemies()) {
 		    enemiesView.get(enemy).updateCharacter(enemy.getPosition(), enemy.isCrouching(), enemy.getAim().getDirection());
 		}
-		
+
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
-		/*enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
-                stage.getEnemy().getAim().getDirection());*/
 
-		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPosSegment))) {
-			prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
-			this.root.getChildren().removeAll(levelView.getDisplayed());
-			this.root.getChildren().addAll(levelView.displaySegments(stage.getPlayer().getPosition()));
-			TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
-			tt.setToX(new Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX() * MapConstants.getTilesize() * -1);
-			ParallelTransition pt = new ParallelTransition();
-			pt.getChildren().add(tt);
-			pt.play();
-		}
+		if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX() > stage.getLevel()
+                .getSegmentAtPosition(prevPosSegment).getOrigin().getX()) {
+
+            this.root.getChildren().removeAll(levelView.getDisplayed());
+            this.root.getChildren().addAll(levelView.displaySegments(stage.getPlayer().getPosition()));
+            TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
+
+            // tt.setToX(new
+            // Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX()
+            // * MapConstants.getTilesize() * -1);
+            offset++;
+            segOffset += stage.getLevel().getSegmentAtPosition(prevPosSegment).getTextMap().getWidth() * MapConstants.getTilesize();
+            tt.setToX(-actualWidth * offset);
+            prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
+            ParallelTransition pt = new ParallelTransition();
+            pt.getChildren().add(tt);
+            pt.play();
+        }
+
+        if (stage.getPlayer().getSpeed().getX() > 0
+                && (stage.getPlayer().getPosition().getX() * MapConstants.getTilesize() - (segOffset))
+                        - (camera.getTranslateX()) > 4 * MapConstants.getTilesize()
+                && (camera.getTranslateX() + offset * actualWidth) + actualWidth < actualSegWidth + segOffset) {
+            camera.setTranslateX(playerView.getCharacterImageView().getX() - (4 * MapConstants.getTilesize()) - (segOffset));
+        }
 	}
 
     /**
