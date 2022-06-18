@@ -56,7 +56,7 @@ public class Controller {
 		this.stage = new StageImpl(textMap);
 		this.viewReference = gameView;
 		this.enemiesController = new LinkedList<>();
-		this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets());
+		this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(), this.stage.getEnemies());
 		this.weaponController = new WeaponController();
 		this.playerController = new PlayerController(this.stage.getLevel(),
 				this.stage.getPlayer());

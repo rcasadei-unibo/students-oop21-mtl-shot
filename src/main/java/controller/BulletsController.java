@@ -7,12 +7,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import model.character.Character;
+import model.character.Enemy;
 import model.character.Player;
 import model.map.tile.MapModel;
 import model.weapons.Bullet;
 
 /**
- * 
  * Updates and mantains the bullets Collection,
  * checking collisions with enemies and Map tiles,
  * or else ticking them.
@@ -21,22 +21,20 @@ import model.weapons.Bullet;
 public class BulletsController {
     private Collection<Bullet> bulletsReference;
     private Player playerReference;
-    //private Collection<Enemy> enemiesReference; TODO: uncomment after merging
+    private Collection<Enemy> enemiesReference;
 	
     /**
-     * 
      * @param playerReference - A reference to the Player
      * @param bulletsReference - A reference to the bullets collection
      * @param mapReference - A reference to the Map
      */
-	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference /*, final Collection<Enemy> enemiesReference TODO: uncomment after merging */) {
+	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference, final Collection<Enemy> enemiesReference) {
 		this.playerReference = playerReference;
 		this.bulletsReference = bulletsReference;
-		//this.enemiesReference = enemiesReference; TODO: uncomment after merging
+		this.enemiesReference = enemiesReference;
 	}
 	
 	/**
-	 * 
 	 * Ticks BulletsController.
 	 */
 	public void controllerTick() {
@@ -50,13 +48,13 @@ public class BulletsController {
 			} else if (false /*this.mapReference.hasSingleCollidable(b.getPosition())*/) {
 				b.hitSomething();
 				// TODO: if the tile is breakable, tile brakes here
-			} else if (enemyColliding.isPresent() /* && !this.enemiesReference.contains(b.getOwner()) */) {
+			} else if (enemyColliding.isPresent() && !this.enemiesReference.contains(b.getOwner())) {
 				b.hitSomething();
-				/*this.enemiesReference.forEach(e -> {
+				this.enemiesReference.forEach(e -> {
 					if (e.equals(enemyColliding)) {
-						e.hurt(b.getDamage());
+						e.getHealth().hurt(b.getDamage());
 					}
-				});*/
+				});
 			} else {
 				//if (b.getPosition().getX() <= this.mapReference.getWidth() && b.getPosition().getY() <= this.mapReference.getHeight()) {
 					b.tick();
@@ -68,7 +66,6 @@ public class BulletsController {
 		/*
 		 * This line removes from this.bullets bullets that have hit something
 		 */
-		// OLD VERSION: this.bulletsReference = this.bulletsReference.stream().filter(b -> b.hasHit() == false).collect(Collectors.toList());
 		this.bulletsReference.removeIf(b -> b.hasHit());
 	}
 	
@@ -82,7 +79,6 @@ public class BulletsController {
 	}
 	
 	/**
-	 * 
 	 * Checks if Bullet b is colliding with
 	 * any of the current Characters in game.
 	 * 
@@ -91,11 +87,11 @@ public class BulletsController {
 	 * Optional.empty() if b is not colliding with any Enemy
 	 */
 	private Optional<Character> checkEnemyColliding(final Bullet b) {
-		/*for (final var c : this.enemiesReference) {
+		for (final var c : this.enemiesReference) {
 			if (b.isColliding(c)) {
 				return Optional.of(c);
 			}
-		} TODO: uncomment after merging */
+		}
 		return Optional.empty();
 	}
 	
