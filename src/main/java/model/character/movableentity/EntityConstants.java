@@ -1,5 +1,7 @@
 package model.character.movableentity;
 
+import controller.Controller;
+
 /**
  * This is a static class where all the main environment constants are
  * contained. The constants can be modified to fit any possible environment
@@ -10,31 +12,39 @@ public final class EntityConstants {
      * Field that represents the max horizontal speed (in module) reachable in this
      * environment.
      */
-    public static final double MAXHORIZONTALSPEED = 0.01;
+    public static final double MAXHORIZONTALSPEED = 5 / Controller.TPS;
     /**
      * Field that represents the max vertical speed (in module) reachable in this
      * environment.
      */
-    public static final double MAXVERTICALSPEED = 0.08;
+    public static final double MAXVERTICALSPEED = 8 / Controller.TPS;
     /**
      * Field that represents the speed reached by the jumping subjects in this
      * environment.
      */
-    public static final double JUMP = -0.02;
+    public static final double JUMP = -7 / Controller.TPS;
     /**
      * Field that represents the horizontal deceleration (in module) in this
      * environment.
      */
-    public static final double DECELERATION = 0.000_05;
+    public static final double DECELERATION = 1 / Controller.TPS;
     /**
      * Field that represents the horizontal acceleration (in module) in this
      * environment.
      */
-    public static final double ACCELERATION = 0.000_05;
+    public static final double ACCELERATION = 0.5 / Controller.TPS;
     /**
      * Field that represents the vertical acceleration in this environment.
      */
-    public static final double GRAVITY = 0.000_03;
+    public static final double GRAVITY = 9.81 / Math.pow(Controller.TPS, 2);
+
+    //For enemy only
+
+    /**
+     * Field that represent the distance that the enemy keeps from the player.
+     */
+    public static final double ENEMY_DISTANCE = 7;
+    public static final double ENEMY_TOLERANCE = 0.5;
 
     private EntityConstants() {
     }

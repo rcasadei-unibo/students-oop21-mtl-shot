@@ -1,14 +1,17 @@
 package controller;
 
+import controller.enemy.EnemyController;
+
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.Set;
 
-import app.MetalShot;
+import javax.management.InstanceNotFoundException;
+
+import model.StageImpl;
 import model.character.Character;
-import controller.map.MapController;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,145 +19,182 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
+
 import util.Direction;
-import util.Vector2D;
 import util.map.TextMap;
+import view.GameView;
 
 /**
- * 
- *
+ * The main controller. It contains all sub-controllers and it manages the game
+ * loop.
  */
 public class Controller {
 
     private final PlayerController playerController;
-    private final MapController mapController;
-    private BulletsController bulletsController;
-    private WeaponController weaponController;
+    private final Collection<EnemyController> enemiesController;
+    private final BulletsController bulletsController;
+    private final WeaponController weaponController;
+    private final StageImpl stage;
     private final Timeline gameLoop;
-    private static final double FPS = 1000;
+    private boolean paused;
+    /**
+     * Ticks per second. A unit that represent how many steps are calculated in a
+     * second.
+     */
+    public static final double TPS = 60;
 
-    // Instance of model (Stage?)
-    private final MetalShot viewReference;
+    private final GameView viewReference;
 
     /**
      * The main controller constructor.
      * 
-     * @param viewReference
-     * @throws IOException if the text map is not present
+     * @param gameView
+     * @throws IOException               if the text map is not present
+     * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public Controller(final MetalShot viewReference) throws IOException {
-        final TextMap textMap = new TextMap("src\\main\\resources\\map.txt");
-        this.mapController = new MapController(textMap);
-        this.viewReference = viewReference;
-        this.bulletsController = new BulletsController(this);
-        this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this); // null ->
-                                                                                                // player view
-        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / FPS), new EventHandler<ActionEvent>() {
+    public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
+        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
+        this.stage = new StageImpl(textMap);
+        this.viewReference = gameView;
+        this.enemiesController = new LinkedList<>();
+        this.bulletsController = new BulletsController(
+                this.stage.getPlayer(), 
+                this.stage.getBullets(),
+                this.stage.getEnemies());
+        this.weaponController = new WeaponController();
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
+        for (final EnemyController enemyController : this.enemiesController) {
+            enemyController.getBrain().setPlayer(this.stage.getPlayer());
+        }
+        this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                // TODO implement game loop here
-
-                // Move player
-                // Jumping and falling included
-                // Shoot (player)
-                // Move/shoot enemies (based on Susca's AI)
-                // Check for colliding bullets
+                for (final EnemyController enemyController : enemiesController) {
+                    enemyController.controllerTick();
+                    if(enemyController.isDead()) {
+                        enemiesController.remove(enemyController);
+                        stage.getEnemies().remove(enemyController.getCharacter());
+                    }
+                }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                viewReference.displayBullets(getBullets());
-                playerController.check();
+                playerController.controllerTick();
+                if (!viewReference.getWindow().isFocused()) {
+                    stage.getPlayer().reset();
+                }
+                gameView.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Starts the game loop.
+     */
     public void gameStart() {
         gameLoop.play();
-        // TODO
+        paused = false;
     }
 
-    public void gamePause() { // not in UML
-        gameLoop.pause();
-        // TODO show pause menu
+    /**
+     * Pause the game loop and display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void gamePause() throws IOException {
+        if (!paused) {
+            gameLoop.pause();
+            this.viewReference.displayPauseMenu();
+        }
+        paused = true;
     }
 
-    public void gameReset() {
-        // TODO
-    }
-
-    public void keyPressed(final KeyCode key) {
+    /**
+     * Handles the input key from standard input on it's press.
+     * 
+     * @param key the key pressed
+     * @throws IOException if the pause menu fxml sheet doesn't exist.
+     */
+    public void keyPressed(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
-            playerController.getPlayer().setLeft(true);
-            playerController.getPlayer().getAim().setDirection(Direction.LEFT);
+            stage.getPlayer().setLeft(true);
+            stage.getPlayer().getAim().setDirection(Direction.LEFT);
         }
         if (key == KeyCode.D) {
-            playerController.getPlayer().setRight(true);
-            playerController.getPlayer().getAim().setDirection(Direction.RIGHT);
+            stage.getPlayer().setRight(true);
+            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
         }
         if (key == KeyCode.W) {
-            playerController.getPlayer().getAim().setDirection(Direction.UP);
+            stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
-            playerController.getPlayer().setJump(true);
+            stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
-            playerController.getPlayer().setCrouchKey(true);
-            playerController.getPlayer().getAim().setDirection(Direction.DOWN);
+            stage.getPlayer().setCrouchKey(true);
+            stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.playerController.getPlayer())) {
-                this.bulletsController.addBullet(this.playerController.getPlayer());
-                System.out.println("Shooting...");
+            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
+                // Play shoot sound
+                this.bulletsController.addBullet(this.stage.getPlayer());
             }
         } else if (key.equals(KeyCode.R)) {
-            this.playerController.getPlayer().getWeapon().reload();
+             if (this.weaponController.tryToReload(this.stage.getPlayer())) {
+                 // Play reload sound
+                 // Play reload animation
+             }
+        }
+        if (key == KeyCode.ESCAPE) {
+            this.gamePause();
         }
     }
 
     /**
+     * Handles the input key from standard input on it's release.
      * 
-     * @param key
+     * @param key the key released
      */
     public void keyReleased(final KeyCode key) {
         if (key == KeyCode.A) {
-            playerController.getPlayer().setLeft(false);
+            stage.getPlayer().setLeft(false);
         }
         if (key == KeyCode.D) {
-            playerController.getPlayer().setRight(false);
+            stage.getPlayer().setRight(false);
         }
         if (key == KeyCode.W) {
-            playerController.getPlayer().getAim().returnToHorizontal();
+            stage.getPlayer().getAim().returnToHorizontal();
         }
         if (key == KeyCode.SPACE) {
-            playerController.getPlayer().setJump(false);
+            stage.getPlayer().setJump(false);
         }
         if (key == KeyCode.S) {
-            playerController.getPlayer().setCrouchKey(false);
-            playerController.getPlayer().getAim().returnToHorizontal();
+            stage.getPlayer().setCrouchKey(false);
+            stage.getPlayer().getAim().returnToHorizontal();
         }
     }
 
+    /**
+     * Saves the current game state.
+     */
     public void save() {
         // TODO
     }
 
+    /**
+     * Loads the selected game.
+     */
     public void load() {
         // TODO
     }
 
+    /**
+     * Loads the next level.
+     */
     public void nextLevel() {
         // TODO
-    }
-
-    /**
-     * Gets the class that handle the map control.
-     * 
-     * @return MapController
-     */
-    public MapController getMapController() {
-        return this.mapController;
     }
 
     /**
@@ -171,7 +211,7 @@ public class Controller {
      * 
      * @return MetalShot
      */
-    public MetalShot getView() {
+    public GameView getView() {
         return this.viewReference;
     }
 
@@ -181,22 +221,16 @@ public class Controller {
      * @return a Set of characters
      */
     public Set<Character> getAllCharacters() {
-        // TODO
         final var set = new HashSet<Character>();
-        set.add(playerController.getPlayer());
+        set.add(stage.getPlayer());
         return set;
     }
 
     /**
-     * Returns a map where every entry represents a bullet's position and direction.
-     * 
-     * @return a Map
+     * Gets the main stage.
+     * @return StageImpl
      */
-    public Map<Vector2D, Direction> getBullets() {
-        final Map<Vector2D, Direction> ret = new HashMap<>();
-        for (final var b : this.bulletsController.getBullets()) {
-            ret.put(b.getPosition(), b.getDirection());
-        }
-        return ret;
+    public StageImpl getStage() {
+        return this.stage;
     }
 }

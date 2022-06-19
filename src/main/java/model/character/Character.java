@@ -10,7 +10,33 @@ import model.weapons.Weapon;
  * A character is a kind of MovableEntity that also has an health, an aim and a
  * weapon.
  */
-public abstract class Character extends MovableEntity {
+public class Character extends MovableEntity {
+
+    /**
+     * Delineates the conditions which limit the entity's crouching capabilities.
+     */
+    public enum Crouch {
+        /** Crouch could be everything. */
+        FREE,
+        /** Crouch has to be false. */
+        UP,
+        /** Crouch has to be true. */
+        DOWN;
+    }
+
+    /**
+     * Delineates the conditions which limit the entity's crouching capabilities.
+     */
+    private Crouch crouchCondition = Crouch.FREE;
+    /*
+     * When it crouches it should not modify directly the crouch state but it should
+     * pass through another variable that represents the crouch key.
+     * (As it does with movement that does not modify directly the position but instead it modifies the speed).
+     */
+    /**
+     * Represent the entity intention to crouch.
+     */
+    private boolean crouchKey;
 
     /**
      * The health of the character.
@@ -39,13 +65,65 @@ public abstract class Character extends MovableEntity {
         this.weapon = weapon;
         this.aim = new Aim();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveEntity() {
+        super.moveEntity();
+        if (this.crouchCondition == Crouch.FREE) {
+            super.setCrouch(crouchKey);
+        } else if (this.crouchCondition == Crouch.DOWN) {
+            super.setCrouch(true);
+        } else {
+            super.setCrouch(false);
+        }
+    }
+
+    /**
+     * Sets the crouch condition.
+     * 
+     * @param crouchCond
+     */
+    public void setCrouchCondition(final Crouch crouchCond) {
+        this.crouchCondition = crouchCond;
+    }
+
+    /**
+     * Gets the crouch condition.
+     * 
+     * @return the crouch condition
+     */
+    public Crouch getCrouchCondition() {
+        return this.crouchCondition;
+    }
+
+    /**
+     * Sets the crouch key.
+     * 
+     * @param crouchKey
+     */
+    public void setCrouchKey(final boolean crouchKey) {
+        this.crouchKey = crouchKey;
+    }
+
+    /**
+     * Return if the crouch key is pressed.
+     * 
+     * @return crouch key
+     */
+    public boolean isCrouchKey() {
+        return this.crouchKey;
+    }
+
     /**
      * Gets the current held weapon.
      * 
      * @return weapon
      */
-    public Weapon getWeapon() { 
-        return this.weapon; 
+    public Weapon getWeapon() {
+        return this.weapon;
     }
 
     /**
@@ -53,8 +131,8 @@ public abstract class Character extends MovableEntity {
      * 
      * @param weapon
      */
-    public void setWeapon(final Weapon weapon) { 
-        this.weapon = weapon; 
+    public void setWeapon(final Weapon weapon) {
+        this.weapon = weapon;
     }
 
     /**
@@ -80,6 +158,6 @@ public abstract class Character extends MovableEntity {
      */
     @Override
     public String toString() {
-        return super.toString() + " " + health.toString() + " " + /*weapon.toString() +*/ " " + aim.toString();
+        return super.toString() + " " + health.toString() + " " + weapon.toString() + " " + aim.toString();
     }
 }

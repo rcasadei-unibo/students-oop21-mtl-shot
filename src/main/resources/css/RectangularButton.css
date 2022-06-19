@@ -1,0 +1,26 @@
+@font-face {
+	font-family: 'PixelMadness';
+	src: url('../menusResources/Pixel_Madness.ttf');
+}
+
+.rectangularButton {
+	-fx-shape: "M 100 300 L 100 200 L 350 200 L 350 300 L 100 300 ";
+
+	-fx-padding: 10;
+	padding: 10;
+
+	-fx-border-width: 3;
+	border-width: 3;
+
+	-fx-border-color: "black";
+	border-color:"black";
+
+	-fx-color: #a0abc4;
+	color: #a0abc4;
+
+	-fx-font-size: 30;
+	font-size: 30;
+
+	-fx-font-family: 'PixelMadness';
+	font-family: 'PixelMadness';
+}

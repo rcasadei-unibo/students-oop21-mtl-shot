@@ -7,7 +7,7 @@ import util.Vector2D;
  * An extension of the abstract class Entity which also has the ability to move
  * in a 2D world. A MovableEntity can jump, crawl, fall and go left and right.
  */
-public abstract class MovableEntity extends Entity {
+public class MovableEntity extends Entity {
     /**
      * Represent the entity intention to go left.
      */
@@ -31,7 +31,7 @@ public abstract class MovableEntity extends Entity {
     /**
      * Field used to create an acceleration and a deceleration.
      */
-    private Vector2D speed;
+    private final Vector2D speed;
 
     /**
      * The MovableEntity constructor that sets the position and the hitbox.
@@ -198,15 +198,13 @@ public abstract class MovableEntity extends Entity {
     }
 
     /**
-     * Resets the entity's fields and the speed.
+     * Resets the entity's fields.
      */
     public void reset() {
         this.left = false;
         this.right = false;
         this.crouch = false;
         this.jump = false;
-        this.fall = false;
-        this.speed = new Vector2D();
     }
 
     /**
@@ -220,11 +218,11 @@ public abstract class MovableEntity extends Entity {
     private void increaseHitbox() {
         super.setPosition(
                 new Vector2D(this.getPosition().getX(), this.getPosition().getY() - super.getHitbox().getY()));
-        super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() * 2));
+        super.getHitbox().setY(super.getHitbox().getY() * 2);
     }
 
     private void decreaseHitbox() {
-        super.setHitbox(new Vector2D(super.getHitbox().getX(), super.getHitbox().getY() / 2));
+        super.getHitbox().setY(super.getHitbox().getY() / 2);
         super.setPosition(
                 new Vector2D(this.getPosition().getX(), this.getPosition().getY() + super.getHitbox().getY()));
     }

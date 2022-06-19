@@ -2,6 +2,7 @@ package model.weapons;
 
 import util.Direction;
 import util.Vector2D;
+import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.character.Character;
 
@@ -47,6 +48,7 @@ public class Bullet extends Entity {
                 owner.getPosition().getY() + owner.getHitbox().getY() / 2),
                 new Vector2D(0.1, 0.1)); // TODO: change magic
                                                                                              // numbers
+        System.out.println(owner.getPosition().toString());
         this.owner = owner;
         this.direction = owner.getAim().getDirection();
         this.speed = new Vector2D(0.05, 0.05);
