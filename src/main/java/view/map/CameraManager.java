@@ -18,6 +18,7 @@ public class CameraManager {
 	private final Group root;
 	private final Group cameraSupport;
 	private final LevelView levelView;
+	private double offset = 0;
 	
 	public CameraManager(final Controller controller, final Group root, final LevelView levelView) {
 		this.controller = controller;
@@ -38,11 +39,14 @@ public class CameraManager {
 			ParallelTransition pt = new ParallelTransition();
 			pt.getChildren().add(tt);
 			pt.play();
+			offset = 0;
 		}
 		if(controller.getStage().getPlayer().getSpeed().getX() > 0 
-				&& controller.getStage().getPlayer().getPosition().getX()> 4 + controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth()
+				&& controller.getStage().getPlayer().getPosition().getX() > 4 + controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth() + offset	
 				&& controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getPlayer().getPosition().getX() > 26) {
 			camera.setTranslateX(camera.getTranslateX() + (controller.getStage().getPlayer().getSpeed().getX()*MapConstants.getTilesize()));
+			offset += controller.getStage().getPlayer().getSpeed().getX();
+			
 		}
 	}
 	

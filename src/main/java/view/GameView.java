@@ -1,43 +1,30 @@
 package view;
 
 import java.io.IOException;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.io.FileInputStream;
 
 import javax.management.InstanceNotFoundException;
 
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Screen;
-import javafx.util.Duration;
 
-import controller.Controller;
-import controller.menu.PauseMenuController;
 import model.StageImpl;
 import model.character.Enemy;
-import util.UserData;
-import util.Vector2D;
-import util.map.MapConstants;
+import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
 import controller.menu.PauseMenuController;
 
-import util.Direction;
 import util.UserData;
-import util.Vector2D;	
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
@@ -47,7 +34,7 @@ public class GameView extends Scene {
     
     private final PlayerView playerView = new PlayerView();
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
-    private final BulletsView bulletsView = new BulletsView();
+    private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
     private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
