@@ -23,9 +23,13 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import controller.Controller;
+import controller.menu.PauseMenuController;
 import model.StageImpl;
 import model.character.Enemy;
-import view.map.CameraManager;
+import util.UserData;
+import util.Vector2D;
+import util.map.MapConstants;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
@@ -72,7 +76,6 @@ public class GameView extends Scene {
 		for(EnemyView enemyView : this.enemiesView.values()) {
 		    totalList.add(enemyView.getCharacterImageView());
 		}
-		//totalList.add(camera);
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -80,6 +83,7 @@ public class GameView extends Scene {
 		controller.gameStart();
 
 		this.setOnKeyPressed(e -> {
+
             try {
                 controller.keyPressed(e.getCode());
             } catch (IOException e1) {
@@ -87,19 +91,10 @@ public class GameView extends Scene {
             }
         });
         this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
-        this.setOnKeyTyped(e -> { });
-	}
-
-    /**
-     * TODO: Andrea Biagini.
-     * 
-     * @param bullets
-     */
-    public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
+        this.setOnKeyTyped(e -> {
+        });
     }
+
     /**
      * Gets the visible part of the player.
      * 
@@ -184,10 +179,13 @@ public class GameView extends Scene {
         this.controller.gameStart();
     }
 
+    /**
+     * 
+     * @return bla
+     */
     public Map<Enemy, EnemyView> getEnemiesView() {
 
         System.out.println("size " + enemiesView.size());
-        // TODO Auto-generated method stub
         return enemiesView;
     }
 }

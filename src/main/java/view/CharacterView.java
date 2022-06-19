@@ -9,7 +9,7 @@ import util.map.MapConstants;
 /**
  * TODO: javadoc.
  */
-public abstract class CharacterView {
+public class CharacterView {
 
     private final ImageView characterImageView;
     private final Image characterCrouchIcon;
@@ -18,6 +18,9 @@ public abstract class CharacterView {
     private final Image characterLeft;
     private final Image characterRight;
 
+    /**
+     * 
+     */
     public CharacterView() {
         characterCrouchIcon = new Image(ClassLoader.getSystemResourceAsStream("croulpleier.png"));
         characterUp = new Image(ClassLoader.getSystemResourceAsStream("pleierUP.png"));
@@ -25,10 +28,14 @@ public abstract class CharacterView {
         characterRight = new Image(ClassLoader.getSystemResourceAsStream("pleierRIGHT.png"));
         characterLeft = new Image(ClassLoader.getSystemResourceAsStream("pleierLEFT.png"));
         characterImageView = new ImageView(characterRight);
-        //characterImageView.setScaleX(GameView.VIEWRESIZE);
-        //characterImageView.setScaleY(GameView.VIEWRESIZE);
     }
 
+    /**
+     * 
+     * @param position
+     * @param crouch
+     * @param direction
+     */
     public void updateCharacter(final Vector2D position, final boolean crouch, final Direction direction) {
         characterImageView.setX(position.getX() * MapConstants.getTilesize());
         characterImageView.setY(position.getY() * MapConstants.getTilesize());
@@ -54,6 +61,10 @@ public abstract class CharacterView {
         }
     }
 
+    /**
+     * 
+     * @return bla
+     */
     public ImageView getCharacterImageView() {
         return characterImageView;
     }
