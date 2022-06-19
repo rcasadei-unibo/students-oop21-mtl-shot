@@ -10,8 +10,6 @@ import java.io.FileInputStream;
 
 import javax.management.InstanceNotFoundException;
 
-import controller.Controller;
-import controller.menu.PauseMenuController;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
@@ -23,14 +21,18 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+
 import model.StageImpl;
 import model.character.Enemy;
-import util.Direction;
-import util.UserData;
-import util.Vector2D;
-import util.map.MapConstants;
+import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
+import controller.Controller;
+import controller.menu.PauseMenuController;
+
+import util.Direction;
+import util.UserData;
+import util.Vector2D;	
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
@@ -38,20 +40,16 @@ import view.player.PlayerView;
  */
 public class GameView extends Scene {
     
-    //public static final int VIEWRESIZE = 2;
     private final PlayerView playerView = new PlayerView();
-    //private final EnemyView enemyView = new EnemyView();
-    private final Map<Enemy,EnemyView> enemiesView = new HashMap<>();
+    private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView();
     private final LevelView levelView;
     private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
-
     private final Controller controller = new Controller(this);
     private final UserData userData;
-
 	private final Group root;
-	private Vector2D prevPosSegment;
-	private final Camera camera = new PerspectiveCamera();
+	private final CameraManager cameraManager;
+	
 	/**
 	 * The GameView constructor.
 	 * 
@@ -63,11 +61,9 @@ public class GameView extends Scene {
 		this.userData = new UserData(username);
 		this.levelView = new LevelView(this.controller.getStage().getLevel());
 		final List<Node> totalList = new ArrayList<>();
-		prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
-		//totalList.add(enemyView.getCharacterImageView());
 		for(Enemy enemy : controller.getStage().getEnemies()) {
 		    enemiesView.put(enemy, new EnemyView());		    
 		}
@@ -76,12 +72,11 @@ public class GameView extends Scene {
 		}
 		this.root = new Group(totalList);
 		this.setRoot(root);
-		this.setCamera(camera);
-		//camera.setScaleX(0.5);
-		//camera.setScaleY(0.5);
+		this.cameraManager = new CameraManager(controller, root, levelView);
+		this.setCamera(cameraManager.getCamera());
 		controller.gameStart();
 
-		 this.setOnKeyPressed(e -> {
+		this.setOnKeyPressed(e -> {
             try {
                 controller.keyPressed(e.getCode());
             } catch (IOException e1) {
@@ -135,35 +130,26 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
 	public void refresh(final StageImpl stage) {
-		if(stage.getPlayer().getSpeed().getX() > 0 
-				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
-				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX(playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize()));
-		}
-		System.out.println(camera.translateXProperty().get()-playerView.getCharacterImageView().xProperty().get());
+		
+		cameraManager.updateCamera();
+		
 		for(Enemy enemy : stage.getEnemies()) {
-		    enemiesView.get(enemy).updateCharacter(enemy.getPosition(), enemy.isCrouching(), enemy.getAim().getDirection());
+		    enemiesView.get(enemy).updateCharacter(
+		    		enemy.getPosition(),
+		    		enemy.isCrouching(),
+		    		enemy.getAim().getDirection()
+		    		);
 		}
 		
-		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
-				stage.getPlayer().getAim().getDirection());
-		/*enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
-                stage.getEnemy().getAim().getDirection());*/
-
-		if (!stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegmentAtPosition(prevPosSegment))) {
-			prevPosSegment = new Vector2D(stage.getPlayer().getPosition());
-			this.root.getChildren().removeAll(levelView.getDisplayed());
-			this.root.getChildren().addAll(levelView.displaySegments(stage.getPlayer().getPosition()));
-			TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.root);
-			tt.setToX(new Vector2D(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin()).getX() * MapConstants.getTilesize() * -1);
-			ParallelTransition pt = new ParallelTransition();
-			pt.getChildren().add(tt);
-			pt.play();
-		}
+		playerView.updateCharacter(
+				stage.getPlayer().getPosition(), 
+				stage.getPlayer().isCrouching(),
+				stage.getPlayer().getAim().getDirection()
+				);
 	}
 
     /**
-     * Gets the datas of the person who's playing Metal Shot.
+     * Gets the data of the person who's playing Metal Shot.
      * 
      * @return UserData
      */
