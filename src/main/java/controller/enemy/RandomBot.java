@@ -42,4 +42,10 @@ public class RandomBot implements SimpleBot {
 		
 	}
 
+    @Override
+    public void fire() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

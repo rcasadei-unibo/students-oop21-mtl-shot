@@ -50,10 +50,10 @@ public class StageImpl {
                 .lives(3)
                 .build();
     }
-    
+
     private void addEnemies() {
-        for(Vector2D pos : level.getEnemiesSpawn()) {
-            enemies.add(new Enemy(pos, new Vector2D(1, 1), new SimpleHealth()));
+        for (Vector2D pos : level.getEnemiesSpawn()) {
+            enemies.add(new Enemy(pos, new Vector2D(1, 1.5), new SimpleHealth()));
         }
     }
 

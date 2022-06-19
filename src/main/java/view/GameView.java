@@ -20,6 +20,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Screen;
 import javafx.util.Duration;
 
 import model.StageImpl;
@@ -49,7 +50,7 @@ public class GameView extends Scene {
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
-	
+
 	/**
 	 * The GameView constructor.
 	 * 
@@ -64,12 +65,14 @@ public class GameView extends Scene {
 		totalList.add(background);
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
+
 		for(Enemy enemy : controller.getStage().getEnemies()) {
 		    enemiesView.put(enemy, new EnemyView());		    
 		}
 		for(EnemyView enemyView : this.enemiesView.values()) {
 		    totalList.add(enemyView.getCharacterImageView());
 		}
+		//totalList.add(camera);
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -123,7 +126,7 @@ public class GameView extends Scene {
     public BulletsView getBulletsView() {
         return this.bulletsView;
     }
-    
+
 	/**
 	 * Updates the current visual frame using the info of the stage.
 	 * 

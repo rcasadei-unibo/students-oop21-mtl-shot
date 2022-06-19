@@ -21,6 +21,7 @@ public class EnemyController extends CharacterController{
 	@Override
 	public void controllerTick() {
 		brain.move();
+		brain.fire();
 		super.controllerTick();
 	}
 	

@@ -7,6 +7,7 @@ import model.character.movableentity.EntityConstants;
 import model.character.movableentity.MovableEntity;
 import model.map.Level;
 import model.map.Segment;
+import util.Direction;
 
 /**
  * TODO
@@ -39,17 +40,18 @@ public class BasicBot implements SimpleBot {
     public void move() {
         if (this.player != null) {
             double distance = enemy.getPosition().getX() - player.getPosition().getX();
-            if (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE + 0.5
-                    && Math.abs(distance) > EntityConstants.ENEMY_DISTANCE - 0.5) {
+            if (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE + EntityConstants.ENEMY_TOLERANCE
+                    && Math.abs(distance) > EntityConstants.ENEMY_DISTANCE - EntityConstants.ENEMY_TOLERANCE) {
                 enemy.setLeft(false);
                 enemy.setRight(false);
             } else {
                 boolean dir = distance > 0;
+                enemy.getAim().setDirection(dir ? Direction.LEFT : Direction.RIGHT);
                 dir = (Math.abs(distance) < EntityConstants.ENEMY_DISTANCE) ? !dir : dir;
                 enemy.setLeft(dir);
                 enemy.setRight(!dir);
                 enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                        this.enemy.getPosition().sum((dir ? -0.5 : 1.5), 0)));
+                        this.enemy.getPosition().sum((dir ? -0.5 : 1.5), +(enemy.getHitbox().getY() - 1))));
             }
         }
     }
@@ -62,6 +64,12 @@ public class BasicBot implements SimpleBot {
     public MovableEntity getEntity() {
         // TODO Auto-generated method stub
         return this.enemy;
+    }
+
+    @Override
+    public void fire() {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -20,5 +20,7 @@ public interface SimpleBot {
     MovableEntity getEntity();
 
     void setEnemy(Character character);
+    
+    void fire();
 
 }
