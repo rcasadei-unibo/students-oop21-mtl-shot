@@ -25,9 +25,11 @@ import util.map.TextMap;
 import view.GameView;
 
 /**
- * The main controller. It contains all sub-controllers and it manages the game loop.
+ * The main controller. It contains all sub-controllers and it manages the game
+ * loop.
  */
 public class Controller {
+
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
@@ -47,7 +49,7 @@ public class Controller {
      * The main controller constructor.
      * 
      * @param gameView
-     * @throws IOException if the text map is not present
+     * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
     public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
@@ -55,29 +57,21 @@ public class Controller {
         this.stage = new StageImpl(textMap);
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
-        this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(), this.stage.getEnemies());
+        this.bulletsController = new BulletsController(
+                this.stage.getPlayer(), 
+                this.stage.getBullets(),
+                this.stage.getEnemies());
         this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(),
-                this.stage.getPlayer());
-
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
         this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
-        System.out.println(enemiesController.size());
-
-        for (EnemyController enemyController : this.enemiesController) {
+        for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
         }
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                // TODO implement game loop here
-
-                // Move player
-                // Jumping and falling included
-                // Shoot (player)
-                // Move/shoot enemies (based on Susca's AI)
-                // Check for colliding bullets
-                for (EnemyController enemyController : enemiesController) {
+                for (final EnemyController enemyController : enemiesController) {
                     enemyController.controllerTick();
                     if(enemyController.isDead()) {
                         enemiesController.remove(enemyController);
@@ -146,7 +140,6 @@ public class Controller {
             if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
                 // Play shoot sound
                 this.bulletsController.addBullet(this.stage.getPlayer());
-                //System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
              if (this.weaponController.tryToReload(this.stage.getPlayer())) {
@@ -228,12 +221,15 @@ public class Controller {
      * @return a Set of characters
      */
     public Set<Character> getAllCharacters() {
-        // TODO
         final var set = new HashSet<Character>();
-        set.add(playerController.getCharacter());
+        set.add(stage.getPlayer());
         return set;
     }
 
+    /**
+     * Gets the main stage.
+     * @return StageImpl
+     */
     public StageImpl getStage() {
         return this.stage;
     }
