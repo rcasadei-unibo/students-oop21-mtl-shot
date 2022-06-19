@@ -8,7 +8,8 @@ import model.map.Level;
 import model.character.Character;
 
 /**
- * TODO: javadoc.
+ * A generic controller for every character in MetalShot. It checks the movement
+ * and the aim of the controlled character.
  */
 public class CharacterController {
 
@@ -16,16 +17,14 @@ public class CharacterController {
 
     private final Character character;
 
-    // private final CharacterView characterView;
-
     /**
      * A shift from the hitbox corners.
      */
     private static final double DELTAX = 0.25;
     private static final double DELTAY = 0.075;
     /*
-     * Constant used to have the shift from the playerPos to the hitbox pos
-     * (player should penetrate at least a bit the field with the head and the arms)
+     * Constant used to have the shift from the playerPos to the hitbox pos (player
+     * should penetrate at least a bit the field with the head and the arms)
      */
     // DELTA > HITBOXSHIFT.x
     // Il replacing al momento del crouch non funziona più in questo modo
@@ -34,8 +33,8 @@ public class CharacterController {
     /**
      * The character controller constructor.
      * 
-     * @param mapController
-     * @param character
+     * @param level     the level where the character is
+     * @param character the character to control.
      */
     public CharacterController(final Level level, final Character character) {
         this.character = character;
@@ -51,20 +50,11 @@ public class CharacterController {
         this.aimChecks();
     }
 
-    /**
-     * Gets the character who is being controlled.
-     * 
-     * @return character
-     */
-    public Character getCharacter() {
-        return this.character;
-    }
-
     private void aimChecks() {
         // if crouching he can't aim at the ground
         if (this.character.isCrouching()) {
             this.character.getAim().returnToHorizontal();
-        // if fling and pressing the down button he has to aim at the ground
+            // if fling and pressing the down button he has to aim at the ground
         } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
             this.character.getAim().setDirection(Direction.DOWN);
         }
@@ -83,10 +73,11 @@ public class CharacterController {
         }
         // Floor collisions
         if (this.isCollidingDown(nextPos)) {
-        	final var target = nextPos.sum(this.character.getHitbox());
+            final var target = nextPos.sum(this.character.getHitbox());
             this.character.setFall(false);
             this.character.setPosition(this.character.getPosition().getX(),
-                    this.level.getSegmentAtPosition(target).getTilePos(target).getY() - this.character.getHitbox().getY());
+                    this.level.getSegmentAtPosition(target).getTilePos(target).getY()
+                            - this.character.getHitbox().getY());
             if (this.character.getSpeed().getY() > 0) {
                 this.character.setSpeed(this.character.getSpeed().getX(), 0);
             }
@@ -96,7 +87,7 @@ public class CharacterController {
         // Left wall collisions
         if (this.isCollidingLeft(nextPos)) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
-        // Right wall collisions
+            // Right wall collisions
         } else if (this.isCollidingRight(nextPos)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
@@ -118,7 +109,8 @@ public class CharacterController {
         final Vector2D topLeft = new Vector2D(0, DELTAX);
         botLeft.add(nextPos);
         topLeft.add(nextPos);
-        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) || level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft);
+        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft)
+                || level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft);
     }
 
     private boolean isCollidingRight(final Vector2D nextPos) {
@@ -127,7 +119,8 @@ public class CharacterController {
         final Vector2D topRight = new Vector2D(this.character.getHitbox().getX(), DELTAX);
         botRight.add(nextPos);
         topRight.add(nextPos);
-        return level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight) || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
+        return level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight)
+                || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
 
     private boolean isCollidingUp(final Vector2D nextPos) {
@@ -135,7 +128,8 @@ public class CharacterController {
         final Vector2D topLeft = new Vector2D(DELTAY, 0);
         topLeft.add(nextPos);
         topRight.add(nextPos);
-        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft) || level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight);
+        return level.getSegmentAtPosition(topLeft).isCollidableAtPosition(topLeft)
+                || level.getSegmentAtPosition(topRight).isCollidableAtPosition(topRight);
     }
 
     private boolean isCollidingDown(final Vector2D nextPos) {
@@ -144,7 +138,8 @@ public class CharacterController {
         final Vector2D botLeft = new Vector2D(DELTAY, this.character.getHitbox().getY());
         botRight.add(nextPos);
         botLeft.add(nextPos);
-        return level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft) || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
+        return level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft)
+                || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
 
 }

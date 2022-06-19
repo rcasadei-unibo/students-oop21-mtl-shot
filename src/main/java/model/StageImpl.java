@@ -18,13 +18,12 @@ import util.Vector2D;
 import util.map.TextMap;
 
 /**
- * TODO: javadoc.
+ * The main stage where every MetalShot entity is present.
  *
  */
 public class StageImpl {
 
     private final Player player;
-    //private final Enemy enemy;
     private final Collection<Enemy> enemies;
     private final Collection<Bullet> bullets;
     private final Level level;
@@ -33,15 +32,14 @@ public class StageImpl {
      * The stage constructor.
      * 
      * @param textMap
-     * @throws IOException if the txt map sheet doesn't exist.
-     * @throws InstanceNotFoundException 
+     * @throws IOException               if the txt map sheet doesn't exist.
+     * @throws InstanceNotFoundException
      */
-    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {        
-        this.level = new Level(Stream.of("src/main/resources/map.txt"
-                ,"src/main/resources/map2.txt"
-                ,"src/main/resources/map3.txt").collect(Collectors.toList()));
-        //this.enemy = new Enemy(level.getEnemySpawn(), new Vector2D(1, 1), new SimpleHealth());
-        this.enemies = new LinkedList<Enemy>();
+    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {
+        this.level = new Level(
+                Stream.of("src/main/resources/map.txt", "src/main/resources/map2.txt", "src/main/resources/map3.txt")
+                        .collect(Collectors.toList()));
+        this.enemies = new LinkedList<>();
         addEnemies();
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
@@ -52,39 +50,42 @@ public class StageImpl {
                 .build();
         this.bullets = new LinkedList<>();
     }
-    
+
     private void addEnemies() {
-        for(Vector2D pos : level.getEnemiesSpawn()) {
+        for (final Vector2D pos : level.getEnemiesSpawn()) {
             enemies.add(new Enemy(pos, new Vector2D(1, 1), new SimpleHealth()));
         }
     }
 
-    /*
-    public void setPlayer(final Player player) {
-        this.player = player;
-    }
-    */
-
+    /**
+     * 
+     * @return bla
+     */
     public Player getPlayer() {
         return this.player;
     }
 
+    /**
+     * 
+     * @return bla
+     */
     public Level getLevel() {
         return this.level;
     }
 
-	/*public Enemy getEnemy() {
-		// TODO Auto-generated method stub
-		return this.enemy;
-	}*/
-
-    public Collection<Enemy> getEnemies(){
+    /**
+     * 
+     * @return bla
+     */
+    public Collection<Enemy> getEnemies() {
         return this.enemies;
     }
-    
+
+    /**
+     * 
+     * @return bla
+     */
     public Collection<Bullet> getBullets() {
-    	return this.bullets;
+        return this.bullets;
     }
-    
-    // public Collection<Enemy> getEnemies();
 }

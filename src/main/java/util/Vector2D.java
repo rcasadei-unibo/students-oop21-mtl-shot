@@ -97,7 +97,7 @@ public class Vector2D {
      * @param y Y coordinate
      * @return summed vector
      */
-    public Vector2D sum(double x, double y) {
+    public Vector2D sum(final double x, final double y) {
         return new Vector2D(this.x + x, this.y + y);
     }
 
