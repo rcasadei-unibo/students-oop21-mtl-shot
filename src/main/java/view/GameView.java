@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -131,21 +132,21 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
 	public void refresh(final StageImpl stage) {
-		/*if(stage.getPlayer().getSpeed().getX() > 0 
-				&& stage.getPlayer().getPosition().getX()-(camera.getTranslateX()/MapConstants.getTilesize()) > 4
-				&& stage.getLevel().getDistance(stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())) - stage.getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX(playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize()));
-			System.out.println("Nice " + (playerView.getCharacterImageView().xProperty().get() - (4*MapConstants.getTilesize())));
-		}*/
+	    
+	    List<EnemyView> removable = new LinkedList<>();
+	    enemiesView.forEach((k,v) -> {
+	        if(!stage.getEnemies().contains(k)) {
+	            removable.add(enemiesView.get(k));
+	        }
+	    });
+	    
+	    List<ImageView> remove = new LinkedList<>();
+	    removable.forEach(e -> {enemiesView.remove(e); remove.add(e.getCharacterImageView());});
+	    
+	    this.root.getChildren().removeAll(remove);
 
 	    double actualWidth = Screen.getPrimary().getBounds().getWidth();
 	    double actualSegWidth = stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getTextMap().getWidth()*MapConstants.getTilesize();
-
-	    /*if(stage.getPlayer().getSpeed().getX() > 0
-	            && (stage.getPlayer().getPosition().getX()*MapConstants.getTilesize()-(offset*1920)) - (camera.getTranslateX()) > 4*MapConstants.getTilesize()
-	            && (camera.getTranslateX()+offset*actualWidth) + actualWidth < 1920+offset*1920) {
-            camera.setTranslateX(playerView.getCharacterImageView().getX() - (4*MapConstants.getTilesize()) - (offset*1920));
-        }*/
 
         for (Enemy enemy : stage.getEnemies()) {
 		    enemiesView.get(enemy).updateCharacter(enemy.getPosition(), enemy.isCrouching(), enemy.getAim().getDirection());
@@ -153,8 +154,6 @@ public class GameView extends Scene {
 
 		playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
 				stage.getPlayer().getAim().getDirection());
-		/*enemyView.updateCharacter(stage.getEnemy().getPosition(), stage.getEnemy().isCrouching(),
-                stage.getEnemy().getAim().getDirection());*/
 		
 		// Updates bullets
     	if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {

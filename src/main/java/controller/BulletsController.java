@@ -50,11 +50,13 @@ public class BulletsController {
 				// TODO: if the tile is breakable, tile brakes here
 			} else if (enemyColliding.isPresent() && !this.enemiesReference.contains(b.getOwner())) {
 				b.hitSomething();
-				this.enemiesReference.forEach(e -> {
+				/*this.enemiesReference.forEach(e -> {
 					if (e.equals(enemyColliding)) {
+		                System.out.println("EHI");
 						e.getHealth().hurt(b.getDamage());
 					}
-				});
+				});*/
+				enemyColliding.get().getHealth().hurt(b.getDamage());
 			} else {
 				//if (b.getPosition().getX() <= this.mapReference.getWidth() && b.getPosition().getY() <= this.mapReference.getHeight()) {
 					b.tick();

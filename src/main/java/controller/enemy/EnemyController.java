@@ -14,7 +14,7 @@ public class EnemyController extends CharacterController{
 
 	public EnemyController(Level level, Character character) {
 		super(level, character);
-		this.brain = new BasicBot(character, level);
+		this.brain = new StillBot(character, level);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -23,6 +23,7 @@ public class EnemyController extends CharacterController{
 		brain.move();
 		brain.fire();
 		super.controllerTick();
+		System.out.println("Vita: " + this.getCharacter().getHealth());
 	}
 	
 	public SimpleBot getBrain() {

@@ -59,6 +59,10 @@ public class CharacterController {
     public Character getCharacter() {
         return this.character;
     }
+    
+    public boolean isDead() {
+        return this.character.getHealth().isDead();
+    }
 
     private void aimChecks() {
         // if crouching he can't aim at the ground
@@ -83,7 +87,7 @@ public class CharacterController {
         }
         // Floor collisions
         if (this.isCollidingDown(nextPos)) {
-        	final var target = nextPos.sum(this.character.getHitbox());
+            final var target = nextPos.sum(this.character.getHitbox());
             this.character.setFall(false);
             this.character.setPosition(this.character.getPosition().getX(),
                     this.level.getSegmentAtPosition(target).getTilePos(target).getY() - this.character.getHitbox().getY());

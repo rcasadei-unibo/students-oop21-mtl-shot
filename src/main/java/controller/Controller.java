@@ -79,6 +79,10 @@ public class Controller {
                 // Check for colliding bullets
                 for (EnemyController enemyController : enemiesController) {
                     enemyController.controllerTick();
+                    if(enemyController.isDead()) {
+                        enemiesController.remove(enemyController);
+                        stage.getEnemies().remove(enemyController.getCharacter());
+                    }
                 }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
