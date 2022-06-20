@@ -59,12 +59,12 @@ public class GameView extends Scene {
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
 
-		for(Enemy enemy : controller.getStage().getEnemies()) {
-		    enemiesView.put(enemy, new EnemyView());		    
-		}
-		for(EnemyView enemyView : this.enemiesView.values()) {
-		    totalList.add(enemyView.getCharacterImageView());
-		}
+        for (final Enemy enemy : controller.getStage().getEnemies()) {
+            enemiesView.put(enemy, new EnemyView());
+        }
+        for (final EnemyView enemyView : this.enemiesView.values()) {
+            totalList.add(enemyView.getCharacterImageView());
+        }
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -120,20 +120,22 @@ public class GameView extends Scene {
 
         cameraManager.updateCamera();
 
-        List<EnemyView> removable = new LinkedList<>();
-        enemiesView.forEach((k, v) -> {
-            if (!stage.getEnemies().contains(k)) {
-                removable.add(enemiesView.get(k));
-            }
-        });
+        if (stage.getEnemies().size() != enemiesView.keySet().size()) {
+            List<EnemyView> removable = new LinkedList<>();
+            enemiesView.forEach((k, v) -> {
+                if (!stage.getEnemies().contains(k)) {
+                    removable.add(enemiesView.get(k));
+                }
+            });
 
-        List<ImageView> remove = new LinkedList<>();
-        removable.forEach(e -> {
-            enemiesView.remove(e);
-            remove.add(e.getCharacterImageView());
-        });
+            List<ImageView> remove = new LinkedList<>();
+            removable.forEach(e -> {
+                enemiesView.remove(e);
+                remove.add(e.getCharacterImageView());
+            });
 
-        this.root.getChildren().removeAll(remove);
+            this.root.getChildren().removeAll(remove);
+        }
 
         for (Enemy enemy : stage.getEnemies()) {
             enemiesView.get(enemy).updateCharacter(
