@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +34,7 @@ import util.UserData;
  * 
  */
 public class GameView extends Scene {
-    
+
     private final PlayerView playerView = new PlayerView();
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
@@ -121,20 +122,7 @@ public class GameView extends Scene {
         cameraManager.updateCamera();
 
         if (stage.getEnemies().size() != enemiesView.keySet().size()) {
-            List<EnemyView> removable = new LinkedList<>();
-            enemiesView.forEach((k, v) -> {
-                if (!stage.getEnemies().contains(k)) {
-                    removable.add(enemiesView.get(k));
-                }
-            });
-
-            List<ImageView> remove = new LinkedList<>();
-            removable.forEach(e -> {
-                enemiesView.remove(e);
-                remove.add(e.getCharacterImageView());
-            });
-
-            this.root.getChildren().removeAll(remove);
+            removeEnemies(stage.getEnemies());
         }
 
         for (Enemy enemy : stage.getEnemies()) {
@@ -200,5 +188,22 @@ public class GameView extends Scene {
 
         System.out.println("size " + enemiesView.size());
         return enemiesView;
+    }
+
+    private void removeEnemies(final Collection<Enemy> enemies) {
+        List<EnemyView> removable = new LinkedList<>();
+        List<ImageView> remove = new LinkedList<>();
+        enemiesView.forEach((k, v) -> {
+            if (!enemies.contains(k)) {
+                removable.add(enemiesView.get(k));
+                remove.add(enemiesView.get(k).getCharacterImageView());
+            }
+        });
+
+        removable.forEach(e -> {
+            enemiesView.remove(e);
+        });
+
+        this.root.getChildren().removeAll(remove);
     }
 }

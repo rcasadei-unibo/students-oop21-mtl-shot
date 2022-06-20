@@ -67,17 +67,29 @@ public class Controller {
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
         }
+
+        refreshEnemiesStatus();
+        
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                for (final EnemyController enemyController : enemiesController) {
-                    enemyController.controllerTick();
-                    if(enemyController.isDead()) {
-                        enemiesController.remove(enemyController);
-                        stage.getEnemies().remove(enemyController.getCharacter());
+                
+                var remove = new LinkedList<EnemyController>();
+                
+                enemiesController.forEach(e -> {
+                    if (e.isActive()) {
+                        e.controllerTick();
+                        if (e.isDead()) {
+                            remove.add(e);
+                        }
                     }
+                });
+                
+                if(!remove.isEmpty()) {
+                    remove.forEach(e -> removeEnemy(e));
                 }
+
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 playerController.controllerTick();
@@ -191,7 +203,14 @@ public class Controller {
     }
 
     /**
-     * Loads the next level.
+     * Loads the next for (final EnemyController enemyController : enemiesController) {
+                    enemyController.controllerTick();
+                    if(enemyController.isDead()) {
+                        enemiesController.remove(enemyController);
+                        stage.getEnemies().remove(enemyController.getCharacter());
+                    }
+                }
+                welevel.
      */
     public void nextLevel() {
         // TODO
@@ -232,5 +251,37 @@ public class Controller {
      */
     public StageImpl getStage() {
         return this.stage;
+    }
+
+    private void removeEnemy(final EnemyController enemyController) {
+        enemiesController.remove(enemyController);
+        stage.getEnemies().remove(enemyController.getCharacter());
+    }
+
+    public void refreshEnemiesStatus() {
+        enemiesController.forEach(e -> {
+            if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
+                    .getSegmentAtPosition(stage.getPlayer().getPosition())) {
+                e.setActive(false);
+            } else {
+                e.setActive(true);
+            }
+        });
+    }
+
+    public void removeOldEnemies() {
+        var remove = new LinkedList<EnemyController>();
+        
+        enemiesController.forEach(e -> {
+            if (!e.isActive()
+                    && stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()).getOrigin().getX() < stage
+                            .getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX()) {
+                remove.add(e);
+            }
+        });
+        
+        if(!remove.isEmpty()) {
+            remove.forEach(e -> removeEnemy(e));
+        }
     }
 }
