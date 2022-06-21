@@ -21,7 +21,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
-import util.Direction;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
 import util.map.TextMap;
 import view.GameView;
 
@@ -152,21 +153,21 @@ public class Controller {
     public void keyPressed(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
             stage.getPlayer().setLeft(true);
-            stage.getPlayer().getAim().setDirection(Direction.LEFT);
+            stage.getPlayer().getAim().setHorizontal(DirectionHorizontal.LEFT);
         }
         if (key == KeyCode.D) {
             stage.getPlayer().setRight(true);
-            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
+            stage.getPlayer().getAim().setHorizontal(DirectionHorizontal.RIGHT);
         }
         if (key == KeyCode.W) {
-            stage.getPlayer().getAim().setDirection(Direction.UP);
+            stage.getPlayer().getAim().setVertical(DirectionVertical.UP);
         }
         if (key == KeyCode.SPACE) {
             stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
             stage.getPlayer().setCrouchKey(true);
-            stage.getPlayer().getAim().setDirection(Direction.DOWN);
+            stage.getPlayer().getAim().setVertical(DirectionVertical.DOWN);
         }
         if (key.equals(KeyCode.J)) {
             this.stage.getPlayer().setFire(true);

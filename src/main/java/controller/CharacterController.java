@@ -1,6 +1,6 @@
 package controller;
 
-import util.Direction;
+import util.DirectionVertical;
 import util.Pair;
 import util.Vector2D;
 import model.character.Character.Crouch;
@@ -70,7 +70,7 @@ public class CharacterController {
             this.character.getAim().returnToHorizontal();
             // if fling and pressing the down button he has to aim at the ground
         } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
-            this.character.getAim().setDirection(Direction.DOWN);
+			this.character.getAim().setVertical(DirectionVertical.DOWN);
         }
     }
 

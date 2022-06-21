@@ -1,10 +1,13 @@
 package model.weapons;
 
-import util.Direction;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
+import util.Pair;
 import util.Vector2D;
 import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.character.Character;
+import model.character.tools.Aim;
 
 /**
  * Bullet class models a bullet with its current position, his owner (a
@@ -22,7 +25,7 @@ public class Bullet extends Entity {
     /*
      * Bullet's movement direction
      */
-    private Direction direction;
+    private Aim aim;
 
     /*
      * Space traveled in a tick's time
@@ -49,7 +52,7 @@ public class Bullet extends Entity {
              // TODO: change magic numbers
                 new Vector2D(0.1, 0.1));
         this.owner = owner;
-        this.direction = owner.getAim().getDirection();
+        this.aim = owner.getAim();
         this.speed = new Vector2D(0.05, 0.05);
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
@@ -62,13 +65,13 @@ public class Bullet extends Entity {
     public void tick() {
         // This implementation is in accordance with this (old) implementation of Vector
         // class. TODO: update in the future
-        if (this.direction.equals(Direction.UP)) {
+        if (this.aim.getDirection().getY().equals(DirectionVertical.UP)) {
             super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() - this.speed.getY()));
-        } else if (this.direction.equals(Direction.DOWN)) {
+        } else if (this.aim.getDirection().getY().equals(DirectionVertical.DOWN)) {
             super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() + this.speed.getY()));
-        } else if (this.direction.equals(Direction.LEFT)) {
+        } else if (this.aim.getDirection().getX().equals(DirectionHorizontal.LEFT)) {
             super.setPosition(new Vector2D(super.getPosition().getX() - this.speed.getX(), super.getPosition().getY()));
-        } else if (this.direction.equals(Direction.RIGHT)) {
+        } else if (this.aim.getDirection().getX().equals(DirectionHorizontal.RIGHT)) {
             super.setPosition(new Vector2D(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY()));
         }
     }
@@ -83,8 +86,8 @@ public class Bullet extends Entity {
     /**
      * @return the bullet's direction
      */
-    public Direction getDirection() {
-        return this.direction;
+    public Pair<DirectionHorizontal, DirectionVertical> getDirection() {
+        return this.aim.getDirection();
     }
 
     /**
@@ -117,7 +120,7 @@ public class Bullet extends Entity {
 
     @Override
     public String toString() {
-        return "Bullet [position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed + ", damage="
+        return "Bullet [position=" + super.getPosition() + ", direction=" + aim.getDirection() + ", speed=" + speed + ", damage="
                 + damage + "]";
     }
 

@@ -2,6 +2,8 @@ package view;
 
 import javafx.scene.image.ImageView;
 import model.character.Character;
+import util.DirectionHorizontal;
+import util.Vector2D;
 import util.map.MapConstants;
 import util.view.Animation;
 
@@ -17,6 +19,7 @@ public class CharacterView {
 	public final Animation characterCrouchIdle;
 	public final Animation characterCrouchRun;
 	public final ImageView characterImageView = new ImageView();
+	public final Vector2D imageOffset = new Vector2D(0.5,0.5);
    
 	/**
      * 
@@ -45,98 +48,105 @@ public class CharacterView {
      * @param crouch
      * @param direction
      */
-    public void updateCharacter(Character character) {
-        characterImageView.setX(character.getPosition().getX() * MapConstants.getTilesize());
-        characterImageView.setY(character.getPosition().getY() * MapConstants.getTilesize());
+    public void updateCharacter(final Character character) {
+    	final var adjustY = character.isCrouching() ? character.getHitbox().getY() : 0d;
+        characterImageView.setX((character.getPosition().getX() - imageOffset.getX()) * MapConstants.getTilesize());
+        characterImageView.setY((character.getPosition().getY() - imageOffset.getY() - adjustY) * MapConstants.getTilesize());
+
     	if(character.getSpeed().getX() == 0) {
-    		
-    		switch (character.getAim().getDirection()) {
+    		switch (character.getAim().getDirection().getY()) {
 	        case UP:
-	        	characterImageView.setImage(characterIdleUp.get(false));
-	        	characterIdleUp.animate();
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterIdleUp.get(false));
+	    	        	characterIdleUp.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterIdleUp.get(true));
+	    	        	characterIdleUp.animate();
+	        			break;
+	        	}
+	        	break;
+	        case NEUTRAL:
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterIdle.get(false));
+	    	        	characterIdle.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterIdle.get(true));
+	    	        	characterIdle.animate();
+	        			break;
+	        	}
 	        	break;
 	        case DOWN:
-	            characterImageView.setImage(characterCrouchIdle.get(false)); // DA CAMBIAREEE
-	            characterCrouchIdle.animate();
-	            break;
-	        case RIGHT:
-	            characterImageView.setImage(characterIdle.get(true));
-	            characterIdle.animate();
-	            break;
-	        case LEFT:
-	            characterImageView.setImage(characterIdle.get(false));
-	            characterIdle.animate();
-	            break;
-	        case NEUTRAL:
-	        default:
-	            break;
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterCrouchIdle.get(false));
+	    	        	characterCrouchIdle.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterCrouchIdle.get(true));
+	    	        	characterCrouchIdle.animate();
+	        			break;
+	        	}
+	        	break;
+	        	
 	        }
-	        if (character.isCrouching()) {
-	            characterImageView.setImage(characterCrouchIdle.get(true));
-	            characterCrouchIdle.animate();
-	        }
-	        
-    	} else if (character.getSpeed().getX() > 0) {
-    		
-    		switch (character.getAim().getDirection()) {
+            if(character.isCrouching() && character.getAim().getDirection().getX().equals(DirectionHorizontal.LEFT)) {
+            	characterImageView.setImage(characterCrouchIdle.get(false));
+            	characterCrouchIdle.animate();
+            } else if(character.isCrouching() && character.getAim().getDirection().getX().equals(DirectionHorizontal.RIGHT)) {
+            	characterImageView.setImage(characterCrouchIdle.get(true));
+            	characterCrouchIdle.animate();
+            }
+    	} else if (character.getSpeed().getX() != 0) {
+    		switch (character.getAim().getDirection().getY()) {
 	        case UP:
-	        	characterImageView.setImage(characterRunUp.get(true));
-	        	characterRunUp.animate();
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterRunUp.get(false));
+	    	        	characterRunUp.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterRunUp.get(true));
+	    	        	characterRunUp.animate();
+	        			break;
+	        	}
+	        	break;
+	        case NEUTRAL:
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterRun.get(false));
+	    	        	characterRun.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterRun.get(true));
+	    	        	characterRun.animate();
+	        			break;
+	        	}
 	        	break;
 	        case DOWN:
-	            characterImageView.setImage(characterCrouchRun.get(true));
-	            characterCrouchRun.animate();
-	            break;
-	        case RIGHT:
-	            characterImageView.setImage(characterRun.get(true));
-	            characterRun.animate();
-	            break;
-	        case LEFT:
-	            characterImageView.setImage(characterRun.get(false));
-	            characterRun.animate();
-	            break;
-	        case NEUTRAL:
-	        default:
-	            break;
-	        }
-	        if (character.isCrouching()) {
-	            characterImageView.setImage(characterCrouchIdle.get(true));
-	            characterCrouchIdle.animate();
-	        }
-	        
-    	} else if (character.getSpeed().getX() < 0) {
-    		
-    		switch (character.getAim().getDirection()) {
-    		 case UP:
- 	        	characterImageView.setImage(characterRunUp.get(false));
- 	        	characterRunUp.animate();
- 	        	break;
- 	        case DOWN:
- 	            characterImageView.setImage(characterCrouchRun.get(false));
- 	            characterCrouchRun.animate();
- 	            break;
- 	        case LEFT:
- 	            characterImageView.setImage(characterRun.get(false));
- 	            characterRun.animate();
- 	            break;
- 	        case RIGHT:
-	            characterImageView.setImage(characterRun.get(true));
-	            characterRun.animate();
-	            break;
- 	        case NEUTRAL:
-	        default:
-	            break;
-	        }
-	        if (character.isCrouching()) {
-	            characterImageView.setImage(characterCrouchIdle.get(false));
-	            characterCrouchIdle.animate();
-	        }
-	        
+	        	switch (character.getAim().getDirection().getX()) {
+	        		case LEFT:
+	    	        	characterImageView.setImage(characterCrouchRun.get(false));
+	    	        	characterCrouchRun.animate();
+	        			break;
+	        		case RIGHT:
+	    	        	characterImageView.setImage(characterCrouchRun.get(true));
+	    	        	characterCrouchRun.animate();
+	        			break;
+	        	}
+	        	break;
+	        }    
     	}
-        
-        
-        
-	        
+    	if(character.isCrouching() && character.getAim().getDirection().getX().equals(DirectionHorizontal.LEFT)) {
+        	characterImageView.setImage(characterCrouchRun.get(false));
+        	characterCrouchRun.animate();
+        } else if(character.isCrouching() && character.getAim().getDirection().getX().equals(DirectionHorizontal.RIGHT)) {
+        	characterImageView.setImage(characterCrouchRun.get(true));
+        	characterCrouchRun.animate();
+        }
     }
 
 	/**
