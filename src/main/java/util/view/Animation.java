@@ -1,6 +1,5 @@
 package util.view;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,10 +28,9 @@ public class Animation {
      * @param delay
      * @throws FileNotFoundException
      */
-    public Animation(final String path, final Pair<Integer, Integer> size, final int frames, final int delay)
-            throws FileNotFoundException {
+    public Animation(final String path, final Pair<Integer, Integer> size, final int frames, final int delay) {
         this.currFrame = 0;
-        this.reader = new Image(new FileInputStream(path)).getPixelReader();
+        this.reader = new Image(ClassLoader.getSystemResourceAsStream(path)).getPixelReader();
         this.size = size;
         this.delay = delay;
         this.frames = frames;
@@ -49,7 +47,7 @@ public class Animation {
     public Animation(final int startFrame, final String path, final Pair<Integer, Integer> size)
             throws FileNotFoundException {
         this.currFrame = startFrame;
-        this.reader = new Image(new FileInputStream(path)).getPixelReader();
+        this.reader = new Image(ClassLoader.getSystemResourceAsStream(path)).getPixelReader();
         this.size = size;
     }
 

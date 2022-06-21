@@ -136,14 +136,10 @@ public class GameView extends Scene {
         this.root.getChildren().removeAll(remove);
 
         for (Enemy enemy : stage.getEnemies()) {
-            enemiesView.get(enemy).updateCharacter(
-                    enemy.getPosition(), 
-                    enemy.isCrouching(),
-                    enemy.getAim().getDirection());
+            enemiesView.get(enemy).updateCharacter(enemy);
         }
 
-        playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
-                stage.getPlayer().getAim().getDirection());
+        playerView.updateCharacter(stage.getPlayer());
 
         // Updates bullets
         if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
