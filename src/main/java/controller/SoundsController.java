@@ -37,9 +37,13 @@ public class SoundsController {
 	 * @return true if the sound has been played, otherwise false.
 	 */
 	public boolean tryToPlaySound(final Sounds soundType) {
-		if (!this.timers.containsKey(soundType)) {
+		if (soundType.equals(Sounds.RIFLE_FIRING)) {
+			this.forcePlaySound(soundType);
+		} else if (soundType.equals(Sounds.RELOAD)) {
+			this.forcePlaySound(soundType);
+		} else if (!this.timers.containsKey(soundType)) {
 			/* Se un suono di tipo soundType non è stato fatto ancora partire, lo fa partire TODO: translate comment */
-			this.timers.put(soundType, new Cooldown(100));	/* Temporal gap between two sounds of the same type (TODO: too high, fix) */
+			this.timers.put(soundType, new Cooldown(10));	/* Temporal gap between two sounds of the same type (TODO: too high, fix) */
 			this.soundManager.playSound(soundType);
 			return true;
 		}

@@ -52,6 +52,11 @@ public class SoundManager {
 		MAIN_THEME(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "mainTheme.mp3")
 				.toFile()
 				.toURI()
+				.toString())),
+		
+		RELOAD(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "reload.mp3")
+				.toFile()
+				.toURI()
 				.toString()));
 		
 		private final AudioClip audioClip;

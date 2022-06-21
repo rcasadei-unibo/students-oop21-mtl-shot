@@ -1,5 +1,6 @@
 package controller;
 
+import controller.WeaponController.TryToShootReturn;
 import controller.enemy.EnemyController;
 
 import java.io.IOException;
@@ -142,13 +143,20 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
-                // Play shoot sound
+        	switch (this.weaponController.tryToShoot(this.stage.getPlayer())) {
+        	case SHOOT:
+        		this.soundsController.tryToPlaySound(Sounds.RIFLE_FIRING);
                 this.bulletsController.addBullet(this.stage.getPlayer());
-            }
+                break;
+        	case RELOAD:
+        		this.soundsController.tryToPlaySound(Sounds.RELOAD);
+                break;
+            default:
+            	break;
+        	}
         } else if (key.equals(KeyCode.R)) {
              if (this.weaponController.tryToReload(this.stage.getPlayer())) {
-                 // Play reload sound
+            	 this.soundsController.tryToPlaySound(Sounds.RELOAD);
                  // Play reload animation
              }
         }
