@@ -23,7 +23,7 @@ public class BasicBot implements SimpleBot {
     private Player player;
     private Level level;
     private double maxDistance = EntityConstants.ENEMY_DISTANCE + 
-            (new Random().nextDouble(EntityConstants.ENEMY_VARIATON) - EntityConstants.ENEMY_VARIATON/2);
+            (new Random().nextDouble()*EntityConstants.ENEMY_VARIATON - EntityConstants.ENEMY_VARIATON/2);
 
     public BasicBot(Character character, Level level) {
         this.enemy = (Enemy) character;
