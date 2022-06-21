@@ -136,6 +136,7 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
+        	this.soundsController.playSound(Sounds.JUMP_1);
             stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
@@ -145,18 +146,18 @@ public class Controller {
         if (key.equals(KeyCode.J)) {
         	switch (this.weaponController.tryToShoot(this.stage.getPlayer())) {
         	case SHOOT:
-        		this.soundsController.tryToPlaySound(Sounds.RIFLE_FIRING);
+        		this.soundsController.playSound(Sounds.RIFLE_FIRING);
                 this.bulletsController.addBullet(this.stage.getPlayer());
                 break;
         	case RELOAD:
-        		this.soundsController.tryToPlaySound(Sounds.RELOAD);
+        		this.soundsController.playSound(Sounds.RELOAD);
                 break;
             default:
             	break;
         	}
         } else if (key.equals(KeyCode.R)) {
              if (this.weaponController.tryToReload(this.stage.getPlayer())) {
-            	 this.soundsController.tryToPlaySound(Sounds.RELOAD);
+            	 this.soundsController.playSound(Sounds.RELOAD);
                  // Play reload animation
              }
         }

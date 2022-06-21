@@ -14,6 +14,7 @@ import java.nio.file.Path;
  *
  */
 public class SoundManager {
+	
 	public SoundManager() {
 		
 	}
@@ -57,6 +58,36 @@ public class SoundManager {
 		RELOAD(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "reload.mp3")
 				.toFile()
 				.toURI()
+				.toString())),
+		
+		HURT_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt1.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		HURT_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt2.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		HURT_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt3.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		JUMP_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump1.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		JUMP_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump2.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		JUMP_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump3.mp3")
+				.toFile()
+				.toURI()
 				.toString()));
 		
 		private final AudioClip audioClip;
@@ -72,4 +103,5 @@ public class SoundManager {
 			return this.audioClip;
 		}
 	}
+	
 }
