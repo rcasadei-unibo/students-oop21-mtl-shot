@@ -103,7 +103,7 @@ public class CharacterController {
         if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + 0.1) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
-        } else if ((this.isCollidingRight(nextPos) || nextPos.getX() + this.character.getHitbox().getX() > bounds.getY()) && !canAdvance) {
+        } else if (this.isCollidingRight(nextPos) || (nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
         // Special case: while flying he can not crouch
