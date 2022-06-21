@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,20 +21,19 @@ import javafx.scene.image.ImageView;
 
 import model.StageImpl;
 import model.character.Enemy;
+import util.UserData;
 import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
 import controller.menu.PauseMenuController;
 
-import util.UserData;
-
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
 public class GameView extends Scene {
-    
+
     private final PlayerView playerView = new PlayerView();
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
@@ -59,12 +59,12 @@ public class GameView extends Scene {
 		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
 		totalList.add(playerView.getCharacterImageView());
 
-		for(Enemy enemy : controller.getStage().getEnemies()) {
-		    enemiesView.put(enemy, new EnemyView());		    
-		}
-		for(EnemyView enemyView : this.enemiesView.values()) {
-		    totalList.add(enemyView.getCharacterImageView());
-		}
+        for (final Enemy enemy : controller.getStage().getEnemies()) {
+            enemiesView.put(enemy, new EnemyView());
+        }
+        for (final EnemyView enemyView : this.enemiesView.values()) {
+            totalList.add(enemyView.getCharacterImageView());
+        }
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -120,20 +120,9 @@ public class GameView extends Scene {
 
         cameraManager.updateCamera();
 
-        List<EnemyView> removable = new LinkedList<>();
-        enemiesView.forEach((k, v) -> {
-            if (!stage.getEnemies().contains(k)) {
-                removable.add(enemiesView.get(k));
-            }
-        });
-
-        List<ImageView> remove = new LinkedList<>();
-        removable.forEach(e -> {
-            enemiesView.remove(e);
-            remove.add(e.getCharacterImageView());
-        });
-
-        this.root.getChildren().removeAll(remove);
+        if (stage.getEnemies().size() != enemiesView.keySet().size()) {
+            removeEnemies(stage.getEnemies());
+        }
 
         for (Enemy enemy : stage.getEnemies()) {
             enemiesView.get(enemy).updateCharacter(enemy);
@@ -151,6 +140,7 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
+        System.out.println("Vita: " + stage.getPlayer().getHealth().getHealth());
 	}
 
     /**
@@ -191,8 +181,23 @@ public class GameView extends Scene {
      * @return bla
      */
     public Map<Enemy, EnemyView> getEnemiesView() {
-
-        System.out.println("size " + enemiesView.size());
         return enemiesView;
+    }
+
+    private void removeEnemies(final Collection<Enemy> enemies) {
+        List<EnemyView> removable = new LinkedList<>();
+        List<ImageView> remove = new LinkedList<>();
+        enemiesView.forEach((k, v) -> {
+            if (!enemies.contains(k)) {
+                removable.add(enemiesView.get(k));
+                remove.add(enemiesView.get(k).getCharacterImageView());
+            }
+        });
+
+        removable.forEach(e -> {
+            enemiesView.remove(e);
+        });
+
+        this.root.getChildren().removeAll(remove);
     }
 }

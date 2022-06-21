@@ -50,6 +50,13 @@ public class CharacterController {
         this.aimChecks();
     }
     
+    public void fire(WeaponController wc, BulletsController bc) {
+        if (wc.tryToShoot(this.character)) {
+            // Play shoot sound
+            bc.addBullet(this.character);
+        }
+    }
+    
     /**
      * Gets the character who is being controlled.
      * 

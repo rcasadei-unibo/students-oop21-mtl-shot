@@ -29,29 +29,17 @@ public class UserData {
     }
 
     /**
-     * Sets the total points possessed by the user.
-     * @param points
-     */
-    public void setPoints(final double points) {
-        this.points = points;
-    }
-
-    /**
      * Gets the date of the last game played.
      * @return Date
      */
     public Date getLastGame() {
         return lastGame;
     }
-
-    /**
-     * Sets the date of the last game played.
-     * @param lastGame
-     */
+    
     public void setLastGame(final Date lastGame) {
         this.lastGame = lastGame;
     }
-
+    
     /**
      * Gets the user name.
      * @return String
