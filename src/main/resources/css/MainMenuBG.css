@@ -1,0 +1,8 @@
+.mmBG {
+	-fx-background-image: url("../menusResources/MainMenuBG.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: cover;
+	background-image: url("../menusResources/MainMenuBG.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}

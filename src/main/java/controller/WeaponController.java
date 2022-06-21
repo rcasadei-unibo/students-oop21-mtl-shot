@@ -6,30 +6,49 @@ import java.util.Map;
 import model.character.Character;
 
 /**
- * TODO: write javadoc
+ * TODO: write javadoc.
  *
  */
 public class WeaponController {
-	private Controller controllerReference;
-	private Map<Character, Cooldown> timers;
+    private Map<Character, Cooldown> shootingTimers;
+    private Map<Character, Cooldown> reloadingTimers;
 
-	public WeaponController(final Controller controllerReference) {
-		this.controllerReference = controllerReference;
-		this.timers = new HashMap<>();
+	public WeaponController() {
+		this.shootingTimers = new HashMap<>();
+		this.reloadingTimers = new HashMap<>();
 	}
 
 	public void controllerTick() {
-		this.timers.forEach((c, sc) -> { sc.tick(); });
-		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
+		this.shootingTimers.forEach((c, sc) -> { sc.tick(); });
+		this.shootingTimers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
+		
+		this.reloadingTimers.forEach((c, sc) -> { sc.tick(); });
+		this.reloadingTimers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 
 	public boolean tryToShoot(final Character characterShooting) {
-		if (!this.timers.containsKey(characterShooting) && characterShooting.getWeapon().getBulletsInMag() != 0) {
+		if (!this.shootingTimers.containsKey(characterShooting) &&
+				characterShooting.getWeapon().getBulletsInMag() != 0 &&
+				!this.reloadingTimers.containsKey(characterShooting)) {
+			
 			/* If characterShooting is not in this.timers, he can shoot */
-			this.timers.put(characterShooting, new Cooldown(characterShooting.getWeapon().getFireRate()));
+			this.shootingTimers.put(characterShooting, new Cooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
+			return true;
+			
+		} else if (characterShooting.getWeapon().getBulletsInMag() == 0) {
+			this.tryToReload(characterShooting);
+		}
+		return false;
+	}
+	
+	public boolean tryToReload(final Character characterReloading) {
+		if (!this.reloadingTimers.containsKey(characterReloading)) {
+			this.reloadingTimers.put(characterReloading, new Cooldown(characterReloading.getWeapon().getReloadTime()));
+			characterReloading.getWeapon().reload();
 			return true;
 		}
 		return false;
 	}
+	
 }
