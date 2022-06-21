@@ -74,8 +74,11 @@ public class BasicBot implements SimpleBot {
 
     @Override
     public void fire() {
-        // TODO Auto-generated method stub
-        
+        if(Math.abs(enemy.getPosition().getX() - player.getPosition().getX()) < maxDistance) {
+            enemy.setFire(true);
+        } else {
+            enemy.setFire(false);            
+        }
     }
 
 }

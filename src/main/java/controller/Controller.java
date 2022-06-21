@@ -69,23 +69,26 @@ public class Controller {
         }
 
         refreshEnemiesStatus();
-        
+
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                
+
                 var remove = new LinkedList<EnemyController>();
-                
+
                 enemiesController.forEach(e -> {
                     if (e.isActive()) {
                         e.controllerTick();
+                        if(e.getCharacter().isShooting()) {
+                            e.fire(weaponController, bulletsController);
+                        }
                         if (e.isDead()) {
                             remove.add(e);
                         }
                     }
                 });
-                
+
                 if(!remove.isEmpty()) {
                     remove.forEach(e -> removeEnemy(e));
                 }
@@ -93,6 +96,9 @@ public class Controller {
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 playerController.controllerTick();
+                if(playerController.getCharacter().isShooting()) {
+                    playerController.fire(weaponController, bulletsController);
+                }
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
@@ -149,10 +155,8 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
-                // Play shoot sound
-                this.bulletsController.addBullet(this.stage.getPlayer());
-            }
+            this.stage.getPlayer().setFire(true);
+//            this.playerController.fire(weaponController, bulletsController);
         } else if (key.equals(KeyCode.R)) {
              if (this.weaponController.tryToReload(this.stage.getPlayer())) {
                  // Play reload sound
@@ -186,6 +190,10 @@ public class Controller {
             stage.getPlayer().setCrouchKey(false);
             stage.getPlayer().getAim().returnToHorizontal();
         }
+        if (key == KeyCode.J) {
+            this.stage.getPlayer().setFire(false);
+//            this.playerController.fire(weaponController, bulletsController);
+        }
     }
 
     /**
@@ -217,7 +225,14 @@ public class Controller {
     }
 
     /**
-     * Gets the class that handle the player control.
+     * Gets the class that handle the p    
+    public void setFire(boolean b) {
+        this.isShooting = b;
+    }
+    
+    public boolean isShooting() {
+        return this.isShooting;
+    }layer control.
      * 
      * @return PlayerController
      */

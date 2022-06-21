@@ -21,13 +21,12 @@ import javafx.scene.image.ImageView;
 
 import model.StageImpl;
 import model.character.Enemy;
+import util.UserData;
 import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
 import controller.menu.PauseMenuController;
-
-import util.UserData;
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
