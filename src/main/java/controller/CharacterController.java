@@ -5,6 +5,7 @@ import util.Vector2D;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
+import util.Pair;
 import model.character.Character;
 
 /**
@@ -44,9 +45,12 @@ public class CharacterController {
     /**
      * The main method that checks everything about the player.
      */
-    public void controllerTick() {
+    public void controllerTick(final double leftBound) {
         this.movementChecks();
         this.character.moveEntity();
+        if (this.character.getPosition().getX() < leftBound) {
+        	this.character.setPosition(leftBound, this.character.getPosition().getY());
+        }
         this.aimChecks();
     }
     

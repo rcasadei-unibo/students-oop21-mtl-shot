@@ -31,16 +31,11 @@ public class PlayerController extends CharacterController {
      * {@inheritDoc}
      */
     @Override
-    public void controllerTick() {
-    	super.controllerTick();
-    	var offset = level.getSegmentAtPosition(super.getCharacter().getPosition()).getOrigin().getX();
-    	if (offset + 0.25 > super.getCharacter().getPosition().getX()) {
-    		super.getCharacter().setPosition(offset + 0.26, 
-    				super.getCharacter().getPosition().getY());
-    	}
-    	offset = offset + level.getSegmentAtPosition(super.getCharacter().getPosition()).getTextMap().getWidth();
-    	if (offset - 0.25 < super.getCharacter().getPosition().getX() + super.getCharacter().getHitbox().getX() && !this.enemies.isEmpty()) {
-    		super.getCharacter().setPosition(offset - 0.26 - super.getCharacter().getHitbox().getX(),
+    public void controllerTick(final double leftBound) {
+    	super.controllerTick(leftBound);
+    	final var rightBound = level.getSegmentAtPosition(super.getCharacter().getPosition()).getOrigin().getX() + level.getSegmentAtPosition(super.getCharacter().getPosition()).getTextMap().getWidth();
+    	if (rightBound - 0.25 < super.getCharacter().getPosition().getX() + super.getCharacter().getHitbox().getX() && !this.enemies.isEmpty()) {
+    		super.getCharacter().setPosition(rightBound - 0.26 - super.getCharacter().getHitbox().getX(),
     				super.getCharacter().getPosition().getY());
     	}
     }

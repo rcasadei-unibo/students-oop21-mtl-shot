@@ -110,6 +110,14 @@ public class GameView extends Scene {
     public BulletsView getBulletsView() {
         return this.bulletsView;
     }
+    
+    /**
+     * Gets the camera manager.
+     * @return CameraManager
+     */
+    public CameraManager getCameraManager() {
+    	return this.cameraManager;
+    }
 
 	/**
 	 * Updates the current visual frame using the info of the stage.
@@ -174,7 +182,10 @@ public class GameView extends Scene {
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-        group.getChildren().add(loader.load());
+        final var pauseMenu = (Node) loader.load();
+        pauseMenu.setLayoutX(this.getCamera().getLayoutX() + this.getCamera().getTranslateX());
+        pauseMenu.setLayoutY(this.getCamera().getLayoutY() + this.getCamera().getTranslateY());
+        group.getChildren().add(pauseMenu);
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
         pmc.setSize(this.getWidth(), this.getHeight());
         pmc.setGameView(this);

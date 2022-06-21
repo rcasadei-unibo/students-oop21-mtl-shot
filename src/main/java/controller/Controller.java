@@ -21,6 +21,8 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 import util.Direction;
+import util.Pair;
+import util.map.MapConstants;
 import util.map.TextMap;
 import view.GameView;
 
@@ -71,8 +73,13 @@ public class Controller {
 
             @Override
             public void handle(final ActionEvent event) {
+            	double leftBound = 0;
+            	if (viewReference.getCameraManager() != null) {            		
+            		leftBound = stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX() + (viewReference.getCameraManager().getCamera().getTranslateX() / MapConstants.getTilesize()) + 0.25;
+            	}
+            	System.out.println(viewReference.getCameraManager().getCamera().getTranslateX() / MapConstants.getTilesize());
                 for (final EnemyController enemyController : enemiesController) {
-                    enemyController.controllerTick();
+                    enemyController.controllerTick(leftBound);
                     if(enemyController.isDead()) {
                         enemiesController.remove(enemyController);
                         stage.getEnemies().remove(enemyController.getCharacter());
@@ -80,7 +87,7 @@ public class Controller {
                 }
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                playerController.controllerTick();
+                playerController.controllerTick(leftBound);
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }

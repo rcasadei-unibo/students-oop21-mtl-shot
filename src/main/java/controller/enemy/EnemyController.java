@@ -19,10 +19,10 @@ public class EnemyController extends CharacterController{
 	}
 	
 	@Override
-	public void controllerTick() {
+	public void controllerTick(final double leftBound) {
 		brain.move();
 		brain.fire();
-		super.controllerTick();
+		super.controllerTick(leftBound);
 	}
 	
 	public SimpleBot getBrain() {
