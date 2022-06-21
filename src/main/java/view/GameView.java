@@ -195,8 +195,6 @@ public class GameView extends Scene {
      * @return bla
      */
     public Map<Enemy, EnemyView> getEnemiesView() {
-
-        System.out.println("size " + enemiesView.size());
         return enemiesView;
     }
 }

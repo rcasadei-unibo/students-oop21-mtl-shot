@@ -62,7 +62,7 @@ public class Controller {
                 this.stage.getBullets(),
                 this.stage.getEnemies());
         this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer(), this.enemiesController);
         this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
