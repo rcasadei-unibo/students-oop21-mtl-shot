@@ -23,7 +23,6 @@ public class EnemyController extends CharacterController{
 		brain.move();
 		brain.fire();
 		super.controllerTick();
-		System.out.println("Vita: " + this.getCharacter().getHealth());
 	}
 	
 	public SimpleBot getBrain() {

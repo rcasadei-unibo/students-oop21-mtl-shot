@@ -45,6 +45,7 @@ public final class EntityConstants {
      */
     public static final double ENEMY_DISTANCE = 7;
     public static final double ENEMY_TOLERANCE = 0.5;
+    public static final int ENEMY_VARIATON = 6;
 
     private EntityConstants() {
     }
