@@ -12,13 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.Pair;
 import view.GameView;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The controller class for the sign in menu (managed by FXML sheet).
  * 
  */
 public class SignInController {
-
+	
     /**
      * The TextField where the user has to put its username.
      */
@@ -34,6 +36,9 @@ public class SignInController {
      */
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
+        var sm = new SoundManager();
+        sm.stopSound(Sounds.METAL_SHOT_HAHA);
+        
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
@@ -61,4 +66,5 @@ public class SignInController {
     private boolean isValid(final String text) {
         return !text.isBlank();
     }
+    
 }

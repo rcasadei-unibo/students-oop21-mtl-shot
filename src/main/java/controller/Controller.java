@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import util.Direction;
 import util.map.TextMap;
 import view.GameView;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The main controller. It contains all sub-controllers and it manages the game
@@ -33,6 +34,7 @@ public class Controller {
     private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
+    private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
@@ -62,6 +64,7 @@ public class Controller {
                 this.stage.getEnemies());
         this.weaponController = new WeaponController();
         this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.soundsController = new SoundsController();
         this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
@@ -80,6 +83,7 @@ public class Controller {
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 playerController.controllerTick();
+                soundsController.controllerTick();
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
@@ -93,6 +97,7 @@ public class Controller {
      * Starts the game loop.
      */
     public void gameStart() {
+    	this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
         gameLoop.play();
         paused = false;
     }
@@ -104,6 +109,7 @@ public class Controller {
      */
     public void gamePause() throws IOException {
         if (!paused) {
+        	this.soundsController.stopSound(Sounds.MAIN_THEME);
             gameLoop.pause();
             this.viewReference.displayPauseMenu();
         }

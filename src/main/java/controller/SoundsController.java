@@ -45,4 +45,12 @@ public class SoundsController {
 		}
 		return false;
 	}
+	
+	public void forcePlaySound(final Sounds soundType) {
+		this.soundManager.playSound(soundType);
+	}
+	
+	public void stopSound(final Sounds soundType) {
+		this.soundManager.stopSound(soundType);
+	}
 }
