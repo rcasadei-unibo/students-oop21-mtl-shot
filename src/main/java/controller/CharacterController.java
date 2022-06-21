@@ -23,13 +23,6 @@ public class CharacterController {
      */
     private static final double DELTAX = 0.25;
     private static final double DELTAY = 0.075;
-    /*
-     * Constant used to have the shift from the playerPos to the hitbox pos (player
-     * should penetrate at least a bit the field with the head and the arms)
-     */
-    // DELTA > HITBOXSHIFT.x
-    // Il replacing al momento del crouch non funziona più in questo modo
-    private static final Vector2D HITBOXSHIFT = new Vector2D();
 
     /**
      * The character controller constructor.
@@ -87,7 +80,6 @@ public class CharacterController {
         final Vector2D nextPos = new Vector2D(character.getPosition());
         // The next frame the character will be in character.pos + character.speed
         nextPos.add(character.getSpeed());
-        nextPos.add(HITBOXSHIFT);
         // Roof collisions
         if (this.isCollidingUp(nextPos) && this.character.getSpeed().getY() < 0) {
             this.character.setSpeed(this.character.getSpeed().getX(), 0);

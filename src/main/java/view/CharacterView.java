@@ -1,34 +1,43 @@
 package view;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import util.Direction;
-import util.Vector2D;
+import model.character.Character;
 import util.map.MapConstants;
+import util.view.Animation;
 
 /**
  * TODO: javadoc.
  */
 public class CharacterView {
 
-    private final ImageView characterImageView;
-    private final Image characterCrouchIcon;
-    private final Image characterUp;
-    private final Image characterDown;
-    private final Image characterLeft;
-    private final Image characterRight;
-
-    /**
+	public final Animation characterIdle;
+	public final Animation characterIdleUp;
+	public final Animation characterRun;
+	public final Animation characterRunUp;
+	public final Animation characterCrouchIdle;
+	public final Animation characterCrouchRun;
+	public final ImageView characterImageView = new ImageView();
+   
+	/**
      * 
-     */
-    public CharacterView() {
-        characterCrouchIcon = new Image(ClassLoader.getSystemResourceAsStream("croulpleier.png"));
-        characterUp = new Image(ClassLoader.getSystemResourceAsStream("pleierUP.png"));
-        characterDown = new Image(ClassLoader.getSystemResourceAsStream("pleierDOWN.png"));
-        characterRight = new Image(ClassLoader.getSystemResourceAsStream("pleierRIGHT.png"));
-        characterLeft = new Image(ClassLoader.getSystemResourceAsStream("pleierLEFT.png"));
-        characterImageView = new ImageView(characterRight);
-    }
+     */ 
+	public CharacterView(
+			final Animation characterIdle,
+			final Animation characterIdleUp,
+			final Animation characterRun,
+			final Animation characterRunUp,
+			final Animation characterCrouchIdle,
+			final Animation characterCrouchRun
+			) {
+		this.characterIdle = characterIdle;
+		this.characterIdleUp = characterIdleUp;
+		this.characterRun = characterRun;
+		this.characterRunUp = characterRunUp;
+		this.characterCrouchIdle = characterCrouchIdle;
+		this.characterCrouchRun = characterCrouchRun;
+	}
+	
+	
 
     /**
      * 
@@ -36,32 +45,101 @@ public class CharacterView {
      * @param crouch
      * @param direction
      */
-    public void updateCharacter(final Vector2D position, final boolean crouch, final Direction direction) {
-        characterImageView.setX(position.getX() * MapConstants.getTilesize());
-        characterImageView.setY(position.getY() * MapConstants.getTilesize());
-        switch (direction) {
-        case UP:
-            characterImageView.setImage(characterUp);
-            break;
-        case DOWN:
-            characterImageView.setImage(characterDown);
-            break;
-        case RIGHT:
-            characterImageView.setImage(characterRight);
-            break;
-        case LEFT:
-            characterImageView.setImage(characterLeft);
-            break;
-        case NEUTRAL:
-        default:
-            break;
-        }
-        if (crouch) {
-            characterImageView.setImage(characterCrouchIcon);
-        }
+    public void updateCharacter(Character character) {
+        characterImageView.setX(character.getPosition().getX() * MapConstants.getTilesize());
+        characterImageView.setY(character.getPosition().getY() * MapConstants.getTilesize());
+    	if(character.getSpeed().getX() == 0) {
+    		
+    		switch (character.getAim().getDirection()) {
+	        case UP:
+	        	characterImageView.setImage(characterIdleUp.get(false));
+	        	characterIdleUp.animate();
+	        	break;
+	        case DOWN:
+	            characterImageView.setImage(characterCrouchIdle.get(false)); // DA CAMBIAREEE
+	            characterCrouchIdle.animate();
+	            break;
+	        case RIGHT:
+	            characterImageView.setImage(characterIdle.get(true));
+	            characterIdle.animate();
+	            break;
+	        case LEFT:
+	            characterImageView.setImage(characterIdle.get(false));
+	            characterIdle.animate();
+	            break;
+	        case NEUTRAL:
+	        default:
+	            break;
+	        }
+	        if (character.isCrouching()) {
+	            characterImageView.setImage(characterCrouchIdle.get(true));
+	            characterCrouchIdle.animate();
+	        }
+	        
+    	} else if (character.getSpeed().getX() > 0) {
+    		
+    		switch (character.getAim().getDirection()) {
+	        case UP:
+	        	characterImageView.setImage(characterRunUp.get(true));
+	        	characterRunUp.animate();
+	        	break;
+	        case DOWN:
+	            characterImageView.setImage(characterCrouchRun.get(true));
+	            characterCrouchRun.animate();
+	            break;
+	        case RIGHT:
+	            characterImageView.setImage(characterRun.get(true));
+	            characterRun.animate();
+	            break;
+	        case LEFT:
+	            characterImageView.setImage(characterRun.get(false));
+	            characterRun.animate();
+	            break;
+	        case NEUTRAL:
+	        default:
+	            break;
+	        }
+	        if (character.isCrouching()) {
+	            characterImageView.setImage(characterCrouchIdle.get(true));
+	            characterCrouchIdle.animate();
+	        }
+	        
+    	} else if (character.getSpeed().getX() < 0) {
+    		
+    		switch (character.getAim().getDirection()) {
+    		 case UP:
+ 	        	characterImageView.setImage(characterRunUp.get(false));
+ 	        	characterRunUp.animate();
+ 	        	break;
+ 	        case DOWN:
+ 	            characterImageView.setImage(characterCrouchRun.get(false));
+ 	            characterCrouchRun.animate();
+ 	            break;
+ 	        case LEFT:
+ 	            characterImageView.setImage(characterRun.get(false));
+ 	            characterRun.animate();
+ 	            break;
+ 	        case RIGHT:
+	            characterImageView.setImage(characterRun.get(true));
+	            characterRun.animate();
+	            break;
+ 	        case NEUTRAL:
+	        default:
+	            break;
+	        }
+	        if (character.isCrouching()) {
+	            characterImageView.setImage(characterCrouchIdle.get(false));
+	            characterCrouchIdle.animate();
+	        }
+	        
+    	}
+        
+        
+        
+	        
     }
 
-    /**
+	/**
      * 
      * @return bla
      */
