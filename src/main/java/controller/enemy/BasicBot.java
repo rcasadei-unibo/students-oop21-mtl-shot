@@ -55,7 +55,9 @@ public class BasicBot implements SimpleBot {
                 enemy.setLeft(dir);
                 enemy.setRight(!dir);
                 enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                        this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), +(enemy.getHitbox().getY() - 1))));
+                        this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), + (enemy.getHitbox().getY() - 1))) ||
+                        getCurrentCharacterSegment().isCollidableAtPosition(
+                                this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), 0)));
             }
         }
     }
