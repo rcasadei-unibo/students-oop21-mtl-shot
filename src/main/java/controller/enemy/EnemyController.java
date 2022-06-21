@@ -3,6 +3,7 @@ package controller.enemy;
 import controller.CharacterController;
 import model.character.Character;
 import model.map.Level;
+import util.Pair;
 /**
  * TODO: javadoc.
  *
@@ -18,10 +19,10 @@ public class EnemyController extends CharacterController{
 	}
 	
 	@Override
-	public void controllerTick() {
+	public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
 		brain.move();
 		brain.fire();
-		super.controllerTick();
+		super.controllerTick(bounds, canAdvance);
 	}
 	
 	public SimpleBot getBrain() {

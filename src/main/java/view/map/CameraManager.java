@@ -7,6 +7,7 @@ import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.util.Duration;
+import util.Pair;
 import util.Vector2D;
 import util.map.MapConstants;
 
@@ -53,6 +54,10 @@ public class CameraManager {
             offset += controller.getStage().getPlayer().getSpeed().getX();
             
         }
+	}
+	
+	public Pair<Double, Double> getBounds(){
+		return new Pair<Double, Double>(controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth() + offset, controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())));
 	}
 	
 	public Camera getCamera() {

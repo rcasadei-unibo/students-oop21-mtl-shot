@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.management.InstanceNotFoundException;
 
@@ -79,9 +80,9 @@ public class Controller {
 
                 enemiesController.forEach(e -> {
                     if (e.isActive()) {
-                        e.controllerTick();
+                        e.controllerTick(viewReference.getCameraManager().getBounds(), false);
                         if(e.getCharacter().isShooting()) {
-                            e.fire(weaponController, bulletsController);
+//                            e.fire(weaponController, bulletsController);
                         }
                         if (e.isDead()) {
                             remove.add(e);
@@ -95,7 +96,11 @@ public class Controller {
 
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                playerController.controllerTick();
+                playerController.controllerTick(viewReference.getCameraManager().getBounds(),
+						stage.getEnemies().stream()
+								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
+										.equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
+								.collect(Collectors.toSet()).isEmpty());
                 if(playerController.getCharacter().isShooting()) {
                     playerController.fire(weaponController, bulletsController);
                 }
@@ -104,7 +109,6 @@ public class Controller {
                     try {
                         gamePause();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                 }
@@ -278,11 +282,6 @@ public class Controller {
         return this.stage;
     }
 
-    private void removeEnemy(final EnemyController enemyController) {
-        enemiesController.remove(enemyController);
-        stage.getEnemies().remove(enemyController.getCharacter());
-    }
-
     public void refreshEnemiesStatus() {
         enemiesController.forEach(e -> {
             if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
@@ -309,4 +308,9 @@ public class Controller {
             remove.forEach(e -> removeEnemy(e));
         }
     }
+
+	private void removeEnemy(final EnemyController enemyController) {
+	    enemiesController.remove(enemyController);
+	    stage.getEnemies().remove(enemyController.getCharacter());
+	}
 }

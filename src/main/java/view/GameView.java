@@ -144,7 +144,6 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
-        System.out.println("Vita: " + stage.getPlayer().getHealth().getHealth());
 	}
 
     /**
@@ -203,5 +202,9 @@ public class GameView extends Scene {
         });
 
         this.root.getChildren().removeAll(remove);
+    }
+    
+    public CameraManager getCameraManager() {
+    	return this.cameraManager;
     }
 }

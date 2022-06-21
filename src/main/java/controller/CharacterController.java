@@ -1,6 +1,7 @@
 package controller;
 
 import util.Direction;
+import util.Pair;
 import util.Vector2D;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
@@ -44,8 +45,8 @@ public class CharacterController {
     /**
      * The main method that checks everything about the player.
      */
-    public void controllerTick() {
-        this.movementChecks();
+    public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
+        this.movementChecks(bounds, canAdvance);
         this.character.moveEntity();
         this.aimChecks();
     }
@@ -80,7 +81,7 @@ public class CharacterController {
         }
     }
 
-    private void movementChecks() {
+    private void movementChecks(final Pair<Double, Double> bounds, final boolean canAdvance) {
         // Setting default values
         character.setCrouchCondition(Crouch.FREE);
         final Vector2D nextPos = new Vector2D(character.getPosition());
@@ -104,14 +105,16 @@ public class CharacterController {
         } else if (this.character.getSpeed().getX() != 0) {
             this.character.setFall(true);
         }
+     
+       
         // Left wall collisions
-        if (this.isCollidingLeft(nextPos)) {
+        if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + 0.1) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
-        } else if (this.isCollidingRight(nextPos)) {
+        } else if ((this.isCollidingRight(nextPos) || nextPos.getX() + this.character.getHitbox().getX() > bounds.getY()) && !canAdvance) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
-        // Special case: while fling he can not crouch
+        // Special case: while flying he can not crouch
         if (this.character.isFalling()) {
             this.character.setCrouchCondition(Crouch.UP);
         }
@@ -161,5 +164,4 @@ public class CharacterController {
         return level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft)
                 || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
-
 }
