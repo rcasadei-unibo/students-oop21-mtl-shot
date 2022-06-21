@@ -36,9 +36,6 @@ public class SignInController {
      */
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
-        var sm = new SoundManager();
-        sm.stopSound(Sounds.METAL_SHOT_HAHA);
-        
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
@@ -50,6 +47,8 @@ public class SignInController {
             stage.setWidth(dim.getX());
             stage.setHeight(dim.getY());
         }
+        var sm = new SoundManager();
+        sm.stopSound(Sounds.METAL_SHOT_HAHA);
     }
     /**
      * Executes when the back button is released.

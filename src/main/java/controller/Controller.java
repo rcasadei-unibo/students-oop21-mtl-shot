@@ -1,6 +1,5 @@
 package controller;
 
-import controller.WeaponController.TryToShootReturn;
 import controller.enemy.EnemyController;
 
 import java.io.IOException;
@@ -31,6 +30,7 @@ import view.sounds.SoundManager.Sounds;
  * loop.
  */
 public class Controller {
+	
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
@@ -39,6 +39,7 @@ public class Controller {
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
+    
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -247,4 +248,5 @@ public class Controller {
     public StageImpl getStage() {
         return this.stage;
     }
+    
 }
