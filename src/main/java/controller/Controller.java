@@ -86,7 +86,7 @@ public class Controller {
 			 * 
 			 */
 			System.out.println("Shooting...");
-			this.soundsController.tryToPlaySound(Sounds.BULLET_FIRING);
+			this.soundsController.tryToPlaySound(Sounds.RIFLE_FIRING);
 		} else if (key.equals(KeyCode.R)) {
 			/*
 			 *     // The player reloads

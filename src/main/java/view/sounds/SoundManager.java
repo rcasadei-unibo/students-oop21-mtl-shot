@@ -19,7 +19,7 @@ public class SoundManager {
 	}
 	
 	/**
-	 * Use this method to play a sound.
+	 * Plays a sound.
 	 * @param sound to be played.
 	 */
 	public void playSound(final Sounds sound) {
@@ -27,16 +27,29 @@ public class SoundManager {
 	}
 	
 	/**
+	 * Immediately stops a sound.
+	 * @param sound to be stopped.
+	 */
+	public void stopSound(final Sounds sound) {
+		sound.getAudioClip().stop();
+	}
+	
+	/**
 	 * It contains, identifies and loads every sound.
 	 *
 	 */
 	public enum Sounds {
-		BULLET_FIRING(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "bullet.wav")
+		RIFLE_FIRING(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "rifle.mp3")
 				.toFile()
 				.toURI()
 				.toString())),
 		
-		MAIN_THEME(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "Domenico Bini - Il Vulcano.mp3")
+		METAL_SHOT_HAHA(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "metalshotHaha.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		MAIN_THEME(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "mainTheme.mp3")
 				.toFile()
 				.toURI()
 				.toString()));
