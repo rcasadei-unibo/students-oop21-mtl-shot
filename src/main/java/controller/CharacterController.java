@@ -54,9 +54,12 @@ public class CharacterController {
     }
     
     public void fire(final WeaponController weaponController, final BulletsController bulletsController, final SoundsController soundsController) {
-        if (weaponController.tryToShoot(this.character).equals(TryToShootReturn.SHOOT)) {
+    	var ttsr = weaponController.tryToShoot(this.character);
+        if (ttsr.equals(TryToShootReturn.SHOOT)) {
             soundsController.playSound(Sounds.RIFLE_FIRING);
             bulletsController.addBullet(this.character);
+        } else if (ttsr.equals(TryToShootReturn.RELOAD)) {
+        	soundsController.playSound(Sounds.RELOAD);
         }
     }
     

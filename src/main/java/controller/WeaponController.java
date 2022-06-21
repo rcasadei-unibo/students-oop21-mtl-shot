@@ -37,8 +37,9 @@ public class WeaponController {
 			return TryToShootReturn.SHOOT;
 			
 		} else if (characterShooting.getWeapon().getBulletsInMag() == 0) {
-			this.tryToReload(characterShooting);
-			return TryToShootReturn.RELOAD;
+			if (this.tryToReload(characterShooting)) {
+				return TryToShootReturn.RELOAD;				
+			}
 		}
 		return TryToShootReturn.NOTHING;
 	}
