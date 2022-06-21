@@ -99,6 +99,16 @@ public class Controller {
                 if(playerController.getCharacter().isShooting()) {
                     playerController.fire(weaponController, bulletsController);
                 }
+                
+                if(playerController.isDead()) {
+                    try {
+                        gamePause();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                }
+                
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }

@@ -3,7 +3,6 @@ package controller.enemy;
 import controller.CharacterController;
 import model.character.Character;
 import model.map.Level;
-import view.EnemyView;
 /**
  * TODO: javadoc.
  *

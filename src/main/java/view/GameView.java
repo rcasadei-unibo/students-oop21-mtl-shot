@@ -144,6 +144,7 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
+        System.out.println("Vita: " + stage.getPlayer().getHealth().getHealth());
 	}
 
     /**
@@ -184,8 +185,6 @@ public class GameView extends Scene {
      * @return bla
      */
     public Map<Enemy, EnemyView> getEnemiesView() {
-
-        System.out.println("size " + enemiesView.size());
         return enemiesView;
     }
 
