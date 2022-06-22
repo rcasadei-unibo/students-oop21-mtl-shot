@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import model.character.Character;
 import model.character.Enemy;
 import model.character.Player;
+import model.map.Level;
 import model.map.tile.MapModel;
 import model.weapons.Bullet;
 
@@ -22,16 +23,18 @@ public class BulletsController {
     private Collection<Bullet> bulletsReference;
     private Player playerReference;
     private Collection<Enemy> enemiesReference;
+    private Level levelReference;
 	
     /**
      * @param playerReference - A reference to the Player
      * @param bulletsReference - A reference to the bullets collection
      * @param mapReference - A reference to the Map
      */
-	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference, final Collection<Enemy> enemiesReference) {
+	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference, final Collection<Enemy> enemiesReference, final Level levelReference) {
 		this.playerReference = playerReference;
 		this.bulletsReference = bulletsReference;
 		this.enemiesReference = enemiesReference;
+		this.levelReference = levelReference;
 	}
 	
 	/**
@@ -41,28 +44,23 @@ public class BulletsController {
 		this.bulletsReference.forEach(b -> {
 			final boolean playerColliding = this.checkPlayerColliding(b);
 			final var enemyColliding = this.checkEnemyColliding(b);
+			final boolean tileColliding = this.checkTilesColliding(b);
 
 			if (playerColliding && !this.playerReference.equals(b.getOwner())) {
 				b.hitSomething();
 				this.playerReference.getHealth().hurt(b.getDamage());
-			} else if (false /*this.mapReference.hasSingleCollidable(b.getPosition())*/) {
+			} else if (tileColliding) {
 				b.hitSomething();
-				// TODO: if the tile is breakable, tile brakes here
 			} else if (enemyColliding.isPresent() && !this.enemiesReference.contains(b.getOwner())) {
 				b.hitSomething();
-				/*this.enemiesReference.forEach(e -> {
-					if (e.equals(enemyColliding)) {
-		                System.out.println("EHI");
-						e.getHealth().hurt(b.getDamage());
-					}
-				});*/
 				enemyColliding.get().getHealth().hurt(b.getDamage());
 			} else {
-				//if (b.getPosition().getX() <= this.mapReference.getWidth() && b.getPosition().getY() <= this.mapReference.getHeight()) {
+				if (this.levelReference.getSegmentAtPosition(b.getPosition())
+						.equals(this.levelReference.getSegmentAtPosition(this.playerReference.getPosition()))) {
 					b.tick();
-				/*} else {
+				} else {
 					b.hitSomething();
-				}*/
+				}
 			}
 		});
 		/*
@@ -109,8 +107,10 @@ public class BulletsController {
 	 * This method checks if Bullet b
 	 * is colliding with any tile
 	 */
-	private Optional<Character> checkTilesColliding(final Bullet b) {
-		// TODO: implementation based on Map implementation
-		return Optional.empty();
+	private boolean checkTilesColliding(final Bullet b) {
+		return this.levelReference
+				.getSegmentAtPosition(b.getPosition())
+				.getCollidableAtPosition(b.getPosition())
+				.isPresent();
 	}
 }

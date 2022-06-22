@@ -48,14 +48,12 @@ public abstract class Weapon {
 	
 	public void reload() {
 		this.bulletsInMag = this.magCapacity;
-        System.out.println("Reloading...");
 	}
 	
 	public void shoot() {
 		if (this.bulletsInMag != 0) {
 			this.bulletsInMag--;
 		}
-		System.out.println("Shooting...");
 	}
 
 	public int getDamagePerBullet() {

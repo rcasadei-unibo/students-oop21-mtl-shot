@@ -1,6 +1,5 @@
 package view;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class BulletsView {
 	    this.scale = scale;
 		this.imageViewList = new LinkedList<>();
 		//bulletTexture = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
-		bulletTexture = new Image(new FileInputStream(ClassLoader.getSystemResource("bullet6x4.png").getPath()));
+		bulletTexture = new Image(ClassLoader.getSystemResourceAsStream("bullet6x4.png"));
 	}
 	
 	/**

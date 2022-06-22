@@ -23,7 +23,7 @@ public class BasicBot implements SimpleBot {
     private Player player;
     private Level level;
     private double maxDistance = EntityConstants.ENEMY_DISTANCE + 
-            (new Random().nextDouble(EntityConstants.ENEMY_VARIATON) - EntityConstants.ENEMY_VARIATON/2);
+            (new Random().nextDouble()*EntityConstants.ENEMY_VARIATON - EntityConstants.ENEMY_VARIATON/2);
 
     public BasicBot(Character character, Level level) {
         this.enemy = (Enemy) character;
@@ -55,7 +55,9 @@ public class BasicBot implements SimpleBot {
                 enemy.setLeft(dir);
                 enemy.setRight(!dir);
                 enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                        this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), +(enemy.getHitbox().getY() - 1))));
+                        this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), + (enemy.getHitbox().getY() - 1))) ||
+                        getCurrentCharacterSegment().isCollidableAtPosition(
+                                this.enemy.getPosition().sum((dir ? - 0.5 : 1.5), 0)));
             }
         }
     }
@@ -72,8 +74,11 @@ public class BasicBot implements SimpleBot {
 
     @Override
     public void fire() {
-        // TODO Auto-generated method stub
-        
+        if(Math.abs(enemy.getPosition().getX() - player.getPosition().getX()) < maxDistance) {
+            enemy.setFire(true);
+        } else {
+            enemy.setFire(false);            
+        }
     }
 
 }

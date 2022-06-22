@@ -46,9 +46,8 @@ public class Bullet extends Entity {
     public Bullet(final Character owner) {
         super(new Vector2D(owner.getPosition().getX() + owner.getHitbox().getX() / 2,
                 owner.getPosition().getY() + owner.getHitbox().getY() / 2),
-                new Vector2D(0.1, 0.1)); // TODO: change magic
-                                                                                             // numbers
-        System.out.println(owner.getPosition().toString());
+             // TODO: change magic numbers
+                new Vector2D(0.1, 0.1));
         this.owner = owner;
         this.direction = owner.getAim().getDirection();
         this.speed = new Vector2D(0.05, 0.05);

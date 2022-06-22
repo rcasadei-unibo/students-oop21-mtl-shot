@@ -7,6 +7,7 @@ import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.util.Duration;
+import util.Pair;
 import util.Vector2D;
 import util.map.MapConstants;
 
@@ -30,24 +31,33 @@ public class CameraManager {
 	}
 	
 	public void updateCamera() {
-		if (!controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).equals(controller.getStage().getLevel().getSegmentAtPosition(prevPosSegment))) {
-			prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
-			this.root.getChildren().removeAll(levelView.getDisplayed());
-			this.root.getChildren().addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
-			TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.cameraSupport);
-			tt.setToX((new Vector2D(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin()).getX()) * MapConstants.getTilesize() - camera.getTranslateX() );
-			ParallelTransition pt = new ParallelTransition();
-			pt.getChildren().add(tt);
-			pt.play();
-			offset = 0;
-		}
-		if(controller.getStage().getPlayer().getSpeed().getX() > 0 
-				&& controller.getStage().getPlayer().getPosition().getX() > 4 + controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth() + offset	
-				&& controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getPlayer().getPosition().getX() > 26) {
-			camera.setTranslateX(camera.getTranslateX() + (controller.getStage().getPlayer().getSpeed().getX()*MapConstants.getTilesize()));
-			offset += controller.getStage().getPlayer().getSpeed().getX();
-			
-		}
+	    
+	    //controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX() > (controller.getStage().getLevel().getSegmentAtPosition(prevPosSegment).getOrigin().getX())
+	    if (!controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).equals(controller.getStage().getLevel().getSegmentAtPosition(prevPosSegment))) {
+            prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
+            this.root.getChildren().removeAll(levelView.getDisplayed());
+            this.root.getChildren().addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
+            TranslateTransition tt = new TranslateTransition(Duration.millis(1000), this.cameraSupport);
+            tt.setToX((new Vector2D(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin()).getX()) * MapConstants.getTilesize() - camera.getTranslateX() );
+            ParallelTransition pt = new ParallelTransition();
+            pt.getChildren().add(tt);
+            pt.play();
+            offset = 0;
+            
+            controller.refreshEnemiesStatus();
+            controller.removeOldEnemies();
+        }
+        if(controller.getStage().getPlayer().getSpeed().getX() > 0 
+                && controller.getStage().getPlayer().getPosition().getX() > 4 + controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth() + offset  
+                && controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getPlayer().getPosition().getX() > 26) {
+            camera.setTranslateX(camera.getTranslateX() + (controller.getStage().getPlayer().getSpeed().getX()*MapConstants.getTilesize()));
+            offset += controller.getStage().getPlayer().getSpeed().getX();
+            
+        }
+	}
+	
+	public Pair<Double, Double> getBounds(){
+		return new Pair<Double, Double>(controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) - controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getTextMap().getWidth() + offset, controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())));
 	}
 	
 	public Camera getCamera() {
