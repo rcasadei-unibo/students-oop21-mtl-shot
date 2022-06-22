@@ -82,9 +82,10 @@ public class Controller {
                     if (e.isActive()) {
                         e.controllerTick(viewReference.getCameraManager().getBounds(), false);
                         if(e.getCharacter().isShooting()) {
-//                            e.fire(weaponController, bulletsController);
+                            e.fire(weaponController, bulletsController);
                         }
                         if (e.isDead()) {
+                            viewReference.getUserData().increasePoints();
                             remove.add(e);
                         }
                     }

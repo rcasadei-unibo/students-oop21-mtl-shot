@@ -3,14 +3,23 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.HUD">
-   <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="pog" prefHeight="71.0" prefWidth="159.0" text="Label" />
-         </children>
-      </HBox>
-   </top>
+	<top>
+		<HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="points" alignment="CENTER" prefHeight="99.0" prefWidth="250.0">
+					<font>
+						<Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf" />
+					</font>
+				</Label>
+				<Label fx:id="health" contentDisplay="RIGHT" prefHeight="101.0" prefWidth="272.0" textAlignment="CENTER">
+					<font>
+						<Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf" />
+					</font>
+				</Label>
+			</children>
+		</HBox>
+	</top>
 </BorderPane>

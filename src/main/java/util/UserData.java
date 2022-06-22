@@ -8,8 +8,11 @@ import java.util.Date;
 public class UserData {
 
     private final String name;
-    private double points;
+    private int points;
+    private int lpLeft;
     private Date lastGame;
+    
+    public static final int POINTS_PER_ENEMY = 10;
 
     /**
      * The UserData constructor.
@@ -24,8 +27,20 @@ public class UserData {
      * Gets the total points possessed by the user.
      * @return points
      */
-    public double getPoints() {
+    public int getPoints() {
         return points;
+    }
+
+    public void increasePoints() {
+        this.points += POINTS_PER_ENEMY;
+    }
+    
+    public int getLpLeft() {
+        return this.lpLeft;
+    }
+    
+    public void setLpLeft(int lp) {
+        this.lpLeft = lp;
     }
 
     /**
@@ -35,11 +50,11 @@ public class UserData {
     public Date getLastGame() {
         return lastGame;
     }
-    
+
     public void setLastGame(final Date lastGame) {
         this.lastGame = lastGame;
     }
-    
+
     /**
      * Gets the user name.
      * @return String
