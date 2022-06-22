@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -32,40 +34,22 @@ public class SoundsController {
 		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 	
-	private boolean playRandomSound(final Sounds sound1, final Sounds sound2, final Sounds sound3, final Sounds sound4, final boolean force) {
-		if (!this.timers.containsKey(sound1) &&
-				!this.timers.containsKey(sound2) &&
-				!this.timers.containsKey(sound3) &&
-				!this.timers.containsKey(sound4)) {
-			int n = this.rnd.nextInt(4);
-			switch (n) {
-			case 0:
-				if (!force) {
-					this.timers.put(sound1, new Cooldown(hurtAndDieCooldownTicks));
-				}
-				this.soundManager.playSound(sound1);
-				break;
-			case 1:
-				if (!force) {
-					this.timers.put(sound2, new Cooldown(hurtAndDieCooldownTicks));
-				}
-				this.soundManager.playSound(sound2);
-				break;
-			case 2:
-				if (!force) {
-					this.timers.put(sound3, new Cooldown(hurtAndDieCooldownTicks));
-				}
-				this.soundManager.playSound(sound3);
-				break;
-			case 3:
-				if (!force) {
-					this.timers.put(sound4, new Cooldown(hurtAndDieCooldownTicks));
-				}
-				this.soundManager.playSound(sound4);
-				break;
-			default:
-				break;
+	/**
+	 * Chooses a random sound in sounds List, and plays it. 
+	 * @param sounds - List of sounds from which choose
+	 * @param force - Forced play when true
+	 * @return true if the sound is actually played
+	 */
+	private boolean playRandomSound(final List<Sounds> sounds, final boolean force) {
+		List<Sounds> tmp = new ArrayList<>(sounds);
+		tmp.removeIf(s -> !this.timers.containsKey(s));
+		
+		if (tmp.isEmpty()) {
+			int n = this.rnd.nextInt(sounds.size());
+			if (!force) {
+				this.timers.put(sounds.get(n), new Cooldown(hurtAndDieCooldownTicks));
 			}
+			this.soundManager.playSound(sounds.get(n));
 			return true;
 		}
 		return false;
@@ -86,25 +70,24 @@ public class SoundsController {
 				soundType.equals(Sounds.HURT_2) ||
 				soundType.equals(Sounds.HURT_3) ||
 				soundType.equals(Sounds.HURT_4)) {
-			if (this.playRandomSound(Sounds.HURT_1, Sounds.HURT_2, Sounds.HURT_3, Sounds.HURT_4, false)) {
+			if (this.playRandomSound(List.of(Sounds.HURT_1, Sounds.HURT_2, Sounds.HURT_3, Sounds.HURT_4), false)) {
 				return true;
 			}
 		} else if (soundType.equals(Sounds.JUMP_1) ||
 				soundType.equals(Sounds.JUMP_2) ||
 				soundType.equals(Sounds.JUMP_3) ||
 				soundType.equals(Sounds.JUMP_4)) {
-			if (this.playRandomSound(Sounds.JUMP_1, Sounds.JUMP_2, Sounds.JUMP_3, Sounds.JUMP_4, false)) {
+			if (this.playRandomSound(List.of(Sounds.JUMP_1, Sounds.JUMP_2, Sounds.JUMP_3, Sounds.JUMP_4), false)) {
 				return true;
 			}
 		} else if (soundType.equals(Sounds.DIE_1) ||
 				soundType.equals(Sounds.DIE_2) ||
 				soundType.equals(Sounds.DIE_3) ||
 				soundType.equals(Sounds.DIE_4)) {
-			if (this.playRandomSound(Sounds.DIE_1, Sounds.DIE_2, Sounds.DIE_3, Sounds.DIE_4, true)) {
+			if (this.playRandomSound(List.of(Sounds.DIE_1, Sounds.DIE_2, Sounds.DIE_3, Sounds.DIE_4), true)) {
 				return true;
 			}
 		} else if (!this.timers.containsKey(soundType)) {
-			/* Se un suono di tipo soundType non è stato fatto ancora partire, lo fa partire TODO: translate comment */
 			this.timers.put(soundType, new Cooldown(10));
 			this.soundManager.playSound(soundType);
 			return true;
@@ -112,10 +95,20 @@ public class SoundsController {
 		return false;
 	}
 	
+	/**
+	 * Plays a sound without starting a cooldown timer
+	 * and without checking for previously started cooldowns,
+	 * so it is played in any case.
+	 * @param soundType - Sound to be played.
+	 */
 	public void forcePlaySound(final Sounds soundType) {
 		this.soundManager.playSound(soundType);
 	}
 	
+	/**
+	 * Stops a given sound.
+	 * @param soundType - Sound to be stopped.
+	 */
 	public void stopSound(final Sounds soundType) {
 		this.soundManager.stopSound(soundType);
 	}
