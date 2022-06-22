@@ -22,7 +22,13 @@ public class StageImpl {
     private final Collection<Bullet> bullets = null;
     private final MapModel mapModel;
 
-    public StageImpl(final TextMap textMap) throws IOException {        
+    /**
+     * The stage constructor.
+     * 
+     * @param textMap
+     * @throws IOException if the txt map sheet doesn't exist.
+     */
+    public StageImpl(final TextMap textMap) throws IOException {
         this.mapModel = new MapModel(textMap);
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1))
@@ -38,12 +44,10 @@ public class StageImpl {
     }
 
     public Player getPlayer() {
-        // TODO Auto-generated method stub
         return this.player;
     }
 
     public MapModel getMapModel() {
-        // TODO Auto-generated method stub
         return this.mapModel;
     }
 

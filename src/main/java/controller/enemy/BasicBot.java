@@ -13,7 +13,7 @@ import util.Vector2D;
  */
 public class BasicBot implements SimpleBot {
 	
-	private MovableEntity enemy = new Enemy(new Vector2D(), null, new SimpleHealth());	
+	private MovableEntity enemy = new Enemy(new Vector2D(), new Vector2D(1, 1), new SimpleHealth());	
 	private Player player;
 	
 	public void setPlayer(final Player p) {

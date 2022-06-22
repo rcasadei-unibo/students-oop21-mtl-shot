@@ -17,25 +17,27 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import util.Direction;
+import util.Pair;
 import util.Vector2D;
 import util.map.TextMap;
 import view.GameView;
 
 /**
- * 
- *
+ * The main controller. It contains all sub-controllers and it manages the game loop.
  */
 public class Controller {
 
     private final PlayerController playerController;
     private final MapController mapController;
     private final StageImpl stage;
-    private BulletsController bulletsController;
-    private WeaponController weaponController;
+    private final BulletsController bulletsController;
+    private final WeaponController weaponController;
     private final Timeline gameLoop;
     private boolean paused;
     /**
@@ -58,42 +60,43 @@ public class Controller {
         this.viewReference = gameView;
         this.bulletsController = new BulletsController(this);
         this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.viewReference.getPlayerView(), this.getMapController(),
-                this.stage.getPlayer()); // null ->
-        // player view
+        this.playerController = new PlayerController(this.mapController, this.stage.getPlayer());
         // SBAGLIATO, SOLO TEMPORANEO!!!!
         final SimpleBot brain = new BasicBot();
-        brain.getEntity().setPosition(25, 0);
+        brain.getEntity().setPosition(30, 0);
         brain.setPlayer(stage.getPlayer());
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                // TODO implement game loop here
- 
-                // Move player
-                // Jumping and falling included
-                // Shoot (player)
-                // Move/shoot enemies (based on Susca's AI)
-                // Check for colliding bullets
                 brain.move();
-                gameView.setEnemyPos(brain.getEntity().getPosition());
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
                 gameView.displayBullets(getBullets());
                 playerController.controllerTick();
+                if (!viewReference.getWindow().isFocused()) {
+                    stage.getPlayer().reset();
+                }
                 gameView.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Starts the game loop.
+     */
     public void gameStart() {
         gameLoop.play();
         paused = false;
     }
 
-    public void gamePause() throws IOException { // not in UML
+    /**
+     * Pause the game loop and display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void gamePause() throws IOException {
         if (!paused) {
             gameLoop.pause();
             this.viewReference.displayPauseMenu();
@@ -101,80 +104,85 @@ public class Controller {
         paused = true;
     }
 
-    public void gameReset() {
-        // TODO
-    }
-
     /**
-     * Handle the input key from standard input on it's press.
+     * Handles the input key from standard input on it's press.
      * 
-     * @param key
+     * @param key the key pressed
+     * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
-    public void keyPressed(final KeyCode key) {
+    public void keyPressed(final KeyCode key) throws IOException {
         if (key == KeyCode.A) {
-            playerController.getCharacter().setLeft(true);
-            playerController.getCharacter().getAim().setDirection(Direction.LEFT);
+            stage.getPlayer().setLeft(true);
+            stage.getPlayer().getAim().setDirection(Direction.LEFT);
         }
         if (key == KeyCode.D) {
-            playerController.getCharacter().setRight(true);
-            playerController.getCharacter().getAim().setDirection(Direction.RIGHT);
+            stage.getPlayer().setRight(true);
+            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
         }
         if (key == KeyCode.W) {
-            playerController.getCharacter().getAim().setDirection(Direction.UP);
+            stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
-            playerController.getCharacter().setJump(true);
+            stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
-            playerController.getCharacter().setCrouchKey(true);
-            playerController.getCharacter().getAim().setDirection(Direction.DOWN);
+            stage.getPlayer().setCrouchKey(true);
+            stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.playerController.getCharacter())) {
-                this.bulletsController.addBullet(this.playerController.getCharacter());
+            if (this.weaponController.tryToShoot(stage.getPlayer())) {
+                this.bulletsController.addBullet(stage.getPlayer());
                 System.out.println("Shooting...");
             }
         } else if (key.equals(KeyCode.R)) {
-            this.playerController.getCharacter().getWeapon().reload();
+            stage.getPlayer().getWeapon().reload();
         }
-    }
-
-    /**
-     * Handle the input key from standard input on it's release.
-     * 
-     * @param key
-     * @throws IOException
-     */
-    public void keyReleased(final KeyCode key) throws IOException {
-        if (key == KeyCode.A) {
-            playerController.getCharacter().setLeft(false);
-        }
-        if (key == KeyCode.D) {
-            playerController.getCharacter().setRight(false);
-        }
-        if (key == KeyCode.W) {
-            playerController.getCharacter().getAim().returnToHorizontal();
-        }
-        if (key == KeyCode.SPACE) {
-            playerController.getCharacter().setJump(false);
-        }
-        if (key == KeyCode.S) {
-            playerController.getCharacter().setCrouchKey(false);
-            playerController.getCharacter().getAim().returnToHorizontal();
-        }
-        if (key == KeyCode.P) {
+        if (key == KeyCode.ESCAPE) {
             this.gamePause();
         }
     }
 
+    /**
+     * Handles the input key from standard input on it's release.
+     * 
+     * @param key the key released
+     */
+    public void keyReleased(final KeyCode key) {
+        if (key == KeyCode.A) {
+            stage.getPlayer().setLeft(false);
+        }
+        if (key == KeyCode.D) {
+            stage.getPlayer().setRight(false);
+        }
+        if (key == KeyCode.W) {
+            stage.getPlayer().getAim().returnToHorizontal();
+        }
+        if (key == KeyCode.SPACE) {
+            stage.getPlayer().setJump(false);
+        }
+        if (key == KeyCode.S) {
+            stage.getPlayer().setCrouchKey(false);
+            stage.getPlayer().getAim().returnToHorizontal();
+        }
+    }
+
+    /**
+     * Saves the current game state.
+     */
     public void save() {
         // TODO
     }
 
+    /**
+     * Loads the selected game.
+     */
     public void load() {
         // TODO
     }
 
+    /**
+     * Loads the next level.
+     */
     public void nextLevel() {
         // TODO
     }
@@ -198,15 +206,6 @@ public class Controller {
     }
 
     /**
-     * Gets the view reference.
-     * 
-     * @return MetalShot
-     */
-    public GameView getView() {
-        return this.viewReference;
-    }
-
-    /**
      * Returns every Character (the player, enemies, ...) currently in game.
      * 
      * @return a Set of characters
@@ -214,7 +213,7 @@ public class Controller {
     public Set<Character> getAllCharacters() {
         // TODO
         final var set = new HashSet<Character>();
-        set.add(playerController.getCharacter());
+        set.add(stage.getPlayer());
         return set;
     }
 

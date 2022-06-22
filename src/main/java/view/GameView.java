@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,21 +7,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.Controller;
-import javafx.event.EventHandler;
+import controller.menu.PauseMenuController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.StageImpl;
 import util.Direction;
 import util.UserData;
 import util.Vector2D;
-import util.map.MapConstants;
 import view.map.MapView;
 import view.player.PlayerView;
 
@@ -32,56 +23,41 @@ import view.player.PlayerView;
  * The game main view. It contains all sub-views and handles the view refresh.
  * 
  */
-public class GameView extends Stage {
+public class GameView extends Scene {
 
     private static final double VIEWRESIZE = 1d;
     private final PlayerView playerView = new PlayerView(VIEWRESIZE);
     private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
     private final MapView mapView;
-    private final ImageView enemy;
-    private final Group mainGroup;
 
     private final Controller controller = new Controller(this);
     private final UserData userData;
 
+    private final Group root;
     /**
      * The GameView constructor.
      * @param username
      * @throws IOException 
      */
     public GameView(final String username) throws IOException {
-        this.initStyle(StageStyle.TRANSPARENT);
-        this.setFullScreenExitHint("");
+        super(new Group());
         this.userData = new UserData(username);
         this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
         final List<Node> totalList = new ArrayList<>();
         totalList.addAll(mapView.getNodes());
         totalList.add(playerView.getPlayerImageView());
-        this.enemy = new ImageView(new Image(new FileInputStream("src/main/resources/person2.png")));
-        totalList.add(enemy);
-        this.mainGroup = new Group(totalList);
-        this.setScene(new Scene(mainGroup));
+        this.root = new Group(totalList);
+        this.setRoot(root);
         controller.gameStart();
-        this.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                controller.keyPressed(event.getCode());
+        this.setOnKeyPressed(e -> {
+            try {
+                controller.keyPressed(e.getCode());
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         });
-        this.getScene().setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-                try {
-                    controller.keyReleased(event.getCode());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        this.getScene().setOnKeyTyped(new EventHandler<KeyEvent>() {
-            public void handle(final KeyEvent event) {
-            }
-        });
+        this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
+        this.setOnKeyTyped(e -> { });
     }
 
     /**
@@ -89,9 +65,9 @@ public class GameView extends Stage {
      * @param bullets
      */
     public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.mainGroup.getChildren().removeAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
         this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.mainGroup.getChildren().addAll(this.bulletsView.getImageViewList());
+        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
     }
 
     /**
@@ -103,20 +79,22 @@ public class GameView extends Stage {
         return this.playerView;
     }
 
+    /**
+     * Gets the visible part of the map.
+     * 
+     * @return MapView
+     */
     public MapView getMapView() {
         return this.mapView;
     }
 
+    /**
+     * Gets the visible part of the bullets.
+     * 
+     * @return BulletsView.
+     */
     public BulletsView getBulletsView() {
         return this.bulletsView;
-    }
-
-    /**
-     * TODO: Matteo Susca.
-     * @param pos
-     */
-    public void setEnemyPos(final Vector2D pos) {
-        this.enemy.setX(pos.getX() * MapConstants.getTilesize());
     }
 
     /**
@@ -128,22 +106,36 @@ public class GameView extends Stage {
                 stage.getPlayer().getAim().getDirection());
     }
 
-    public Controller getController() {
-        return this.controller;
-    }
-    
+    /**
+     * Gets the datas of the person who's playing Metal Shot.
+     * 
+     * @return UserData
+     */
     public UserData getUserData() {
         return this.userData;
     }
 
+    /**
+     * Display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
     public void displayPauseMenu() throws IOException {
-        this.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/PauseMenu.fxml")));
-        this.show();
+        final Group group = new Group(root);
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        group.getChildren().add(loader.load());
+        final PauseMenuController pmc = (PauseMenuController) loader.getController();
+        pmc.setSize(this.getWidth(), this.getHeight());
+        pmc.setGameView(this);
+        this.setRoot(group);
     }
 
+    /**
+     * Dispose the pause menu.
+     */
     public void disposePauseMenu() {
-        this.getScene().setRoot(mainGroup);
+        final Group group = new Group(root);
+        this.setRoot(group);
         this.controller.gameStart();
-        this.show();
     }
 }

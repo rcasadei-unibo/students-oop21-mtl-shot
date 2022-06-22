@@ -2,6 +2,7 @@ package model.weapons;
 
 import util.Direction;
 import util.Vector2D;
+import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.character.Character;
 
