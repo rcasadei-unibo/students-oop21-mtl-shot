@@ -18,7 +18,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
@@ -180,7 +179,7 @@ public class GameView extends Scene {
     }
 
     /**
-     * Display the pause menu.
+     * Display the win menu.
      * 
      * @throws IOException if the fxml sheet doesn't exist.
      */

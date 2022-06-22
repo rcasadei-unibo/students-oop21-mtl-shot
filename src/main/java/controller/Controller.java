@@ -117,7 +117,7 @@ public class Controller {
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
-                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(1)) && !winScene) {
+                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1)) && !winScene) {
                 	winScene = true;
                 	try {
 						viewReference.displayWinMenu();

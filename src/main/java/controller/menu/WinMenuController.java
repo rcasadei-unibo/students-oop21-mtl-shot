@@ -38,6 +38,5 @@ public class WinMenuController {
 
 	public void setShift(final Vector2D origin) {
 		pane.setTranslateX(MapConstants.getTilesize() * origin.getX());
-		System.out.println(origin.getX());
 	}
 }
