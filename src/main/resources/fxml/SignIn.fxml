@@ -48,7 +48,7 @@
          <children>
             <TextField fx:id="name" promptText="Name" styleClass="rectangularButton" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="PixelMadness" size="30.0" />
+                  <Font name="PixelMadness" size="30.0"  url="@../menusResources/Pixel_Madness.ttf"/>
                </font>
             </TextField>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#insertReleased" styleClass="rectangularButton" text="Insert" GridPane.columnIndex="2" GridPane.rowIndex="1">
