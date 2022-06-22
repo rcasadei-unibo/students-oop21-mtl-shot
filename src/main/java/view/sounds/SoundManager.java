@@ -75,6 +75,11 @@ public class SoundManager {
 				.toURI()
 				.toString())),
 		
+		HURT_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt4.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
 		JUMP_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump1.mp3")
 				.toFile()
 				.toURI()
@@ -86,6 +91,31 @@ public class SoundManager {
 				.toString())),
 		
 		JUMP_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump3.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		JUMP_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump4.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		DIE_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die1.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		DIE_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die2.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		DIE_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die3.mp3")
+				.toFile()
+				.toURI()
+				.toString())),
+		
+		DIE_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die4.mp3")
 				.toFile()
 				.toURI()
 				.toString()));

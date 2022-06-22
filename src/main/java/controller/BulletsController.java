@@ -56,8 +56,12 @@ public class BulletsController {
 				b.hitSomething();
 			} else if (enemyColliding.isPresent() && !this.enemiesReference.contains(b.getOwner())) {
 				b.hitSomething();
-				this.soundsControllerRef.playSound(Sounds.HURT_1);
 				enemyColliding.get().getHealth().hurt(b.getDamage());
+				if (enemyColliding.get().getHealth().isDead()) {
+					this.soundsControllerRef.playSound(Sounds.DIE_1);
+				} else {
+					this.soundsControllerRef.playSound(Sounds.HURT_1);					
+				}
 			} else {
 				if (this.levelReference.getSegmentAtPosition(b.getPosition())
 						.equals(this.levelReference.getSegmentAtPosition(this.playerReference.getPosition()))) {
