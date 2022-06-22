@@ -40,85 +40,28 @@ public class SoundManager {
 	 *
 	 */
 	public enum Sounds {
-		RIFLE_FIRING(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "rifle.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		RIFLE_FIRING(new AudioClip(ClassLoader.getSystemResource("sounds/rifle.mp3").toExternalForm())),
 		
-		METAL_SHOT_HAHA(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "metalshotHaha.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		METAL_SHOT_HAHA(new AudioClip(ClassLoader.getSystemResource("sounds/metalshotHaha.mp3").toExternalForm())),
 		
-		MAIN_THEME(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "mainTheme.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		MAIN_THEME(new AudioClip(ClassLoader.getSystemResource("sounds/mainTheme.mp3").toExternalForm())),
 		
-		RELOAD(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "reload.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		RELOAD(new AudioClip(ClassLoader.getSystemResource("sounds/reload.mp3").toExternalForm())),
 		
-		HURT_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt1.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		HURT_1(new AudioClip(ClassLoader.getSystemResource("sounds/hurt1.mp3").toExternalForm())),
+		HURT_2(new AudioClip(ClassLoader.getSystemResource("sounds/hurt2.mp3").toExternalForm())),
+		HURT_3(new AudioClip(ClassLoader.getSystemResource("sounds/hurt3.mp3").toExternalForm())),
+		HURT_4(new AudioClip(ClassLoader.getSystemResource("sounds/hurt4.mp3").toExternalForm())),
 		
-		HURT_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt2.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
+		JUMP_1(new AudioClip(ClassLoader.getSystemResource("sounds/jump1.mp3").toExternalForm())),
+		JUMP_2(new AudioClip(ClassLoader.getSystemResource("sounds/jump2.mp3").toExternalForm())),
+		JUMP_3(new AudioClip(ClassLoader.getSystemResource("sounds/jump3.mp3").toExternalForm())),
+		JUMP_4(new AudioClip(ClassLoader.getSystemResource("sounds/jump4.mp3").toExternalForm())),
 		
-		HURT_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt3.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		HURT_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "hurt4.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		JUMP_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump1.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		JUMP_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump2.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		JUMP_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump3.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		JUMP_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "jump4.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		DIE_1(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die1.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		DIE_2(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die2.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		DIE_3(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die3.mp3")
-				.toFile()
-				.toURI()
-				.toString())),
-		
-		DIE_4(new AudioClip(Path.of("src" + File.separator + "main" + File.separator + "resources" + File.separator + "sounds" + File.separator + "die4.mp3")
-				.toFile()
-				.toURI()
-				.toString()));
+		DIE_1(new AudioClip(ClassLoader.getSystemResource("sounds/die1.mp3").toExternalForm())),
+		DIE_2(new AudioClip(ClassLoader.getSystemResource("sounds/die2.mp3").toExternalForm())),
+		DIE_3(new AudioClip(ClassLoader.getSystemResource("sounds/die3.mp3").toExternalForm())),
+		DIE_4(new AudioClip(ClassLoader.getSystemResource("sounds/die4.mp3").toExternalForm()));
 		
 		private final AudioClip audioClip;
 		
