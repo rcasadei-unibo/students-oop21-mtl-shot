@@ -1,8 +1,6 @@
 package view.sounds;
 
-import java.io.File;
 import javafx.scene.media.AudioClip;
-import java.nio.file.Path;
 
 /**
  * It contains every sound. Each one
@@ -14,10 +12,6 @@ import java.nio.file.Path;
  *
  */
 public class SoundManager {
-	
-	public SoundManager() {
-		
-	}
 	
 	/**
 	 * Plays a sound.
