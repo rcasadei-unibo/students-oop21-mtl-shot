@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
+import util.map.MapConstants;
 import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
@@ -162,7 +163,9 @@ public class GameView extends Scene {
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-        group.getChildren().add(loader.load());
+        final var pauseMenu = (Node) loader.load();
+        group.getChildren().add(pauseMenu);
+        pauseMenu.setLayoutX(this.cameraManager.getOffset() * MapConstants.getTilesize());
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
         pmc.setSize(this.getWidth(), this.getHeight());
         pmc.setGameView(this);
@@ -186,10 +189,11 @@ public class GameView extends Scene {
     public void displayWinMenu() throws IOException {
     	final Group group = new Group(root);
     	final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
-        group.getChildren().add(loader.load());
+    	final var winMenu = (Node) loader.load();
+        winMenu.setLayoutX(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX());
+    	group.getChildren().add(winMenu);
         final WinMenuController wmc = (WinMenuController) loader.getController();
         wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
-        wmc.setShift(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin());
         //wmc.setSize(getWidth() / controller.getStage().getLevel().getSegments().size(), getHeight());
         this.setRoot(group);
     }

@@ -64,4 +64,7 @@ public class CameraManager {
 		return this.camera;
 	}
 	
+	public double getOffset() {
+		return this.offset;
+	}
 }
