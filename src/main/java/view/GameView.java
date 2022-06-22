@@ -69,7 +69,7 @@ public class GameView extends Scene {
         }
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/HUD.fxml"));
         totalList.add(loader.load());
-        this.hudController  = (HUD) loader.getController();
+        this.hudController  = (HUD) loader.getController();        
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -122,6 +122,8 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
     public void refresh(final StageImpl stage) {
+        this.hudController.setSize(this.getHeight(), this.getWidth());
+        
         cameraManager.updateCamera();
 
         if (stage.getEnemies().size() != enemiesView.keySet().size()) {
