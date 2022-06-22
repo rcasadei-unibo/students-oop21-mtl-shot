@@ -9,7 +9,7 @@ package controller;
  * the tick() method can be always called.
  * 
  */
-public class ShootingCooldown {
+public class Cooldown {
 	
 	/*
 	 * Total amount of ticks
@@ -21,7 +21,7 @@ public class ShootingCooldown {
 	 */
 	private int elapsedTicks;
 	
-	public ShootingCooldown(final int totalTicks) {
+	public Cooldown(final int totalTicks) {
 		this.totalTicks = totalTicks;
 		this.elapsedTicks = 0;
 	}

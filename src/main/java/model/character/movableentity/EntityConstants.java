@@ -38,6 +38,15 @@ public final class EntityConstants {
      */
     public static final double GRAVITY = 9.81 / Math.pow(Controller.TPS, 2);
 
+    //For enemy only
+
+    /**
+     * Field that represent the distance that the enemy keeps from the player.
+     */
+    public static final double ENEMY_DISTANCE = 7;
+    public static final double ENEMY_TOLERANCE = 0.5;
+    public static final int ENEMY_VARIATON = 6;
+
     private EntityConstants() {
     }
 }

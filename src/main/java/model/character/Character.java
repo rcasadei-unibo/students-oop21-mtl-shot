@@ -11,6 +11,8 @@ import model.weapons.Weapon;
  * weapon.
  */
 public class Character extends MovableEntity {
+    
+    private boolean isShooting = false;
 
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.
@@ -159,5 +161,13 @@ public class Character extends MovableEntity {
     @Override
     public String toString() {
         return super.toString() + " " + health.toString() + " " + weapon.toString() + " " + aim.toString();
+    }
+    
+    public void setFire(boolean b) {
+        this.isShooting = b;
+    }
+    
+    public boolean isShooting() {
+        return this.isShooting;
     }
 }

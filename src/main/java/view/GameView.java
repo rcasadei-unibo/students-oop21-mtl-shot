@@ -1,23 +1,32 @@
 package view;
 
 import java.io.IOException;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import controller.Controller;
-import controller.menu.PauseMenuController;
+import javax.management.InstanceNotFoundException;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import model.StageImpl;
-import util.Direction;
+import model.character.Enemy;
 import util.UserData;
-import util.Vector2D;
-import view.map.MapView;
+import view.map.CameraManager;
+import view.map.LevelView;
 import view.player.PlayerView;
+import controller.Controller;
+import controller.menu.PauseMenuController;
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
@@ -25,31 +34,45 @@ import view.player.PlayerView;
  */
 public class GameView extends Scene {
 
-    private static final double VIEWRESIZE = 1d;
-    private final PlayerView playerView = new PlayerView(VIEWRESIZE);
-    private final BulletsView bulletsView = new BulletsView(VIEWRESIZE);
-    private final MapView mapView;
-
+    private final PlayerView playerView = new PlayerView();
+    private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
+    private final BulletsView bulletsView = new BulletsView(1);
+    private final LevelView levelView;
+    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
     private final UserData userData;
+	private final Group root;
+	private final CameraManager cameraManager;
 
-    private final Group root;
-    /**
-     * The GameView constructor.
-     * @param username
-     * @throws IOException 
-     */
-    public GameView(final String username) throws IOException {
-        super(new Group());
-        this.userData = new UserData(username);
-        this.mapView = new MapView(controller.getMapController(), VIEWRESIZE);
-        final List<Node> totalList = new ArrayList<>();
-        totalList.addAll(mapView.getNodes());
-        totalList.add(playerView.getPlayerImageView());
-        this.root = new Group(totalList);
-        this.setRoot(root);
-        controller.gameStart();
-        this.setOnKeyPressed(e -> {
+	/**
+	 * The GameView constructor.
+	 * 
+	 * @param username
+	 * @throws IOException
+	 */
+	public GameView(final String username) throws IOException, InstanceNotFoundException {
+		super(new Group());
+		this.userData = new UserData(username);
+		this.levelView = new LevelView(this.controller.getStage().getLevel());
+		final List<Node> totalList = new ArrayList<>();
+		totalList.add(background);
+		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
+		totalList.add(playerView.getCharacterImageView());
+
+        for (final Enemy enemy : controller.getStage().getEnemies()) {
+            enemiesView.put(enemy, new EnemyView());
+        }
+        for (final EnemyView enemyView : this.enemiesView.values()) {
+            totalList.add(enemyView.getCharacterImageView());
+        }
+		this.root = new Group(totalList);
+		this.setRoot(root);
+		this.cameraManager = new CameraManager(controller, root, levelView);
+		this.setCamera(cameraManager.getCamera());
+		controller.gameStart();
+
+		this.setOnKeyPressed(e -> {
+
             try {
                 controller.keyPressed(e.getCode());
             } catch (IOException e1) {
@@ -57,17 +80,8 @@ public class GameView extends Scene {
             }
         });
         this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
-        this.setOnKeyTyped(e -> { });
-    }
-
-    /**
-     * TODO: Andrea Biagini.
-     * @param bullets
-     */
-    public void displayBullets(final Map<Vector2D, Direction> bullets) {
-        this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
-        this.bulletsView.updateBullets(bullets.keySet().stream().collect(Collectors.toList()));
-        this.root.getChildren().addAll(this.bulletsView.getImageViewList());
+        this.setOnKeyTyped(e -> {
+        });
     }
 
     /**
@@ -82,10 +96,10 @@ public class GameView extends Scene {
     /**
      * Gets the visible part of the map.
      * 
-     * @return MapView
+     * @return LevelView
      */
-    public MapView getMapView() {
-        return this.mapView;
+    public LevelView getLevelView() {
+        return this.levelView;
     }
 
     /**
@@ -97,17 +111,43 @@ public class GameView extends Scene {
         return this.bulletsView;
     }
 
-    /**
-     * Updates the current visual frame using the info of the stage.
-     * @param stage
-     */
+	/**
+	 * Updates the current visual frame using the info of the stage.
+	 * 
+	 * @param stage
+	 */
     public void refresh(final StageImpl stage) {
+
+        cameraManager.updateCamera();
+
+        if (stage.getEnemies().size() != enemiesView.keySet().size()) {
+            removeEnemies(stage.getEnemies());
+        }
+
+        for (Enemy enemy : stage.getEnemies()) {
+            enemiesView.get(enemy).updateCharacter(
+                    enemy.getPosition(), 
+                    enemy.isCrouching(),
+                    enemy.getAim().getDirection());
+        }
+
         playerView.updateCharacter(stage.getPlayer().getPosition(), stage.getPlayer().isCrouching(),
                 stage.getPlayer().getAim().getDirection());
-    }
+
+        // Updates bullets
+        if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
+            this.root.getChildren().removeAll(this.bulletsView.getImageViewList());
+            this.bulletsView
+                    .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+            this.root.getChildren().addAll(this.bulletsView.getImageViewList());
+        } else {
+            this.bulletsView
+                    .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
+        }
+	}
 
     /**
-     * Gets the datas of the person who's playing Metal Shot.
+     * Gets the data of the person who's playing Metal Shot.
      * 
      * @return UserData
      */
@@ -131,11 +171,40 @@ public class GameView extends Scene {
     }
 
     /**
-     * Dispose the pause menu.
+     * Dispose of the pause menu.
      */
     public void disposePauseMenu() {
         final Group group = new Group(root);
         this.setRoot(group);
         this.controller.gameStart();
+    }
+
+    /**
+     * 
+     * @return bla
+     */
+    public Map<Enemy, EnemyView> getEnemiesView() {
+        return enemiesView;
+    }
+
+    private void removeEnemies(final Collection<Enemy> enemies) {
+        List<EnemyView> removable = new LinkedList<>();
+        List<ImageView> remove = new LinkedList<>();
+        enemiesView.forEach((k, v) -> {
+            if (!enemies.contains(k)) {
+                removable.add(enemiesView.get(k));
+                remove.add(enemiesView.get(k).getCharacterImageView());
+            }
+        });
+
+        removable.forEach(e -> {
+            enemiesView.remove(e);
+        });
+
+        this.root.getChildren().removeAll(remove);
+    }
+    
+    public CameraManager getCameraManager() {
+    	return this.cameraManager;
     }
 }

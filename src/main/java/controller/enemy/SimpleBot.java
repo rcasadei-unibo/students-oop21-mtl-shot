@@ -1,20 +1,26 @@
 package controller.enemy;
 
+import model.character.Character;
 import model.character.Player;
 import model.character.movableentity.MovableEntity;
 /**
- * Bot that make enemy move and take decision
- * @author Matteo Susca
- *
+ * The brain of an enemy.
  */
 public interface SimpleBot {
-	/**
-	 * communicate with the enemy (or MovableEntity) and make it move.
-	 */
-	void move();
-	
-	void setPlayer(Player p);
-	
-	MovableEntity getEntity();
-	
+    /**
+     * Communicates with the enemy (or MovableEntity) and make it move.
+     */
+    void move();
+    /**
+     * 
+     * @param p
+     */
+    void setPlayer(Player p);
+
+    MovableEntity getEntity();
+
+    void setEnemy(Character character);
+    
+    void fire();
+
 }

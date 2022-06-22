@@ -1,14 +1,21 @@
 package util.map;
+
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public final class MapConstants {
-	private static final double TILESIZE = 32;
 
-	public static double getTilesize() {
-		return TILESIZE;
-	}
-	
+    private static final int TILESIZE = 64;
+
+    private MapConstants() { }
+
+    /**
+     * 
+     * @return bla
+     */
+    public static int getTilesize() {
+        return TILESIZE;
+    }
+
 }

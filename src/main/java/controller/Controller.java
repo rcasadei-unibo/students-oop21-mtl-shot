@@ -1,47 +1,46 @@
 package controller;
 
-import controller.enemy.BasicBot;
-import controller.enemy.SimpleBot;
+import controller.enemy.EnemyController;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
-import controller.map.MapController;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import util.Direction;
-import util.Pair;
-import util.Vector2D;
 import util.map.TextMap;
 import view.GameView;
 
 /**
- * The main controller. It contains all sub-controllers and it manages the game loop.
+ * The main controller. It contains all sub-controllers and it manages the game
+ * loop.
  */
 public class Controller {
 
     private final PlayerController playerController;
-    private final MapController mapController;
-    private final StageImpl stage;
+    private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
+    private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
     /**
-     * Tick per second. A unit that represent how many frames are calculated in a second.
+     * Ticks per second. A unit that represent how many steps are calculated in a
+     * second.
      */
     public static final double TPS = 60;
 
@@ -51,29 +50,69 @@ public class Controller {
      * The main controller constructor.
      * 
      * @param gameView
-     * @throws IOException if the text map is not present
+     * @throws IOException               if the text map is not present
+     * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public Controller(final GameView gameView) throws IOException {
+    public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
         final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
         this.stage = new StageImpl(textMap);
-        this.mapController = new MapController(this.stage.getMapModel());
         this.viewReference = gameView;
-        this.bulletsController = new BulletsController(this);
-        this.weaponController = new WeaponController(this);
-        this.playerController = new PlayerController(this.mapController, this.stage.getPlayer());
-        // SBAGLIATO, SOLO TEMPORANEO!!!!
-        final SimpleBot brain = new BasicBot();
-        brain.getEntity().setPosition(30, 0);
-        brain.setPlayer(stage.getPlayer());
+        this.enemiesController = new LinkedList<>();
+        this.bulletsController = new BulletsController(this.stage.getPlayer(),
+        		this.stage.getBullets(),
+        		this.stage.getEnemies(),
+        		this.stage.getLevel());
+        this.weaponController = new WeaponController();
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
+        for (final EnemyController enemyController : this.enemiesController) {
+            enemyController.getBrain().setPlayer(this.stage.getPlayer());
+        }
+
+        refreshEnemiesStatus();
+
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-                brain.move();
+
+                var remove = new LinkedList<EnemyController>();
+
+                enemiesController.forEach(e -> {
+                    if (e.isActive()) {
+                        e.controllerTick(viewReference.getCameraManager().getBounds(), false);
+                        if(e.getCharacter().isShooting()) {
+//                            e.fire(weaponController, bulletsController);
+                        }
+                        if (e.isDead()) {
+                            remove.add(e);
+                        }
+                    }
+                });
+
+                if(!remove.isEmpty()) {
+                    remove.forEach(e -> removeEnemy(e));
+                }
+
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                gameView.displayBullets(getBullets());
-                playerController.controllerTick();
+                playerController.controllerTick(viewReference.getCameraManager().getBounds(),
+						stage.getEnemies().stream()
+								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
+										.equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
+								.collect(Collectors.toSet()).isEmpty());
+                if(playerController.getCharacter().isShooting()) {
+                    playerController.fire(weaponController, bulletsController);
+                }
+                
+                if(playerController.isDead()) {
+                    try {
+                        gamePause();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
@@ -130,12 +169,13 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(stage.getPlayer())) {
-                this.bulletsController.addBullet(stage.getPlayer());
-                System.out.println("Shooting...");
-            }
+            this.stage.getPlayer().setFire(true);
+//            this.playerController.fire(weaponController, bulletsController);
         } else if (key.equals(KeyCode.R)) {
-            stage.getPlayer().getWeapon().reload();
+             if (this.weaponController.tryToReload(this.stage.getPlayer())) {
+                 // Play reload sound
+                 // Play reload animation
+             }
         }
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
@@ -164,6 +204,10 @@ public class Controller {
             stage.getPlayer().setCrouchKey(false);
             stage.getPlayer().getAim().returnToHorizontal();
         }
+        if (key == KeyCode.J) {
+            this.stage.getPlayer().setFire(false);
+//            this.playerController.fire(weaponController, bulletsController);
+        }
     }
 
     /**
@@ -181,23 +225,28 @@ public class Controller {
     }
 
     /**
-     * Loads the next level.
+     * Loads the next for (final EnemyController enemyController : enemiesController) {
+                    enemyController.controllerTick();
+                    if(enemyController.isDead()) {
+                        enemiesController.remove(enemyController);
+                        stage.getEnemies().remove(enemyController.getCharacter());
+                    }
+                }
+                welevel.
      */
     public void nextLevel() {
         // TODO
     }
 
     /**
-     * Gets the class that handle the map control.
-     * 
-     * @return MapController
-     */
-    public MapController getMapController() {
-        return this.mapController;
+     * Gets the class that handle the p    
+    public void setFire(boolean b) {
+        this.isShooting = b;
     }
-
-    /**
-     * Gets the class that handle the player control.
+    
+    public boolean isShooting() {
+        return this.isShooting;
+    }layer control.
      * 
      * @return PlayerController
      */
@@ -206,27 +255,62 @@ public class Controller {
     }
 
     /**
+     * Gets the view reference.
+     * 
+     * @return MetalShot
+     */
+    public GameView getView() {
+        return this.viewReference;
+    }
+
+    /**
      * Returns every Character (the player, enemies, ...) currently in game.
      * 
      * @return a Set of characters
      */
     public Set<Character> getAllCharacters() {
-        // TODO
         final var set = new HashSet<Character>();
         set.add(stage.getPlayer());
         return set;
     }
 
     /**
-     * Returns a map where every entry represents a bullet's position and direction.
-     * 
-     * @return a Map
+     * Gets the main stage.
+     * @return StageImpl
      */
-    public Map<Vector2D, Direction> getBullets() {
-        final Map<Vector2D, Direction> ret = new HashMap<>();
-        for (final var b : this.bulletsController.getBullets()) {
-            ret.put(b.getPosition(), b.getDirection());
-        }
-        return ret;
+    public StageImpl getStage() {
+        return this.stage;
     }
+
+    public void refreshEnemiesStatus() {
+        enemiesController.forEach(e -> {
+            if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
+                    .getSegmentAtPosition(stage.getPlayer().getPosition())) {
+                e.setActive(false);
+            } else {
+                e.setActive(true);
+            }
+        });
+    }
+
+    public void removeOldEnemies() {
+        var remove = new LinkedList<EnemyController>();
+        
+        enemiesController.forEach(e -> {
+            if (!e.isActive()
+                    && stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()).getOrigin().getX() < stage
+                            .getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX()) {
+                remove.add(e);
+            }
+        });
+        
+        if(!remove.isEmpty()) {
+            remove.forEach(e -> removeEnemy(e));
+        }
+    }
+
+	private void removeEnemy(final EnemyController enemyController) {
+	    enemiesController.remove(enemyController);
+	    stage.getEnemies().remove(enemyController.getCharacter());
+	}
 }

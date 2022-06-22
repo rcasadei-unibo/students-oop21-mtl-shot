@@ -2,6 +2,7 @@ package controller.enemy;
 
 import java.util.Random;
 
+import model.character.Character;
 import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.MovableEntity;
@@ -34,5 +35,17 @@ public class RandomBot implements SimpleBot {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setEnemy(Character character) {
+		// TODO Auto-generated method stub
+		
+	}
+
+    @Override
+    public void fire() {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

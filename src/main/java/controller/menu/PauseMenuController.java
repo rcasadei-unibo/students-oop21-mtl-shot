@@ -3,6 +3,8 @@ package controller.menu;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.management.InstanceNotFoundException;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,8 +52,8 @@ public class PauseMenuController {
     }
 
     @FXML
-    void restartReleased(final MouseEvent event) throws IOException {
-/*
+/*    void restartReleased(final MouseEvent event) throws IOException {
+
         final GameView gv = (GameView) ((Node) event.getSource()).getScene().getWindow();
         final GameView gv1 = new GameView(gv.getUserData().getName());
         gv1.setWidth(gv.getWidth());
@@ -60,7 +62,9 @@ public class PauseMenuController {
         gv1.initStyle(gv.getStyle());
         gv1.setFullScreenExitHint("");
         gv1.show();
-        gv.close();*/
+        gv.close();
+}*/
+    void restartReleased(final MouseEvent event) throws IOException, InstanceNotFoundException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
