@@ -12,6 +12,7 @@ import model.character.Player;
 import model.map.Level;
 import model.map.tile.MapModel;
 import model.weapons.Bullet;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * Updates and mantains the bullets Collection,
@@ -23,6 +24,7 @@ public class BulletsController {
     private Collection<Bullet> bulletsReference;
     private Player playerReference;
     private Collection<Enemy> enemiesReference;
+    private SoundsController soundsControllerRef;
     private Level levelReference;
 	
     /**
@@ -30,10 +32,11 @@ public class BulletsController {
      * @param bulletsReference - A reference to the bullets collection
      * @param mapReference - A reference to the Map
      */
-	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference, final Collection<Enemy> enemiesReference, final Level levelReference) {
+	public BulletsController(final Player playerReference, final Collection<Bullet> bulletsReference, final Collection<Enemy> enemiesReference, final SoundsController soundsControllerRef, final Level levelReference) {
 		this.playerReference = playerReference;
 		this.bulletsReference = bulletsReference;
 		this.enemiesReference = enemiesReference;
+		this.soundsControllerRef = soundsControllerRef;
 		this.levelReference = levelReference;
 	}
 	
@@ -53,6 +56,7 @@ public class BulletsController {
 				b.hitSomething();
 			} else if (enemyColliding.isPresent() && !this.enemiesReference.contains(b.getOwner())) {
 				b.hitSomething();
+				this.soundsControllerRef.playSound(Sounds.HURT_1);
 				enemyColliding.get().getHealth().hurt(b.getDamage());
 			} else {
 				if (this.levelReference.getSegmentAtPosition(b.getPosition())

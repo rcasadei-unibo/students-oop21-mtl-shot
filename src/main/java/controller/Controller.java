@@ -61,13 +61,14 @@ public class Controller {
         this.stage = new StageImpl(textMap);
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
-        this.bulletsController = new BulletsController(this.stage.getPlayer(),
-        		this.stage.getBullets(),
-        		this.stage.getEnemies(),
-        		this.stage.getLevel());
         this.weaponController = new WeaponController();
         this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
         this.soundsController = new SoundsController();
+        this.bulletsController = new BulletsController(this.stage.getPlayer(),
+        		this.stage.getBullets(),
+        		this.stage.getEnemies(),
+        		this.soundsController,
+        		this.stage.getLevel());
         this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
@@ -118,6 +119,7 @@ public class Controller {
                     }
                 }
                 
+                soundsController.controllerTick();
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
