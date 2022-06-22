@@ -53,4 +53,8 @@ public class UserData {
     public String toString() {
         return this.name + ": " + this.points + " points, " + this.lastGame + " last game";
     }
+
+	public int getTime() {
+		return 0;
+	}
 }

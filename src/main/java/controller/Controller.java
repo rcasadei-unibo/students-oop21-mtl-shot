@@ -38,6 +38,7 @@ public class Controller {
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
+    private boolean winScene;
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -115,6 +116,14 @@ public class Controller {
                 
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
+                }
+                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(1)) && !winScene) {
+                	winScene = true;
+                	try {
+						viewReference.displayWinMenu();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
                 }
                 gameView.refresh(stage);
             }
@@ -252,15 +261,6 @@ public class Controller {
      */
     public PlayerController getPlayerController() {
         return this.playerController;
-    }
-
-    /**
-     * Gets the view reference.
-     * 
-     * @return MetalShot
-     */
-    public GameView getView() {
-        return this.viewReference;
     }
 
     /**

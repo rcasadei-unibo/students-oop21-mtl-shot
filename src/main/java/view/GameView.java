@@ -18,7 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.paint.Color;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
@@ -27,6 +27,7 @@ import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
 import controller.menu.PauseMenuController;
+import controller.menu.WinMenuController;
 
 /**
  * The game main view. It contains all sub-views and handles the view refresh.
@@ -80,8 +81,7 @@ public class GameView extends Scene {
             }
         });
         this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
-        this.setOnKeyTyped(e -> {
-        });
+        this.setOnKeyTyped(e -> { });
     }
 
     /**
@@ -177,6 +177,30 @@ public class GameView extends Scene {
         final Group group = new Group(root);
         this.setRoot(group);
         this.controller.gameStart();
+    }
+
+    /**
+     * Display the pause menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void displayWinMenu() throws IOException {
+    	final Group group = new Group(root);
+    	final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
+        group.getChildren().add(loader.load());
+        final WinMenuController wmc = (WinMenuController) loader.getController();
+        wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
+        wmc.setShift(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin());
+        //wmc.setSize(getWidth() / controller.getStage().getLevel().getSegments().size(), getHeight());
+        this.setRoot(group);
+    }
+    
+    /**
+     * Dispose of the win menu.
+     */
+    public void disposeWinMenu() {
+        final Group group = new Group(root);
+        this.setRoot(group);
     }
 
     /**
