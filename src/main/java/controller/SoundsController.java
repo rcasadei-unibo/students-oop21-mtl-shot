@@ -29,9 +29,6 @@ public class SoundsController {
 	public void controllerTick() {
 		this.timers.forEach((c, sc) -> { sc.tick(); });
 		this.timers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
-		if (!this.timers.isEmpty()) {
-			System.out.println(this.timers);
-		}
 	}
 	
 	/**
@@ -41,7 +38,6 @@ public class SoundsController {
 	 * @return true if the sound has been played, otherwise false.
 	 */
 	public boolean playSound(final Sounds soundType) {
-		System.out.println("Play sound");
 		if (soundType.equals(Sounds.RIFLE_FIRING)) {
 			this.forcePlaySound(soundType);
 		} else if (soundType.equals(Sounds.RELOAD)) {
@@ -51,7 +47,6 @@ public class SoundsController {
 				soundType.equals(Sounds.HURT_3)) {
 			if (!this.timers.containsKey(Sounds.HURT_1) && !this.timers.containsKey(Sounds.HURT_2) && !this.timers.containsKey(Sounds.HURT_3)) {
 				int n = this.rnd.nextInt(3);
-				System.out.println(n);
 				switch (n) {
 				case 0:
 					this.timers.put(Sounds.HURT_1, new Cooldown(50));	/* Temporal gap between two sounds of the same type (TODO: too high, fix) */
