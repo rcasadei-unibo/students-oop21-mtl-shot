@@ -27,7 +27,7 @@ public class Cooldown {
 	}
 	
 	/*
-	 * Increments the number of elapsed ticks (called by WeaponController)
+	 * Increments the number of elapsed ticks
 	 */
 	public void tick() {
 		this.elapsedTicks++;

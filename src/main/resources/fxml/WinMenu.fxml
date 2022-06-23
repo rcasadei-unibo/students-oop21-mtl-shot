@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menu.WinMenuController">
+   <top>
+      <Label text="MISSION COMPLETE!" textFill="RED" BorderPane.alignment="CENTER">
+         <font>
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf" />
+               </font>
+      </Label>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="All enemies killed">
+              <font>
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf" />
+               </font>
+            </Label>
+            <Label fx:id="remeaningLives" text="Remeaning lives:">
+               <font>
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf" />
+               </font>
+            </Label>
+            <Label fx:id="remeaningTime" text="Remeaning time:">
+               <font>
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf" />
+               </font>
+            </Label>
+            <Label fx:id="totalPoints" text="Total Points:">
+               <font>
+                  <Font name="PixelMadness" size="40.0" url="@../menusResources/Pixel_Madness.ttf" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
