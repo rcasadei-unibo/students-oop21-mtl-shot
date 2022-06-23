@@ -20,6 +20,8 @@ public class CameraManager {
 	private final LevelView levelView;
 	private final GameView gameView;
 	private double offset = 0;
+	double cameraScaleFactorX;
+	double cameraScaleFactorY;
 	private Camera camera = new PerspectiveCamera();
 
 	public CameraManager(final Controller controller, final Group root, final LevelView levelView, GameView gameView) {
@@ -32,15 +34,15 @@ public class CameraManager {
 
 	public void updateCamera() {
 		double adjust;
-		double cameraScaleFactorX = 1920/gameView.getWidth();
-		double cameraScaleFactorY = 1080/gameView.getHeight();
+		cameraScaleFactorX = 1920/gameView.getWidth();
+		cameraScaleFactorY = 1080/gameView.getHeight();
 		
-		if (cameraScaleFactorX < cameraScaleFactorY) {
+		if (cameraScaleFactorX <= cameraScaleFactorY) {
 			adjust = 1920;
 			this.camera.setScaleX(cameraScaleFactorX); 
 			this.camera.setScaleY(cameraScaleFactorX); 
 		} else {
-			adjust = gameView.getWidth()*2;
+			adjust = gameView.getWidth()*2 - MapConstants.getTilesize();
 			this.camera.setScaleX(cameraScaleFactorY);
 			this.camera.setScaleY(cameraScaleFactorY);
 		}
@@ -69,7 +71,7 @@ public class CameraManager {
 		if (controller.getStage().getPlayer().getSpeed().getX() > 0
 				&& controller.getStage().getPlayer().getPosition().getX() > 4 + offset
 				&& (adjust/MapConstants.getTilesize()) + offset - controller.getStage().getLevel().getDistance(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())) < 0) {
-
+			
 			final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.root);
 			tt.setToX(-(((offset + controller.getStage().getPlayer().getSpeed().getX()) * MapConstants.getTilesize())));
 			final ParallelTransition pt = new ParallelTransition();
@@ -102,5 +104,9 @@ public class CameraManager {
 	public void resetCamera() {
 		this.camera.setScaleX(1);
 		this.camera.setScaleY(1);
+	}
+	
+	public Pair<Double, Double> getScaleFactors(){
+		return new Pair<Double, Double>(this.cameraScaleFactorX, this.cameraScaleFactorY);
 	}
 }
