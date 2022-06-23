@@ -52,7 +52,6 @@ public class GameView extends Scene {
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
-	private final Button b;
 
 	/**
 	 * The GameView constructor.
@@ -75,14 +74,6 @@ public class GameView extends Scene {
         for (final EnemyView enemyView : this.enemiesView.values()) {
             totalList.add(enemyView.getCharacterImageView());
         }
-        this.b = new Button("PROVA");
-        b.setDisable(true);
-        b.setStyle("-fx-border-color: \"black\";");
-        b.applyCss();
-        b.setLayoutX(29.5 * MapConstants.getTilesize());
-        b.setLayoutY(10 * MapConstants.getTilesize());
-        totalList.add(b);
-        
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -205,8 +196,7 @@ public class GameView extends Scene {
     	final Group group = new Group(root);
     	final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
     	final var winMenu = (Node) loader.load();
-        winMenu.setLayoutX(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX());
-    	group.getChildren().add(winMenu);
+        group.getChildren().add(winMenu);
         final WinMenuController wmc = (WinMenuController) loader.getController();
         wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
         this.setRoot(group);
@@ -229,8 +219,7 @@ public class GameView extends Scene {
     	final Group group = new Group(root);
     	final var loader = new FXMLLoader(getClass().getResource("/fxml/GameOverMenu.fxml"));
     	final var goMenu = (Node) loader.load();
-        goMenu.setLayoutX(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX());
-    	group.getChildren().add(goMenu);
+        group.getChildren().add(goMenu);
 		final GameOverMenuController gomc = (GameOverMenuController) loader.getController();
 		gomc.setInfoToDisplay(
 				this.controller.getStage().getLevel().getSegments()

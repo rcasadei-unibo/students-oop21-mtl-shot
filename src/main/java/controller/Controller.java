@@ -18,12 +18,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 import util.Direction;
-import util.map.TextMap;
 import view.GameView;
 
 /**
@@ -39,8 +37,6 @@ public class Controller {
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
-    private boolean winScene;
-    private boolean gameOverScene;
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -118,16 +114,15 @@ public class Controller {
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
-                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1)) && !winScene) {
-                	winScene = true;
+                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
                 	try {
 						viewReference.displayWinMenu();
+						gameLoop.pause();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
                 }
-                if (stage.getPlayer().getHealth().isDead() && !gameOverScene) {
-                	gameOverScene = true;
+                if (stage.getPlayer().getHealth().isDead()) {
                 	try {
 						gameOver();
 					} catch (final IOException e1) {
