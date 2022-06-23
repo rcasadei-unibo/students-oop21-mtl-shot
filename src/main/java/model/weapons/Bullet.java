@@ -1,6 +1,7 @@
 package model.weapons;
 
-import util.Direction;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
 import util.Vector2D;
 
 import java.util.Random;
@@ -8,6 +9,7 @@ import java.util.Random;
 import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.character.Character;
+import model.character.tools.Aim;
 
 /**
  * Bullet class models a bullet with its current position, his owner (a
@@ -25,7 +27,7 @@ public class Bullet extends Entity {
     /*
      * Bullet's movement direction
      */
-    private Direction direction;
+    private Aim aim;
 
     /*
      * Space traveled in a tick's time
@@ -54,7 +56,7 @@ public class Bullet extends Entity {
                 owner.getPosition().getY() + owner.getHitbox().getY() / 2),
                 new Vector2D(0.1, 0.1)); // TODO: change magic numbers
         this.owner = owner;
-        this.direction = owner.getAim().getDirection();
+        this.aim = owner.getAim();
         this.speed = 0.05;
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
@@ -63,13 +65,13 @@ public class Bullet extends Entity {
         double angleInterval = 1 / ((owner.getWeapon().getAccuracy()));
         double angle = 2.0 * angleInterval * (r.nextDouble() - 1/2);    // r.nextDouble()*angleInterval - angleInterval/2
         
-        if (this.direction.equals(Direction.UP)) {
+        if (this.aim.getDirection().getY().equals(DirectionVertical.UP)) {
         	angle += 90;
-        } else if (this.direction.equals(Direction.DOWN)) {
+        } else if (this.aim.getDirection().getY().equals(DirectionVertical.DOWN)) {
         	angle += 270;
-        } else if (this.direction.equals(Direction.LEFT)) {
+        } else if (this.aim.getDirection().getX().equals(DirectionHorizontal.LEFT)) {
         	angle += 180;
-        } else if (this.direction.equals(Direction.RIGHT)) {
+        } else if (this.aim.getDirection().getX().equals(DirectionHorizontal.RIGHT)) {
         	angle += 0;
         }
         
@@ -118,8 +120,8 @@ public class Bullet extends Entity {
     /**
      * @return the bullet's direction
      */
-    public Direction getDirection() {
-        return this.direction;
+    public Aim getAim() {
+        return this.aim;
     }
 
     /**
@@ -152,7 +154,7 @@ public class Bullet extends Entity {
 
     @Override
     public String toString() {
-        return "Bullet [position=" + super.getPosition() + ", direction=" + direction + ", speed=" + speed + ", damage="
+        return "Bullet [position=" + super.getPosition() + ", aim=" + aim + ", speed=" + speed + ", damage="
                 + damage + "]";
     }
 
