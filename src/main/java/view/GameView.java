@@ -17,6 +17,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -79,7 +80,8 @@ public class GameView extends Scene {
         }
 		this.root = new Group(totalList);
 		this.setRoot(root);
-		this.cameraManager = new CameraManager(controller, root, levelView);
+		this.cameraManager = new CameraManager(controller, root, levelView, this);
+		this.setCamera(cameraManager.getCamera());
 		controller.gameStart();
 
 		this.setOnKeyPressed(e -> {
@@ -172,6 +174,7 @@ public class GameView extends Scene {
      * @throws IOException if the fxml sheet doesn't exist.
      */
     public void displayPauseMenu() throws IOException {
+    	cameraManager.resetCamera();
         final Group group = new Group(root);
         loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
         pauseMenu = (GridPane) loader.load();
