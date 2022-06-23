@@ -20,8 +20,9 @@ public class EnemyController extends CharacterController{
 	
 	@Override
 	public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
-		brain.move();
-		brain.fire();
+	    brain.controllerTick();
+//		brain.move();
+//		brain.fire();
 		super.controllerTick(bounds, canAdvance);
 	}
 	
