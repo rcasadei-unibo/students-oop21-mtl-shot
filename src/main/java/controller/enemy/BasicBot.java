@@ -9,7 +9,7 @@ import model.character.movableentity.EntityConstants;
 import model.character.movableentity.MovableEntity;
 import model.map.Level;
 import model.map.Segment;
-import util.Direction;
+import util.DirectionHorizontal;
 
 /**
  * TODO
@@ -50,7 +50,7 @@ public class BasicBot implements SimpleBot {
                 enemy.setRight(false);
             } else {
                 boolean dir = distance > 0;
-                enemy.getAim().setDirection(dir ? Direction.LEFT : Direction.RIGHT);
+                enemy.getAim().setHorizontal(dir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
                 dir = (Math.abs(distance) < maxDistance) ? !dir : dir;
                 enemy.setLeft(dir);
                 enemy.setRight(!dir);
