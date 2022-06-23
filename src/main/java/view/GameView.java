@@ -26,6 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
+import model.weapons.R99;
 import util.UserData;
 import util.map.MapConstants;
 import view.map.CameraManager;
@@ -157,6 +158,14 @@ public class GameView extends Scene {
         }
 
         playerView.updateCharacter(stage.getPlayer());
+        if(stage.getPlayer().getWeapon().equals(new R99())) {
+        	playerView.setWeapon(CharacterSprites.playerIdleRifle,
+        			CharacterSprites.playerIdleUpRifle,
+        			CharacterSprites.playerRunRifle,
+        			CharacterSprites.playerRunUpRifle,
+        			CharacterSprites.playerCrouchIdleRifle,
+        			CharacterSprites.playerCrouchRunRifle);        	
+        }
 
         // Updates bullets
         if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {

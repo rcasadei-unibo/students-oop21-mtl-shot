@@ -12,14 +12,14 @@ import util.view.Animation;
  */
 public class CharacterView {
 
-	public final Animation characterIdle;
-	public final Animation characterIdleUp;
-	public final Animation characterRun;
-	public final Animation characterRunUp;
-	public final Animation characterCrouchIdle;
-	public final Animation characterCrouchRun;
-	public final ImageView characterImageView = new ImageView();
-	public final Vector2D imageOffset = new Vector2D(0.5,0.5);
+	private Animation characterIdle;
+	private Animation characterIdleUp;
+	private Animation characterRun;
+	private Animation characterRunUp;
+	private Animation characterCrouchIdle;
+	private Animation characterCrouchRun;
+	private final ImageView characterImageView = new ImageView();
+	private final Vector2D imageOffset = new Vector2D(0.5,0.5);
    
 	/**
      * 
@@ -155,6 +155,20 @@ public class CharacterView {
      */
     public ImageView getCharacterImageView() {
         return characterImageView;
+    }
+    
+    public void setWeapon(Animation characterIdle, 
+    		Animation characterIdleUp, 
+    		Animation characterRun,
+    		Animation characterRunUp,
+    		Animation characterCrouchIdle,
+    		Animation characterCrouchRun) {
+		this.characterIdle = characterIdle;
+		this.characterIdleUp = characterIdleUp;
+		this.characterRun = characterRun;
+		this.characterRunUp = characterRunUp;
+		this.characterCrouchIdle = characterCrouchIdle;
+		this.characterCrouchRun = characterCrouchRun;
     }
 
 }
