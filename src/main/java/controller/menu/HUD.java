@@ -12,12 +12,14 @@ public class HUD {
     @FXML
     public Label points;
     public Label health;
+    public Label date;
     public AnchorPane ac;
     
 
     public void refresh(final UserData ud) {
         points.setText(ud.getPoints() + "");
         health.setText(ud.getLpLeft() + "/100");
+        date.setText(ud.getTime());
     }
     
     public void setSize(final double height, final double width) {

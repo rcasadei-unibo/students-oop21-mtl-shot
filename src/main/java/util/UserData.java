@@ -1,5 +1,6 @@
 package util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,7 +11,9 @@ public class UserData {
     private final String name;
     private int points;
     private int lpLeft;
-    private Date lastGame;
+    private Date lastGame = new Date();
+    private long startTime = new Date().getTime();
+    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
     
     public static final int POINTS_PER_ENEMY = 10;
 
@@ -53,6 +56,10 @@ public class UserData {
 
     public void setLastGame(final Date lastGame) {
         this.lastGame = lastGame;
+    }
+    
+    public String getTime() {
+        return sdf.format(new Date(new Date().getTime()-startTime));
     }
 
     /**
