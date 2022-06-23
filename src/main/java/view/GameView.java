@@ -21,10 +21,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
+import util.Vector2D;
 import util.map.MapConstants;
 import view.map.CameraManager;
 import view.map.LevelView;
@@ -83,7 +86,6 @@ public class GameView extends Scene {
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
-		this.setCamera(cameraManager.getCamera());
 		controller.gameStart();
 
 		this.setOnKeyPressed(e -> {
@@ -177,9 +179,8 @@ public class GameView extends Scene {
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-        final var pauseMenu = (Node) loader.load();
+        final var pauseMenu = (GridPane) loader.load();
         group.getChildren().add(pauseMenu);
-        pauseMenu.setLayoutX(this.cameraManager.getOffset() * MapConstants.getTilesize());
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
         pmc.setSize(this.getWidth(), this.getHeight());
         pmc.setGameView(this);

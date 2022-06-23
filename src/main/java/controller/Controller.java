@@ -18,6 +18,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
@@ -56,8 +57,7 @@ public class Controller {
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
     public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
-        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
-        this.stage = new StageImpl(textMap);
+        this.stage = new StageImpl();
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
         this.bulletsController = new BulletsController(this.stage.getPlayer(),
@@ -77,7 +77,7 @@ public class Controller {
 
             @Override
             public void handle(final ActionEvent event) {
-
+            	
                 var remove = new LinkedList<EnemyController>();
 
                 enemiesController.forEach(e -> {
