@@ -13,8 +13,6 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
-import model.weapons.P2020;
-import model.weapons.PeaceKeeper;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,7 +38,6 @@ public class Controller {
     private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
-    private boolean paused;
     
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
@@ -113,7 +110,7 @@ public class Controller {
                 
                 if(playerController.isDead()) {
                     try {
-                        gamePause();
+                        gameOver();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -150,7 +147,6 @@ public class Controller {
     public void gameStart() {
     	this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
         gameLoop.play();
-        paused = false;
     }
 
     /**
@@ -158,14 +154,11 @@ public class Controller {
      * 
      * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void gamePause() throws IOException {
-        if (!paused) {
-        	this.soundsController.stopSound(Sounds.MAIN_THEME);
-            gameLoop.pause();
-            this.viewReference.displayPauseMenu();
-        }
-        paused = true;
-    }
+	public void gamePause() throws IOException {
+		this.soundsController.stopSound(Sounds.MAIN_THEME);
+		gameLoop.pause();
+		this.viewReference.displayPauseMenu();
+	}
 
     public void gameOver() throws IOException {
     	gameLoop.pause();
@@ -199,13 +192,7 @@ public class Controller {
         }
         if (key.equals(KeyCode.J)) {
             this.stage.getPlayer().setFire(true);
-//            this.playerController.fire(weaponController, bulletsController);
-        } else if (key.equals(KeyCode.R)) {
-             if (this.weaponController.tryToReload(this.stage.getPlayer())) {
-            	 this.soundsController.playSound(Sounds.RELOAD);
-                 // Play reload animation
-             }
-        }
+        } 
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
         }
