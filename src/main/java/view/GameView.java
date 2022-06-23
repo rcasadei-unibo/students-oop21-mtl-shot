@@ -57,7 +57,7 @@ public class GameView extends Scene {
     private FXMLLoader loader;
     private GridPane pauseMenu;
     
-    private AnchorPane hud;
+    private Node hud;
     
 	/**
 	 * The GameView constructor.

@@ -3,6 +3,7 @@ package controller.menu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import util.UserData;
 /**
  * 
@@ -13,7 +14,7 @@ public class HUD {
     public Label points;
     public Label health;
     public Label date;
-    public AnchorPane ac;
+    public BorderPane ac;
     
 
     public void refresh(final UserData ud) {
