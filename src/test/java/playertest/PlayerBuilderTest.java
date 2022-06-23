@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import model.weapons.P2020;
+import model.weapons.R99;
 import util.Vector2D;
 
 /**
@@ -19,7 +19,7 @@ public class PlayerBuilderTest {
     @Test
     void incorrectHitbox() {
         assertThrows(IllegalArgumentException.class, () -> new PlayerBuilder().health(new SimpleHealth())
-                .hitbox(new Vector2D(0, -1)).lives(3).position(new Vector2D()).weapon(new P2020()).build());
+                .hitbox(new Vector2D(0, -1)).lives(3).position(new Vector2D()).weapon(new R99()).build());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PlayerBuilderTest {
             new PlayerBuilder().lives(-1).build();
         });
         assertThrows(IllegalStateException.class, () -> {
-            new PlayerBuilder().weapon(new P2020()).build();
+            new PlayerBuilder().weapon(new R99()).build();
         });
         assertThrows(IllegalStateException.class, () -> {
             new PlayerBuilder().position(new Vector2D()).build();
@@ -56,7 +56,7 @@ public class PlayerBuilderTest {
             new PlayerBuilder().position(new Vector2D()).lives(3).build();
         });
         assertThrows(IllegalStateException.class, () -> {
-            new PlayerBuilder().position(new Vector2D()).weapon(new P2020()).build();
+            new PlayerBuilder().position(new Vector2D()).weapon(new R99()).build();
         });
         assertThrows(IllegalStateException.class, () -> {
             new PlayerBuilder().position(new Vector2D()).health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).build();
@@ -71,7 +71,7 @@ public class PlayerBuilderTest {
     void builderCorrectTest() {
         try {
             new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                    .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                    .position(new Vector2D(0, 0)).weapon(new R99()).build();
         } catch (final Exception e) {
             fail("Builder doesn't work");
         }
