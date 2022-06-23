@@ -3,9 +3,11 @@ package controller;
 import util.Direction;
 import util.Pair;
 import util.Vector2D;
+import view.sounds.SoundManager.Sounds;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
+import controller.WeaponController.TryToShootReturn;
 import model.character.Character;
 
 /**
@@ -51,10 +53,13 @@ public class CharacterController {
         this.aimChecks();
     }
     
-    public void fire(WeaponController wc, BulletsController bc) {
-        if (wc.tryToShoot(this.character)) {
-            // Play shoot sound
-            bc.addBullet(this.character);
+    public void fire(final WeaponController weaponController, final BulletsController bulletsController, final SoundsController soundsController) {
+    	var ttsr = weaponController.tryToShoot(this.character);
+        if (ttsr.equals(TryToShootReturn.SHOOT)) {
+            soundsController.playSound(Sounds.RIFLE_FIRING);
+            bulletsController.addBullet(this.character);
+        } else if (ttsr.equals(TryToShootReturn.RELOAD)) {
+        	soundsController.playSound(Sounds.RELOAD);
         }
     }
     

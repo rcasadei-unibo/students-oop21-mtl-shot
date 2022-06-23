@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 
 /**
@@ -23,7 +25,8 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
+    	final var loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/MainMenu.fxml"));
+        final Parent root = loader.load();
         final Scene scene = new Scene(root);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setScene(scene);

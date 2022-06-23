@@ -26,7 +26,7 @@ public class WeaponController {
 		this.reloadingTimers.entrySet().removeIf(e -> e.getValue().isCooldownOver());
 	}
 
-	public boolean tryToShoot(final Character characterShooting) {
+	public TryToShootReturn tryToShoot(final Character characterShooting) {
 		if (!this.shootingTimers.containsKey(characterShooting) &&
 				characterShooting.getWeapon().getBulletsInMag() != 0 &&
 				!this.reloadingTimers.containsKey(characterShooting)) {
@@ -34,12 +34,14 @@ public class WeaponController {
 			/* If characterShooting is not in this.timers, he can shoot */
 			this.shootingTimers.put(characterShooting, new Cooldown(characterShooting.getWeapon().getFireRate()));
 			characterShooting.getWeapon().shoot();
-			return true;
+			return TryToShootReturn.SHOOT;
 			
 		} else if (characterShooting.getWeapon().getBulletsInMag() == 0) {
-			this.tryToReload(characterShooting);
+			if (this.tryToReload(characterShooting)) {
+				return TryToShootReturn.RELOAD;
+			}
 		}
-		return false;
+		return TryToShootReturn.NOTHING;
 	}
 	
 	public boolean tryToReload(final Character characterReloading) {
@@ -49,6 +51,10 @@ public class WeaponController {
 			return true;
 		}
 		return false;
+	}
+	
+	public enum TryToShootReturn {
+		SHOOT, RELOAD, NOTHING
 	}
 	
 }

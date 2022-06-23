@@ -13,6 +13,8 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.weapons.P2020;
+import model.weapons.PeaceKeeper;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,20 +25,23 @@ import javafx.util.Duration;
 
 import util.Direction;
 import view.GameView;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The main controller. It contains all sub-controllers and it manages the game
  * loop.
  */
 public class Controller {
-
+	
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
+    private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
+    
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -56,12 +61,14 @@ public class Controller {
         this.stage = new StageImpl();
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
+        this.weaponController = new WeaponController();
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.soundsController = new SoundsController();
         this.bulletsController = new BulletsController(this.stage.getPlayer(),
         		this.stage.getBullets(),
         		this.stage.getEnemies(),
+        		this.soundsController,
         		this.stage.getLevel());
-        this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
         this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
@@ -94,13 +101,14 @@ public class Controller {
 
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
+                
                 playerController.controllerTick(viewReference.getCameraManager().getBounds(),
 						stage.getEnemies().stream()
 								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
 										.equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
 								.collect(Collectors.toSet()).isEmpty());
                 if(playerController.getCharacter().isShooting()) {
-                    playerController.fire(weaponController, bulletsController);
+                    playerController.fire(weaponController, bulletsController, soundsController);
                 }
                 
                 if(playerController.isDead()) {
@@ -111,6 +119,7 @@ public class Controller {
                     }
                 }
                 
+                soundsController.controllerTick();
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
@@ -139,6 +148,7 @@ public class Controller {
      * Starts the game loop.
      */
     public void gameStart() {
+    	this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
         gameLoop.play();
         paused = false;
     }
@@ -150,6 +160,7 @@ public class Controller {
      */
     public void gamePause() throws IOException {
         if (!paused) {
+        	this.soundsController.stopSound(Sounds.MAIN_THEME);
             gameLoop.pause();
             this.viewReference.displayPauseMenu();
         }
@@ -179,6 +190,7 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
+        	this.soundsController.playSound(Sounds.JUMP_1);
             stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
@@ -190,7 +202,7 @@ public class Controller {
 //            this.playerController.fire(weaponController, bulletsController);
         } else if (key.equals(KeyCode.R)) {
              if (this.weaponController.tryToReload(this.stage.getPlayer())) {
-                 // Play reload sound
+            	 this.soundsController.playSound(Sounds.RELOAD);
                  // Play reload animation
              }
         }
@@ -289,7 +301,7 @@ public class Controller {
     public StageImpl getStage() {
         return this.stage;
     }
-
+    
     public void refreshEnemiesStatus() {
         enemiesController.forEach(e -> {
             if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
@@ -321,4 +333,5 @@ public class Controller {
 	    enemiesController.remove(enemyController);
 	    stage.getEnemies().remove(enemyController.getCharacter());
 	}
+
 }
