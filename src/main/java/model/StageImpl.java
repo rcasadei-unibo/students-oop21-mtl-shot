@@ -36,7 +36,7 @@ public class StageImpl {
      * @throws IOException               if the txt map sheet doesn't exist.
      * @throws InstanceNotFoundException
      */
-    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {
+    public StageImpl() throws IOException, InstanceNotFoundException {
         this.level = new Level(
                 Stream.of("src/main/resources/map.txt", "src/main/resources/map2.txt", "src/main/resources/map3.txt")
                         .collect(Collectors.toList()));
