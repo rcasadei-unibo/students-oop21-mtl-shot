@@ -133,7 +133,7 @@ public class Controller {
      * Starts the game loop.
      */
     public void gameStart() {
-    	this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
+    	//this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
         gameLoop.play();
         paused = false;
     }
@@ -171,7 +171,9 @@ public class Controller {
             stage.getPlayer().getAim().setDirection(Direction.UP);
         }
         if (key == KeyCode.SPACE) {
-        	this.soundsController.playSound(Sounds.JUMP_1);
+        	if (!stage.getPlayer().isJumping() && !stage.getPlayer().isFalling()) {
+        		this.soundsController.playSound(Sounds.JUMP_1);
+        	}
             stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
