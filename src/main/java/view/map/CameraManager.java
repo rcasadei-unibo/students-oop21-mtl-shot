@@ -3,6 +3,8 @@ package view.map;
 import controller.Controller;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -47,8 +49,6 @@ public class CameraManager {
 			this.camera.setScaleY(cameraScaleFactorY);
 		}
 		
-		System.out.println((adjust/MapConstants.getTilesize()) + offset);
-		
 		if (!controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())
 				.equals(controller.getStage().getLevel().getSegmentAtPosition(prevPosSegment))) {
 			prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
@@ -61,6 +61,13 @@ public class CameraManager {
 			final ParallelTransition pt = new ParallelTransition();
 			pt.getChildren().add(tt);
 			pt.play();
+			pt.setOnFinished(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent event) {
+					root.getChildren().removeAll(levelView.getPreviousSegment(controller.getStage().getPlayer().getPosition()));
+				}
+			});
 			offset = controller.getStage().getLevel()
 					.getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX();
 
@@ -78,13 +85,6 @@ public class CameraManager {
 			pt.getChildren().add(tt);
 			pt.play();
 			offset += controller.getStage().getPlayer().getSpeed().getX();
-		}
-		
-		if ((adjust/MapConstants.getTilesize()) + offset > 31) {
-			
-			//this.offset -= 2;
-			
-			//offset = 30 - (adjust/MapConstants.getTilesize());
 		}
 	}
 
