@@ -30,7 +30,7 @@ import view.sounds.SoundManager.Sounds;
  * The main controller. It contains all sub-controllers and it manages the game
  * loop.
  */
-public class Controller {
+public class Controller extends Thread{
 	
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
@@ -57,8 +57,7 @@ public class Controller {
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
     public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
-        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
-        this.stage = new StageImpl(textMap);
+        this.stage = new StageImpl();
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
         this.weaponController = new WeaponController();
@@ -101,7 +100,7 @@ public class Controller {
 
                 weaponController.controllerTick();
                 bulletsController.controllerTick();
-                
+
                 playerController.controllerTick(viewReference.getCameraManager().getBounds(),
 						stage.getEnemies().stream()
 								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
@@ -110,7 +109,7 @@ public class Controller {
                 if(playerController.getCharacter().isShooting()) {
                     playerController.fire(weaponController, bulletsController, soundsController);
                 }
-                
+
                 if(playerController.isDead()) {
                     try {
                         gamePause();

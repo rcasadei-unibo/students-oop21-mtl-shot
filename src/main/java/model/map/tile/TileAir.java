@@ -11,7 +11,7 @@ import util.Vector2D;
 public class TileAir extends AbstractTile {
 	
 	public TileAir(final Vector2D position) {
-        super(position, "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Air.png");
+        super(position, "Air.png");
 	}
 
 	@Override

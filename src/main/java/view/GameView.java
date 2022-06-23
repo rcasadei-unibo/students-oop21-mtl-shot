@@ -38,7 +38,7 @@ public class GameView extends Scene {
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
-    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
+    private final ImageView background = new ImageView(new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
     private final UserData userData;
 	private final Group root;
@@ -144,6 +144,7 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
+        //System.out.println(Thread.currentThread().getName());
 	}
 
     /**
