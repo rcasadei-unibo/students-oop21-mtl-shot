@@ -15,6 +15,7 @@ import model.map.Level;
 import model.weapons.Bullet;
 import model.weapons.P2020;
 import model.weapons.PeaceKeeper;
+import model.weapons.TestWeapon1;
 import util.Vector2D;
 import util.map.TextMap;
 
@@ -45,7 +46,7 @@ public class StageImpl {
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
-                .weapon(new P2020())
+                .weapon(new TestWeapon1())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
