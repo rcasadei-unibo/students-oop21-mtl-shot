@@ -64,7 +64,8 @@ public class BulletsController {
 				}
 			} else {
 				if (this.levelReference.getSegmentAtPosition(b.getPosition())
-						.equals(this.levelReference.getSegmentAtPosition(this.playerReference.getPosition()))) {
+						.equals(this.levelReference.getSegmentAtPosition(this.playerReference.getPosition())) 
+						&& b.getPosition().getY() > 0 && b.getPosition().getX() > 0) {
 					b.tick();
 				} else {
 					b.hitSomething();

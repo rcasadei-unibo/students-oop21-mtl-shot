@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
-import model.weapons.P2020;
+import model.weapons.R99;
 import util.Vector2D;
 
 /**
@@ -21,7 +21,7 @@ public class MovementPlayerTest {
     @Test
     void startingPlayer() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         assertFalse(player.isCrouching());
         assertFalse(player.isFalling());
         assertFalse(player.isJumping());
@@ -33,7 +33,7 @@ public class MovementPlayerTest {
     @Test
     void goRightTest() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         final var pos = new Vector2D(player.getPosition());
         player.setRight(true);
         player.moveEntity();
@@ -45,7 +45,7 @@ public class MovementPlayerTest {
     @Test
     void goLeftTest() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         final var pos = new Vector2D(player.getPosition());
         player.setLeft(true);
         player.moveEntity();
@@ -57,7 +57,7 @@ public class MovementPlayerTest {
     @Test
     void jumpTest() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         final var pos = new Vector2D(player.getPosition());
         player.setJump(true);
         player.moveEntity();
@@ -70,7 +70,7 @@ public class MovementPlayerTest {
     @Test
     void crouchTest() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         player.setCrouchKey(true);
         player.moveEntity();
         assertTrue(player.isCrouching());
@@ -80,7 +80,7 @@ public class MovementPlayerTest {
     @Test
     void jumpAfterAWhileTest() {
         final var player = new PlayerBuilder().health(new SimpleHealth()).hitbox(new Vector2D(1, 1)).lives(3)
-                .position(new Vector2D(0, 0)).weapon(new P2020()).build();
+                .position(new Vector2D(0, 0)).weapon(new R99()).build();
         player.setJump(true);
         for (int i = 0; i < MOVES; i++) {
             player.moveEntity();
