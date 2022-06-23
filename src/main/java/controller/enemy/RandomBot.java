@@ -20,7 +20,6 @@ public class RandomBot implements SimpleBot {
 	@Override
 	public void move() {
 		boolean dir = new Random().nextBoolean();
-		System.out.println(dir ? "right" : "left");
 		entity.setRight(dir);
 		entity.setLeft(!dir);
 		entity.moveEntity();
@@ -44,6 +43,12 @@ public class RandomBot implements SimpleBot {
 
     @Override
     public void fire() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void controllerTick() {
         // TODO Auto-generated method stub
         
     }

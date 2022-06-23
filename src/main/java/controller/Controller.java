@@ -82,15 +82,15 @@ public class Controller {
             @Override
             public void handle(final ActionEvent event) {
             	if(paused) {
-            		viewReference.menuRefresh();
-            	} else {
-            		var remove = new LinkedList<EnemyController>();
+                    viewReference.menuRefresh();
+                } else {
+                    var remove = new LinkedList<EnemyController>();
 
                     enemiesController.forEach(e -> {
                         if (e.isActive()) {
                             e.controllerTick(viewReference.getCameraManager().getBounds(), false);
-                            if(e.getCharacter().isShooting()) {
-//                                e.fire(weaponController, bulletsController);
+                            if (e.getCharacter().isShooting()) {
+                                e.fire(weaponController, bulletsController, soundsController);
                             }
                             if (e.isDead()) {
                                 remove.add(e);
@@ -143,7 +143,6 @@ public class Controller {
                     }
                     gameView.refresh(stage);
             	}
-                
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -250,14 +249,7 @@ public class Controller {
     }
 
     /**
-     * Loads the next for (final EnemyController enemyController : enemiesController) {
-                    enemyController.controllerTick();
-                    if(enemyController.isDead()) {
-                        enemiesController.remove(enemyController);
-                        stage.getEnemies().remove(enemyController.getCharacter());
-                    }
-                }
-                welevel.
+     * Loads the next level.
      */
     public void nextLevel() {
         // TODO

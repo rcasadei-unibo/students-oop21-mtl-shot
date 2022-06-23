@@ -12,28 +12,22 @@ import java.util.stream.Collectors;
 
 import javax.management.InstanceNotFoundException;
 
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
-import util.Vector2D;
-import util.map.MapConstants;
 import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
+import controller.menu.HUD;
 import controller.menu.GameOverMenuController;
 import controller.menu.PauseMenuController;
 import controller.menu.WinMenuController;
@@ -53,10 +47,11 @@ public class GameView extends Scene {
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
+	private final HUD hudController;
+
     private FXMLLoader loader;
     private GridPane pauseMenu;
-	
-	
+    
 	/**
 	 * The GameView constructor.
 	 * 
@@ -78,6 +73,9 @@ public class GameView extends Scene {
         for (final EnemyView enemyView : this.enemiesView.values()) {
             totalList.add(enemyView.getCharacterImageView());
         }
+        final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/HUD.fxml"));
+        totalList.add(loader.load());
+        this.hudController  = (HUD) loader.getController();        
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView, this);
@@ -129,7 +127,8 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
     public void refresh(final StageImpl stage) {
-
+        this.hudController.setSize(this.getHeight(), this.getWidth());
+        
         cameraManager.updateCamera();
 
         if (stage.getEnemies().size() != enemiesView.keySet().size()) {
@@ -152,6 +151,8 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
+        userData.setLpLeft(stage.getPlayer().getHealth().getHealth());
+        hudController.refresh(userData);
 	}
 
     /**
