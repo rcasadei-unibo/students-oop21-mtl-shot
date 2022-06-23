@@ -1,6 +1,8 @@
 package model.character.tools;
 
-import util.Direction;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
+import util.Pair;
 
 /**
  * A class that manages the aim of something that lives in a 2D world. It uses 2
@@ -9,57 +11,51 @@ import util.Direction;
 public final class Aim {
 
     /**
-     * Field for horizontal axis aim.
+     * Field for direction.
      */
-    private Direction horizontal;
-    /**
-     * Field for vertical axis aim.
-     */
-    private Direction vertical;
+	private Pair<DirectionHorizontal, DirectionVertical> direction;
 
     /**
      * Starts by default aiming at its right.
      */
     public Aim() {
-        this.horizontal = Direction.RIGHT;
-        this.vertical = Direction.NEUTRAL;
+        this.direction = new Pair<>(DirectionHorizontal.RIGHT, DirectionVertical.NEUTRAL);
     }
-
-    /**
-     * Starts aiming at the passed direction.
-     * If the direction is NEUTRAL it calls the default constructor.
-     * 
-     * @param direction
-     */
-    public Aim(final Direction direction) {
-        this();
-        this.setDirection(direction);
-    }
-
-    /**
-     * Gets the current aiming direction (preferring the vertical over the horizontal).
-     * 
-     * @return direction
-     */
-    public Direction getDirection() {
-        if (this.vertical != Direction.NEUTRAL) {
-            return this.vertical;
-        } else {
-            return this.horizontal;
-        }
-    }
-
+    
     /**
      * Sets the aiming direction.
      * 
      * @param direction
      */
-    public void setDirection(final Direction direction) {
-        if (direction == Direction.LEFT || direction == Direction.RIGHT) {
-            this.horizontal = direction;
-        } else if (direction != Direction.NEUTRAL) {
-            this.vertical = direction;
-        }
+    public void setDirection(final Pair<DirectionHorizontal, DirectionVertical> direction) {
+        this.direction = direction;
+    }
+    
+    /**
+     * Sets the horizontal aiming direction.
+     * 
+     * @param direction
+     */
+    public void setHorizontal(final DirectionHorizontal direction) {
+    	this.direction = new Pair<>(direction, DirectionVertical.NEUTRAL);
+    }
+    
+    /**
+     * Sets the vertical aiming direction.
+     * 
+     * @param direction
+     */
+    public void setVertical(final DirectionVertical direction) {
+    	this.direction = new Pair<>(this.direction.getX(), direction);
+    }
+
+    /**
+     * Gets the current aiming direction.
+     * 
+     * @return Pair<DirectionHorizontal, DirectionVertical>
+     */
+    public Pair<DirectionHorizontal, DirectionVertical> getDirection() {
+        return this.direction;
     }
 
     /**
@@ -67,7 +63,7 @@ public final class Aim {
      * facing.
      */
     public void returnToHorizontal() {
-        this.vertical = Direction.NEUTRAL;
+        this.direction = new Pair<>(this.direction.getX(), DirectionVertical.NEUTRAL);
     }
 
     /**

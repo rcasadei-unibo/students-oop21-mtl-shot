@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import view.sounds.SoundManager;
-import view.sounds.SoundManager.Sounds;
 
 
 /**
@@ -31,7 +29,7 @@ public final class MetalShot extends Application {
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setScene(scene);
         primaryStage.setTitle("メタルショット");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        //primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
