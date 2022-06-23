@@ -52,7 +52,10 @@ public class GameView extends Scene {
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
-
+    private FXMLLoader loader;
+    private GridPane pauseMenu;
+	
+	
 	/**
 	 * The GameView constructor.
 	 * 
@@ -157,6 +160,11 @@ public class GameView extends Scene {
     public UserData getUserData() {
         return this.userData;
     }
+    
+    public void menuRefresh() {
+    	this.pauseMenu.setPrefSize(this.getWidth(), this.getHeight());
+    }
+    
 
     /**
      * Display the pause menu.
@@ -165,8 +173,8 @@ public class GameView extends Scene {
      */
     public void displayPauseMenu() throws IOException {
         final Group group = new Group(root);
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-        final var pauseMenu = (GridPane) loader.load();
+        loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        pauseMenu = (GridPane) loader.load();
         group.getChildren().add(pauseMenu);
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
         pmc.setSize(this.getWidth(), this.getHeight());

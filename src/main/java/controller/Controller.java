@@ -39,6 +39,7 @@ public class Controller {
     private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
+    private Boolean paused;
     
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
@@ -71,6 +72,8 @@ public class Controller {
         for (final EnemyController enemyController : this.enemiesController) {
             enemyController.getBrain().setPlayer(this.stage.getPlayer());
         }
+        this.paused = false;
+
 
         refreshEnemiesStatus();
 
@@ -78,68 +81,73 @@ public class Controller {
 
             @Override
             public void handle(final ActionEvent event) {
-            	
-                var remove = new LinkedList<EnemyController>();
+            	if(paused) {
+            		viewReference.menuRefresh();
+            	} else {
+            		var remove = new LinkedList<EnemyController>();
 
-                enemiesController.forEach(e -> {
-                    if (e.isActive()) {
-                        e.controllerTick(viewReference.getCameraManager().getBounds(), false);
-                        if(e.getCharacter().isShooting()) {
-//                            e.fire(weaponController, bulletsController);
+                    enemiesController.forEach(e -> {
+                        if (e.isActive()) {
+                            e.controllerTick(viewReference.getCameraManager().getBounds(), false);
+                            if(e.getCharacter().isShooting()) {
+//                                e.fire(weaponController, bulletsController);
+                            }
+                            if (e.isDead()) {
+                                remove.add(e);
+                            }
                         }
-                        if (e.isDead()) {
-                            remove.add(e);
+                    });
+
+                    if(!remove.isEmpty()) {
+                        remove.forEach(e -> removeEnemy(e));
+                    }
+
+                    weaponController.controllerTick();
+                    bulletsController.controllerTick();
+                    
+                    playerController.controllerTick(viewReference.getCameraManager().getBounds(),
+    						stage.getEnemies().stream()
+    								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
+    										.equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
+    								.collect(Collectors.toSet()).isEmpty());
+                    if(playerController.getCharacter().isShooting()) {
+                        playerController.fire(weaponController, bulletsController, soundsController);
+                    }
+                    
+                    if(playerController.isDead()) {
+                        try {
+                            gameOver();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
                         }
                     }
-                });
-
-                if(!remove.isEmpty()) {
-                    remove.forEach(e -> removeEnemy(e));
-                }
-
-                weaponController.controllerTick();
-                bulletsController.controllerTick();
-                
-                playerController.controllerTick(viewReference.getCameraManager().getBounds(),
-						stage.getEnemies().stream()
-								.filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
-										.equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
-								.collect(Collectors.toSet()).isEmpty());
-                if(playerController.getCharacter().isShooting()) {
-                    playerController.fire(weaponController, bulletsController, soundsController);
-                }
-                
-                if(playerController.isDead()) {
-                    try {
-                        gameOver();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                    
+                    soundsController.controllerTick();
+                    if (!viewReference.getWindow().isFocused()) {
+                        stage.getPlayer().reset();
                     }
-                }
+                    if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
+                    	try {
+    						viewReference.displayWinMenu();
+    						gameLoop.pause();
+    					} catch (IOException e1) {
+    						e1.printStackTrace();
+    					}
+                    }
+                    if (stage.getPlayer().getHealth().isDead()) {
+                    	try {
+    						gameOver();
+    					} catch (final IOException e1) {
+    						e1.printStackTrace();
+    					}
+                    }
+                    gameView.refresh(stage);
+            	}
                 
-                soundsController.controllerTick();
-                if (!viewReference.getWindow().isFocused()) {
-                    stage.getPlayer().reset();
-                }
-                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
-                	try {
-						viewReference.displayWinMenu();
-						gameLoop.pause();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-                }
-                if (stage.getPlayer().getHealth().isDead()) {
-                	try {
-						gameOver();
-					} catch (final IOException e1) {
-						e1.printStackTrace();
-					}
-                }
-                gameView.refresh(stage);
             }
         }));
         gameLoop.setCycleCount(Timeline.INDEFINITE);
+        gameLoop.play();
     }
 
     /**
@@ -147,7 +155,7 @@ public class Controller {
      */
     public void gameStart() {
     	this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
-        gameLoop.play();
+       	this.paused = false;
     }
 
     /**
@@ -157,7 +165,7 @@ public class Controller {
      */
 	public void gamePause() throws IOException {
 		this.soundsController.stopSound(Sounds.MAIN_THEME);
-		gameLoop.pause();
+		this.paused = true;
 		this.viewReference.displayPauseMenu();
 	}
 
