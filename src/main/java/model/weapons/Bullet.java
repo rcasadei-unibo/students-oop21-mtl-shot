@@ -2,6 +2,9 @@ package model.weapons;
 
 import util.Direction;
 import util.Vector2D;
+
+import java.util.Random;
+
 import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.character.Character;
@@ -27,7 +30,7 @@ public class Bullet extends Entity {
     /*
      * Space traveled in a tick's time
      */
-    private Vector2D speed;
+    private double speed;
 
     /*
      * Bullet's damage (based on the weapon held by owner)
@@ -38,6 +41,9 @@ public class Bullet extends Entity {
      * It is true if the bullet has hit something
      */
     private boolean hit;
+    
+    private double cos;
+    private double sin;
 
     /**
      * TODO: write javadoc.
@@ -46,14 +52,43 @@ public class Bullet extends Entity {
     public Bullet(final Character owner) {
         super(new Vector2D(owner.getPosition().getX() + owner.getHitbox().getX() / 2,
                 owner.getPosition().getY() + owner.getHitbox().getY() / 2),
-                new Vector2D(0.1, 0.1)); // TODO: change magic
-                                                                                             // numbers
-        System.out.println(owner.getPosition().toString());
+                new Vector2D(0.1, 0.1)); // TODO: change magic numbers
+        
         this.owner = owner;
         this.direction = owner.getAim().getDirection();
-        this.speed = new Vector2D(0.05, 0.05);
+        this.speed = 0.05;
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
+        
+        var r = new Random();
+        double angleInterval = 1 / ((owner.getWeapon().getAccuracy()));
+        double angle = 2.0 * angleInterval * (r.nextDouble() - 1/2);    // r.nextDouble()*angleInterval - angleInterval/2
+        
+        if (this.direction.equals(Direction.UP)) {
+        	angle += 90;
+        } else if (this.direction.equals(Direction.DOWN)) {
+        	angle += 270;
+        } else if (this.direction.equals(Direction.LEFT)) {
+        	angle += 180;
+        } else if (this.direction.equals(Direction.RIGHT)) {
+        	angle += 0;
+        }
+        
+        /*switch (this.direction) {
+    	default:
+    		break;
+    	case UP:
+    		angle += 90;
+    		break;
+    	case LEFT:
+    		angle += 180;
+    		break;
+    	case DOWN:
+    		angle += 270;
+    		break;
+    	}*/
+    	this.sin = Math.sin(Math.toRadians(angle));
+    	this.cos = Math.cos(Math.toRadians(angle));
     }
 
     /**
@@ -61,9 +96,8 @@ public class Bullet extends Entity {
      * bullet is not colliding with entities or tiles.
      */
     public void tick() {
-        // This implementation is in accordance with this (old) implementation of Vector
-        // class. TODO: update in the future
-        if (this.direction.equals(Direction.UP)) {
+    	/* TODO: Old code, without accuracy. For emergencies only! */
+        /*if (this.direction.equals(Direction.UP)) {
             super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() - this.speed.getY()));
         } else if (this.direction.equals(Direction.DOWN)) {
             super.setPosition(new Vector2D(super.getPosition().getX(), super.getPosition().getY() + this.speed.getY()));
@@ -71,7 +105,8 @@ public class Bullet extends Entity {
             super.setPosition(new Vector2D(super.getPosition().getX() - this.speed.getX(), super.getPosition().getY()));
         } else if (this.direction.equals(Direction.RIGHT)) {
             super.setPosition(new Vector2D(super.getPosition().getX() + this.speed.getX(), super.getPosition().getY()));
-        }
+        }*/
+    	super.setPosition(super.getPosition().getX() + this.speed*this.cos, super.getPosition().getY() - this.speed*this.sin);
     }
 
     /**
@@ -91,7 +126,7 @@ public class Bullet extends Entity {
     /**
      * @return the bullet's speed
      */
-    public Vector2D getSpeed() {
+    public double getSpeed() {
         return this.speed;
     }
 

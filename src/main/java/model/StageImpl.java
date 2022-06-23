@@ -14,6 +14,7 @@ import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
 import model.weapons.P2020;
+import model.weapons.PeaceKeeper;
 import util.Vector2D;
 import util.map.TextMap;
 
