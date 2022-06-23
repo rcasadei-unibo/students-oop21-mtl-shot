@@ -50,7 +50,7 @@ public class Bullet extends Entity {
                 new Vector2D(0.1, 0.1));
         this.owner = owner;
         this.direction = owner.getAim().getDirection();
-        this.speed = new Vector2D(0.05, 0.05);
+        this.speed = new Vector2D(0.1, 0.1);
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
     }

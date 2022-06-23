@@ -39,6 +39,7 @@ public class Controller {
     private final Timeline gameLoop;
     private boolean paused;
     private boolean winScene;
+    private boolean gameOverScene;
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -125,6 +126,14 @@ public class Controller {
 						e1.printStackTrace();
 					}
                 }
+                if (stage.getPlayer().getHealth().isDead() && !gameOverScene) {
+                	gameOverScene = true;
+                	try {
+						gameOver();
+					} catch (final IOException e1) {
+						e1.printStackTrace();
+					}
+                }
                 gameView.refresh(stage);
             }
         }));
@@ -152,6 +161,10 @@ public class Controller {
         paused = true;
     }
 
+    public void gameOver() throws IOException {
+    	gameLoop.pause();
+    	this.viewReference.displayGameOverMenu();
+    }
     /**
      * Handles the input key from standard input on it's press.
      * 

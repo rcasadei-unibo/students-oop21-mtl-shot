@@ -12,12 +12,16 @@ import java.util.stream.Collectors;
 
 import javax.management.InstanceNotFoundException;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
 import util.UserData;
@@ -26,6 +30,7 @@ import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
+import controller.menu.GameOverMenuController;
 import controller.menu.PauseMenuController;
 import controller.menu.WinMenuController;
 
@@ -44,6 +49,7 @@ public class GameView extends Scene {
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
+	private final Button b;
 
 	/**
 	 * The GameView constructor.
@@ -66,6 +72,14 @@ public class GameView extends Scene {
         for (final EnemyView enemyView : this.enemiesView.values()) {
             totalList.add(enemyView.getCharacterImageView());
         }
+        this.b = new Button("PROVA");
+        b.setDisable(true);
+        b.setStyle("-fx-border-color: \"black\";");
+        b.applyCss();
+        b.setLayoutX(29.5 * MapConstants.getTilesize());
+        b.setLayoutY(10 * MapConstants.getTilesize());
+        totalList.add(b);
+        
 		this.root = new Group(totalList);
 		this.setRoot(root);
 		this.cameraManager = new CameraManager(controller, root, levelView);
@@ -194,7 +208,6 @@ public class GameView extends Scene {
     	group.getChildren().add(winMenu);
         final WinMenuController wmc = (WinMenuController) loader.getController();
         wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
-        //wmc.setSize(getWidth() / controller.getStage().getLevel().getSegments().size(), getHeight());
         this.setRoot(group);
     }
     
@@ -206,6 +219,34 @@ public class GameView extends Scene {
         this.setRoot(group);
     }
 
+    /**
+     * Display the game over menu.
+     * 
+     * @throws IOException if the fxml sheet doesn't exist.
+     */
+    public void displayGameOverMenu() throws IOException {
+    	final Group group = new Group(root);
+    	final var loader = new FXMLLoader(getClass().getResource("/fxml/GameOverMenu.fxml"));
+    	final var goMenu = (Node) loader.load();
+        goMenu.setLayoutX(controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX());
+    	group.getChildren().add(goMenu);
+		final GameOverMenuController gomc = (GameOverMenuController) loader.getController();
+		gomc.setInfoToDisplay(
+				this.controller.getStage().getLevel().getSegments()
+						.indexOf(this.controller.getStage().getLevel()
+								.getSegmentAtPosition(this.controller.getStage().getPlayer().getPosition()))
+						+ 1,
+				this.controller.getStage().getLevel().getSegments().size(), this.userData);
+		this.setRoot(group);
+    }
+    
+    /**
+     * Dispose of the game over menu.
+     */
+    public void disposeGameOverMenu() {
+        final Group group = new Group(root);
+        this.setRoot(group);
+    }
     /**
      * 
      * @return bla
