@@ -13,6 +13,8 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.weapons.P2020;
+import model.weapons.PeaceKeeper;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

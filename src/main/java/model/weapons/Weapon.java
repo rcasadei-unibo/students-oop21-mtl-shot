@@ -1,5 +1,7 @@
 package model.weapons;
 
+import java.util.Objects;
+
 /**
  * Weapon class models an infinite-bullets
  * generic weapon
@@ -33,12 +35,15 @@ public abstract class Weapon {
 	 */
 	private final int reloadTime;
 	
-	public Weapon(final String name, final int magCapacity, final int damagePerBullet, final int fireRate, final int reloadTime) {
+	private final double accuracy;
+	
+	public Weapon(final String name, final int magCapacity, final int damagePerBullet, final int fireRate, final int reloadTime, final double accuracy) {
 		this.name = name;
 		this.magCapacity = magCapacity;
 		this.damagePerBullet = damagePerBullet;
 		this.fireRate = fireRate;
 		this.reloadTime = reloadTime;
+		this.accuracy = accuracy;
 		
 		/*
 		 * When initialized, the mag is full
@@ -83,4 +88,29 @@ public abstract class Weapon {
 	public int getFireRate() {
 		return this.fireRate;
 	}
+	
+	public double getAccuracy() {
+		return this.accuracy;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accuracy, bulletsInMag, damagePerBullet, fireRate, magCapacity, name, reloadTime);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Weapon other = (Weapon) obj;
+		return Double.doubleToLongBits(accuracy) == Double.doubleToLongBits(other.accuracy)
+				&& bulletsInMag == other.bulletsInMag && damagePerBullet == other.damagePerBullet
+				&& fireRate == other.fireRate && magCapacity == other.magCapacity && Objects.equals(name, other.name)
+				&& reloadTime == other.reloadTime;
+	}
+	
 }
