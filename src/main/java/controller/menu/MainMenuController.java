@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -58,9 +57,7 @@ public class MainMenuController {
     @FXML
     public void optionReleased(final MouseEvent event) throws IOException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OptionsMenu.fxml"));
-        stage.getScene().setRoot(loader.load());
-        ((OptionsMenuController) loader.getController()).setGameView(Optional.empty());
+        stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/SettingsMenu.fxml")));
         stage.show();
     }
 

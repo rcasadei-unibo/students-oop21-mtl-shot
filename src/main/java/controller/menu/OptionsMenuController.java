@@ -14,7 +14,7 @@ import util.Pair;
 import view.GameView;
 
 /**
- * The controller class for the Options menu (managed by FXML sheet).
+ * The controller class for the Settings menu (managed by FXML sheet).
  * 
  */
 public class OptionsMenuController {

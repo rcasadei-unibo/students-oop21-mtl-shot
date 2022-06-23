@@ -13,6 +13,8 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.weapons.P2020;
+import model.weapons.PeaceKeeper;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +24,6 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 import util.Direction;
-import util.map.TextMap;
 import view.GameView;
 import view.sounds.SoundManager.Sounds;
 
@@ -79,7 +80,7 @@ public class Controller extends Thread{
 
             @Override
             public void handle(final ActionEvent event) {
-
+            	
                 var remove = new LinkedList<EnemyController>();
 
                 enemiesController.forEach(e -> {
@@ -122,6 +123,21 @@ public class Controller extends Thread{
                 if (!viewReference.getWindow().isFocused()) {
                     stage.getPlayer().reset();
                 }
+                if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
+                	try {
+						viewReference.displayWinMenu();
+						gameLoop.pause();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+                }
+                if (stage.getPlayer().getHealth().isDead()) {
+                	try {
+						gameOver();
+					} catch (final IOException e1) {
+						e1.printStackTrace();
+					}
+                }
                 gameView.refresh(stage);
             }
         }));
@@ -151,6 +167,10 @@ public class Controller extends Thread{
         paused = true;
     }
 
+    public void gameOver() throws IOException {
+    	gameLoop.pause();
+    	this.viewReference.displayGameOverMenu();
+    }
     /**
      * Handles the input key from standard input on it's press.
      * 
@@ -261,15 +281,6 @@ public class Controller extends Thread{
      */
     public PlayerController getPlayerController() {
         return this.playerController;
-    }
-
-    /**
-     * Gets the view reference.
-     * 
-     * @return MetalShot
-     */
-    public GameView getView() {
-        return this.viewReference;
     }
 
     /**
