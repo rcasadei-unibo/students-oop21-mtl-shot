@@ -64,5 +64,10 @@ public class LevelView {
     public List<Group> getDisplayed() {
         return displayed;
     }
+    
+    public List<Group> getPreviousSegment(final Vector2D playerPosition){
+    	return atManager.getSegment(
+                level.getSegments().indexOf(level.getSegmentAtPositionOffset(playerPosition, -1).get()));
+    }
 
 }

@@ -1,16 +1,22 @@
 package model.weapons;
 
 /**
- * Weapon - TestWeapon1
+ * Weapon - Kraber, sniper.
  *
  */
 public class Kraber extends Weapon {
-	public Kraber() {
-		super("Kraber",  // Name
-				5,          // Mag capacity
-				100,           // Damage per bullet
-				100,           // Fire rate
-				150,           // Reload time
-				50);        // Accuracy
-	}
+
+    private static final int MAG_CAPACITY = 5;
+    private static final int DAMAGE_PER_BULLET = 100;
+    private static final int FIRE_RATE = 100;
+    private static final int RELOAD_TIME = 150;
+    private static final double ACCURACY = 50.0;
+
+    /**
+     * Creates weapon.
+     */
+    public Kraber() {
+        super("Kraber", MAG_CAPACITY, DAMAGE_PER_BULLET, FIRE_RATE, RELOAD_TIME, ACCURACY);
+    }
+
 }

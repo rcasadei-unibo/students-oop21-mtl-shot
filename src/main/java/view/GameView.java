@@ -1,7 +1,6 @@
 package view;
 
 import java.io.IOException;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,21 +17,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
+import model.weapons.R99;
 import util.UserData;
-import util.Vector2D;
 import util.map.MapConstants;
 import view.map.CameraManager;
 import view.map.LevelView;
 import view.player.PlayerView;
 import controller.Controller;
+import controller.menu.HUD;
 import controller.menu.GameOverMenuController;
 import controller.menu.PauseMenuController;
 import controller.menu.WinMenuController;
@@ -47,15 +45,18 @@ public class GameView extends Scene {
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
-    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/menusResources/MainMenuBG.png")));
+    private final ImageView background = new ImageView(new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
     private final UserData userData;
 	private final Group root;
 	private final CameraManager cameraManager;
+	private final HUD hudController;
+
     private FXMLLoader loader;
     private GridPane pauseMenu;
-	
-	
+    
+    private Node hud;
+    
 	/**
 	 * The GameView constructor.
 	 * 
@@ -77,11 +78,17 @@ public class GameView extends Scene {
         for (final EnemyView enemyView : this.enemiesView.values()) {
             totalList.add(enemyView.getCharacterImageView());
         }
+        final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/HUD.fxml"));
+        hud = loader.load();
+        this.hudController  = (HUD) loader.getController();        
 		this.root = new Group(totalList);
-		this.setRoot(root);
-		this.cameraManager = new CameraManager(controller, root, levelView);
-		controller.gameStart();
 
+		this.setRoot(root);
+		this.cameraManager = new CameraManager(controller, root, levelView, this);
+		this.setCamera(cameraManager.getCamera());
+	    root.getChildren().add(hud);
+		controller.gameStart();
+		
 		this.setOnKeyPressed(e -> {
 
             try {
@@ -127,7 +134,16 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
     public void refresh(final StageImpl stage) {
-
+    	
+    	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
+		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
+		final ParallelTransition pt = new ParallelTransition();
+		this.hud.toFront();
+		pt.getChildren().add(tt);
+		pt.play();
+    	
+		this.hudController.setSize(1920*1.75, 1080*1.75);
+        
         cameraManager.updateCamera();
 
         if (stage.getEnemies().size() != enemiesView.keySet().size()) {
@@ -139,6 +155,14 @@ public class GameView extends Scene {
         }
 
         playerView.updateCharacter(stage.getPlayer());
+        if(stage.getPlayer().getWeapon().equals(new R99())) {
+        	playerView.setWeapon(CharacterSprites.playerIdleRifle,
+        			CharacterSprites.playerIdleUpRifle,
+        			CharacterSprites.playerRunRifle,
+        			CharacterSprites.playerRunUpRifle,
+        			CharacterSprites.playerCrouchIdleRifle,
+        			CharacterSprites.playerCrouchRunRifle);        	
+        }
 
         // Updates bullets
         if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
@@ -150,6 +174,8 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
+        userData.setLpLeft(stage.getPlayer().getHealth().getHealth());
+        hudController.refresh(userData);
 	}
 
     /**
@@ -172,6 +198,7 @@ public class GameView extends Scene {
      * @throws IOException if the fxml sheet doesn't exist.
      */
     public void displayPauseMenu() throws IOException {
+    	cameraManager.resetCamera();
         final Group group = new Group(root);
         loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
         pauseMenu = (GridPane) loader.load();

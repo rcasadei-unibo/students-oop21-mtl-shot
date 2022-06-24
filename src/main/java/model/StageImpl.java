@@ -39,7 +39,7 @@ public class StageImpl {
      */
     public StageImpl() throws IOException, InstanceNotFoundException {
         this.level = new Level(
-                Stream.of("src/main/resources/map.txt", "src/main/resources/map2.txt", "src/main/resources/map3.txt")
+                Stream.of("map.txt", "map2.txt", "map3.txt")
                         .collect(Collectors.toList()));
         this.enemies = new LinkedList<>();
         addEnemies();

@@ -19,7 +19,7 @@ import view.GameView;
  */
 public class OptionsMenuController {
 
-    private Optional<GameView> gameView;
+    private Optional<GameView> gameView = Optional.empty();
     private static final Pair<Integer, Integer> PREFSIZE = new Pair<>(800, 600);
 
     @FXML
