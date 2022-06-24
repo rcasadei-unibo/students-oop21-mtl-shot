@@ -13,6 +13,9 @@ import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.weapons.Kraber;
+import model.weapons.PeaceKeeper;
+import model.weapons.R99;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -84,7 +87,7 @@ public class Controller extends Thread {
                         if (e.isActive()) {
                             e.controllerTick(viewReference.getCameraManager().getBounds(), false);
                             if (e.getCharacter().isShooting()) {
-                                e.fire(weaponController, bulletsController, soundsController);
+//                                 e.fire(weaponController, bulletsController, soundsController);
                             }
                             if (e.isDead()) {
                                 remove.add(e);
@@ -193,6 +196,15 @@ public class Controller extends Thread {
         }
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
+        }
+        if (key == KeyCode.DIGIT1) {
+            this.stage.getPlayer().setWeapon(new R99());
+        }
+        if (key == KeyCode.DIGIT2) {
+            this.stage.getPlayer().setWeapon(new PeaceKeeper());
+        }
+        if (key == KeyCode.DIGIT3) {
+            this.stage.getPlayer().setWeapon(new Kraber());
         }
     }
 

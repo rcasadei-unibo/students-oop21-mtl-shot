@@ -14,6 +14,9 @@ import util.Vector2D;
 import util.map.MapConstants;
 import view.GameView;
 
+/**
+ * Handles camera movement and resizing of viewable space.
+ */
 public class CameraManager {
 
 	private final Controller controller;
@@ -22,25 +25,37 @@ public class CameraManager {
 	private final LevelView levelView;
 	private final GameView gameView;
 	private double offset = 0;
-	double cameraScaleFactorX;
-	double cameraScaleFactorY;
+	private double cameraScaleFactorX;
+	private double cameraScaleFactorY;
 	private Camera camera = new PerspectiveCamera();
+	private static final double HORIZONTALDEFAULT = 1920;
+	private static final double VERTICALDEFAULT = 1080;
 
-	public CameraManager(final Controller controller, final Group root, final LevelView levelView, GameView gameView) {
+	/**
+	 * Camera manager constructor.
+	 * @param controller
+	 * @param root
+	 * @param levelView
+	 * @param gameView
+	 */
+	public CameraManager(final Controller controller, final Group root, final LevelView levelView, final GameView gameView) {
 		this.controller = controller;
 		this.prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
 		this.root = root;
 		this.levelView = levelView;
 		this.gameView = gameView;
 	}
-
+	
+	/**
+	 * Updates the camera's parameters based on the game's state.
+	 */
 	public void updateCamera() {
 		double adjust;
-		cameraScaleFactorX = 1920 / gameView.getWidth();
-		cameraScaleFactorY = 1080 / gameView.getHeight();
+		cameraScaleFactorX = HORIZONTALDEFAULT / gameView.getWidth();
+		cameraScaleFactorY = VERTICALDEFAULT / gameView.getHeight();
 
 		if (cameraScaleFactorX <= cameraScaleFactorY) {
-			adjust = 1920;
+			adjust = HORIZONTALDEFAULT;
 			this.camera.setScaleX(cameraScaleFactorX);
 			this.camera.setScaleY(cameraScaleFactorX);
 		} else {
@@ -48,7 +63,6 @@ public class CameraManager {
 			this.camera.setScaleX(cameraScaleFactorY);
 			this.camera.setScaleY(cameraScaleFactorY);
 		}
-		System.out.println(cameraScaleFactorX <= cameraScaleFactorY);
 		if (!controller.getStage().getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())
 				.equals(controller.getStage().getLevel().getSegmentAtPosition(prevPosSegment))) {
 			prevPosSegment = new Vector2D(controller.getStage().getPlayer().getPosition());
@@ -64,7 +78,7 @@ public class CameraManager {
 			pt.setOnFinished(new EventHandler<ActionEvent>() {
 
 				@Override
-				public void handle(ActionEvent event) {
+				public void handle(final ActionEvent event) {
 					root.getChildren()
 							.removeAll(levelView.getPreviousSegment(controller.getStage().getPlayer().getPosition()));
 				}
@@ -87,27 +101,45 @@ public class CameraManager {
 			pt.play();
 			offset += controller.getStage().getPlayer().getSpeed().getX();
 		}
-		System.out.println(adjust/MapConstants.getTilesize());
 	}
 
+	/**
+	 * Returns the left and right bounds of the area the player can traverse.
+	 * @return the left and right bound of the traversable area as a Pair.
+	 */
 	public Pair<Double, Double> getBounds() {
 		return new Pair<Double, Double>(offset, controller.getStage().getLevel().getDistance(controller.getStage()
 				.getLevel().getSegmentAtPosition(controller.getStage().getPlayer().getPosition())));
 	}
-
+	
+	/**
+	 * Returns the space in Game Units traversed by the camera when following the player, is zero when changing segment.
+	 * @return the offset value.
+	 */
 	public double getOffset() {
 		return this.offset;
 	}
-
+	
+	/**
+	 * Returns the camera managed by the CameraManager.
+	 * @return the camera object.
+	 */
 	public Camera getCamera() {
 		return this.camera;
 	}
-
+	
+	/**
+	 * Resets the camera's scale for correct menù handling.
+	 */
 	public void resetCamera() {
 		this.camera.setScaleX(1);
 		this.camera.setScaleY(1);
 	}
 
+	/**
+	 * Returns the scale factors.
+	 * @return the scale factors as a Pair.
+	 */
 	public Pair<Double, Double> getScaleFactors() {
 		return new Pair<Double, Double>(this.cameraScaleFactorX, this.cameraScaleFactorY);
 	}

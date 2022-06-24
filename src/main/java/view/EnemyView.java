@@ -10,9 +10,9 @@ public class EnemyView extends CharacterView {
      * The constructor of the EnemyView.
      */
     public EnemyView() {
-        super(CharacterSprites.playerIdleRifle, CharacterSprites.playerIdleUpRifle, CharacterSprites.playerRunRifle,
-                CharacterSprites.playerRunUpRifle, CharacterSprites.playerCrouchIdleRifle,
-                CharacterSprites.playerCrouchRunRifle);
+        super(CharacterSprites.PLAYERIDLERIFLE, CharacterSprites.PLAYERIDLEUPRIFLE, CharacterSprites.PLAYERRUNRIFLE,
+                CharacterSprites.PLAYERRUNUPRIFLE, CharacterSprites.PLAYERCROUCHIDLERIFLE,
+                CharacterSprites.PLAYERCROUCHRUNRIFLE, CharacterSprites.PLAYERRUNDOWNRIFLE);
     }
 
 }

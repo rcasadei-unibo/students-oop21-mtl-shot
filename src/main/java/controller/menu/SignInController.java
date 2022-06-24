@@ -39,7 +39,6 @@ public class SignInController {
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
         if (this.isValid(name.getText())) {
-            stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
             final GameView gv = new GameView(name.getText());
             stage.setScene(gv);
             stage.setFullScreen(fs);

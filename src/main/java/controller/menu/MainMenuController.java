@@ -63,15 +63,4 @@ public class MainMenuController {
         stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/SettingsMenu.fxml")));
         stage.show();
     }
-
-    /**
-     * Executes when the leaderboard button is released.
-     * 
-     * @param event
-     * @throws FileNotFoundException
-     */
-    @FXML
-    public void leaderboardReleased(final MouseEvent event) throws FileNotFoundException {
-        // Show leaderboard panel
-    }
 }

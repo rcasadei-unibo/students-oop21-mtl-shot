@@ -40,14 +40,6 @@
                   <Font name="PixelMadness" size="30.0"  url="@../menusResources/Pixel_Madness.ttf"/>
                </font>
       </Button>
-      <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseReleased="#optionReleased" styleClass="rectangularButton" text="Settings" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <GridPane.margin>
-            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
-         </GridPane.margin>
-         <font>
-                  <Font name="PixelMadness" size="30.0"  url="@../menusResources/Pixel_Madness.ttf"/>
-               </font>
-      </Button>
       <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#quitReleased" styleClass="rectangularButton" text="Quit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />

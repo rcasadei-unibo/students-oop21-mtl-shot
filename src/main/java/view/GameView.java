@@ -23,7 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
-import model.weapons.R99;
 import util.UserData;
 import util.map.MapConstants;
 import view.map.CameraManager;
@@ -129,13 +128,12 @@ public class GameView extends Scene {
      * @param stage
      */
     public void refresh(final StageImpl stage) {
-
-        final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
-        tt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
-        final ParallelTransition pt = new ParallelTransition();
-        this.hud.toFront();
-        pt.getChildren().add(tt);
-        pt.play();
+    	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
+		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
+		final ParallelTransition pt = new ParallelTransition();
+		this.hud.toFront();
+		pt.getChildren().add(tt);
+		pt.play();
 
         this.hudController.setSize(1920 * 1.75, 1080 * 1.75);
 
@@ -150,11 +148,6 @@ public class GameView extends Scene {
         }
 
         playerView.updateCharacter(stage.getPlayer());
-        if (stage.getPlayer().getWeapon().equals(new R99())) {
-            playerView.setWeapon(CharacterSprites.playerIdleRifle, CharacterSprites.playerIdleUpRifle,
-                    CharacterSprites.playerRunRifle, CharacterSprites.playerRunUpRifle,
-                    CharacterSprites.playerCrouchIdleRifle, CharacterSprites.playerCrouchRunRifle);
-        }
 
         // Updates bullets
         if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {
@@ -224,6 +217,7 @@ public class GameView extends Scene {
      * @throws IOException if the fxml sheet doesn't exist.
      */
     public void displayWinMenu() {
+        root.getChildren().remove(this.hud);
         final Group group = new Group(root);
         final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
 
@@ -254,6 +248,7 @@ public class GameView extends Scene {
      * @throws IOException if the fxml sheet doesn't exist.
      */
     public void displayGameOverMenu() {
+        root.getChildren().remove(this.hud);
         final Group group = new Group(root);
         final var loader = new FXMLLoader(getClass().getResource("/fxml/GameOverMenu.fxml"));
 
