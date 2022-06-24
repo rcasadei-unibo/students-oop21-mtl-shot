@@ -1,5 +1,6 @@
 package util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -8,8 +9,13 @@ import java.util.Date;
 public class UserData {
 
     private final String name;
-    private double points;
-    private Date lastGame;
+    private int points;
+    private int lpLeft;
+    private Date lastGame = new Date();
+    private long startTime = new Date().getTime();
+    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+    
+    public static final int POINTS_PER_ENEMY = 10;
 
     /**
      * The UserData constructor.
@@ -24,16 +30,20 @@ public class UserData {
      * Gets the total points possessed by the user.
      * @return points
      */
-    public double getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    /**
-     * Sets the total points possessed by the user.
-     * @param points
-     */
-    public void setPoints(final double points) {
-        this.points = points;
+    public void increasePoints() {
+        this.points += POINTS_PER_ENEMY;
+    }
+    
+    public int getLpLeft() {
+        return this.lpLeft;
+    }
+    
+    public void setLpLeft(int lp) {
+        this.lpLeft = lp;
     }
 
     /**
@@ -44,12 +54,12 @@ public class UserData {
         return lastGame;
     }
 
-    /**
-     * Sets the date of the last game played.
-     * @param lastGame
-     */
     public void setLastGame(final Date lastGame) {
         this.lastGame = lastGame;
+    }
+    
+    public String getTime() {
+        return sdf.format(new Date(new Date().getTime()-startTime));
     }
 
     /**

@@ -1,11 +1,22 @@
 package model.weapons;
 
 /**
- * TODO: write javadoc
+ * Weapon - PeaceKeeper, shotgun.
  *
  */
 public class PeaceKeeper extends Weapon {
-	public PeaceKeeper() {
-		super("Peacekeeper", 6, 15, 70, 200);
-	}
+
+    private static final int MAG_CAPACITY = 6;
+    private static final int DAMAGE_PER_BULLET = 30;
+    private static final int FIRE_RATE = 0;
+    private static final int RELOAD_TIME = 120;
+    private static final double ACCURACY = 0.2;
+
+    /**
+     * Creates weapon.
+     */
+    public PeaceKeeper() {
+        super("PeaceKeeper", MAG_CAPACITY, DAMAGE_PER_BULLET, FIRE_RATE, RELOAD_TIME, ACCURACY);
+    }
+
 }

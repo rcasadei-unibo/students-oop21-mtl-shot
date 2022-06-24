@@ -1,17 +1,14 @@
 package model.map.tile;
 
-import java.io.File;
-
 import util.Vector2D;
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public class TileAir extends AbstractTile {
 	
 	public TileAir(final Vector2D position) {
-        super(position, "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Air.png");
+        super(position, "Air.png");
 	}
 
 	@Override

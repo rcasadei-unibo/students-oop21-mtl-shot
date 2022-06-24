@@ -26,7 +26,8 @@ val javaFXModules = listOf(
     "controls",
     "fxml",
     "swing",
-    "graphics"
+    "graphics",
+    "media"
 )
 
 val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
@@ -60,5 +61,6 @@ tasks.withType<Test> {
 
 application {
     // Define the main class for the application
-    mainClass.set("it.unibo.samplejavafx.App")
+    mainClass.set("app.App")
+	applicationDefaultJvmArgs = listOf("-Dprism.forceGPU=true")
 }

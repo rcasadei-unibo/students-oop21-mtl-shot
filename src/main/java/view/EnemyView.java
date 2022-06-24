@@ -1,13 +1,18 @@
 package view;
+
 /**
- * TODO: javadoc.
+ * Defines the graphic properties of the enemy.
  *
  */
 public class EnemyView extends CharacterView {
 
-	public EnemyView() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * The constructor of the EnemyView.
+     */
+    public EnemyView() {
+        super(CharacterSprites.PLAYERIDLERIFLE, CharacterSprites.PLAYERIDLEUPRIFLE, CharacterSprites.PLAYERRUNRIFLE,
+                CharacterSprites.PLAYERRUNUPRIFLE, CharacterSprites.PLAYERCROUCHIDLERIFLE,
+                CharacterSprites.PLAYERCROUCHRUNRIFLE, CharacterSprites.PLAYERRUNDOWNRIFLE);
+    }
 
 }

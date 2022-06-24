@@ -29,7 +29,7 @@ public class PauseMenuController {
     @FXML
     void optionReleased(final MouseEvent event) throws IOException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/OptionsMenu.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SettingsMenu.fxml"));
         stage.getScene().setRoot(loader.load());
         ((OptionsMenuController) loader.getController()).setGameView(Optional.of(this.gameView));
         stage.show();
@@ -37,7 +37,8 @@ public class PauseMenuController {
 
     @FXML
     void quitReleased(final Event event) throws IOException {
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene()
+                .setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
     }
 
     @FXML
@@ -60,6 +61,7 @@ public class PauseMenuController {
 
     /**
      * Sets the size of the options menu panel.
+     * 
      * @param width
      * @param height
      */
@@ -69,6 +71,7 @@ public class PauseMenuController {
 
     /**
      * Sets the reference to the GameView.
+     * 
      * @param gameView
      */
     public void setGameView(final GameView gameView) {

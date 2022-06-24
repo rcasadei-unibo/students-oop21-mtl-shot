@@ -3,8 +3,6 @@ package model.map.tile;
 import util.Vector2D;
 /**
  * 
- * @author filippo.gurioli
- *
  */
 public interface Tile {
 	

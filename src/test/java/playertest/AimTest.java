@@ -1,12 +1,13 @@
 package playertest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import model.character.tools.Aim;
-import util.Direction;
+import util.Pair;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
 
 /**
  * JUnit to test the Aim class.
@@ -17,43 +18,31 @@ public class AimTest {
     @Test
     void constructorTest() {
         final var aim = new Aim();
-        assertEquals(Direction.RIGHT, aim.getDirection());
-    }
-
-    @Test
-    void constructorTest2() {
-        final var aim = new Aim(Direction.NEUTRAL);
-        assertEquals(Direction.RIGHT, aim.getDirection());
-    }
-
-    @Test
-    void constructorTest3() {
-        final var aim = new Aim(Direction.UP);
-        assertEquals(Direction.UP, aim.getDirection());
+        assertEquals(new Pair<DirectionHorizontal, DirectionVertical>(DirectionHorizontal.RIGHT, DirectionVertical.NEUTRAL), aim.getDirection());
     }
 
     @Test
     void setDirectionTest() {
         final var aim = new Aim();
-        aim.setDirection(Direction.DOWN);
-        assertEquals(Direction.DOWN, aim.getDirection());
-        aim.setDirection(Direction.NEUTRAL);
-        assertEquals(Direction.DOWN, aim.getDirection());
+        aim.setDirection(new Pair<>(DirectionHorizontal.LEFT, DirectionVertical.DOWN));
+        assertEquals(DirectionVertical.DOWN, aim.getDirection().getY());
+        aim.setDirection(new Pair<>(DirectionHorizontal.LEFT, DirectionVertical.NEUTRAL));
+        assertEquals(DirectionHorizontal.LEFT, aim.getDirection().getX());
     }
 
     @Test
     void returnToHorizontalTest() {
         final var aim = new Aim();
-        aim.setDirection(Direction.DOWN);
+        aim.setDirection(new Pair<>(DirectionHorizontal.RIGHT, DirectionVertical.DOWN));
         aim.returnToHorizontal();
-        assertEquals(Direction.RIGHT, aim.getDirection());
+        assertEquals(new Pair<>(DirectionHorizontal.RIGHT, DirectionVertical.NEUTRAL), aim.getDirection());
     }
 
     @Test
-    void returnToHorizontalTest2() {
-        final var aim = new Aim(Direction.LEFT);
-        aim.setDirection(Direction.DOWN);
-        aim.returnToHorizontal();
-        assertEquals(Direction.LEFT, aim.getDirection());
+    void setHorizontalOrVerticalTest() {
+        final var aim = new Aim();
+        aim.setHorizontal(DirectionHorizontal.LEFT);
+        aim.setVertical(DirectionVertical.UP);
+        assertEquals(new Pair<>(DirectionHorizontal.LEFT, DirectionVertical.UP), aim.getDirection());
     }
 }

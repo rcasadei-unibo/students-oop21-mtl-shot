@@ -1,11 +1,13 @@
 package controller;
 
-import util.Direction;
+import util.DirectionVertical;
+import util.Pair;
 import util.Vector2D;
+import view.sounds.SoundManager.Sounds;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
-import util.Pair;
+import controller.WeaponController.TryToShootReturn;
 import model.character.Character;
 
 /**
@@ -23,13 +25,6 @@ public class CharacterController {
      */
     private static final double DELTAX = 0.25;
     private static final double DELTAY = 0.075;
-    /*
-     * Constant used to have the shift from the playerPos to the hitbox pos (player
-     * should penetrate at least a bit the field with the head and the arms)
-     */
-    // DELTA > HITBOXSHIFT.x
-    // Il replacing al momento del crouch non funziona più in questo modo
-    private static final Vector2D HITBOXSHIFT = new Vector2D();
 
     /**
      * The character controller constructor.
@@ -44,16 +39,32 @@ public class CharacterController {
 
     /**
      * The main method that checks everything about the player.
+     * @param bounds
+     * @param canAdvance
      */
-    public void controllerTick(final double leftBound) {
-        this.movementChecks();
+    public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
+        this.movementChecks(bounds, canAdvance);
         this.character.moveEntity();
-        if (this.character.getPosition().getX() < leftBound) {
-        	this.character.setPosition(leftBound, this.character.getPosition().getY());
-        }
         this.aimChecks();
     }
-    
+
+    /**
+     * Defines the actions to execute when the boolean isShooting is true.
+     * @param weaponController
+     * @param bulletsController
+     * @param soundsController
+     */
+    public void fire(final WeaponController weaponController, final BulletsController bulletsController,
+            final SoundsController soundsController) {
+        var ttsr = weaponController.tryToShoot(this.character);
+        if (ttsr.equals(TryToShootReturn.SHOOT)) {
+            soundsController.playSound(Sounds.RIFLE_FIRING);
+            bulletsController.addBullet(this.character);
+        } else if (ttsr.equals(TryToShootReturn.RELOAD)) {
+            soundsController.playSound(Sounds.RELOAD);
+        }
+    }
+
     /**
      * Gets the character who is being controlled.
      * 
@@ -62,28 +73,31 @@ public class CharacterController {
     public Character getCharacter() {
         return this.character;
     }
-    
+
+    /**
+     * 
+     * @return true if the character is dead
+     */
     public boolean isDead() {
         return this.character.getHealth().isDead();
     }
-    
+
     private void aimChecks() {
         // if crouching he can't aim at the ground
         if (this.character.isCrouching()) {
             this.character.getAim().returnToHorizontal();
             // if fling and pressing the down button he has to aim at the ground
         } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
-            this.character.getAim().setDirection(Direction.DOWN);
+            this.character.getAim().setVertical(DirectionVertical.DOWN);
         }
     }
 
-    private void movementChecks() {
+    private void movementChecks(final Pair<Double, Double> bounds, final boolean canAdvance) {
         // Setting default values
         character.setCrouchCondition(Crouch.FREE);
         final Vector2D nextPos = new Vector2D(character.getPosition());
         // The next frame the character will be in character.pos + character.speed
         nextPos.add(character.getSpeed());
-        nextPos.add(HITBOXSHIFT);
         // Roof collisions
         if (this.isCollidingUp(nextPos) && this.character.getSpeed().getY() < 0) {
             this.character.setSpeed(this.character.getSpeed().getX(), 0);
@@ -101,14 +115,16 @@ public class CharacterController {
         } else if (this.character.getSpeed().getX() != 0) {
             this.character.setFall(true);
         }
+
         // Left wall collisions
-        if (this.isCollidingLeft(nextPos)) {
+        if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + 0.1) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
-        } else if (this.isCollidingRight(nextPos)) {
+        } else if (this.isCollidingRight(nextPos)
+                || (nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
-        // Special case: while fling he can not crouch
+        // Special case: while flying he can not crouch
         if (this.character.isFalling()) {
             this.character.setCrouchCondition(Crouch.UP);
         }
@@ -158,5 +174,4 @@ public class CharacterController {
         return level.getSegmentAtPosition(botLeft).isCollidableAtPosition(botLeft)
                 || level.getSegmentAtPosition(botRight).isCollidableAtPosition(botRight);
     }
-
 }

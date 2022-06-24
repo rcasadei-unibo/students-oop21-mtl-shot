@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.Pair;
 import view.GameView;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The controller class for the sign in menu (managed by FXML sheet).
@@ -27,10 +29,9 @@ public class SignInController {
 
     /**
      * Executes when the insert button is released.
+     * 
      * @param event
-     * @throws IOException 
-     * @throws InstanceNotFoundException 
-     * @throws InterruptedException
+     * @throws IOException
      */
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
@@ -38,16 +39,19 @@ public class SignInController {
         final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
         final boolean fs = stage.isFullScreen();
         if (this.isValid(name.getText())) {
-            stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
             final GameView gv = new GameView(name.getText());
             stage.setScene(gv);
             stage.setFullScreen(fs);
             stage.setWidth(dim.getX());
             stage.setHeight(dim.getY());
         }
+        var sm = new SoundManager();
+        sm.stopSound(Sounds.METAL_SHOT_HAHA);
     }
+
     /**
      * Executes when the back button is released.
+     * 
      * @param event
      * @throws IOException
      */
@@ -61,4 +65,5 @@ public class SignInController {
     private boolean isValid(final String text) {
         return !text.isBlank();
     }
+
 }

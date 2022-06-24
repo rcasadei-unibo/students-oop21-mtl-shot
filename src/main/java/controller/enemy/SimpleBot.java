@@ -1,26 +1,24 @@
 package controller.enemy;
 
-import model.character.Character;
-import model.character.Player;
-import model.character.movableentity.MovableEntity;
 /**
  * The brain of an enemy.
  */
 public interface SimpleBot {
+
+    /**
+     * Execute all the action and checks that an enemy
+     * has to do every frame.
+     */
+    void controllerTick();
+
     /**
      * Communicates with the enemy (or MovableEntity) and make it move.
      */
     void move();
+
     /**
-     * 
-     * @param p
+     * Execute the actions and checks to make the enemy shoot.
      */
-    void setPlayer(Player p);
-
-    MovableEntity getEntity();
-
-    void setEnemy(Character character);
-    
     void fire();
 
 }

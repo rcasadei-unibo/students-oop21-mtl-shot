@@ -4,8 +4,6 @@ import java.util.Objects;
 
 import util.Vector2D;
 /**
- * 
- * @author filippo.gurioli
  *
  */
 public abstract class AbstractTile implements Tile {
@@ -25,9 +23,14 @@ public abstract class AbstractTile implements Tile {
 	public String getPath() {
 		return this.path;
 	}
-	
+	/**
+	 *
+	 */
     public abstract boolean isCollidable();
-    
+    /**
+    *
+    */
+    public abstract boolean isTileable();
     @Override
 	public String toString() {
 		return this.position + " - Is collidable: " + isCollidable(); 

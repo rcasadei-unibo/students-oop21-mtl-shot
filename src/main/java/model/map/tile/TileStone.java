@@ -1,6 +1,5 @@
 package model.map.tile;
 
-import java.io.File;
 
 import util.Vector2D;
 /**
@@ -11,7 +10,7 @@ import util.Vector2D;
 public class TileStone extends AbstractTile {
 
 	public TileStone(final Vector2D position) {
-		super(position, "src" + File.separator + "main" + File.separator + "resources" + File.separator + "DesertTilesetCompact.png");
+		super(position, "DesertTilesetCompact.png");
 	}
 
 	@Override

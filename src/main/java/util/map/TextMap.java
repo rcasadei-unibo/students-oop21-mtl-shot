@@ -2,8 +2,8 @@ package util.map;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 
@@ -22,13 +22,13 @@ public class TextMap {
      * @throws IOException
      */
     public TextMap(final String path) throws IOException {
-        var br = new BufferedReader(new FileReader(path));
+    	this.path = path;
+        var br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(path)));
         this.height = br.lines().count();
         br.close();
-        br = new BufferedReader(new FileReader(path));
+        br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(path)));
         this.width = br.readLine().length();
         br.close();
-        this.path = path;
     }
 
     /**
@@ -52,7 +52,15 @@ public class TextMap {
      * @return bla
      */
     public File getFile() {
-        return new File(path);
+        System.out.println(this.path);
+        System.out.println(ClassLoader.getSystemResource(path).getPath());
+        File f = new File(ClassLoader.getSystemResource(path).getFile());
+        System.out.println(f.exists());
+        return f;
+    }
+    
+    public String getPath() {
+        return this.path;
     }
 
 }

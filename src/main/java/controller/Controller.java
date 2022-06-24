@@ -7,11 +7,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.management.InstanceNotFoundException;
 
 import model.StageImpl;
 import model.character.Character;
+import model.weapons.Kraber;
+import model.weapons.PeaceKeeper;
+import model.weapons.R99;
 import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,25 +24,26 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
-import util.Direction;
-import util.Pair;
-import util.map.MapConstants;
-import util.map.TextMap;
+import util.DirectionHorizontal;
+import util.DirectionVertical;
 import view.GameView;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The main controller. It contains all sub-controllers and it manages the game
  * loop.
  */
-public class Controller {
+public class Controller extends Thread {
 
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
     private final BulletsController bulletsController;
     private final WeaponController weaponController;
+    private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
     private boolean paused;
+
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
      * second.
@@ -54,68 +59,104 @@ public class Controller {
      * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
-        final TextMap textMap = new TextMap(ClassLoader.getSystemResource("map.txt").getPath());
-        this.stage = new StageImpl(textMap);
+    public Controller(final GameView gameView) throws InstanceNotFoundException, IOException {
+        this.stage = new StageImpl();
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
-        this.bulletsController = new BulletsController(
-                this.stage.getPlayer(), 
-                this.stage.getBullets(),
-                this.stage.getEnemies());
         this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer(), this.enemiesController);
-        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
-        for (final EnemyController enemyController : this.enemiesController) {
-            enemyController.getBrain().setPlayer(this.stage.getPlayer());
-        }
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.soundsController = new SoundsController();
+        this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(),
+                this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
+        this.stage.getEnemies().forEach(
+                e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e, this.stage.getPlayer())));
+        this.paused = false;
+
+        refreshEnemiesStatus();
+
         this.gameLoop = new Timeline(new KeyFrame(Duration.seconds(1 / TPS), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(final ActionEvent event) {
-            	double leftBound = 0;
-            	if (viewReference.getCameraManager() != null) {            		
-            		leftBound = stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX() + (viewReference.getCameraManager().getCamera().getTranslateX() / MapConstants.getTilesize()) + 0.25;
-            	}
-            	System.out.println(viewReference.getCameraManager().getCamera().getTranslateX() / MapConstants.getTilesize());
-                for (final EnemyController enemyController : enemiesController) {
-                    enemyController.controllerTick(leftBound);
-                    if(enemyController.isDead()) {
-                        enemiesController.remove(enemyController);
-                        stage.getEnemies().remove(enemyController.getCharacter());
+                if (paused) {
+                    viewReference.menuRefresh();
+                } else {
+                    var remove = new LinkedList<EnemyController>();
+
+                    enemiesController.forEach(e -> {
+                        if (e.isActive()) {
+                            e.controllerTick(viewReference.getCameraManager().getBounds(), false);
+                            if (e.getCharacter().isShooting()) {
+                                 e.fire(weaponController, bulletsController, soundsController);
+                            }
+                            if (e.isDead()) {
+                                remove.add(e);
+                                viewReference.getUserData().increasePoints();
+                            }
+                        }
+                    });
+
+                    if (!remove.isEmpty()) {
+                        remove.forEach(e -> removeEnemy(e));
                     }
+
+                    weaponController.controllerTick();
+                    bulletsController.controllerTick();
+
+                    playerController.controllerTick(viewReference.getCameraManager().getBounds(),
+                            stage.getEnemies().stream()
+                                    .filter(t -> stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
+                                            .equals(stage.getLevel().getSegmentAtPosition(t.getPosition())))
+                                    .collect(Collectors.toSet()).isEmpty());
+                    if (playerController.getCharacter().isShooting()) {
+                        playerController.fire(weaponController, bulletsController, soundsController);
+                    }
+
+                    if (playerController.isDead()) {
+                        gameOver();
+                    }
+
+                    soundsController.controllerTick();
+
+                    if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
+                            .equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
+
+                        viewReference.displayWinMenu();
+                        gameLoop.pause();
+
+                    }
+
+                    gameView.refresh(stage);
                 }
-                weaponController.controllerTick();
-                bulletsController.controllerTick();
-                playerController.controllerTick(leftBound);
-                if (!viewReference.getWindow().isFocused()) {
-                    stage.getPlayer().reset();
-                }
-                gameView.refresh(stage);
             }
         }));
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
+        this.gameLoop.setCycleCount(Timeline.INDEFINITE);
+        this.gameLoop.play();
     }
 
     /**
      * Starts the game loop.
      */
     public void gameStart() {
-        gameLoop.play();
-        paused = false;
+        this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
+        this.paused = false;
     }
 
     /**
      * Pause the game loop and display the pause menu.
-     * 
-     * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void gamePause() throws IOException {
-        if (!paused) {
-            gameLoop.pause();
-            this.viewReference.displayPauseMenu();
-        }
-        paused = true;
+    public void gamePause() {
+        this.soundsController.stopSound(Sounds.MAIN_THEME);
+        this.paused = true;
+        this.viewReference.displayPauseMenu();
+    }
+
+    /**
+     * 
+     */
+    public void gameOver() {
+        this.gameLoop.pause();
+        this.viewReference.displayGameOverMenu();
     }
 
     /**
@@ -124,38 +165,42 @@ public class Controller {
      * @param key the key pressed
      * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
-    public void keyPressed(final KeyCode key) throws IOException {
+    public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
             stage.getPlayer().setLeft(true);
-            stage.getPlayer().getAim().setDirection(Direction.LEFT);
+            stage.getPlayer().getAim().setHorizontal(DirectionHorizontal.LEFT);
         }
         if (key == KeyCode.D) {
             stage.getPlayer().setRight(true);
-            stage.getPlayer().getAim().setDirection(Direction.RIGHT);
+            stage.getPlayer().getAim().setHorizontal(DirectionHorizontal.RIGHT);
         }
         if (key == KeyCode.W) {
-            stage.getPlayer().getAim().setDirection(Direction.UP);
+            stage.getPlayer().getAim().setVertical(DirectionVertical.UP);
         }
         if (key == KeyCode.SPACE) {
+            if (!stage.getPlayer().isJumping() && !stage.getPlayer().isFalling()) {
+                this.soundsController.playSound(Sounds.JUMP_1);
+            }
             stage.getPlayer().setJump(true);
         }
         if (key == KeyCode.S) {
             stage.getPlayer().setCrouchKey(true);
-            stage.getPlayer().getAim().setDirection(Direction.DOWN);
+            stage.getPlayer().getAim().setVertical(DirectionVertical.DOWN);
         }
         if (key.equals(KeyCode.J)) {
-            if (this.weaponController.tryToShoot(this.stage.getPlayer())) {
-                // Play shoot sound
-                this.bulletsController.addBullet(this.stage.getPlayer());
-            }
-        } else if (key.equals(KeyCode.R)) {
-             if (this.weaponController.tryToReload(this.stage.getPlayer())) {
-                 // Play reload sound
-                 // Play reload animation
-             }
+            this.stage.getPlayer().setFire(true);
         }
         if (key == KeyCode.ESCAPE) {
             this.gamePause();
+        }
+        if (key == KeyCode.DIGIT1) {
+            this.stage.getPlayer().setWeapon(new R99());
+        }
+        if (key == KeyCode.DIGIT2) {
+            this.stage.getPlayer().setWeapon(new PeaceKeeper());
+        }
+        if (key == KeyCode.DIGIT3) {
+            this.stage.getPlayer().setWeapon(new Kraber());
         }
     }
 
@@ -181,45 +226,22 @@ public class Controller {
             stage.getPlayer().setCrouchKey(false);
             stage.getPlayer().getAim().returnToHorizontal();
         }
+        if (key == KeyCode.J) {
+            this.stage.getPlayer().setFire(false);
+//            this.playerController.fire(weaponController, bulletsController);
+        }
     }
 
     /**
-     * Saves the current game state.
-     */
-    public void save() {
-        // TODO
-    }
-
-    /**
-     * Loads the selected game.
-     */
-    public void load() {
-        // TODO
-    }
-
-    /**
-     * Loads the next level.
-     */
-    public void nextLevel() {
-        // TODO
-    }
-
-    /**
-     * Gets the class that handle the player control.
+     * Gets the class that handle the p public void setFire(boolean b) {
+     * this.isShooting = b; }
+     * 
+     * public boolean isShooting() { return this.isShooting; }layer control.
      * 
      * @return PlayerController
      */
     public PlayerController getPlayerController() {
         return this.playerController;
-    }
-
-    /**
-     * Gets the view reference.
-     * 
-     * @return MetalShot
-     */
-    public GameView getView() {
-        return this.viewReference;
     }
 
     /**
@@ -235,9 +257,30 @@ public class Controller {
 
     /**
      * Gets the main stage.
+     * 
      * @return StageImpl
      */
     public StageImpl getStage() {
         return this.stage;
     }
+
+    /**
+     * Pause the enemies that are in a segment different from the Player segment.
+     */
+    public void refreshEnemiesStatus() {
+        enemiesController.forEach(e -> {
+            if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
+                    .getSegmentAtPosition(stage.getPlayer().getPosition())) {
+                e.setActive(false);
+            } else {
+                e.setActive(true);
+            }
+        });
+    }
+
+    private void removeEnemy(final EnemyController enemyController) {
+        enemiesController.remove(enemyController);
+        stage.getEnemies().remove(enemyController.getCharacter());
+    }
+
 }

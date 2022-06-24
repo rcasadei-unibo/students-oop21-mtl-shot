@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 
 /**
@@ -23,15 +22,16 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
+    	final var loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/MainMenu.fxml"));
+        final Parent root = loader.load();
         final Scene scene = new Scene(root);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setScene(scene);
         primaryStage.setTitle("メタルショット");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setResizable(false);
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 }
-
+	

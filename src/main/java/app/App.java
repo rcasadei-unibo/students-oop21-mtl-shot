@@ -18,6 +18,7 @@ public final class App {
      * @param args
      */
     public static void main(final String... args) {
+        System.setProperty("prism.forceGPU", "true");
         Application.launch(MetalShot.class, args);
     }
 }
