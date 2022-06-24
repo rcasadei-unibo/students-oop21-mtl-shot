@@ -123,9 +123,9 @@ public class Controller {
                     }
                     
                     soundsController.controllerTick();
-                    if (!viewReference.getWindow().isFocused()) {
+                    /*if (!viewReference.getWindow().isFocused()) {
                         stage.getPlayer().reset();
-                    }
+                    }*/
                     if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
                     	try {
     						viewReference.displayWinMenu();
