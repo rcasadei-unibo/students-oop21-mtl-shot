@@ -1,7 +1,6 @@
 package view;
 
 import java.io.IOException;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,11 +16,9 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.StageImpl;
@@ -48,7 +45,7 @@ public class GameView extends Scene {
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
-    private final ImageView background = new ImageView(new Image(new FileInputStream("src/main/resources/backgroundLarge.png")));
+    private final ImageView background = new ImageView(new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
     private final UserData userData;
 	private final Group root;

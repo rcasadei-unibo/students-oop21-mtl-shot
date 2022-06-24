@@ -1,16 +1,22 @@
 package model.weapons;
 
 /**
- * Weapon - PeaceKeeper.
+ * Weapon - PeaceKeeper, shotgun.
  *
  */
 public class PeaceKeeper extends Weapon {
-	public PeaceKeeper() {
-		super("PeaceKeeper",  // Name
-				6,            // Mag capacity
-				30,           // Damage per bullet
-				0,           // Fire rate
-				120,          // Reload time
-				0.2);        // Accuracy
-	}
+
+    private static final int MAG_CAPACITY = 6;
+    private static final int DAMAGE_PER_BULLET = 30;
+    private static final int FIRE_RATE = 0;
+    private static final int RELOAD_TIME = 120;
+    private static final double ACCURACY = 0.2;
+
+    /**
+     * Creates weapon.
+     */
+    public PeaceKeeper() {
+        super("PeaceKeeper", MAG_CAPACITY, DAMAGE_PER_BULLET, FIRE_RATE, RELOAD_TIME, ACCURACY);
+    }
+
 }
