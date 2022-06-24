@@ -56,7 +56,7 @@ public class Controller extends Thread {
      * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public Controller(final GameView gameView) throws IOException, InstanceNotFoundException {
+    public Controller(final GameView gameView) throws InstanceNotFoundException, IOException {
         this.stage = new StageImpl();
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
@@ -65,7 +65,8 @@ public class Controller extends Thread {
         this.soundsController = new SoundsController();
         this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(),
                 this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
-        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e, this.stage.getPlayer())));
+        this.stage.getEnemies().forEach(
+                e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e, this.stage.getPlayer())));
         this.paused = false;
 
         refreshEnemiesStatus();
@@ -109,11 +110,7 @@ public class Controller extends Thread {
                     }
 
                     if (playerController.isDead()) {
-                        try {
-                            gameOver();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        gameOver();
                     }
 
                     soundsController.controllerTick();
@@ -124,27 +121,18 @@ public class Controller extends Thread {
 
                     if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
                             .equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
-                        try {
-                            viewReference.displayWinMenu();
-                            gameLoop.pause();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+
+                        viewReference.displayWinMenu();
+                        gameLoop.pause();
 
                     }
-                    if (stage.getPlayer().getHealth().isDead()) {
-                        try {
-                            gameOver();
-                        } catch (final IOException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
+
                     gameView.refresh(stage);
                 }
             }
         }));
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
-        gameLoop.play();
+        this.gameLoop.setCycleCount(Timeline.INDEFINITE);
+        this.gameLoop.play();
     }
 
     /**
@@ -157,17 +145,18 @@ public class Controller extends Thread {
 
     /**
      * Pause the game loop and display the pause menu.
-     * 
-     * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void gamePause() throws IOException {
+    public void gamePause() {
         this.soundsController.stopSound(Sounds.MAIN_THEME);
         this.paused = true;
         this.viewReference.displayPauseMenu();
     }
 
-    public void gameOver() throws IOException {
-        gameLoop.pause();
+    /**
+     * 
+     */
+    public void gameOver() {
+        this.gameLoop.pause();
         this.viewReference.displayGameOverMenu();
     }
 
@@ -177,7 +166,7 @@ public class Controller extends Thread {
      * @param key the key pressed
      * @throws IOException if the pause menu fxml sheet doesn't exist.
      */
-    public void keyPressed(final KeyCode key) throws IOException {
+    public void keyPressed(final KeyCode key) {
         if (key == KeyCode.A) {
             stage.getPlayer().setLeft(true);
             stage.getPlayer().getAim().setHorizontal(DirectionHorizontal.LEFT);
@@ -233,27 +222,6 @@ public class Controller extends Thread {
             this.stage.getPlayer().setFire(false);
 //            this.playerController.fire(weaponController, bulletsController);
         }
-    }
-
-    /**
-     * Saves the current game state.
-     */
-    public void save() {
-        // TODO
-    }
-
-    /**
-     * Loads the selected game.
-     */
-    public void load() {
-        // TODO
-    }
-
-    /**
-     * Loads the next level.
-     */
-    public void nextLevel() {
-        // TODO
     }
 
     /**

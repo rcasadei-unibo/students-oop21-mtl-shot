@@ -37,7 +37,9 @@ public class WeaponController {
     }
 
     /**
-     * characterShooting reloads olny if its corresponding shooting cooldown is over.
+     * characterShooting reloads olny if its corresponding shooting cooldown is
+     * over.
+     * 
      * @param characterShooting
      * @return true if characterShooting has shot
      */
@@ -59,7 +61,9 @@ public class WeaponController {
     }
 
     /**
-     * characterReloading reloads only if its corresponding reloading cooldown is over.
+     * characterReloading reloads only if its corresponding reloading cooldown is
+     * over.
+     * 
      * @param characterReloading
      * @return true if characterReloading has reloaded
      */

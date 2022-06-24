@@ -45,32 +45,33 @@ public class GameView extends Scene {
     private final Map<Enemy, EnemyView> enemiesView = new HashMap<>();
     private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
-    private final ImageView background = new ImageView(new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
+    private final ImageView background = new ImageView(
+            new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
     private final Controller controller = new Controller(this);
     private final UserData userData;
-	private final Group root;
-	private final CameraManager cameraManager;
-	private final HUD hudController;
+    private final Group root;
+    private final CameraManager cameraManager;
+    private final HUD hudController;
 
     private FXMLLoader loader;
     private GridPane pauseMenu;
-    
+
     private Node hud;
-    
-	/**
-	 * The GameView constructor.
-	 * 
-	 * @param username
-	 * @throws IOException
-	 */
-	public GameView(final String username) throws IOException, InstanceNotFoundException {
-		super(new Group());
-		this.userData = new UserData(username);
-		this.levelView = new LevelView(this.controller.getStage().getLevel());
-		final List<Node> totalList = new ArrayList<>();
-		totalList.add(background);
-		totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
-		totalList.add(playerView.getCharacterImageView());
+
+    /**
+     * The GameView constructor.
+     * 
+     * @param username
+     * @throws IOException
+     */
+    public GameView(final String username) throws IOException, InstanceNotFoundException {
+        super(new Group());
+        this.userData = new UserData(username);
+        this.levelView = new LevelView(this.controller.getStage().getLevel());
+        final List<Node> totalList = new ArrayList<>();
+        totalList.add(background);
+        totalList.addAll(levelView.displaySegments(controller.getStage().getPlayer().getPosition()));
+        totalList.add(playerView.getCharacterImageView());
 
         for (final Enemy enemy : controller.getStage().getEnemies()) {
             enemiesView.put(enemy, new EnemyView());
@@ -80,25 +81,19 @@ public class GameView extends Scene {
         }
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/HUD.fxml"));
         hud = loader.load();
-        this.hudController  = (HUD) loader.getController();
-		this.root = new Group(totalList);
+        this.hudController = (HUD) loader.getController();
+        this.root = new Group(totalList);
 
-		this.setRoot(root);
-		this.cameraManager = new CameraManager(controller, root, levelView, this);
-		this.setCamera(cameraManager.getCamera());
-	    root.getChildren().add(hud);
-		controller.gameStart();
+        this.setRoot(root);
+        this.cameraManager = new CameraManager(controller, root, levelView, this);
+        this.setCamera(cameraManager.getCamera());
+        root.getChildren().add(hud);
+        controller.gameStart();
 
-		this.setOnKeyPressed(e -> {
-
-            try {
-                controller.keyPressed(e.getCode());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+        this.setOnKeyPressed(e -> {
+            controller.keyPressed(e.getCode());
         });
         this.setOnKeyReleased(e -> controller.keyReleased(e.getCode()));
-        this.setOnKeyTyped(e -> { });
     }
 
     /**
@@ -128,21 +123,21 @@ public class GameView extends Scene {
         return this.bulletsView;
     }
 
-	/**
-	 * Updates the current visual frame using the info of the stage.
-	 * 
-	 * @param stage
-	 */
+    /**
+     * Updates the current visual frame using the info of the stage.
+     * 
+     * @param stage
+     */
     public void refresh(final StageImpl stage) {
 
-    	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
-		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
-		final ParallelTransition pt = new ParallelTransition();
-		this.hud.toFront();
-		pt.getChildren().add(tt);
-		pt.play();
+        final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
+        tt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        final ParallelTransition pt = new ParallelTransition();
+        this.hud.toFront();
+        pt.getChildren().add(tt);
+        pt.play();
 
-		this.hudController.setSize(1920*1.75, 1080*1.75);
+        this.hudController.setSize(1920 * 1.75, 1080 * 1.75);
 
         cameraManager.updateCamera();
 
@@ -155,13 +150,10 @@ public class GameView extends Scene {
         }
 
         playerView.updateCharacter(stage.getPlayer());
-        if(stage.getPlayer().getWeapon().equals(new R99())) {
-        	playerView.setWeapon(CharacterSprites.playerIdleRifle,
-        			CharacterSprites.playerIdleUpRifle,
-        			CharacterSprites.playerRunRifle,
-        			CharacterSprites.playerRunUpRifle,
-        			CharacterSprites.playerCrouchIdleRifle,
-        			CharacterSprites.playerCrouchRunRifle);        	
+        if (stage.getPlayer().getWeapon().equals(new R99())) {
+            playerView.setWeapon(CharacterSprites.playerIdleRifle, CharacterSprites.playerIdleUpRifle,
+                    CharacterSprites.playerRunRifle, CharacterSprites.playerRunUpRifle,
+                    CharacterSprites.playerCrouchIdleRifle, CharacterSprites.playerCrouchRunRifle);
         }
 
         // Updates bullets
@@ -176,7 +168,7 @@ public class GameView extends Scene {
         }
         userData.setLpLeft(stage.getPlayer().getHealth().getHealth());
         hudController.refresh(userData);
-	}
+    }
 
     /**
      * Gets the data of the person who's playing Metal Shot.
@@ -186,22 +178,28 @@ public class GameView extends Scene {
     public UserData getUserData() {
         return this.userData;
     }
-    
+
     public void menuRefresh() {
-    	this.pauseMenu.setPrefSize(this.getWidth(), this.getHeight());
+        this.pauseMenu.setPrefSize(this.getWidth(), this.getHeight());
     }
-    
 
     /**
      * Display the pause menu.
      * 
      * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void displayPauseMenu() throws IOException {
-    	cameraManager.resetCamera();
+    public void displayPauseMenu() {
+        cameraManager.resetCamera();
         final Group group = new Group(root);
         loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
-        pauseMenu = (GridPane) loader.load();
+
+        GridPane pauseMenu = null;
+        try {
+            pauseMenu = (GridPane) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         group.getChildren().add(pauseMenu);
         final PauseMenuController pmc = (PauseMenuController) loader.getController();
         pmc.setSize(this.getWidth(), this.getHeight());
@@ -223,16 +221,23 @@ public class GameView extends Scene {
      * 
      * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void displayWinMenu() throws IOException {
-    	final Group group = new Group(root);
-    	final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
-    	final var winMenu = (Node) loader.load();
+    public void displayWinMenu() {
+        final Group group = new Group(root);
+        final var loader = new FXMLLoader(getClass().getResource("/fxml/WinMenu.fxml"));
+
+        Node winMenu = null;
+        try {
+            winMenu = (Node) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         group.getChildren().add(winMenu);
         final WinMenuController wmc = (WinMenuController) loader.getController();
         wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
         this.setRoot(group);
     }
-    
+
     /**
      * Dispose of the win menu.
      */
@@ -246,21 +251,28 @@ public class GameView extends Scene {
      * 
      * @throws IOException if the fxml sheet doesn't exist.
      */
-    public void displayGameOverMenu() throws IOException {
-    	final Group group = new Group(root);
-    	final var loader = new FXMLLoader(getClass().getResource("/fxml/GameOverMenu.fxml"));
-    	final var goMenu = (Node) loader.load();
+    public void displayGameOverMenu() {
+        final Group group = new Group(root);
+        final var loader = new FXMLLoader(getClass().getResource("/fxml/GameOverMenu.fxml"));
+
+        Node goMenu = null;
+        try {
+            goMenu = (Node) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         group.getChildren().add(goMenu);
-		final GameOverMenuController gomc = (GameOverMenuController) loader.getController();
-		gomc.setInfoToDisplay(
-				this.controller.getStage().getLevel().getSegments()
-						.indexOf(this.controller.getStage().getLevel()
-								.getSegmentAtPosition(this.controller.getStage().getPlayer().getPosition()))
-						+ 1,
-				this.controller.getStage().getLevel().getSegments().size(), this.userData);
-		this.setRoot(group);
+        final GameOverMenuController gomc = (GameOverMenuController) loader.getController();
+        gomc.setInfoToDisplay(
+                this.controller.getStage().getLevel().getSegments()
+                        .indexOf(this.controller.getStage().getLevel()
+                                .getSegmentAtPosition(this.controller.getStage().getPlayer().getPosition()))
+                        + 1,
+                this.controller.getStage().getLevel().getSegments().size(), this.userData);
+        this.setRoot(group);
     }
-    
+
     /**
      * Dispose of the game over menu.
      */
@@ -268,6 +280,7 @@ public class GameView extends Scene {
         final Group group = new Group(root);
         this.setRoot(group);
     }
+
     /**
      * 
      * @return bla
@@ -292,8 +305,8 @@ public class GameView extends Scene {
 
         this.root.getChildren().removeAll(remove);
     }
-    
+
     public CameraManager getCameraManager() {
-    	return this.cameraManager;
+        return this.cameraManager;
     }
 }
