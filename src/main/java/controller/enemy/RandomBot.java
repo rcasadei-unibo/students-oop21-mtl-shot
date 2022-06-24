@@ -30,12 +30,6 @@ public class RandomBot implements SimpleBot {
     }
 
     @Override
-    public void setPlayer(final Player p) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void setEnemy(final Character character) {
         // TODO Auto-generated method stub
 

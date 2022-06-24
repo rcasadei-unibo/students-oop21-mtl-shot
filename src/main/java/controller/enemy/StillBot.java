@@ -29,10 +29,6 @@ public class StillBot implements SimpleBot {
     }
 
     @Override
-    public void setPlayer(final Player p) {
-    }
-
-    @Override
     public Enemy getEnemy() {
         // TODO Auto-generated method stub
         return this.enemy;

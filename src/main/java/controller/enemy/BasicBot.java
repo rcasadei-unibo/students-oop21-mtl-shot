@@ -32,9 +32,10 @@ public class BasicBot implements SimpleBot {
      * @param enemy
      * @param level
      */
-    public BasicBot(final Enemy enemy, final Level level) {
+    public BasicBot(final Enemy enemy, final Level level, final Player player) {
         this.enemy = enemy;
         this.level = level;
+        this.player = player;
     }
 
     @Override
@@ -59,14 +60,6 @@ public class BasicBot implements SimpleBot {
         if (Math.abs(distance) < this.maxDistance) {
             enemy.setStatus(Status.ACTIVE);
         }
-    }
-
-    /**
-     * Sets the player who the enemy has to kill.
-     * @param p
-     */
-    public void setPlayer(final Player p) {
-        this.player = p;
     }
 
     /**

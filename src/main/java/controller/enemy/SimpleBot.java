@@ -21,13 +21,6 @@ public interface SimpleBot {
     void move();
 
     /**
-     * Sets the player who the enemy has to kill.
-     * 
-     * @param p
-     */
-    void setPlayer(Player p);
-
-    /**
      * returns the reference to the enemy it refers to.
      * @return the reference to the enemy
      */

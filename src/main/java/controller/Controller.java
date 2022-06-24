@@ -65,10 +65,7 @@ public class Controller extends Thread {
         this.soundsController = new SoundsController();
         this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(),
                 this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
-        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e)));
-        for (final EnemyController enemyController : this.enemiesController) {
-            enemyController.getBrain().setPlayer(this.stage.getPlayer());
-        }
+        this.stage.getEnemies().forEach(e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e, this.stage.getPlayer())));
         this.paused = false;
 
         refreshEnemiesStatus();
