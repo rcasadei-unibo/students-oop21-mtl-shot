@@ -24,12 +24,12 @@ public class BasicBot implements SimpleBot {
             + (new Random().nextDouble() * EntityConstants.ENEMY_VARIATON - EntityConstants.ENEMY_VARIATON / 2);
     private boolean lastDir = true;
 
-
     /**
      * the BasicBot constructor.
      * 
      * @param enemy
      * @param level
+     * @param player
      */
     public BasicBot(final Enemy enemy, final Level level, final Player player) {
         this.enemy = enemy;
@@ -40,14 +40,14 @@ public class BasicBot implements SimpleBot {
     @Override
     public void controllerTick() {
         switch (enemy.getStatus()) {
-            case IDLE:
-                this.randomMove();
-                break;
-            case ACTIVE:
-                this.move();
-                this.fire();
-                break;
-            default:
+        case IDLE:
+            this.randomMove();
+            break;
+        case ACTIVE:
+            this.move();
+            this.fire();
+            break;
+        default:
         }
     }
 
@@ -81,19 +81,16 @@ public class BasicBot implements SimpleBot {
     private void movementLogic(final boolean dir) {
         enemy.setLeft(dir);
         enemy.setRight(!dir);
-        double nearTileX = dir 
-                ? -(EntityConstants.ENEMY_DELTA) 
+        double nearTileX = dir ? -(EntityConstants.ENEMY_DELTA)
                 : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX());
-        enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                    this.enemy.getPosition().sum((nearTileX),
-                            (enemy.getHitbox().getY() - 1)))
-                || getCurrentCharacterSegment().isCollidableAtPosition(
-                    this.enemy.getPosition().sum((nearTileX), 
-                            0)));
+        enemy.setJump(getCurrentCharacterSegment()
+                .isCollidableAtPosition(this.enemy.getPosition().sum((nearTileX), (enemy.getHitbox().getY() - 1)))
+                || getCurrentCharacterSegment().isCollidableAtPosition(this.enemy.getPosition().sum((nearTileX), 0)));
     }
 
     /**
      * Gets the Segment where the enemy is at that moment.
+     * 
      * @return the Segment where the enemy is at that moment
      */
     public Segment getCurrentCharacterSegment() {

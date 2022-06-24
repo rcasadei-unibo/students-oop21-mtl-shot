@@ -13,7 +13,7 @@ public final class Aim {
     /**
      * Field for direction.
      */
-	private Pair<DirectionHorizontal, DirectionVertical> direction;
+    private Pair<DirectionHorizontal, DirectionVertical> direction;
 
     /**
      * Starts by default aiming at its right.
@@ -21,7 +21,7 @@ public final class Aim {
     public Aim() {
         this.direction = new Pair<>(DirectionHorizontal.RIGHT, DirectionVertical.NEUTRAL);
     }
-    
+
     /**
      * Sets the aiming direction.
      * 
@@ -30,23 +30,23 @@ public final class Aim {
     public void setDirection(final Pair<DirectionHorizontal, DirectionVertical> direction) {
         this.direction = direction;
     }
-    
+
     /**
      * Sets the horizontal aiming direction.
      * 
      * @param direction
      */
     public void setHorizontal(final DirectionHorizontal direction) {
-    	this.direction = new Pair<>(direction, DirectionVertical.NEUTRAL);
+        this.direction = new Pair<>(direction, DirectionVertical.NEUTRAL);
     }
-    
+
     /**
      * Sets the vertical aiming direction.
      * 
      * @param direction
      */
     public void setVertical(final DirectionVertical direction) {
-    	this.direction = new Pair<>(this.direction.getX(), direction);
+        this.direction = new Pair<>(this.direction.getX(), direction);
     }
 
     /**

@@ -23,14 +23,18 @@ public class Enemy extends Character {
     }
 
     /**
-     * 
-     * @return
+     * Returns the current status of the enemy.
+     * @return current Status of the enemy
      */
     public Status getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
+    /**
+     * Allows to set the status of the enemy.
+     * @param status
+     */
+    public void setStatus(final Status status) {
         this.status = status;
     }
 }

@@ -2,9 +2,7 @@ package controller.enemy;
 
 import java.util.Random;
 
-import model.character.Character;
 import model.character.Enemy;
-import model.character.Player;
 import model.character.tools.health.SimpleHealth;
 import util.Vector2D;
 

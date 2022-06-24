@@ -20,6 +20,7 @@ public class EnemyController extends CharacterController {
      * 
      * @param level
      * @param enemy
+     * @param player
      */
     public EnemyController(final Level level, final Enemy enemy, final Player player) {
         super(level, enemy);

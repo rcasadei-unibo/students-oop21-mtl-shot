@@ -11,7 +11,7 @@ import model.weapons.Weapon;
  * weapon.
  */
 public class Character extends MovableEntity {
-    
+
     private boolean isShooting = false;
 
     /**
@@ -32,8 +32,9 @@ public class Character extends MovableEntity {
     private Crouch crouchCondition = Crouch.FREE;
     /*
      * When it crouches it should not modify directly the crouch state but it should
-     * pass through another variable that represents the crouch key.
-     * (As it does with movement that does not modify directly the position but instead it modifies the speed).
+     * pass through another variable that represents the crouch key. (As it does
+     * with movement that does not modify directly the position but instead it
+     * modifies the speed).
      */
     /**
      * Represent the entity intention to crouch.
@@ -162,11 +163,20 @@ public class Character extends MovableEntity {
     public String toString() {
         return super.toString() + " " + health.toString() + " " + weapon.toString() + " " + aim.toString();
     }
-    
-    public void setFire(boolean b) {
+
+    /**
+     * modifies the boolean of the shooting action.
+     * 
+     * @param b
+     */
+    public void setFire(final boolean b) {
         this.isShooting = b;
     }
-    
+
+    /**
+     * 
+     * @return value of the shooting status.
+     */
     public boolean isShooting() {
         return this.isShooting;
     }
