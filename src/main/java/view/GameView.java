@@ -54,7 +54,7 @@ public class GameView extends Scene {
     private final HUD hudController;
 
     private FXMLLoader loader;
-    private GridPane pauseMenu;
+    private GridPane pauseMenu = null;
 
     private Node hud;
 
@@ -193,9 +193,8 @@ public class GameView extends Scene {
         final Group group = new Group(root);
         loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
 
-        GridPane pauseMenu = null;
         try {
-            pauseMenu = (GridPane) loader.load();
+            this.pauseMenu = (GridPane) loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }

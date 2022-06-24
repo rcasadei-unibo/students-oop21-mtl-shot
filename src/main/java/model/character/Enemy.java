@@ -1,7 +1,7 @@
 package model.character;
 
 import model.character.tools.health.Health;
-import model.weapons.R99;
+import model.weapons.Flatline;
 import util.Status;
 import util.Vector2D;
 
@@ -19,7 +19,7 @@ public class Enemy extends Character {
      * @param health
      */
     public Enemy(final Vector2D position, final Vector2D hitbox, final Health health) {
-        super(position, hitbox, health, new R99());
+        super(position, hitbox, health, new Flatline());
     }
 
     /**
