@@ -23,13 +23,13 @@ public class TextMap {
      * @throws IOException
      */
     public TextMap(final String path) throws IOException {
+    	this.path = path;
         var br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(path)));
         this.height = br.lines().count();
         br.close();
         br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(path)));
         this.width = br.readLine().length();
         br.close();
-        this.path = path;
     }
 
     /**

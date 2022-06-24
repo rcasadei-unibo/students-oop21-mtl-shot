@@ -1,7 +1,5 @@
 package model.map.tile;
 
-import java.io.File;
-
 import util.Vector2D;
 /**
  * 
