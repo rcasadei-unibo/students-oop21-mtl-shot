@@ -32,8 +32,8 @@ public class BasicBot implements SimpleBot {
      * @param character
      * @param level
      */
-    public BasicBot(final Character character, final Level level) {
-        this.enemy = (Enemy) character;
+    public BasicBot(final Enemy enemy, final Level level) {
+        this.enemy = (Enemy) enemy;
         this.level = level;
     }
 
@@ -98,15 +98,14 @@ public class BasicBot implements SimpleBot {
     private void movementLogic(final boolean dir) {
         enemy.setLeft(dir);
         enemy.setRight(!dir);
+        double nearTileX = dir 
+                ? -(EntityConstants.ENEMY_DELTA) 
+                : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX());
         enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                    this.enemy.getPosition().sum((dir 
-                            ? -(EntityConstants.ENEMY_DELTA) 
-                            : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())),
+                    this.enemy.getPosition().sum((nearTileX),
                             (enemy.getHitbox().getY() - 1)))
                 || getCurrentCharacterSegment().isCollidableAtPosition(
-                    this.enemy.getPosition().sum((dir 
-                            ? -(EntityConstants.ENEMY_DELTA) 
-                            : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
+                    this.enemy.getPosition().sum((nearTileX), 
                             0)));
     }
 
@@ -125,11 +124,7 @@ public class BasicBot implements SimpleBot {
 
     @Override
     public void fire() {
-        if (Math.abs(enemy.getPosition().getX() - player.getPosition().getX()) < maxDistance) {
-            enemy.setFire(true);
-        } else {
-            enemy.setFire(false);
-        }
+        enemy.setFire(Math.abs(enemy.getPosition().getX() - player.getPosition().getX()) < maxDistance);
     }
 
 }

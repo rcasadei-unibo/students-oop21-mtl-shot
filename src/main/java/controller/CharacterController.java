@@ -45,7 +45,7 @@ public class CharacterController {
         this.character.moveEntity();
         this.aimChecks();
     }
-    
+
     public void fire(final WeaponController weaponController, final BulletsController bulletsController, final SoundsController soundsController) {
     	var ttsr = weaponController.tryToShoot(this.character);
         if (ttsr.equals(TryToShootReturn.SHOOT)) {

@@ -1,7 +1,7 @@
 package controller.enemy;
 
 import controller.CharacterController;
-import model.character.Character;
+import model.character.Enemy;
 import model.map.Level;
 import util.Pair;
 
@@ -20,9 +20,9 @@ public class EnemyController extends CharacterController {
      * @param level
      * @param character
      */
-    public EnemyController(final Level level, final Character character) {
-        super(level, character);
-        this.brain = new BasicBot(character, level);
+    public EnemyController(final Level level, final Enemy enemy) {
+        super(level, enemy);
+        this.brain = new BasicBot(enemy, level);
     }
 
     @Override

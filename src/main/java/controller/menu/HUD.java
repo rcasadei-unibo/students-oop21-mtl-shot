@@ -14,16 +14,16 @@ public class HUD {
     public Label points;
     public Label health;
     public Label date;
-    public BorderPane ac;
-    
+    public BorderPane bp;
+
 
     public void refresh(final UserData ud) {
         points.setText(ud.getPoints() + "");
         health.setText(ud.getLpLeft() + "/100");
         date.setText(ud.getTime());
     }
-    
+
     public void setSize(final double height, final double width) {
-        ac.setPrefSize(width, height);
+        bp.setPrefSize(width, height);
     }
 }
