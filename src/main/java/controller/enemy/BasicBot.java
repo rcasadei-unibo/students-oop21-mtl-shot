@@ -6,7 +6,6 @@ import model.character.Character;
 import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.EntityConstants;
-import model.character.movableentity.MovableEntity;
 import model.map.Level;
 import model.map.Segment;
 import util.DirectionHorizontal;
@@ -38,14 +37,17 @@ public class BasicBot implements SimpleBot {
         this.level = level;
     }
 
+    @Override
     public void controllerTick() {
-        switch(enemy.getStatus()) {
+        switch (enemy.getStatus()) {
             case IDLE:
                 this.randomMove();
                 break;
             case ACTIVE:
                 this.move();
                 this.fire();
+                break;
+            default:
         }
     }
 
@@ -54,12 +56,22 @@ public class BasicBot implements SimpleBot {
         enemy.getAim().setHorizontal(lastDir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
         enemy.setLeft(lastDir);
         enemy.setRight(!lastDir);
-        enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                this.enemy.getPosition().sum((lastDir ? -0.5 : 1.5), +(enemy.getHitbox().getY() - 1)))
-                || getCurrentCharacterSegment()
-                        .isCollidableAtPosition(this.enemy.getPosition().sum((lastDir ? -0.5 : 1.5), 0)));
+        enemy.setJump(getCurrentCharacterSegment()
+                        .isCollidableAtPosition(
+                                this.enemy
+                                .getPosition()
+                                .sum((lastDir 
+                                        ? -(EntityConstants.ENEMY_DELTA) 
+                                        : enemy.getHitbox().getX() + EntityConstants.ENEMY_DELTA),
+                                        +(enemy.getHitbox().getY() - 1)))
+                        || getCurrentCharacterSegment()
+                        .isCollidableAtPosition(
+                                this.enemy.getPosition().sum((lastDir 
+                                        ? -(EntityConstants.ENEMY_DELTA) 
+                                        : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
+                                        0)));
         double distance = enemy.getPosition().getX() - player.getPosition().getX();
-        if(Math.abs(distance) < this.maxDistance) {
+        if (Math.abs(distance) < this.maxDistance) {
             enemy.setStatus(Status.ACTIVE);
         }
     }
@@ -96,9 +108,15 @@ public class BasicBot implements SimpleBot {
                 enemy.setLeft(dir);
                 enemy.setRight(!dir);
                 enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                        this.enemy.getPosition().sum((dir ? -0.5 : 1.5), +(enemy.getHitbox().getY() - 1)))
-                        || getCurrentCharacterSegment()
-                                .isCollidableAtPosition(this.enemy.getPosition().sum((dir ? -0.5 : 1.5), 0)));
+                            this.enemy.getPosition().sum((dir 
+                                    ? -(EntityConstants.ENEMY_DELTA) 
+                                    : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())),
+                                    (enemy.getHitbox().getY() - 1)))
+                        || getCurrentCharacterSegment().isCollidableAtPosition(
+                            this.enemy.getPosition().sum((dir 
+                                    ? -(EntityConstants.ENEMY_DELTA) 
+                                    : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
+                                    0)));
             }
         }
     }
@@ -112,8 +130,7 @@ public class BasicBot implements SimpleBot {
     }
 
     @Override
-    public MovableEntity getEntity() {
-        // TODO Auto-generated method stub
+    public Enemy getEnemy() {
         return this.enemy;
     }
 

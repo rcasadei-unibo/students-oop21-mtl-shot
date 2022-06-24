@@ -33,7 +33,6 @@ public class StageImpl {
     /**
      * The stage constructor.
      * 
-     * @param textMap
      * @throws IOException               if the txt map sheet doesn't exist.
      * @throws InstanceNotFoundException
      */

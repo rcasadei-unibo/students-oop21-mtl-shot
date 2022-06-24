@@ -45,11 +45,25 @@ public final class EntityConstants {
      */
     public static final double ENEMY_DISTANCE = 7;
 
+    /**
+     * Field that represent the tolerance that the enemy has before start moving depending on player position.
+     */
     public static final double ENEMY_TOLERANCE = 0.5;
 
+    /**
+     * Field that represent the varianton of the distance kept by the enemy.
+     */
     public static final int ENEMY_VARIATON = 6;
 
+    /**
+     * the probability "n" that in a random movement the enemy changes direction (1/n).
+     */
     public static final int CHANGE_DIR_PROBABILITY = 50;
+
+    /**
+     * The delta for the checks of collision of the enemy.
+     */
+    public static final double ENEMY_DELTA = 0.5;
 
     private EntityConstants() {
     }
