@@ -87,7 +87,7 @@ public class Controller extends Thread {
                         if (e.isActive()) {
                             e.controllerTick(viewReference.getCameraManager().getBounds(), false);
                             if (e.getCharacter().isShooting()) {
-//                                 e.fire(weaponController, bulletsController, soundsController);
+                                 e.fire(weaponController, bulletsController, soundsController);
                             }
                             if (e.isDead()) {
                                 remove.add(e);
@@ -117,10 +117,6 @@ public class Controller extends Thread {
                     }
 
                     soundsController.controllerTick();
-
-                    if (!viewReference.getWindow().isFocused()) {
-                        stage.getPlayer().reset();
-                    }
 
                     if (stage.getLevel().getSegmentAtPosition(stage.getPlayer().getPosition())
                             .equals(stage.getLevel().getSegments().get(stage.getLevel().getSegments().size() - 1))) {
