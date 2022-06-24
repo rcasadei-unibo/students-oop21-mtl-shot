@@ -18,7 +18,7 @@ public class EnemyController extends CharacterController {
      * Constructor for the controller of the enemy.
      * 
      * @param level
-     * @param character
+     * @param enemy
      */
     public EnemyController(final Level level, final Enemy enemy) {
         super(level, enemy);

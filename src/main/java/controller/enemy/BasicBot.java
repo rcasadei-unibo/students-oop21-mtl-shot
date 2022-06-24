@@ -29,11 +29,11 @@ public class BasicBot implements SimpleBot {
     /**
      * the BasicBot constructor.
      * 
-     * @param character
+     * @param enemy
      * @param level
      */
     public BasicBot(final Enemy enemy, final Level level) {
-        this.enemy = (Enemy) enemy;
+        this.enemy = enemy;
         this.level = level;
     }
 
