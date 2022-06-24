@@ -23,6 +23,8 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
+import model.weapons.Kraber;
+import model.weapons.PeaceKeeper;
 import model.weapons.R99;
 import util.UserData;
 import util.map.MapConstants;
@@ -134,7 +136,6 @@ public class GameView extends Scene {
 	 * @param stage
 	 */
     public void refresh(final StageImpl stage) {
-
     	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
 		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
 		final ParallelTransition pt = new ParallelTransition();
@@ -155,14 +156,6 @@ public class GameView extends Scene {
         }
 
         playerView.updateCharacter(stage.getPlayer());
-        if(stage.getPlayer().getWeapon().equals(new R99())) {
-        	playerView.setWeapon(CharacterSprites.playerIdleRifle,
-        			CharacterSprites.playerIdleUpRifle,
-        			CharacterSprites.playerRunRifle,
-        			CharacterSprites.playerRunUpRifle,
-        			CharacterSprites.playerCrouchIdleRifle,
-        			CharacterSprites.playerCrouchRunRifle);        	
-        }
 
         // Updates bullets
         if (stage.getBullets().size() != this.bulletsView.getImageViewList().size()) {

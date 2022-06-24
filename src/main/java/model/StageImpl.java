@@ -14,6 +14,7 @@ import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
 import model.weapons.PeaceKeeper;
+import model.weapons.R99;
 import util.Vector2D;
 
 /**
@@ -42,7 +43,7 @@ public class StageImpl {
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
-                .weapon(new PeaceKeeper())
+                .weapon(new R99())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();
