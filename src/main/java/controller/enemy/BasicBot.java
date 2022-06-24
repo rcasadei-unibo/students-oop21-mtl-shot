@@ -54,22 +54,7 @@ public class BasicBot implements SimpleBot {
     private void randomMove() {
         lastDir = (new Random().nextInt(EntityConstants.CHANGE_DIR_PROBABILITY) == 0) ? !lastDir : lastDir;
         enemy.getAim().setHorizontal(lastDir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
-        enemy.setLeft(lastDir);
-        enemy.setRight(!lastDir);
-        enemy.setJump(getCurrentCharacterSegment()
-                        .isCollidableAtPosition(
-                                this.enemy
-                                .getPosition()
-                                .sum((lastDir 
-                                        ? -(EntityConstants.ENEMY_DELTA) 
-                                        : enemy.getHitbox().getX() + EntityConstants.ENEMY_DELTA),
-                                        +(enemy.getHitbox().getY() - 1)))
-                        || getCurrentCharacterSegment()
-                        .isCollidableAtPosition(
-                                this.enemy.getPosition().sum((lastDir 
-                                        ? -(EntityConstants.ENEMY_DELTA) 
-                                        : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
-                                        0)));
+        movementLogic(lastDir);
         double distance = enemy.getPosition().getX() - player.getPosition().getX();
         if (Math.abs(distance) < this.maxDistance) {
             enemy.setStatus(Status.ACTIVE);
@@ -105,20 +90,24 @@ public class BasicBot implements SimpleBot {
                 boolean dir = distance > 0;
                 enemy.getAim().setHorizontal(dir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
                 dir = (Math.abs(distance) < maxDistance) ? !dir : dir;
-                enemy.setLeft(dir);
-                enemy.setRight(!dir);
-                enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
-                            this.enemy.getPosition().sum((dir 
-                                    ? -(EntityConstants.ENEMY_DELTA) 
-                                    : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())),
-                                    (enemy.getHitbox().getY() - 1)))
-                        || getCurrentCharacterSegment().isCollidableAtPosition(
-                            this.enemy.getPosition().sum((dir 
-                                    ? -(EntityConstants.ENEMY_DELTA) 
-                                    : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
-                                    0)));
+                movementLogic(dir);
             }
         }
+    }
+
+    private void movementLogic(final boolean dir) {
+        enemy.setLeft(dir);
+        enemy.setRight(!dir);
+        enemy.setJump(getCurrentCharacterSegment().isCollidableAtPosition(
+                    this.enemy.getPosition().sum((dir 
+                            ? -(EntityConstants.ENEMY_DELTA) 
+                            : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())),
+                            (enemy.getHitbox().getY() - 1)))
+                || getCurrentCharacterSegment().isCollidableAtPosition(
+                    this.enemy.getPosition().sum((dir 
+                            ? -(EntityConstants.ENEMY_DELTA) 
+                            : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX())), 
+                            0)));
     }
 
     /**
