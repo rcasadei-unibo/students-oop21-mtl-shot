@@ -13,7 +13,6 @@ import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
-import model.weapons.PeaceKeeper;
 import model.weapons.R99;
 import util.Vector2D;
 

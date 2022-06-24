@@ -286,7 +286,8 @@ public class GameView extends Scene {
         return enemiesView;
     }
 
-    private void removeEnemies(final Collection<Enemy> enemies) {
+    @SuppressWarnings("unlikely-arg-type")
+	private void removeEnemies(final Collection<Enemy> enemies) {
         List<EnemyView> removable = new LinkedList<>();
         List<ImageView> remove = new LinkedList<>();
         enemiesView.forEach((k, v) -> {
