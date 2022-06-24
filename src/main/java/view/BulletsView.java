@@ -28,7 +28,6 @@ public class BulletsView {
 	public BulletsView(final double scale) throws FileNotFoundException {
 	    this.scale = scale;
 		this.imageViewList = new LinkedList<>();
-		//bulletTexture = new Image(new FileInputStream("src" + File.separator + "main" + File.separator + "resources" + File.separator + "bullet6x4.png"));
 		bulletTexture = new Image(ClassLoader.getSystemResourceAsStream("bullet6x4.png"));
 	}
 	

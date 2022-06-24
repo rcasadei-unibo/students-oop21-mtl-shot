@@ -18,7 +18,7 @@
       </VBox>
    </center>
    <top>
-      <Label text="Options" BorderPane.alignment="CENTER">
+      <Label text="Settings" BorderPane.alignment="CENTER">
          <font>
             <Font name="PixelMadness" size="70.0" url="@../menusResources/Pixel_Madness.ttf" />
          </font>

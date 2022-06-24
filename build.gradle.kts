@@ -62,4 +62,5 @@ tasks.withType<Test> {
 application {
     // Define the main class for the application
     mainClass.set("app.App")
+	applicationDefaultJvmArgs = listOf("-Dprism.forceGPU=true")
 }

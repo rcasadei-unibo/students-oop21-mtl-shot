@@ -1,19 +1,17 @@
 package playertest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import model.character.tools.Aim;
-import util.Direction;
 
 /**
  * JUnit to test the Aim class.
  * 
  */
 public class AimTest {
-
+/*
     @Test
     void constructorTest() {
         final var aim = new Aim();
@@ -55,5 +53,5 @@ public class AimTest {
         aim.setDirection(Direction.DOWN);
         aim.returnToHorizontal();
         assertEquals(Direction.LEFT, aim.getDirection());
-    }
+    }*/
 }

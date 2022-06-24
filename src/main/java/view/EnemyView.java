@@ -5,9 +5,8 @@ package view;
  */
 public class EnemyView extends CharacterView {
 
-	public EnemyView() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public EnemyView() {
+    	super(CharacterSprites.playerIdleRifle, CharacterSprites.playerIdleUpRifle, CharacterSprites.playerRunRifle, CharacterSprites.playerRunUpRifle, CharacterSprites.playerCrouchIdleRifle, CharacterSprites.playerCrouchRunRifle);
+    } 
 
 }

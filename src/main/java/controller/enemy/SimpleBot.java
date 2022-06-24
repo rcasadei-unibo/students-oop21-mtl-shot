@@ -7,6 +7,8 @@ import model.character.movableentity.MovableEntity;
  * The brain of an enemy.
  */
 public interface SimpleBot {
+    
+    public void controllerTick();    
     /**
      * Communicates with the enemy (or MovableEntity) and make it move.
      */

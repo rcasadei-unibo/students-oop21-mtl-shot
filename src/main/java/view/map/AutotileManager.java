@@ -1,6 +1,5 @@
 package view.map;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class AutotileManager {
             for (final var tile : segment) {
 
                 tilesInSegment.add(autotile(tile, toBeTiled,
-                        new Image(new FileInputStream(level.getSegmentAtPosition(tile).getTile(tile).get().getPath()))
+                        new Image(ClassLoader.getSystemResourceAsStream(level.getSegmentAtPosition(tile).getTile(tile).get().getPath()))
                                 .getPixelReader()));
             }
             renderedSegments.add(tilesInSegment);

@@ -13,8 +13,9 @@ import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
-import model.weapons.P2020;
-import util.UserData;
+import model.weapons.R99;
+import model.weapons.PeaceKeeper;
+import model.weapons.Kraber;
 import util.Vector2D;
 import util.map.TextMap;
 
@@ -36,16 +37,16 @@ public class StageImpl {
      * @throws IOException               if the txt map sheet doesn't exist.
      * @throws InstanceNotFoundException
      */
-    public StageImpl(final TextMap textMap) throws IOException, InstanceNotFoundException {
+    public StageImpl() throws IOException, InstanceNotFoundException {
         this.level = new Level(
-                Stream.of("src/main/resources/map.txt", "src/main/resources/map2.txt", "src/main/resources/map3.txt")
+                Stream.of("map.txt", "map2.txt", "map3.txt")
                         .collect(Collectors.toList()));
         this.enemies = new LinkedList<>();
         addEnemies();
         this.player = new PlayerBuilder()
                 .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
-                .weapon(new P2020())
+                .weapon(new PeaceKeeper())
                 .health(new SimpleHealth())
                 .lives(3)
                 .build();

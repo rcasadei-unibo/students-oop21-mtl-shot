@@ -31,8 +31,6 @@ public class SignInController {
      * Executes when the insert button is released.
      * @param event
      * @throws IOException 
-     * @throws InstanceNotFoundException 
-     * @throws InterruptedException
      */
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {

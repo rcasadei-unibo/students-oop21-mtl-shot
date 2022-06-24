@@ -1,9 +1,9 @@
 package util;
 
 /**
- * Enumeration of every direction in a 2D world in a determined landmark.
+ * Enumeration of every vertical direction in a 2D world in a determined landmark.
  */
-public enum Direction {
+public enum DirectionVertical {
 
     /**
      * Up direction.
@@ -13,14 +13,6 @@ public enum Direction {
      * Down direction.
      */
     DOWN,
-    /**
-     * Left direction.
-     */
-    LEFT,
-    /**
-     * Right direction.
-     */
-    RIGHT,
     /**
      * It represents the state in which there is no direction.
      */
