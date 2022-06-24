@@ -18,7 +18,7 @@ public class SoundManager {
 	 * @param sound to be played.
 	 */
 	public void playSound(final Sounds sound) {
-//		sound.getAudioClip().play();
+		sound.getAudioClip().play();
 	}
 	
 	/**

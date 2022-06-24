@@ -12,7 +12,7 @@ public class StillBot implements SimpleBot{
     private Player player;
     private Level level;
 
-    public StillBot(Character enemy, Level level) {
+    public StillBot(final Character enemy, Level level) {
         this.enemy = (Enemy) enemy;
         this.level = level;
     }
@@ -35,7 +35,7 @@ public class StillBot implements SimpleBot{
     }
 
     @Override
-    public void setEnemy(Character character) {
+    public void setEnemy(final Character character) {
         this.enemy = (Enemy) character;
 
     }
@@ -43,13 +43,11 @@ public class StillBot implements SimpleBot{
     @Override
     public void fire() {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void controllerTick() {
         // TODO Auto-generated method stub
-        
     }
 
 }
