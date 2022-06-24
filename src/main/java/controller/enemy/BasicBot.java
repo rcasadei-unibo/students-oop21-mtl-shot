@@ -2,7 +2,6 @@ package controller.enemy;
 
 import java.util.Random;
 
-import model.character.Character;
 import model.character.Enemy;
 import model.character.Player;
 import model.character.movableentity.EntityConstants;
@@ -62,15 +61,6 @@ public class BasicBot implements SimpleBot {
         }
     }
 
-    /**
-     * Sets the reference to the Enemy model.
-     */
-    @Override
-    public void setEnemy(final Character character) {
-        this.enemy = (Enemy) character;
-
-    }
-
     @Override
     public void move() {
         if (this.player != null) {
@@ -108,11 +98,6 @@ public class BasicBot implements SimpleBot {
      */
     public Segment getCurrentCharacterSegment() {
         return level.getSegmentAtPosition(this.enemy.getPosition());
-    }
-
-    @Override
-    public Enemy getEnemy() {
-        return this.enemy;
     }
 
     @Override

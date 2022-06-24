@@ -2,7 +2,6 @@ package controller.enemy;
 
 import model.character.Character;
 import model.character.Enemy;
-import model.character.Player;
 import model.map.Level;
 
 /**
@@ -25,18 +24,6 @@ public class StillBot implements SimpleBot {
     @Override
     public void move() {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public Enemy getEnemy() {
-        // TODO Auto-generated method stub
-        return this.enemy;
-    }
-
-    @Override
-    public void setEnemy(final Character character) {
-        this.enemy = (Enemy) character;
 
     }
 

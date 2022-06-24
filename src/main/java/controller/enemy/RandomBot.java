@@ -25,17 +25,6 @@ public class RandomBot implements SimpleBot {
     }
 
     @Override
-    public Enemy getEnemy() {
-        return this.enemy;
-    }
-
-    @Override
-    public void setEnemy(final Character character) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void fire() {
         // TODO Auto-generated method stub
 
