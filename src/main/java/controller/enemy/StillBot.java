@@ -46,14 +46,10 @@ public class StillBot implements SimpleBot {
 
     @Override
     public void fire() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void controllerTick() {
-        // TODO Auto-generated method stub
-
     }
 
 }
