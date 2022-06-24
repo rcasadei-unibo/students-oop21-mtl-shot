@@ -13,11 +13,8 @@ import model.character.Player.PlayerBuilder;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
-import model.weapons.R99;
 import model.weapons.PeaceKeeper;
-import model.weapons.Kraber;
 import util.Vector2D;
-import util.map.TextMap;
 
 /**
  * The main stage where every MetalShot entity is present.
@@ -52,12 +49,6 @@ public class StageImpl {
         this.bullets = new LinkedList<>();
     }
 
-    private void addEnemies() {
-        for (final Vector2D pos : level.getEnemiesSpawn()) {
-            enemies.add(new Enemy(pos, new Vector2D(1, 1.5), new SimpleHealth()));
-        }
-    }
-
     /**
      * 
      * @return bla
@@ -88,5 +79,11 @@ public class StageImpl {
      */
     public Collection<Bullet> getBullets() {
         return this.bullets;
+    }
+
+    private void addEnemies() {
+        for (final Vector2D pos : level.getEnemiesSpawn()) {
+            enemies.add(new Enemy(pos, new Vector2D(1, 1.5), new SimpleHealth()));
+        }
     }
 }
