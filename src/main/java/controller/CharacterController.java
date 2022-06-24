@@ -39,6 +39,8 @@ public class CharacterController {
 
     /**
      * The main method that checks everything about the player.
+     * @param bounds
+     * @param canAdvance
      */
     public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
         this.movementChecks(bounds, canAdvance);
@@ -46,16 +48,23 @@ public class CharacterController {
         this.aimChecks();
     }
 
-    public void fire(final WeaponController weaponController, final BulletsController bulletsController, final SoundsController soundsController) {
-    	var ttsr = weaponController.tryToShoot(this.character);
+    /**
+     * Defines the actions to execute when the boolean isShooting is true.
+     * @param weaponController
+     * @param bulletsController
+     * @param soundsController
+     */
+    public void fire(final WeaponController weaponController, final BulletsController bulletsController,
+            final SoundsController soundsController) {
+        var ttsr = weaponController.tryToShoot(this.character);
         if (ttsr.equals(TryToShootReturn.SHOOT)) {
             soundsController.playSound(Sounds.RIFLE_FIRING);
             bulletsController.addBullet(this.character);
         } else if (ttsr.equals(TryToShootReturn.RELOAD)) {
-        	soundsController.playSound(Sounds.RELOAD);
+            soundsController.playSound(Sounds.RELOAD);
         }
     }
-    
+
     /**
      * Gets the character who is being controlled.
      * 
@@ -64,18 +73,22 @@ public class CharacterController {
     public Character getCharacter() {
         return this.character;
     }
-    
+
+    /**
+     * 
+     * @return true if the character is dead
+     */
     public boolean isDead() {
         return this.character.getHealth().isDead();
     }
-    
+
     private void aimChecks() {
         // if crouching he can't aim at the ground
         if (this.character.isCrouching()) {
             this.character.getAim().returnToHorizontal();
             // if fling and pressing the down button he has to aim at the ground
         } else if (!this.character.isCrouching() && this.character.isCrouchKey()) {
-			this.character.getAim().setVertical(DirectionVertical.DOWN);
+            this.character.getAim().setVertical(DirectionVertical.DOWN);
         }
     }
 
@@ -102,13 +115,13 @@ public class CharacterController {
         } else if (this.character.getSpeed().getX() != 0) {
             this.character.setFall(true);
         }
-     
-       
+
         // Left wall collisions
         if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + 0.1) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
-        } else if (this.isCollidingRight(nextPos) || (nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance)) {
+        } else if (this.isCollidingRight(nextPos)
+                || (nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance)) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
         // Special case: while flying he can not crouch

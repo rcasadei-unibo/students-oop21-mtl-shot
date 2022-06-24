@@ -10,27 +10,33 @@ import util.UserData;
  */
 public class WinMenuController {
 
-	@FXML
-	private BorderPane pane;
-	@FXML
-	private Label totalPoints;
-	@FXML
-	private Label remeaningTime;
-	@FXML
-	private Label remeaningLives;
-	/**
-	 * Sets the size of the options menu panel.
-	 * 
-	 * @param width
-	 * @param height
-	 */
-	public void setSize(final double width, final double height) {
-		pane.setPrefSize(width, height);
-	}
-	
-	public void setInfoToDisplay(final UserData userData, final int lives) {
-		this.remeaningLives.setText("Remeaning lives: " + lives);
-		this.remeaningTime.setText("Remeaning time: " + userData.getTime());
-		this.totalPoints.setText("Total points: " + userData.getPoints());
-	}
+    @FXML
+    private BorderPane pane;
+    @FXML
+    private Label totalPoints;
+    @FXML
+    private Label remeaningTime;
+    @FXML
+    private Label remeaningLives;
+
+    /**
+     * Sets the size of the options menu panel.
+     * 
+     * @param width
+     * @param height
+     */
+    public void setSize(final double width, final double height) {
+        pane.setPrefSize(width, height);
+    }
+
+    /**
+     * Modifies the label of the win menu.
+     * @param userData
+     * @param lives
+     */
+    public void setInfoToDisplay(final UserData userData, final int lives) {
+        this.remeaningLives.setText("Remeaning lives: " + lives);
+        this.remeaningTime.setText("Remeaning time: " + userData.getTime());
+        this.totalPoints.setText("Total points: " + userData.getPoints());
+    }
 }

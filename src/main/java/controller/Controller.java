@@ -39,7 +39,7 @@ public class Controller extends Thread {
     private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
-    private Boolean paused;
+    private boolean paused;
 
     /**
      * Ticks per second. A unit that represent how many steps are calculated in a
@@ -256,6 +256,9 @@ public class Controller extends Thread {
         return this.stage;
     }
 
+    /**
+     * Pause the enemies that are in a segment different from the Player segment.
+     */
     public void refreshEnemiesStatus() {
         enemiesController.forEach(e -> {
             if (stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()) != stage.getLevel()
@@ -265,22 +268,6 @@ public class Controller extends Thread {
                 e.setActive(true);
             }
         });
-    }
-
-    public void removeOldEnemies() {
-        var remove = new LinkedList<EnemyController>();
-
-        enemiesController.forEach(e -> {
-            if (!e.isActive()
-                    && stage.getLevel().getSegmentAtPosition(e.getCharacter().getPosition()).getOrigin().getX() < stage
-                            .getLevel().getSegmentAtPosition(stage.getPlayer().getPosition()).getOrigin().getX()) {
-                remove.add(e);
-            }
-        });
-
-        if (!remove.isEmpty()) {
-            remove.forEach(e -> removeEnemy(e));
-        }
     }
 
     private void removeEnemy(final EnemyController enemyController) {

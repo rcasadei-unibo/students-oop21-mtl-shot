@@ -20,7 +20,7 @@ import view.sounds.SoundManager.Sounds;
  * 
  */
 public class SignInController {
-	
+
     /**
      * The TextField where the user has to put its username.
      */
@@ -29,8 +29,9 @@ public class SignInController {
 
     /**
      * Executes when the insert button is released.
+     * 
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
@@ -48,8 +49,10 @@ public class SignInController {
         var sm = new SoundManager();
         sm.stopSound(Sounds.METAL_SHOT_HAHA);
     }
+
     /**
      * Executes when the back button is released.
+     * 
      * @param event
      * @throws IOException
      */
@@ -63,5 +66,5 @@ public class SignInController {
     private boolean isValid(final String text) {
         return !text.isBlank();
     }
-    
+
 }

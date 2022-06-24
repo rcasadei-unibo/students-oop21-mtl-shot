@@ -179,6 +179,9 @@ public class GameView extends Scene {
         return this.userData;
     }
 
+    /**
+     * Refresh the pauseMenu with the current size.
+     */
     public void menuRefresh() {
         this.pauseMenu.setPrefSize(this.getWidth(), this.getHeight());
     }

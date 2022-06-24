@@ -20,15 +20,16 @@ import view.sounds.SoundManager.Sounds;
  * 
  */
 public class MainMenuController {
-	
-	{
-		/* Plays main menu theme  */
-		var sm = new SoundManager();
+
+    {
+        /* Plays main menu theme */
+        var sm = new SoundManager();
         sm.playSound(Sounds.METAL_SHOT_HAHA);
-	}
-	
+    }
+
     /**
      * Executes when the start button is released.
+     * 
      * @param event
      * @throws IOException
      */
@@ -41,6 +42,7 @@ public class MainMenuController {
 
     /**
      * Executes when the close button is released.
+     * 
      * @param event
      * @throws FileNotFoundException
      */
@@ -51,8 +53,9 @@ public class MainMenuController {
 
     /**
      * Executes when the option button is released.
+     * 
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     public void optionReleased(final MouseEvent event) throws IOException {
@@ -63,11 +66,12 @@ public class MainMenuController {
 
     /**
      * Executes when the leaderboard button is released.
+     * 
      * @param event
      * @throws FileNotFoundException
      */
     @FXML
     public void leaderboardReleased(final MouseEvent event) throws FileNotFoundException {
-        //Show leaderboard panel
+        // Show leaderboard panel
     }
 }

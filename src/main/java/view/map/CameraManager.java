@@ -73,7 +73,6 @@ public class CameraManager {
 					.getSegmentAtPosition(controller.getStage().getPlayer().getPosition()).getOrigin().getX();
 
 			controller.refreshEnemiesStatus();
-			controller.removeOldEnemies();
 		}
 
 		if (controller.getStage().getPlayer().getSpeed().getX() > 0
