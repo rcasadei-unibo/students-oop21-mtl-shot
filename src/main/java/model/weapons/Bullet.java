@@ -57,13 +57,13 @@ public class Bullet extends Entity {
                 new Vector2D(0.1, 0.1)); // TODO: change magic numbers
         this.owner = owner;
         this.aim = owner.getAim();
-        this.speed = 0.05;
+        this.speed = 0.3;
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
         
         var r = new Random();
         double angleInterval = 1 / ((owner.getWeapon().getAccuracy()));
-        double angle = 2.0 * angleInterval * (r.nextDouble() - 1/2);    // r.nextDouble()*angleInterval - angleInterval/2
+        double angle = 8 * angleInterval * (r.nextDouble() - 0.5);    // r.nextDouble()*angleInterval - angleInterval/2
         
         if (this.aim.getDirection().getY().equals(DirectionVertical.UP)) {
         	angle += 90;
