@@ -14,7 +14,7 @@ import util.map.MapConstants;
  */
 public class BulletsView {
 
-    private List<ImageView> imageViewList;
+    private final List<ImageView> imageViewList;
     private final Image bulletTexture;
     private final double scale;
 

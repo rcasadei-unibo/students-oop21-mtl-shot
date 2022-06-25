@@ -34,17 +34,17 @@ public class Bullet extends Entity {
     /**
      * Bullet's movement direction.
      */
-    private Aim aim;
+    private final Aim aim;
 
     /**
      * Space traveled in a tick's time.
      */
-    private double speed;
+    private final double speed;
 
     /**
      * Bullet's damage (based on the weapon held by owner).
      */
-    private int damage;
+    private final int damage;
 
     /**
      * It is true if the bullet has hit something.
@@ -54,12 +54,12 @@ public class Bullet extends Entity {
     /**
      * Cos of the angle based on accuracy.
      */
-    private double cos;
+    private final double cos;
 
     /**
      * Sin of the angle based on accuracy.
      */
-    private double sin;
+    private final double sin;
 
     /**
      * Creates a bullet based on owner's position, weapon and aim, adding an angle
@@ -77,8 +77,8 @@ public class Bullet extends Entity {
         this.hit = false;
         this.damage = owner.getWeapon().getDamagePerBullet();
 
-        var r = new Random();
-        double angleInterval = 1 / ((owner.getWeapon().getAccuracy()));
+        final var r = new Random();
+        final double angleInterval = 1 / ((owner.getWeapon().getAccuracy()));
         double angle = ACCURACY_AMPLIFIER * angleInterval * (r.nextDouble() - 0.5);
 
         if (this.aim.getDirection().getY().equals(DirectionVertical.UP)) {

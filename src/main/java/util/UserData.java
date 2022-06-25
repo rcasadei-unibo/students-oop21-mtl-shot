@@ -12,8 +12,8 @@ public class UserData {
     private int points;
     private int lpLeft;
     private Date lastGame = new Date();
-    private long startTime = new Date().getTime();
-    private SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+    private final long startTime = new Date().getTime();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
     /**
      * Defines the amount of points the player gets for defeating an Enemy.
      */

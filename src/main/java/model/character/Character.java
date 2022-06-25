@@ -10,9 +10,9 @@ import model.weapons.Weapon;
  * A character is a kind of MovableEntity that also has an health, an aim and a
  * weapon.
  */
-public class Character extends MovableEntity {
+public abstract class Character extends MovableEntity {
 
-    private boolean isShooting = false;
+    private boolean isShooting;
 
     /**
      * Delineates the conditions which limit the entity's crouching capabilities.

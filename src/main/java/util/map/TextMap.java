@@ -52,11 +52,7 @@ public class TextMap {
      * @return the file.
      */
     public File getFile() {
-        System.out.println(this.path);
-        System.out.println(ClassLoader.getSystemResource(path).getPath());
-        File f = new File(ClassLoader.getSystemResource(path).getFile());
-        System.out.println(f.exists());
-        return f;
+        return new File(ClassLoader.getSystemResource(path).getFile());
     }
     /**
      * Returns the TextMap's File's path.

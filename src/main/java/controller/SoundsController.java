@@ -15,10 +15,10 @@ import view.sounds.SoundManager.Sounds;
  *
  */
 public class SoundsController {
-    private Map<Sounds, Cooldown> timers;
-    private SoundManager soundManager;
-    private Random rnd;
-    private final int hurtAndDieCooldownTicks = 50;
+    private final Map<Sounds, Cooldown> timers;
+    private final SoundManager soundManager;
+    private final Random rnd;
+    private static final int HURTANDDIECOOLDOWNTICK = 50;
 
     /**
      * Instantiates SoundsController.
@@ -47,13 +47,13 @@ public class SoundsController {
      * @return true if the sound is actually played
      */
     private boolean playRandomSound(final List<Sounds> sounds, final boolean force) {
-        List<Sounds> tmp = new ArrayList<>(sounds);
+        final List<Sounds> tmp = new ArrayList<>(sounds);
         tmp.removeIf(s -> !this.timers.containsKey(s));
 
         if (tmp.isEmpty()) {
-            int n = this.rnd.nextInt(sounds.size());
+            final int n = this.rnd.nextInt(sounds.size());
             if (!force) {
-                this.timers.put(sounds.get(n), new Cooldown(hurtAndDieCooldownTicks));
+                this.timers.put(sounds.get(n), new Cooldown(HURTANDDIECOOLDOWNTICK));
             }
             this.soundManager.playSound(sounds.get(n));
             return true;

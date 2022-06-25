@@ -298,6 +298,10 @@ public class GameView extends Scene {
         this.root.getChildren().removeAll(remove);
     }
 
+    /**
+     * Returns the main controller of this scene.
+     * @return the main controller of this scene
+     */
     public Controller getController() {
         return this.controller;
     }

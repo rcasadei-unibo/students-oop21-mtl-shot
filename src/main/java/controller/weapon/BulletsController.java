@@ -17,11 +17,11 @@ import view.sounds.SoundManager.Sounds;
  *
  */
 public class BulletsController {
-    private Collection<Bullet> bulletsReference;
-    private Player playerReference;
-    private Collection<Enemy> enemiesReference;
-    private SoundsController soundsControllerRef;
-    private Level levelReference;
+    private final Collection<Bullet> bulletsReference;
+    private final Player playerReference;
+    private final Collection<Enemy> enemiesReference;
+    private final SoundsController soundsControllerRef;
+    private final Level levelReference;
 
     /**
      * Instantiates BulletsController.

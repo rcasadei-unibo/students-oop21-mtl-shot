@@ -24,7 +24,7 @@ public class HUD {
      * @param ud
      */
     public void refresh(final UserData ud) {
-        points.setText(ud.getPoints() + "");
+        points.setText(String.valueOf(ud.getPoints()));
         health.setText(ud.getLpLeft() + "/100");
         date.setText(ud.getTime());
     }

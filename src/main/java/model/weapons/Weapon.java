@@ -156,7 +156,7 @@ public abstract class Weapon {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Weapon other = (Weapon) obj;
+        final Weapon other = (Weapon) obj;
         return Double.doubleToLongBits(accuracy) == Double.doubleToLongBits(other.accuracy)
                 && damagePerBullet == other.damagePerBullet && fireRate == other.fireRate
                 && magCapacity == other.magCapacity && Objects.equals(name, other.name)

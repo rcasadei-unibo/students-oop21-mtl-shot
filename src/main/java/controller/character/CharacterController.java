@@ -60,7 +60,7 @@ public class CharacterController {
      */
     public void fire(final WeaponController weaponController, final BulletsController bulletsController,
             final SoundsController soundsController) {
-        var ttsr = weaponController.tryToShoot(this.character);
+        final var ttsr = weaponController.tryToShoot(this.character);
         if (ttsr.equals(TryToShootReturn.SHOOT)) {
             soundsController.playSound(Sounds.RIFLE_FIRING);
             bulletsController.addBullet(this.character);
@@ -125,7 +125,7 @@ public class CharacterController {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
         } else if (this.isCollidingRight(nextPos)
-                || (nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance)) {
+                || nextPos.getX() + this.character.getHitbox().getX() > bounds.getY() && !canAdvance) {
             this.character.setSpeed(-EntityConstants.ACCELERATION, this.character.getSpeed().getY());
         }
         // Special case: while flying he can not crouch

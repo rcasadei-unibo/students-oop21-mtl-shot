@@ -17,10 +17,10 @@ import util.direction.DirectionHorizontal;
  */
 public class BasicBot implements SimpleBot {
 
-    private Enemy enemy;
-    private Player player;
-    private Level level;
-    private double maxDistance = EntityConstants.ENEMY_DISTANCE
+    private final Enemy enemy;
+    private final Player player;
+    private final Level level;
+    private final double maxDistance = EntityConstants.ENEMY_DISTANCE
             + (new Random().nextDouble() * EntityConstants.ENEMY_VARIATON - EntityConstants.ENEMY_VARIATON / 2);
     private boolean lastDir = true;
 
@@ -52,10 +52,10 @@ public class BasicBot implements SimpleBot {
     }
 
     private void randomMove() {
-        lastDir = (new Random().nextInt(EntityConstants.CHANGE_DIR_PROBABILITY) == 0) ? !lastDir : lastDir;
+        this.lastDir = (new Random().nextInt(EntityConstants.CHANGE_DIR_PROBABILITY) == 0) ? !lastDir : lastDir;
         enemy.getAim().setHorizontal(lastDir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
         movementLogic(lastDir);
-        double distance = enemy.getPosition().getX() - player.getPosition().getX();
+        final double distance = enemy.getPosition().getX() - player.getPosition().getX();
         if (Math.abs(distance) < this.maxDistance) {
             enemy.setStatus(Status.ACTIVE);
         }
@@ -64,7 +64,7 @@ public class BasicBot implements SimpleBot {
     @Override
     public void move() {
         if (this.player != null) {
-            double distance = enemy.getPosition().getX() - player.getPosition().getX();
+            final double distance = enemy.getPosition().getX() - player.getPosition().getX();
             if (Math.abs(distance) < maxDistance + EntityConstants.ENEMY_TOLERANCE
                     && Math.abs(distance) > maxDistance - EntityConstants.ENEMY_TOLERANCE) {
                 enemy.setLeft(false);
@@ -72,7 +72,7 @@ public class BasicBot implements SimpleBot {
             } else {
                 boolean dir = distance > 0;
                 enemy.getAim().setHorizontal(dir ? DirectionHorizontal.LEFT : DirectionHorizontal.RIGHT);
-                dir = (Math.abs(distance) < maxDistance) ? !dir : dir;
+                dir = Math.abs(distance) < maxDistance ? !dir : dir;
                 movementLogic(dir);
             }
         }
@@ -81,11 +81,11 @@ public class BasicBot implements SimpleBot {
     private void movementLogic(final boolean dir) {
         enemy.setLeft(dir);
         enemy.setRight(!dir);
-        double nearTileX = dir ? -(EntityConstants.ENEMY_DELTA)
-                : (EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX());
+        final double nearTileX = dir ? -(EntityConstants.ENEMY_DELTA)
+                : EntityConstants.ENEMY_DELTA + enemy.getHitbox().getX();
         enemy.setJump(getCurrentCharacterSegment()
-                .isCollidableAtPosition(this.enemy.getPosition().sum((nearTileX), (enemy.getHitbox().getY() - 1)))
-                || getCurrentCharacterSegment().isCollidableAtPosition(this.enemy.getPosition().sum((nearTileX), 0)));
+                .isCollidableAtPosition(this.enemy.getPosition().sum(nearTileX, enemy.getHitbox().getY() - 1))
+                || getCurrentCharacterSegment().isCollidableAtPosition(this.enemy.getPosition().sum(nearTileX, 0)));
     }
 
     /**

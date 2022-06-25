@@ -10,7 +10,6 @@ import model.character.Enemy;
 
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
-import model.character.movableentity.EntityConstants;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;

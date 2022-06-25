@@ -7,7 +7,7 @@ import util.Vector2D;
  * any game. It's composed by an hitbox and a position, each one of them is
  * identified by a Vector.
  */
-public class Entity {
+public abstract class Entity {
     /**
      * It represents a box that has width and height.
      */

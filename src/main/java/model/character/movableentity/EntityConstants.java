@@ -1,7 +1,6 @@
 package model.character.movableentity;
 
 import controller.Controller;
-import util.Vector2D;
 
 /**
  * This is a static class where all the main environment constants are

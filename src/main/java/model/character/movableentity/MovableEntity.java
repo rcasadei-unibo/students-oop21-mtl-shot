@@ -7,7 +7,7 @@ import util.Vector2D;
  * An extension of the abstract class Entity which also has the ability to move
  * in a 2D world. A MovableEntity can jump, crawl, fall and go left and right.
  */
-public class MovableEntity extends Entity {
+public abstract class MovableEntity extends Entity {
     /**
      * Represents the entity intention to go left.
      */

@@ -10,8 +10,8 @@ import model.character.Character;
  *
  */
 public class WeaponController {
-    private Map<Character, Cooldown> shootingTimers;
-    private Map<Character, Cooldown> reloadingTimers;
+    private final Map<Character, Cooldown> shootingTimers;
+    private final Map<Character, Cooldown> reloadingTimers;
 
     /**
      * Instantiates WeaponController.
@@ -52,10 +52,8 @@ public class WeaponController {
             characterShooting.getWeapon().shoot();
             return TryToShootReturn.SHOOT;
 
-        } else if (characterShooting.getWeapon().getBulletsInMag() == 0) {
-            if (this.tryToReload(characterShooting)) {
-                return TryToShootReturn.RELOAD;
-            }
+        } else if (characterShooting.getWeapon().getBulletsInMag() == 0 && this.tryToReload(characterShooting)) {
+            return TryToShootReturn.RELOAD;
         }
         return TryToShootReturn.NOTHING;
     }

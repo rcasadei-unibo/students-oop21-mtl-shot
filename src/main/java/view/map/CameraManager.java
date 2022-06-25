@@ -24,10 +24,10 @@ public class CameraManager {
     private final Group root;
     private final LevelView levelView;
     private final GameView gameView;
-    private double offset = 0;
+    private double offset;
     private double cameraScaleFactorX;
     private double cameraScaleFactorY;
-    private Camera camera = new PerspectiveCamera();
+    private final Camera camera = new PerspectiveCamera();
     /**
      * Fixed horizontal screen reference size.
      */
