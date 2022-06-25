@@ -24,7 +24,7 @@ public final class MetalShot extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws IOException {
-    	final var loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/MainMenu.fxml"));
+        final var loader = new FXMLLoader(ClassLoader.getSystemResource("fxml/MainMenu.fxml"));
         final Parent root = loader.load();
         final Scene scene = new Scene(root);
         primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -37,4 +37,3 @@ public final class MetalShot extends Application {
         new SoundManager().playSound(Sounds.METAL_SHOT_HAHA);
     }
 }
-	

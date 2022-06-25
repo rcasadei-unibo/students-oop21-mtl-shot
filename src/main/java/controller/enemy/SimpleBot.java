@@ -6,7 +6,7 @@ package controller.enemy;
 public interface SimpleBot {
 
     /**
-     * Execute all the action and checks that an enemy
+     * Execute all the actions and checks that an enemy
      * has to do every frame.
      */
     void controllerTick();

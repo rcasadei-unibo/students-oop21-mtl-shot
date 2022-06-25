@@ -48,8 +48,7 @@ public class OptionsMenuController {
     }
 
     /**
-     * Sets the reference to the possible GameView (the options pane could be
-     * displayed both in MainMenu and in PauseMenu).
+     * Sets the reference to the possible GameView.
      * 
      * @param gameView
      */

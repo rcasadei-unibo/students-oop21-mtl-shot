@@ -6,8 +6,8 @@ import javafx.scene.layout.BorderPane;
 import util.UserData;
 
 /**
- * 
- * 
+ * The controller class for the game over menu (managed by FXML sheet).
+ *
  */
 public class GameOverMenuController {
 

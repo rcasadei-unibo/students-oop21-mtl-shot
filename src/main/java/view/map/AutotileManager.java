@@ -13,8 +13,8 @@ import util.Vector2D;
 import util.map.MapConstants;
 
 /**
- * 
  *
+ * Implements the AutotileManager, which is in charge of drawing the Tiles in a way that they merge dinamically one into the other.
  */
 public class AutotileManager {
 
@@ -45,9 +45,9 @@ public class AutotileManager {
     }
 
     /**
-     * 
+     * Gets the ImageViews of each Tile from a specific Segment selected through index, starting from the leftmost visible Segment.
      * @param index
-     * @return bla
+     * @return the ImageViews of the tiles from the leftmost rendered Segment.
      */
     public List<Group> getSegment(final int index) {
         return renderedSegments.get(index);
@@ -216,11 +216,7 @@ public class AutotileManager {
         botLeftCorner.setX(tempPos.getX());
         botLeftCorner.setY(tempPos.getY());
 
-        // create the new image, canvas size is the max. of both image sizes
-
         return new Group(topLeft, topRight, botRight, botLeft, topLeftCorner, topRightCorner,
                 botRightCorner, botLeftCorner);
-
     }
-
 }

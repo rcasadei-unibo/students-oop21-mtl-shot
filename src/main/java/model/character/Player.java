@@ -16,7 +16,6 @@ public final class Player extends Character {
     private int lives;
     // private final List<Item> items;
 
-    //?????????????????????????????????
     public static final long serialVersionUID = 0L;
 
     private Player(final PlayerBuilder builder) {
@@ -50,15 +49,8 @@ public final class Player extends Character {
     }
 
     /**
-     * Picks up the item only if it's close enough to take it
-     * 
-     * @param item
+     * {@inheritDoc}
      */
-    /*
-     * public void interact(final Item item) { if(super.isColliding(item)) {
-     * this.items.add(item); } }
-     */
-
     @Override
     public String toString() {
         return super.toString() + " " + this.lives;
