@@ -64,7 +64,7 @@ public class Controller extends Thread {
         this.viewReference = gameView;
         this.enemiesController = new LinkedList<>();
         this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer(), this.enemiesController);
         this.soundsController = new SoundsController();
         this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(),
                 this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
@@ -228,7 +228,6 @@ public class Controller extends Thread {
         }
         if (key == KeyCode.J) {
             this.stage.getPlayer().setFire(false);
-//            this.playerController.fire(weaponController, bulletsController);
         }
     }
 

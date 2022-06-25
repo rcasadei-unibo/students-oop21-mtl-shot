@@ -6,6 +6,7 @@ import controller.CharacterController;
 import controller.enemy.EnemyController;
 import model.character.Player;
 import model.map.Level;
+import util.Pair;
 
 /**
  * The player controller. It checks if the player is colliding into the ground,
@@ -31,8 +32,8 @@ public class PlayerController extends CharacterController {
      * {@inheritDoc}
      */
     @Override
-    public void controllerTick(final double leftBound) {
-    	super.controllerTick(leftBound);
+    public void controllerTick(final Pair<Double, Double> bounds, final boolean canAdvance) {
+    	super.controllerTick(bounds, canAdvance);
     	final var rightBound = level.getSegmentAtPosition(super.getCharacter().getPosition()).getOrigin().getX() + level.getSegmentAtPosition(super.getCharacter().getPosition()).getTextMap().getWidth();
     	if (rightBound - 0.25 < super.getCharacter().getPosition().getX() + super.getCharacter().getHitbox().getX() && !this.enemies.isEmpty()) {
     		super.getCharacter().setPosition(rightBound - 0.26 - super.getCharacter().getHitbox().getX(),
