@@ -3,7 +3,7 @@ package model.map.tile;
 import util.Vector2D;
 /**
  * 
- *
+ * Extends AbstractTile into a TileAir.
  */
 public class TileAir extends AbstractTile {
 	
@@ -11,14 +11,13 @@ public class TileAir extends AbstractTile {
         super(position, "tileSet/Air.png");
 	}
 
-	@Override
-	public boolean isCollidable() {
-		return false;
-	}
+    @Override
+    public boolean isCollidable() {
+        return false;
+    }
 
-	@Override
-	public boolean isTileable() {
-		return false;
-	}
-
+    @Override
+    public boolean isTileable() {
+        return false;
+    }
 }

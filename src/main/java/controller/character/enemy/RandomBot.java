@@ -7,7 +7,7 @@ import model.character.tools.health.SimpleHealth;
 import util.Vector2D;
 
 /**
- * A SimpleBot that make decision randomly.
+ * A SimpleBot that makes decision randomly.
  *
  */
 public class RandomBot implements SimpleBot {

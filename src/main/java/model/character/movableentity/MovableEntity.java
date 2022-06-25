@@ -9,23 +9,23 @@ import util.Vector2D;
  */
 public class MovableEntity extends Entity {
     /**
-     * Represent the entity intention to go left.
+     * Represents the entity intention to go left.
      */
     private boolean left;
     /**
-     * Represent the entity intention to go right.
+     * Represents the entity intention to go right.
      */
     private boolean right;
     /**
-     * Represent the entity intention to jump.
+     * Represents the entity intention to jump.
      */
     private boolean jump;
     /**
-     * Represent the current crouch state.
+     * Represents the current crouch state.
      */
     private boolean crouch;
     /**
-     * Represent if the entity has to fall or not.
+     * Represents if the entity has to fall or not.
      */
     private boolean fall;
     /**

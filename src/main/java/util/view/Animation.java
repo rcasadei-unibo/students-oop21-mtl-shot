@@ -52,9 +52,9 @@ public class Animation {
     }
 
     /**
-     * 
+     * Returns the current frame of the Animation, can be mirrored if right is set to true.
      * @param right
-     * @return bla
+     * @return the current frame of the Animation.
      */
     public Image get(final boolean right) {
         int line;
@@ -69,7 +69,8 @@ public class Animation {
     }
 
     /**
-     * 
+     * Advances the animation by one frame if enough time has passed.
+     * This timeframe is determined by the animation's delay property.
      */
     public void animate() {
         if (curdelay == 0) {

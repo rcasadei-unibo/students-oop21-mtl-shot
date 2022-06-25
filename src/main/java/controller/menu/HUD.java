@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 import util.UserData;
 
 /**
- * 
+ * The controller class for the in game HUD (Heads Up Display, managed by FXML sheet).
  *
  */
 public class HUD {

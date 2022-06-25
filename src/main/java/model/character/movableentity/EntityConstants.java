@@ -1,6 +1,7 @@
 package model.character.movableentity;
 
 import controller.Controller;
+import util.Vector2D;
 
 /**
  * This is a static class where all the main environment constants are
@@ -41,17 +42,17 @@ public final class EntityConstants {
     //For enemy only
 
     /**
-     * Field that represent the distance that the enemy keeps from the player.
+     * Field that represents the distance that the enemy keeps from the player.
      */
     public static final double ENEMY_DISTANCE = 7;
 
     /**
-     * Field that represent the tolerance that the enemy has before start moving depending on player position.
+     * Field that represents the tolerance that the enemy has before start moving depending on player position.
      */
     public static final double ENEMY_TOLERANCE = 0.5;
 
     /**
-     * Field that represent the varianton of the distance kept by the enemy.
+     * Field that represents the variation of the distance kept by the enemy.
      */
     public static final int ENEMY_VARIATON = 6;
 
@@ -64,6 +65,11 @@ public final class EntityConstants {
      * The delta for the checks of collision of the enemy.
      */
     public static final double ENEMY_DELTA = 0.5;
+
+    /**
+     * The default hitbox size.
+     */
+    public static final Vector2D DEFAULT_HITBOX = new Vector2D(1, 1.5);
 
     private EntityConstants() {
     }

@@ -35,7 +35,7 @@ import controller.menu.PauseMenuController;
 import controller.menu.WinMenuController;
 
 /**
- * The game main view. It contains all sub-views and handles the view refresh.
+ * The game main View. It contains all sub views and handles the View refresh.
  * 
  */
 public class GameView extends Scene {
@@ -52,6 +52,7 @@ public class GameView extends Scene {
     private final HUD hudController;
     private GridPane pauseMenu;
     private final Node hud;
+    private static final double SCALINGFACTOR = 1.75;
 
     /**
      * The GameView constructor.
@@ -92,27 +93,27 @@ public class GameView extends Scene {
     }
 
     /**
-     * Gets the visible part of the player.
+     * Returns the View side of the player.
      * 
-     * @return PlayerView
+     * @return the PlayerView
      */
     public PlayerView getPlayerView() {
         return this.playerView;
     }
 
     /**
-     * Gets the visible part of the map.
+     * Returns the View side of the map.
      * 
-     * @return LevelView
+     * @return the LevelView
      */
     public LevelView getLevelView() {
         return this.levelView;
     }
 
     /**
-     * Gets the visible part of the bullets.
+     * Returns the View side of the bullets.
      * 
-     * @return BulletsView.
+     * @return the BulletsView.
      */
     public BulletsView getBulletsView() {
         return this.bulletsView;
@@ -131,7 +132,7 @@ public class GameView extends Scene {
         pt.getChildren().add(tt);
         pt.play();
 
-        this.hudController.setSize(1920 * 1.75, 1080 * 1.75);
+        this.hudController.setSize(CameraManager.HORIZONTALDEFAULT * SCALINGFACTOR, CameraManager.VERTICALDEFAULT * SCALINGFACTOR);
 
         cameraManager.updateCamera();
 
@@ -265,8 +266,8 @@ public class GameView extends Scene {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the View side of the Enemies.
+     * @return the View of the Enemies.
      */
     public Map<Enemy, EnemyView> getEnemiesView() {
         return enemiesView;
@@ -293,7 +294,11 @@ public class GameView extends Scene {
     public Controller getController() {
         return this.controller;
     }
-    
+
+    /**
+     * Returns the CameraManager.
+     * @return the CameraManager.
+     */
     public CameraManager getCameraManager() {
         return this.cameraManager;
     }

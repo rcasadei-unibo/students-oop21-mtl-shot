@@ -10,6 +10,7 @@ import model.character.Enemy;
 
 import model.character.Player;
 import model.character.Player.PlayerBuilder;
+import model.character.movableentity.EntityConstants;
 import model.character.tools.health.SimpleHealth;
 import model.map.Level;
 import model.weapons.Bullet;
@@ -40,7 +41,7 @@ public class StageImpl {
         this.enemies = new LinkedList<>();
         addEnemies();
         this.player = new PlayerBuilder()
-                .hitbox(new Vector2D(1, 1.5))
+                .hitbox(EntityConstants.DEFAULT_HITBOX)
                 .position(level.getPlayerSpawn())
                 .weapon(new R99())
                 .health(new SimpleHealth())
@@ -50,32 +51,32 @@ public class StageImpl {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the Player.
+     * @return the Player.
      */
     public Player getPlayer() {
         return this.player;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the Level.
+     * @return the Level.
      */
     public Level getLevel() {
         return this.level;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns a Collection of all the Enemies.
+     * @return all the Enemies.
      */
     public Collection<Enemy> getEnemies() {
         return this.enemies;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns a Collection of all the Bullets.
+     * @return all the Bullets.
      */
     public Collection<Bullet> getBullets() {
         return this.bullets;
@@ -83,7 +84,7 @@ public class StageImpl {
 
     private void addEnemies() {
         for (final Vector2D pos : level.getEnemiesSpawn()) {
-            enemies.add(new Enemy(pos, new Vector2D(1, 1.5), new SimpleHealth()));
+            enemies.add(new Enemy(pos, EntityConstants.DEFAULT_HITBOX, new SimpleHealth()));
         }
     }
 }

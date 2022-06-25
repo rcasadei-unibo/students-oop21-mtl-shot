@@ -10,8 +10,7 @@ import util.map.MapConstants;
 import util.view.Animation;
 
 /**
- * 
- * 
+ * Implements the View side of a Character.
  */
 public class CharacterView {
     private Animation characterIdle;
@@ -47,6 +46,7 @@ public class CharacterView {
     }
 
     /**
+     * Updates the Character's View to reflect any changes on its Model.
      * 
      * @param character
      */
@@ -83,6 +83,8 @@ public class CharacterView {
                     characterImageView.setImage(characterIdleUp.get(true));
                     characterIdleUp.animate();
                     break;
+                default:
+                    break;
                 }
                 break;
             case NEUTRAL:
@@ -94,6 +96,8 @@ public class CharacterView {
                 case RIGHT:
                     characterImageView.setImage(characterIdle.get(true));
                     characterIdle.animate();
+                    break;
+                default:
                     break;
                 }
                 break;
@@ -107,7 +111,11 @@ public class CharacterView {
                     characterImageView.setImage(characterCrouchIdle.get(true));
                     characterCrouchIdle.animate();
                     break;
+                default:
+                    break;
                 }
+                break;
+            default:
                 break;
             }
         }
@@ -123,6 +131,8 @@ public class CharacterView {
                     characterImageView.setImage(characterIdleUp.get(true));
                     characterIdleUp.animate();
                     break;
+                default:
+                    break;
                 }
                 break;
             case NEUTRAL:
@@ -134,6 +144,8 @@ public class CharacterView {
                 case RIGHT:
                     characterImageView.setImage(characterIdle.get(true));
                     characterIdle.animate();
+                    break;
+                default:
                     break;
                 }
                 break;
@@ -148,6 +160,8 @@ public class CharacterView {
                         characterImageView.setImage(characterRunDown.get(true));
                         characterRunDown.animate();
                         break;
+                    default:
+                        break;
                     }
                 } else {
                     switch (character.getAim().getDirection().getX()) {
@@ -159,8 +173,12 @@ public class CharacterView {
                         characterImageView.setImage(characterCrouchIdle.get(true));
                         characterCrouchIdle.animate();
                         break;
+                    default:
+                        break;
                     }
                 }
+                break;
+            default:
                 break;
 
             }
@@ -184,6 +202,8 @@ public class CharacterView {
                     characterImageView.setImage(characterRunUp.get(true));
                     characterRunUp.animate();
                     break;
+                default:
+                    break;
                 }
                 break;
             case NEUTRAL:
@@ -195,6 +215,8 @@ public class CharacterView {
                 case RIGHT:
                     characterImageView.setImage(characterRun.get(true));
                     characterRun.animate();
+                    break;
+                default:
                     break;
                 }
                 break;
@@ -209,6 +231,8 @@ public class CharacterView {
                         characterImageView.setImage(characterRunDown.get(true));
                         characterRunDown.animate();
                         break;
+                    default:
+                        break;
                     }
                 } else {
                     switch (character.getAim().getDirection().getX()) {
@@ -220,8 +244,12 @@ public class CharacterView {
                         characterImageView.setImage(characterCrouchRun.get(true));
                         characterCrouchRun.animate();
                         break;
+                    default:
+                        break;
                     }
                 }
+                break;
+            default:
                 break;
             }
         }
@@ -236,8 +264,9 @@ public class CharacterView {
     }
 
     /**
+     * Returns the CharacterView's ImageView.
      * 
-     * @return bla
+     * @return the ImageView.
      */
     public ImageView getCharacterImageView() {
         return characterImageView;

@@ -22,7 +22,7 @@ public class TextMap {
      * @throws IOException
      */
     public TextMap(final String path) throws IOException {
-    	this.path = path;
+        this.path = path;
         var br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(path)));
         this.height = br.lines().count();
         br.close();
@@ -32,24 +32,24 @@ public class TextMap {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the TextMap's width.
+     * @return the width.
      */
     public double getWidth() {
         return width;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the TextMap's height.
+     * @return the height.
      */
     public double getHeight() {
         return height;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the TextMap's source file.
+     * @return the file.
      */
     public File getFile() {
         System.out.println(this.path);
@@ -58,7 +58,10 @@ public class TextMap {
         System.out.println(f.exists());
         return f;
     }
-    
+    /**
+     * Returns the TextMap's File's path.
+     * @return the file's path.
+     */
     public String getPath() {
         return this.path;
     }
