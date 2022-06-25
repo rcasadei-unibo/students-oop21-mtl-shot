@@ -59,6 +59,7 @@ public class Controller {
 
     /**
      * The main controller constructor.
+     * 
      * @param userName
      * @param primaryStage
      * @throws IOException               if the text map is not present

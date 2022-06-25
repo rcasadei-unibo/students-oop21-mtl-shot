@@ -132,6 +132,12 @@ public class GameView extends Scene {
         pt.getChildren().add(tt);
         pt.play();
 
+        final TranslateTransition btt = new TranslateTransition(Duration.millis(1), this.background);
+        btt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        final ParallelTransition bpt = new ParallelTransition();
+        bpt.getChildren().add(btt);
+        bpt.play();
+
         this.hudController.setSize(CameraManager.HORIZONTALDEFAULT * SCALINGFACTOR, CameraManager.VERTICALDEFAULT * SCALINGFACTOR);
 
         cameraManager.updateCamera();

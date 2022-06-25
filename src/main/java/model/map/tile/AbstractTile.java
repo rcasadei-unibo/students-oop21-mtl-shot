@@ -54,15 +54,15 @@ public abstract class AbstractTile implements Tile {
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
-           return true;
+            return true;
         }
         if (obj == null) {
-           return false;
+            return false;
         }
         if (getClass() != obj.getClass()) {
-           return false;
+            return false;
         }
         final AbstractTile other = (AbstractTile) obj;
-        return Objects.equals(position, other.getPosition()) && isCollidable() == other.isCollidable();
+        return Objects.equals(path, other.path) && Objects.equals(position, other.position);
     }
 }
