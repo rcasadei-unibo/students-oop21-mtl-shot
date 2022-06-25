@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 
 /**
@@ -32,6 +34,7 @@ public final class MetalShot extends Application {
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
+        new SoundManager().playSound(Sounds.METAL_SHOT_HAHA);
     }
 }
 	

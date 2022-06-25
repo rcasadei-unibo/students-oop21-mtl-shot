@@ -21,12 +21,6 @@ import view.sounds.SoundManager.Sounds;
  */
 public class MainMenuController {
 
-    {
-        /* Plays main menu theme */
-        var sm = new SoundManager();
-        sm.playSound(Sounds.METAL_SHOT_HAHA);
-    }
-
     /**
      * Executes when the start button is released.
      * 
