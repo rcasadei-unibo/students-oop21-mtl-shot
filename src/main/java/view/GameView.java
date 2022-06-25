@@ -45,7 +45,7 @@ public class GameView extends Scene {
     private final BulletsView bulletsView = new BulletsView(1);
     private final LevelView levelView;
     private final ImageView background = new ImageView(
-            new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
+            new Image(ClassLoader.getSystemResourceAsStream("backgroundLarge.png")));
     private final Controller controller;
     private final Group root;
     private final CameraManager cameraManager;
@@ -133,7 +133,7 @@ public class GameView extends Scene {
         pt.play();
 
         final TranslateTransition btt = new TranslateTransition(Duration.millis(1), this.background);
-        btt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        btt.setToX(cameraManager.getOffset() * MapConstants.getTilesize() - cameraManager.HORIZONTALDEFAULT);
         final ParallelTransition bpt = new ParallelTransition();
         bpt.getChildren().add(btt);
         bpt.play();
