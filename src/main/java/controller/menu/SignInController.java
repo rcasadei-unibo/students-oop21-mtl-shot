@@ -36,7 +36,7 @@ public class SignInController {
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         if (this.isValid(name.getText())) {
-        	new Controller(name.getText(), stage);
+            new Controller(name.getText(), stage);
         }
         var sm = new SoundManager();
         sm.stopSound(Sounds.METAL_SHOT_HAHA);

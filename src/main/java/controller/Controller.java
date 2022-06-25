@@ -57,7 +57,8 @@ public class Controller extends Thread {
     /**
      * The main controller constructor.
      * 
-     * @param gameView
+     * @param userName
+     * @param primaryStage
      * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
