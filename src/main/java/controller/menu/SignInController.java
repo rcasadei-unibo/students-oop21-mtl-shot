@@ -4,14 +4,13 @@ import java.io.IOException;
 
 import javax.management.InstanceNotFoundException;
 
+import controller.Controller;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import util.Pair;
-import view.GameView;
 import view.sounds.SoundManager;
 import view.sounds.SoundManager.Sounds;
 
@@ -36,14 +35,8 @@ public class SignInController {
     @FXML
     public void insertReleased(final Event event) throws IOException, InstanceNotFoundException {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
-        final boolean fs = stage.isFullScreen();
         if (this.isValid(name.getText())) {
-            final GameView gv = new GameView(name.getText());
-            stage.setScene(gv);
-            stage.setFullScreen(fs);
-            stage.setWidth(dim.getX());
-            stage.setHeight(dim.getY());
+        	new Controller(name.getText(), stage);
         }
         var sm = new SoundManager();
         sm.stopSound(Sounds.METAL_SHOT_HAHA);
