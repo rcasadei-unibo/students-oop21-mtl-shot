@@ -7,8 +7,8 @@ import model.character.Player;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
 import model.map.Segment;
-import util.DirectionHorizontal;
 import util.Status;
+import util.direction.DirectionHorizontal;
 
 /**
  * A Basic Bot that shoots when near the player, jumps obstacles and mantains

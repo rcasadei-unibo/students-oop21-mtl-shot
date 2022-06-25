@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import model.character.tools.Aim;
 import util.Pair;
-import util.DirectionHorizontal;
-import util.DirectionVertical;
+import util.direction.DirectionHorizontal;
+import util.direction.DirectionVertical;
 
 /**
  * JUnit to test the Aim class.
