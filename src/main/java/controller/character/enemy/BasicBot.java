@@ -1,4 +1,4 @@
-package controller.enemy;
+package controller.character.enemy;
 
 import java.util.Random;
 

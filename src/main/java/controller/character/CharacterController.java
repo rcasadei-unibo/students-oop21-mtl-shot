@@ -1,4 +1,4 @@
-package controller;
+package controller.character;
 
 import util.Pair;
 import util.Vector2D;
@@ -7,7 +7,10 @@ import view.sounds.SoundManager.Sounds;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
 import model.map.Level;
-import controller.WeaponController.TryToShootReturn;
+import controller.SoundsController;
+import controller.weapon.BulletsController;
+import controller.weapon.WeaponController;
+import controller.weapon.WeaponController.TryToShootReturn;
 import model.character.Character;
 
 /**

@@ -12,20 +12,12 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import view.sounds.SoundManager;
-import view.sounds.SoundManager.Sounds;
 
 /**
  * The controller class for the main menu (managed by FXML sheet).
  * 
  */
 public class MainMenuController {
-
-    {
-        /* Plays main menu theme */
-        var sm = new SoundManager();
-        sm.playSound(Sounds.METAL_SHOT_HAHA);
-    }
 
     /**
      * Executes when the start button is released.

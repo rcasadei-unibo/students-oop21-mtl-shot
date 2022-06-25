@@ -1,7 +1,4 @@
-package view.player;
-
-import view.CharacterSprites;
-import view.CharacterView;
+package view.character;
 
 /**
  * 

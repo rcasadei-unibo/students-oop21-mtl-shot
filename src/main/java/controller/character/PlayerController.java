@@ -1,7 +1,6 @@
-package controller.player;
+package controller.character;
 
 
-import controller.CharacterController;
 import model.character.Player;
 import model.map.Level;
 

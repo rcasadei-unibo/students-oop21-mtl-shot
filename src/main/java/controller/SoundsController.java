@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import controller.weapon.Cooldown;
 import view.sounds.SoundManager;
 import view.sounds.SoundManager.Sounds;
 

@@ -4,13 +4,12 @@ package model.map.tile;
 import util.Vector2D;
 /**
  * 
- * @author filippo.gurioli
  *
  */
 public class TileStone extends AbstractTile {
 
 	public TileStone(final Vector2D position) {
-		super(position, "DesertTilesetCompact.png");
+		super(position, "tileSet/DesertTilesetCompact.png");
 	}
 
 	@Override

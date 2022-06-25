@@ -1,4 +1,4 @@
-package controller;
+package controller.weapon;
 
 /**
  * This class models a sort of timer, a counter that is incremented every game

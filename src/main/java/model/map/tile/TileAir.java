@@ -8,7 +8,7 @@ import util.Vector2D;
 public class TileAir extends AbstractTile {
 	
 	public TileAir(final Vector2D position) {
-        super(position, "Air.png");
+        super(position, "tileSet/Air.png");
 	}
 
 	@Override

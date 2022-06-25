@@ -1,4 +1,4 @@
-package controller.enemy;
+package controller.character.enemy;
 
 /**
  * A bot that make the enemy still. Made for testing purpose

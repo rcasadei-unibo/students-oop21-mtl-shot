@@ -14,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.GameView;
+import view.sounds.SoundManager;
+import view.sounds.SoundManager.Sounds;
 
 /**
  * The controller class for the in game pause menu (managed by FXML sheet).
@@ -39,11 +41,12 @@ public class PauseMenuController {
     void quitReleased(final Event event) throws IOException {
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).getScene()
                 .setRoot(FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml")));
+        new SoundManager().playSound(Sounds.METAL_SHOT_HAHA);
     }
 
     @FXML
     void restartReleased(final MouseEvent event) throws IOException, InstanceNotFoundException {
-        new Controller(this.gameView.getUserData().getName(), (Stage) ((Node) event.getSource()).getScene().getWindow());
+        new Controller(this.gameView.getController().getUserData().getName(), (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML

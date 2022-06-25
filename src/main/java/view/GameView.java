@@ -23,11 +23,11 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.StageImpl;
 import model.character.Enemy;
-import util.UserData;
 import util.map.MapConstants;
+import view.character.EnemyView;
+import view.character.PlayerView;
 import view.map.CameraManager;
 import view.map.LevelView;
-import view.player.PlayerView;
 import controller.Controller;
 import controller.menu.HUD;
 import controller.menu.GameOverMenuController;
@@ -47,26 +47,22 @@ public class GameView extends Scene {
     private final ImageView background = new ImageView(
             new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
     private final Controller controller;
-    private final UserData userData;
     private final Group root;
     private final CameraManager cameraManager;
     private final HUD hudController;
-
-    private FXMLLoader loader;
-    private GridPane pauseMenu = null;
-
-    private Node hud;
+    private GridPane pauseMenu;
+    private final Node hud;
 
     /**
      * The GameView constructor.
      * 
-     * @param username
-     * @throws IOException
+     * @param controller
+     * @throws IOException               if the text map is not present
+     * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public GameView(final String username, final Controller controller) throws IOException, InstanceNotFoundException {
+    public GameView(final Controller controller) throws IOException, InstanceNotFoundException {
         super(new Group());
         this.controller = controller;
-        this.userData = new UserData(username);
         this.levelView = new LevelView(this.controller.getStage().getLevel());
         final List<Node> totalList = new ArrayList<>();
         totalList.add(background);
@@ -128,12 +124,12 @@ public class GameView extends Scene {
      * @param stage
      */
     public void refresh(final StageImpl stage) {
-    	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
-		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
-		final ParallelTransition pt = new ParallelTransition();
-		this.hud.toFront();
-		pt.getChildren().add(tt);
-		pt.play();
+        final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
+        tt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        final ParallelTransition pt = new ParallelTransition();
+        this.hud.toFront();
+        pt.getChildren().add(tt);
+        pt.play();
 
         this.hudController.setSize(1920 * 1.75, 1080 * 1.75);
 
@@ -143,7 +139,7 @@ public class GameView extends Scene {
             removeEnemies(stage.getEnemies());
         }
 
-        for (Enemy enemy : stage.getEnemies()) {
+        for (final Enemy enemy : stage.getEnemies()) {
             enemiesView.get(enemy).updateCharacter(enemy);
         }
 
@@ -159,17 +155,8 @@ public class GameView extends Scene {
             this.bulletsView
                     .updateBullets(stage.getBullets().stream().map(b -> b.getPosition()).collect(Collectors.toList()));
         }
-        userData.setLpLeft(stage.getPlayer().getHealth().getHealth());
-        hudController.refresh(userData);
-    }
-
-    /**
-     * Gets the data of the person who's playing Metal Shot.
-     * 
-     * @return UserData
-     */
-    public UserData getUserData() {
-        return this.userData;
+        this.controller.getUserData().setLpLeft(stage.getPlayer().getHealth().getHealth());
+        hudController.refresh(this.controller.getUserData());
     }
 
     /**
@@ -187,7 +174,7 @@ public class GameView extends Scene {
     public void displayPauseMenu() {
         cameraManager.resetCamera();
         final Group group = new Group(root);
-        loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
+        final var loader = new FXMLLoader(getClass().getResource("/fxml/PauseMenu.fxml"));
 
         try {
             this.pauseMenu = (GridPane) loader.load();
@@ -208,7 +195,6 @@ public class GameView extends Scene {
     public void disposePauseMenu() {
         final Group group = new Group(root);
         this.setRoot(group);
-        this.controller.gameStart();
     }
 
     /**
@@ -230,7 +216,7 @@ public class GameView extends Scene {
 
         group.getChildren().add(winMenu);
         final WinMenuController wmc = (WinMenuController) loader.getController();
-        wmc.setInfoToDisplay(userData, this.controller.getStage().getPlayer().getLives());
+        wmc.setInfoToDisplay(this.controller.getUserData(), this.controller.getStage().getPlayer().getLives());
         this.setRoot(group);
     }
 
@@ -266,7 +252,7 @@ public class GameView extends Scene {
                         .indexOf(this.controller.getStage().getLevel()
                                 .getSegmentAtPosition(this.controller.getStage().getPlayer().getPosition()))
                         + 1,
-                this.controller.getStage().getLevel().getSegments().size(), this.userData);
+                this.controller.getStage().getLevel().getSegments().size(), this.controller.getUserData());
         this.setRoot(group);
     }
 
@@ -287,9 +273,9 @@ public class GameView extends Scene {
     }
 
     @SuppressWarnings("unlikely-arg-type")
-	private void removeEnemies(final Collection<Enemy> enemies) {
-        List<EnemyView> removable = new LinkedList<>();
-        List<ImageView> remove = new LinkedList<>();
+    private void removeEnemies(final Collection<Enemy> enemies) {
+        final List<EnemyView> removable = new LinkedList<>();
+        final List<ImageView> remove = new LinkedList<>();
         enemiesView.forEach((k, v) -> {
             if (!enemies.contains(k)) {
                 removable.add(enemiesView.get(k));
@@ -304,6 +290,10 @@ public class GameView extends Scene {
         this.root.getChildren().removeAll(remove);
     }
 
+    public Controller getController() {
+        return this.controller;
+    }
+    
     public CameraManager getCameraManager() {
         return this.cameraManager;
     }

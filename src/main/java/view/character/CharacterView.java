@@ -1,4 +1,4 @@
-package view;
+package view.character;
 
 import javafx.scene.image.ImageView;
 import model.character.Character;
@@ -9,6 +9,10 @@ import util.direction.DirectionHorizontal;
 import util.map.MapConstants;
 import util.view.Animation;
 
+/**
+ * 
+ * 
+ */
 public class CharacterView {
     private Animation characterIdle;
     private Animation characterIdleUp;
@@ -16,12 +20,19 @@ public class CharacterView {
     private Animation characterRunUp;
     private Animation characterCrouchIdle;
     private Animation characterCrouchRun;
-    private Animation characterRunDown;
+    private final Animation characterRunDown;
     private final ImageView characterImageView = new ImageView();
     private final Vector2D imageOffset = new Vector2D(0.5, 0.5);
 
     /**
      * 
+     * @param characterIdle
+     * @param characterIdleUp
+     * @param characterRun
+     * @param characterRunUp
+     * @param characterCrouchIdle
+     * @param characterCrouchRun
+     * @param characterRunDown
      */
     public CharacterView(final Animation characterIdle, final Animation characterIdleUp, final Animation characterRun,
             final Animation characterRunUp, final Animation characterCrouchIdle, final Animation characterCrouchRun,
@@ -37,9 +48,7 @@ public class CharacterView {
 
     /**
      * 
-     * @param position
-     * @param crouch
-     * @param direction
+     * @param character
      */
     public void updateCharacter(final Character character) {
 
@@ -234,8 +243,8 @@ public class CharacterView {
         return characterImageView;
     }
 
-    private void setWeapon(Animation characterIdle, Animation characterIdleUp, Animation characterRun,
-            Animation characterRunUp, Animation characterCrouchIdle, Animation characterCrouchRun) {
+    private void setWeapon(final Animation characterIdle, final Animation characterIdleUp, final Animation characterRun,
+            final Animation characterRunUp, final Animation characterCrouchIdle, final Animation characterCrouchRun) {
         this.characterIdle = characterIdle;
         this.characterIdleUp = characterIdleUp;
         this.characterRun = characterRun;

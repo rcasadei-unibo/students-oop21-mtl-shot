@@ -1,6 +1,9 @@
 package controller;
 
-import controller.enemy.EnemyController;
+import controller.character.PlayerController;
+import controller.character.enemy.EnemyController;
+import controller.weapon.BulletsController;
+import controller.weapon.WeaponController;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,7 +19,6 @@ import model.character.Character;
 import model.weapons.Kraber;
 import model.weapons.PeaceKeeper;
 import model.weapons.R99;
-import controller.player.PlayerController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -25,6 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.Pair;
+import util.UserData;
 import util.direction.DirectionHorizontal;
 import util.direction.DirectionVertical;
 import view.GameView;
@@ -43,6 +46,7 @@ public class Controller extends Thread {
     private final SoundsController soundsController;
     private final StageImpl stage;
     private final Timeline gameLoop;
+    private final UserData userData;
     private boolean paused;
 
     /**
@@ -55,16 +59,17 @@ public class Controller extends Thread {
 
     /**
      * The main controller constructor.
-     * 
-     * @param gameView
+     * @param userName
+     * @param primaryStage
      * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
     public Controller(final String userName, final Stage primaryStage) throws InstanceNotFoundException, IOException {
+        this.userData = new UserData(userName);
         this.stage = new StageImpl();
         final boolean fs = primaryStage.isFullScreen();
         final var dim = new Pair<>(primaryStage.getWidth(), primaryStage.getHeight());
-        this.viewReference = new GameView(userName, this);
+        this.viewReference = new GameView(this);
         primaryStage.setScene(viewReference);
         primaryStage.setFullScreen(fs);
         primaryStage.setWidth(dim.getX());
@@ -77,7 +82,6 @@ public class Controller extends Thread {
                 this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
         this.stage.getEnemies().forEach(
                 e -> enemiesController.add(new EnemyController(this.stage.getLevel(), e, this.stage.getPlayer())));
-        this.paused = false;
 
         refreshEnemiesStatus();
 
@@ -88,7 +92,7 @@ public class Controller extends Thread {
                 if (paused) {
                     viewReference.menuRefresh();
                 } else {
-                    var remove = new LinkedList<EnemyController>();
+                    final var remove = new LinkedList<EnemyController>();
 
                     enemiesController.forEach(e -> {
                         if (e.isActive()) {
@@ -98,7 +102,7 @@ public class Controller extends Thread {
                             }
                             if (e.isDead()) {
                                 remove.add(e);
-                                viewReference.getUserData().increasePoints();
+                                userData.increasePoints();
                             }
                         }
                     });
@@ -139,13 +143,6 @@ public class Controller extends Thread {
         }));
         this.gameLoop.setCycleCount(Timeline.INDEFINITE);
         this.gameLoop.play();
-        gameStart();
-    }
-
-    /**
-     * Starts the game loop.
-     */
-    public void gameStart() {
         this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
         this.paused = false;
     }
@@ -165,6 +162,15 @@ public class Controller extends Thread {
     public void gameOver() {
         this.gameLoop.pause();
         this.viewReference.displayGameOverMenu();
+    }
+
+    /**
+     * Gets the data of the person who's playing Metal Shot.
+     * 
+     * @return UserData
+     */
+    public UserData getUserData() {
+        return this.userData;
     }
 
     /**

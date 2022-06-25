@@ -1,4 +1,4 @@
-package controller;
+package controller.weapon;
 
 import java.util.HashMap;
 import java.util.Map;

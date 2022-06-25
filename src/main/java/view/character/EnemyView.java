@@ -1,4 +1,4 @@
-package view;
+package view.character;
 
 /**
  * Defines the graphic properties of the enemy.

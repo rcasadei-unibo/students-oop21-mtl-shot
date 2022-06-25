@@ -1,8 +1,9 @@
-package controller;
+package controller.weapon;
 
 import java.util.Collection;
 import java.util.Optional;
 
+import controller.SoundsController;
 import model.character.Character;
 import model.character.Enemy;
 import model.character.Player;

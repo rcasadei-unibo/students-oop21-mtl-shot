@@ -1,6 +1,6 @@
-package controller.enemy;
+package controller.character.enemy;
 
-import controller.CharacterController;
+import controller.character.CharacterController;
 import model.character.Enemy;
 import model.character.Player;
 import model.map.Level;
