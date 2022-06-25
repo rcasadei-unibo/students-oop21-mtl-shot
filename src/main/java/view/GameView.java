@@ -313,4 +313,12 @@ public class GameView extends Scene {
     public CameraManager getCameraManager() {
         return this.cameraManager;
     }
+    
+    /**
+     * Returns the background.
+     * @return the background.
+     */
+    public ImageView getBackground() {
+        return this.background;
+    }
 }

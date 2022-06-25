@@ -102,54 +102,6 @@ public class CharacterView {
                 }
                 break;
             case DOWN:
-                switch (character.getAim().getDirection().getX()) {
-                case LEFT:
-                    characterImageView.setImage(characterCrouchIdle.get(false));
-                    characterCrouchIdle.animate();
-                    break;
-                case RIGHT:
-                    characterImageView.setImage(characterCrouchIdle.get(true));
-                    characterCrouchIdle.animate();
-                    break;
-                default:
-                    break;
-                }
-                break;
-            default:
-                break;
-            }
-        }
-        if (character.getSpeed().getX() == 0) {
-            switch (character.getAim().getDirection().getY()) {
-            case UP:
-                switch (character.getAim().getDirection().getX()) {
-                case LEFT:
-                    characterImageView.setImage(characterIdleUp.get(false));
-                    characterIdleUp.animate();
-                    break;
-                case RIGHT:
-                    characterImageView.setImage(characterIdleUp.get(true));
-                    characterIdleUp.animate();
-                    break;
-                default:
-                    break;
-                }
-                break;
-            case NEUTRAL:
-                switch (character.getAim().getDirection().getX()) {
-                case LEFT:
-                    characterImageView.setImage(characterIdle.get(false));
-                    characterIdle.animate();
-                    break;
-                case RIGHT:
-                    characterImageView.setImage(characterIdle.get(true));
-                    characterIdle.animate();
-                    break;
-                default:
-                    break;
-                }
-                break;
-            case DOWN:
                 if (character.getSpeed().getY() != 0) {
                     switch (character.getAim().getDirection().getX()) {
                     case LEFT:
