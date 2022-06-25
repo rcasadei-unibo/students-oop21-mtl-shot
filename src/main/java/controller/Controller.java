@@ -24,10 +24,9 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import util.DirectionHorizontal;
-import util.DirectionVertical;
 import util.Pair;
+import util.direction.DirectionHorizontal;
+import util.direction.DirectionVertical;
 import view.GameView;
 import view.sounds.SoundManager.Sounds;
 
@@ -141,6 +140,7 @@ public class Controller extends Thread {
         }));
         this.gameLoop.setCycleCount(Timeline.INDEFINITE);
         this.gameLoop.play();
+        gameStart();
     }
 
     /**

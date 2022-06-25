@@ -1,8 +1,8 @@
 package model.character.tools;
 
-import util.DirectionHorizontal;
-import util.DirectionVertical;
 import util.Pair;
+import util.direction.DirectionHorizontal;
+import util.direction.DirectionVertical;
 
 /**
  * A class that manages the aim of something that lives in a 2D world. It uses 2

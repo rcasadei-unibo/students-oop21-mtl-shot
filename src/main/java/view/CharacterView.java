@@ -4,8 +4,8 @@ import javafx.scene.image.ImageView;
 import model.character.Character;
 import model.weapons.Kraber;
 import model.weapons.PeaceKeeper;
-import util.DirectionHorizontal;
 import util.Vector2D;
+import util.direction.DirectionHorizontal;
 import util.map.MapConstants;
 import util.view.Animation;
 

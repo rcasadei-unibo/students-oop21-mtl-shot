@@ -1,8 +1,8 @@
 package model.weapons;
 
-import util.DirectionHorizontal;
-import util.DirectionVertical;
 import util.Vector2D;
+import util.direction.DirectionHorizontal;
+import util.direction.DirectionVertical;
 
 import java.util.Random;
 

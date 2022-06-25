@@ -1,4 +1,4 @@
-package util;
+package util.direction;
 
 /**
  * Enumeration of every horizontal direction in a 2D world in a determined landmark.

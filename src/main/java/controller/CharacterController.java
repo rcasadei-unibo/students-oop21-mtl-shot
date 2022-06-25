@@ -1,8 +1,8 @@
 package controller;
 
-import util.DirectionVertical;
 import util.Pair;
 import util.Vector2D;
+import util.direction.DirectionVertical;
 import view.sounds.SoundManager.Sounds;
 import model.character.Character.Crouch;
 import model.character.movableentity.EntityConstants;
