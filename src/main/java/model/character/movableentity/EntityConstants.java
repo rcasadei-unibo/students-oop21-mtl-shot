@@ -66,11 +66,6 @@ public final class EntityConstants {
      */
     public static final double ENEMY_DELTA = 0.5;
 
-    /**
-     * The default hitbox size.
-     */
-    public static final Vector2D DEFAULT_HITBOX = new Vector2D(1, 1.5);
-
     private EntityConstants() {
     }
 }
