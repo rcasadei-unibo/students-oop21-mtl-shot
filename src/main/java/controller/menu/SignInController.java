@@ -37,9 +37,8 @@ public class SignInController {
         final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         if (this.isValid(name.getText())) {
             new Controller(name.getText(), stage);
+            new SoundManager().stopSound(Sounds.METAL_SHOT_HAHA);
         }
-        final var sm = new SoundManager();
-        sm.stopSound(Sounds.METAL_SHOT_HAHA);
     }
 
     /**
