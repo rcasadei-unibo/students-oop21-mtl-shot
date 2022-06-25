@@ -22,10 +22,12 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import util.DirectionHorizontal;
 import util.DirectionVertical;
+import util.Pair;
 import view.GameView;
 import view.sounds.SoundManager.Sounds;
 
@@ -59,9 +61,15 @@ public class Controller extends Thread {
      * @throws IOException               if the text map is not present
      * @throws InstanceNotFoundException if player spawn is not set in any text map
      */
-    public Controller(final GameView gameView) throws InstanceNotFoundException, IOException {
+    public Controller(final String userName, final Stage primaryStage) throws InstanceNotFoundException, IOException {
         this.stage = new StageImpl();
-        this.viewReference = gameView;
+        final boolean fs = primaryStage.isFullScreen();
+        final var dim = new Pair<>(primaryStage.getWidth(), primaryStage.getHeight());
+        this.viewReference = new GameView(userName, this);
+        primaryStage.setScene(viewReference);
+        primaryStage.setFullScreen(fs);
+        primaryStage.setWidth(dim.getX());
+        primaryStage.setHeight(dim.getY());
         this.enemiesController = new LinkedList<>();
         this.weaponController = new WeaponController();
         this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer(), this.enemiesController);
@@ -126,7 +134,7 @@ public class Controller extends Thread {
 
                     }
 
-                    gameView.refresh(stage);
+                    viewReference.refresh(stage);
                 }
             }
         }));
