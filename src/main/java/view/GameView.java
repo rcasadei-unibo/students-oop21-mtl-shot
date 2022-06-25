@@ -195,6 +195,7 @@ public class GameView extends Scene {
      */
     public void disposePauseMenu() {
         final Group group = new Group(root);
+        this.controller.resume();
         this.setRoot(group);
     }
 

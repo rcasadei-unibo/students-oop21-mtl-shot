@@ -12,7 +12,7 @@ public class TileStone extends AbstractTile {
      * @param position
      */
     public TileStone(final Vector2D position) {
-        super(position, "DesertTilesetCompact.png");
+        super(position, "tileSet/DesertTilesetCompact.png");
     }
 
     @Override

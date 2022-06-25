@@ -37,7 +37,7 @@ import view.sounds.SoundManager.Sounds;
  * The main controller. It contains all sub-controllers and it manages the game
  * loop.
  */
-public class Controller extends Thread {
+public class Controller {
 
     private final PlayerController playerController;
     private final Collection<EnemyController> enemiesController;
@@ -143,8 +143,7 @@ public class Controller extends Thread {
         }));
         this.gameLoop.setCycleCount(Timeline.INDEFINITE);
         this.gameLoop.play();
-        this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
-        this.paused = false;
+        resume();
     }
 
     /**
@@ -157,11 +156,19 @@ public class Controller extends Thread {
     }
 
     /**
-     * 
+     * Display the game over menu.
      */
     public void gameOver() {
         this.gameLoop.pause();
         this.viewReference.displayGameOverMenu();
+    }
+
+    /**
+     * Restore the game loop.
+     */
+    public void resume() {
+        this.soundsController.forcePlaySound(Sounds.MAIN_THEME);
+        this.paused = false;
     }
 
     /**

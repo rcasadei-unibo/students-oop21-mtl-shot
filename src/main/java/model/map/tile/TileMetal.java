@@ -11,7 +11,7 @@ public class TileMetal extends AbstractTile {
      * @param position
      */
     public TileMetal(final Vector2D position) {
-        super(position, "MetalTilesetCompact.png");
+        super(position, "tileSet/MetalTilesetCompact.png");
     }
 
     @Override

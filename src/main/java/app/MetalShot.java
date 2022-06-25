@@ -34,6 +34,5 @@ public final class MetalShot extends Application {
         primaryStage.setFullScreen(true);
         new SoundManager().playSound(Sounds.METAL_SHOT_HAHA);
         primaryStage.show();
-        new SoundManager().playSound(Sounds.METAL_SHOT_HAHA);
     }
 }

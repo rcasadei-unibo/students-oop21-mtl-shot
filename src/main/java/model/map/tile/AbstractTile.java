@@ -62,7 +62,7 @@ public abstract class AbstractTile implements Tile {
         if (getClass() != obj.getClass()) {
            return false;
         }
-        final TileStone other = (TileStone) obj;
+        final AbstractTile other = (AbstractTile) obj;
         return Objects.equals(position, other.getPosition()) && isCollidable() == other.isCollidable();
     }
 }
