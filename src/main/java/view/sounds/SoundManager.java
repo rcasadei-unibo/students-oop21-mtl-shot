@@ -16,9 +16,9 @@ public class SoundManager {
      * @param sound to be played.
      */
     public void playSound(final Sounds sound) {
-    	if (sound.equals(Sounds.MAIN_THEME) || sound.equals(Sounds.METAL_SHOT_HAHA)) {
-    		sound.getAudioClip().setPriority(1);
-    	}
+        if (sound.equals(Sounds.MAIN_THEME) || sound.equals(Sounds.METAL_SHOT_HAHA)) {
+            sound.getAudioClip().setPriority(1);
+        }
         sound.getAudioClip().play();
     }
 
