@@ -25,6 +25,7 @@ public class CharacterController {
      */
     private static final double DELTAX = 0.25;
     private static final double DELTAY = 0.075;
+    private static final double CONDOFFSET = 0.1;
 
     /**
      * The character controller constructor.
@@ -117,7 +118,7 @@ public class CharacterController {
         }
 
         // Left wall collisions
-        if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + 0.1) {
+        if (this.isCollidingLeft(nextPos) || nextPos.getX() < bounds.getX() + CharacterController.CONDOFFSET) {
             this.character.setSpeed(EntityConstants.ACCELERATION, this.character.getSpeed().getY());
             // Right wall collisions
         } else if (this.isCollidingRight(nextPos)

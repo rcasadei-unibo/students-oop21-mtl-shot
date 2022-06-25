@@ -13,7 +13,7 @@ import util.map.TextMap;
 
 /**
  * 
- * 
+ * Defines a Level made up of Segments.
  */
 public class Level {
 
@@ -35,7 +35,7 @@ public class Level {
 
     /**
      * 
-     * @return bla
+     * @return the Segments that make up the level.
      */
     public List<Segment> getSegments() {
         return this.segments;
@@ -44,7 +44,7 @@ public class Level {
     /**
      * 
      * @param position
-     * @return bla
+     * @return the Segment on which the coordinates land.
      */
     public Segment getSegmentAtPosition(final Vector2D position) {
         double i = 0;
@@ -61,7 +61,7 @@ public class Level {
      * 
      * @param position
      * @param offset
-     * @return bla
+     * @return the nth Segment after the Segment on which the coordinates land.
      */
     public Optional<Segment> getSegmentAtPositionOffset(final Vector2D position, final int offset) {
         if (this.getSegments().indexOf(this.getSegmentAtPosition(position)) + offset >= this.getSegments().size()
@@ -74,7 +74,7 @@ public class Level {
 
     /**
      * 
-     * @return bla
+     * @return the Player's spawn
      * @throws InstanceNotFoundException
      */
     public Vector2D getPlayerSpawn() throws InstanceNotFoundException {

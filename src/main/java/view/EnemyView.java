@@ -1,8 +1,8 @@
 package view;
 
 /**
- * Defines the graphic properties of the enemy.
- *
+ * 
+ * Extends the CharacterView into a EnemyView, assigning correspective sprites.
  */
 public class EnemyView extends CharacterView {
 

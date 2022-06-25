@@ -11,8 +11,8 @@ public final class MapConstants {
     private MapConstants() { }
 
     /**
-     * 
-     * @return bla
+     * Returns the TILESIZE constant for converting screen pixels into Game Units.
+     * @return the TILESIZE constant.
      */
     public static int getTilesize() {
         return TILESIZE;

@@ -1,7 +1,7 @@
 package controller.enemy;
 
 /**
- * A bot that make the enemy still. Made for testing purpose
+ * A bot that makes the enemy still. Made for testing purpose
  *
  */
 public class StillBot implements SimpleBot {

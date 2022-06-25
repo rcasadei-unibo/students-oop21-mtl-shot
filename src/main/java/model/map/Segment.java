@@ -20,7 +20,7 @@ import util.map.TextMap;
 
 /**
  * 
- *
+ * Defines a Segment made up of Tiles.
  */
 public class Segment {
 
@@ -71,7 +71,7 @@ public class Segment {
     }
 
     /**
-     * 
+     * Adds a Collection of tiles to the Segment.
      * @param bundle
      */
     public void addBundle(final Collection<Tile> bundle) {
@@ -81,9 +81,9 @@ public class Segment {
     }
 
     /**
-     * 
+     * Returns a Set of all Tiles of a specific Tile type in the Segment.
      * @param tileClass
-     * @return bla
+     * @return all the Tiles of a specific Tile type in the Segment.
      */
     public Optional<Set<Tile>> getTileSet(final Class<? extends Tile> tileClass) {
         for (final var temp : map) {
@@ -95,8 +95,8 @@ public class Segment {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns a Set of Sets of Tiles, grouped up by columns and rows.
+     * @return a Collection of every Tile from the Level.
      */
     public Set<Set<Tile>> getMap() {
         return this.map;
@@ -113,16 +113,16 @@ public class Segment {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the player's spawn position in the Segment, if it has one.
+     * @return the player's spawn position.
      */
     public Vector2D getPlayerSpawn() {
         return playerSpawn;
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the enemies' spawn positions in the Segment, if it has any.
+     * @return the enemies' spawn positions.
      */
     public Collection<Vector2D> getEnemiesSpawn() {
         return this.enemiesSpawn;
@@ -141,16 +141,16 @@ public class Segment {
     }
 
     /**
-     * 
-     * @return bla
+     * The Segment's TextMap, a Character based representation of the Segment's contents.
+     * @return the Segment's TextMap.
      */
     public TextMap getTextMap() {
         return this.textMap;
     }
 
     /**
-     * 
-     * @return bla
+     * The Segment's tileable Tiles as a List of positions.
+     * @return the Segment's tileable Tiles' positions.
      */
     public List<Vector2D> getTileables() {
         return this.getAllTiles().stream().filter(t -> t.isTileable()).map(t -> t.getPosition())
@@ -158,8 +158,8 @@ public class Segment {
     }
 
     /**
-     * 
-     * @return bla
+     * The Segment's collidable Tiles as a List of positions.
+     * @return the Segment's collidable Tiles' positions.
      */
     public List<Vector2D> getCollidables() {
         return this.getAllTiles().stream().filter(t -> t.isCollidable()).map(t -> t.getPosition())
@@ -167,9 +167,9 @@ public class Segment {
     }
 
     /**
-     * 
+     * Checks if the Tile present at the give position is collidable.
      * @param position
-     * @return bla
+     * @return the requested Tile's collidability.
      */
     public boolean isCollidableAtPosition(final Vector2D position) {
         final var tmp = this.getAllTiles().stream().filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
@@ -181,9 +181,9 @@ public class Segment {
     }
 
     /**
-     * 
+     * Returns the collidable tile at given position, if it exists.
      * @param position
-     * @return bla
+     * @return the collidable tile at given position.
      */
     public Optional<Tile> getCollidableAtPosition(final Vector2D position) {
         return this.getAllTiles().stream().filter(t -> t.getPosition().getX() == Math.floor(position.getX()))
@@ -192,36 +192,36 @@ public class Segment {
     }
 
     /**
-     * 
+     * Returns the tile at given position, if it exists.
      * @param position
-     * @return bla
+     * @return the tile at given position.
      */
     public Optional<Tile> getTile(final Vector2D position) {
         return this.getAllTiles().stream().filter(t -> t.getPosition().equals(position)).findFirst();
     }
 
     /**
-     * 
+     * Returns a specific Tile from a List of Tiles, if it exists.
      * @param position
      * @param tileList
-     * @return bla
+     * @return a specific Tile from a List of Tiles.
      */
     public Optional<Tile> getTile(final Vector2D position, final List<Tile> tileList) {
         return tileList.stream().filter(t -> t.getPosition().equals(position)).findFirst();
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the Segment's left side's distance from the leftmost side of the Level.
+     * @return the Segment's left side's distance from the leftmost side of the Level.
      */
     public Vector2D getOrigin() {
         return new Vector2D(this.offset, textMap.getHeight());
     }
 
     /**
-     * 
+     * Returns a Tile's position simplified to the TextMap's Tile's position.
      * @param position
-     * @return bla
+     * @return a Tile's position on the TextMap.
      */
     public Vector2D getTilePos(final Vector2D position) {
         return this.getAllTiles().stream().filter(t -> t.getPosition().getX() == Math.floor(position.getX()))

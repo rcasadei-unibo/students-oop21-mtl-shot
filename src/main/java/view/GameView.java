@@ -35,7 +35,7 @@ import controller.menu.PauseMenuController;
 import controller.menu.WinMenuController;
 
 /**
- * The game main view. It contains all sub-views and handles the view refresh.
+ * The game main View. It contains all sub views and handles the View refresh.
  * 
  */
 public class GameView extends Scene {
@@ -56,6 +56,7 @@ public class GameView extends Scene {
     private GridPane pauseMenu = null;
 
     private Node hud;
+    private static final double SCALINGFACTOR = 1.75;
 
     /**
      * The GameView constructor.
@@ -96,27 +97,27 @@ public class GameView extends Scene {
     }
 
     /**
-     * Gets the visible part of the player.
+     * Returns the View side of the player.
      * 
-     * @return PlayerView
+     * @return the PlayerView
      */
     public PlayerView getPlayerView() {
         return this.playerView;
     }
 
     /**
-     * Gets the visible part of the map.
+     * Returns the View side of the map.
      * 
-     * @return LevelView
+     * @return the LevelView
      */
     public LevelView getLevelView() {
         return this.levelView;
     }
 
     /**
-     * Gets the visible part of the bullets.
+     * Returns the View side of the bullets.
      * 
-     * @return BulletsView.
+     * @return the BulletsView.
      */
     public BulletsView getBulletsView() {
         return this.bulletsView;
@@ -128,14 +129,14 @@ public class GameView extends Scene {
      * @param stage
      */
     public void refresh(final StageImpl stage) {
-    	final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
-		tt.setToX(cameraManager.getOffset()*MapConstants.getTilesize());
-		final ParallelTransition pt = new ParallelTransition();
-		this.hud.toFront();
-		pt.getChildren().add(tt);
-		pt.play();
+        final TranslateTransition tt = new TranslateTransition(Duration.millis(1), this.hud);
+        tt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        final ParallelTransition pt = new ParallelTransition();
+        this.hud.toFront();
+        pt.getChildren().add(tt);
+        pt.play();
 
-        this.hudController.setSize(1920 * 1.75, 1080 * 1.75);
+        this.hudController.setSize(CameraManager.HORIZONTALDEFAULT * SCALINGFACTOR, CameraManager.VERTICALDEFAULT * SCALINGFACTOR);
 
         cameraManager.updateCamera();
 
@@ -164,7 +165,7 @@ public class GameView extends Scene {
     }
 
     /**
-     * Gets the data of the person who's playing Metal Shot.
+     * Returns the data of the person who's playing Metal Shot.
      * 
      * @return UserData
      */
@@ -279,15 +280,15 @@ public class GameView extends Scene {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the View side of the Enemies.
+     * @return the View of the Enemies.
      */
     public Map<Enemy, EnemyView> getEnemiesView() {
         return enemiesView;
     }
 
     @SuppressWarnings("unlikely-arg-type")
-	private void removeEnemies(final Collection<Enemy> enemies) {
+    private void removeEnemies(final Collection<Enemy> enemies) {
         List<EnemyView> removable = new LinkedList<>();
         List<ImageView> remove = new LinkedList<>();
         enemiesView.forEach((k, v) -> {
@@ -304,6 +305,10 @@ public class GameView extends Scene {
         this.root.getChildren().removeAll(remove);
     }
 
+    /**
+     * Returns the CameraManager.
+     * @return the CameraManager.
+     */
     public CameraManager getCameraManager() {
         return this.cameraManager;
     }

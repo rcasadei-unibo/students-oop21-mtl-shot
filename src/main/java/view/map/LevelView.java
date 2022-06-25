@@ -8,9 +8,9 @@ import javafx.scene.Group;
 import model.map.Level;
 import util.Vector2D;
 
-/**
+ /**
  * 
- *
+ * Implements the View side of the Level.
  */
 public class LevelView {
 
@@ -38,9 +38,9 @@ public class LevelView {
     }
 
     /**
-     * 
+     * Displays only the visible Segments for performance.
      * @param playerPosition
-     * @return bla
+     * @return a list of Groups, each is all the ImageViews from a Segment.
      */
     public List<Group> displaySegments(final Vector2D playerPosition) {
         final List<Group> nodes = new LinkedList<>();
@@ -58,14 +58,19 @@ public class LevelView {
     }
 
     /**
-     * 
-     * @return bla
+     * Returns the currently displayed Segments' Tile ImageViews, bundled in a List of Groups.
+     * @return the displayed Segments' Tile ImageViews.
      */
     public List<Group> getDisplayed() {
         return displayed;
     }
-    public List<Group> getPreviousSegment(final Vector2D playerPosition){
-    	return atManager.getSegment(
+     /**
+     * Returns the Segment before the one the player is traversing's Tile ImageViews, bundled in a List of Groups.
+     * @param playerPosition
+     * @return the Segment before the one the player is traversing's Tile ImageViews.
+     */
+    public List<Group> getPreviousSegment(final Vector2D playerPosition) {
+        return atManager.getSegment(
                 level.getSegments().indexOf(level.getSegmentAtPositionOffset(playerPosition, -1).get()));
     }
 
