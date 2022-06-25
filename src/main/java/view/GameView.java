@@ -62,6 +62,7 @@ public class GameView extends Scene {
      * The GameView constructor.
      * 
      * @param username
+     * @param controller
      * @throws IOException
      */
     public GameView(final String username, final Controller controller) throws IOException, InstanceNotFoundException {
@@ -135,6 +136,12 @@ public class GameView extends Scene {
         this.hud.toFront();
         pt.getChildren().add(tt);
         pt.play();
+
+        final TranslateTransition btt = new TranslateTransition(Duration.millis(1), this.background);
+        btt.setToX(cameraManager.getOffset() * MapConstants.getTilesize());
+        final ParallelTransition bpt = new ParallelTransition();
+        bpt.getChildren().add(btt);
+        bpt.play();
 
         this.hudController.setSize(CameraManager.HORIZONTALDEFAULT * SCALINGFACTOR, CameraManager.VERTICALDEFAULT * SCALINGFACTOR);
 

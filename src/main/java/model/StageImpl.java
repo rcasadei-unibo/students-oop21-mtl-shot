@@ -41,7 +41,7 @@ public class StageImpl {
         this.enemies = new LinkedList<>();
         addEnemies();
         this.player = new PlayerBuilder()
-                .hitbox(EntityConstants.DEFAULT_HITBOX)
+                .hitbox(new Vector2D(1, 1.5))
                 .position(level.getPlayerSpawn())
                 .weapon(new R99())
                 .health(new SimpleHealth())
@@ -84,7 +84,7 @@ public class StageImpl {
 
     private void addEnemies() {
         for (final Vector2D pos : level.getEnemiesSpawn()) {
-            enemies.add(new Enemy(pos, EntityConstants.DEFAULT_HITBOX, new SimpleHealth()));
+            enemies.add(new Enemy(pos, new Vector2D(1, 1.5), new SimpleHealth()));
         }
     }
 }
