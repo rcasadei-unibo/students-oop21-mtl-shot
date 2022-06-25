@@ -72,7 +72,7 @@ public class Controller extends Thread {
         primaryStage.setHeight(dim.getY());
         this.enemiesController = new LinkedList<>();
         this.weaponController = new WeaponController();
-        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer(), this.enemiesController);
+        this.playerController = new PlayerController(this.stage.getLevel(), this.stage.getPlayer());
         this.soundsController = new SoundsController();
         this.bulletsController = new BulletsController(this.stage.getPlayer(), this.stage.getBullets(),
                 this.stage.getEnemies(), this.soundsController, this.stage.getLevel());
