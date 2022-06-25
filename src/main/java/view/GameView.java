@@ -46,7 +46,7 @@ public class GameView extends Scene {
     private final LevelView levelView;
     private final ImageView background = new ImageView(
             new Image(ClassLoader.getSystemResourceAsStream("menusResources/MainMenuBG.png")));
-    private final Controller controller = new Controller(this);
+    private final Controller controller;
     private final UserData userData;
     private final Group root;
     private final CameraManager cameraManager;
@@ -64,8 +64,9 @@ public class GameView extends Scene {
      * @param username
      * @throws IOException
      */
-    public GameView(final String username) throws IOException, InstanceNotFoundException {
+    public GameView(final String username, final Controller controller) throws IOException, InstanceNotFoundException {
         super(new Group());
+        this.controller = controller;
         this.userData = new UserData(username);
         this.levelView = new LevelView(this.controller.getStage().getLevel());
         final List<Node> totalList = new ArrayList<>();
@@ -88,7 +89,6 @@ public class GameView extends Scene {
         this.cameraManager = new CameraManager(controller, root, levelView, this);
         this.setCamera(cameraManager.getCamera());
         root.getChildren().add(hud);
-        controller.gameStart();
 
         this.setOnKeyPressed(e -> {
             controller.keyPressed(e.getCode());

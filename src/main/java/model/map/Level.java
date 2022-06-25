@@ -34,7 +34,7 @@ public class Level {
     }
 
     /**
-     * 
+     * Returns the Segments that make up the level.
      * @return the Segments that make up the level.
      */
     public List<Segment> getSegments() {
@@ -42,7 +42,7 @@ public class Level {
     }
 
     /**
-     * 
+     * Returns the Segment on which the coordinates land.
      * @param position
      * @return the Segment on which the coordinates land.
      */
@@ -58,7 +58,7 @@ public class Level {
     }
 
     /**
-     * 
+     * Returns the nth Segment after the Segment on which the coordinates land.
      * @param position
      * @param offset
      * @return the nth Segment after the Segment on which the coordinates land.
@@ -73,8 +73,8 @@ public class Level {
     }
 
     /**
-     * 
-     * @return the Player's spawn
+     * Returns the Player's spawn position.
+     * @return the Player's spawn.
      * @throws InstanceNotFoundException
      */
     public Vector2D getPlayerSpawn() throws InstanceNotFoundException {
@@ -87,9 +87,9 @@ public class Level {
     }
 
     /**
-     * 
+     * The distance from the rightmost edge of the current segment and the leftmost edge of the map.
      * @param target
-     * @return bla
+     * @return the distance of the rightmost edge of the current segment.
      */
     public double getDistance(final Segment target) {
         double dist = 0;
@@ -103,8 +103,8 @@ public class Level {
     }
 
     /**
-     * 
-     * @return bla
+     * A collection containing the Enemies' spawn positions.
+     * @return the Enemies' spawn positions.
      */
     public Collection<Vector2D> getEnemiesSpawn() {
         final Collection<Vector2D> positions = new LinkedList<>();

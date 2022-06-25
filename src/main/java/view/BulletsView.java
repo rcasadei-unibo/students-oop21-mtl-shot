@@ -20,7 +20,7 @@ public class BulletsView {
 
     /**
      * 
-     * @param scale - imageViews scale
+     * @param scale imageViews scale
      * @throws FileNotFoundException
      */
     public BulletsView(final double scale) throws FileNotFoundException {
@@ -31,7 +31,7 @@ public class BulletsView {
 
     /**
      * 
-     * @param bullets - new bullets coordinates.
+     * @param bullets new bullets coordinates.
      */
     public void updateBullets(final List<Vector2D> bullets) {
         for (int i = 0; i < this.imageViewList.size() && i < bullets.size(); i++) {

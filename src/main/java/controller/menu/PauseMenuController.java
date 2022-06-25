@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.management.InstanceNotFoundException;
 
+import controller.Controller;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import util.Pair;
 import view.GameView;
 
 /**
@@ -43,15 +43,7 @@ public class PauseMenuController {
 
     @FXML
     void restartReleased(final MouseEvent event) throws IOException, InstanceNotFoundException {
-        final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        final Pair<Double, Double> dim = new Pair<>(stage.getWidth(), stage.getHeight());
-        final boolean fs = stage.isFullScreen();
-        stage.getScene().setRoot(FXMLLoader.load(getClass().getResource("/fxml/LoadingScene.fxml")));
-        final GameView gv = new GameView(this.gameView.getUserData().getName());
-        stage.setScene(gv);
-        stage.setFullScreen(fs);
-        stage.setWidth(dim.getX());
-        stage.setHeight(dim.getY());
+        new Controller(this.gameView.getUserData().getName(), (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @FXML
