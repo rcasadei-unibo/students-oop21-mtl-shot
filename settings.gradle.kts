@@ -7,4 +7,12 @@
  * in the user manual at https://docs.gradle.org/5.5.1/userguide/multi_project_builds.html
  */
 
+ buildscript {
+     repositories {
+         gradlePluginPortal()
+         mavenCentral()
+     }
+ }
+
+
 rootProject.name = "OOP21-Mtl-Shot"
